@@ -37,14 +37,14 @@ public class OrderServlet extends HttpServlet {
 		
 		// TODO 왜 cartNo가 넘어오지 않는가
 		
-//		String cartNo1 = request.getParameter("cartNo1");
-//		String cartCount1 = request.getParameter("cartCount1");
-//		String cartNo2 = request.getParameter("cartNo2");
-//		String cartCount2 = request.getParameter("cartCount2");
-//		System.out.println("cartNo1 : " + cartNo1);
-//		System.out.println("cartCount1 : " + cartCount1);
-//		System.out.println("cartNo2 : " + cartNo2);
-//		System.out.println("cartCount2 : " + cartCount2);
+		String cartNo1 = request.getParameter("cartNo0");
+		String cartCount1 = request.getParameter("cartCount0");
+		String cartNo2 = request.getParameter("cartNo1");
+		String cartCount2 = request.getParameter("cartCount1");
+		System.out.println("cartNo1 : " + cartNo1);
+		System.out.println("cartCount1 : " + cartCount1);
+		System.out.println("cartNo2 : " + cartNo2);
+		System.out.println("cartCount2 : " + cartCount2);
 		
 		// 멤버 정보는 세션에
 		

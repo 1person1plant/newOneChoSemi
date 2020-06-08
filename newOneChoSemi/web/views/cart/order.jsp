@@ -595,7 +595,7 @@
 	                </tfoot>
 	            </tbody>
 	        </table> <!-- 배송지 정보 끝 -->
-	
+
 	        <!-- 주문고객과 동일 스크립트 -->
 	        <script>
 	            $(".order_confirm_switch").change(function(){
@@ -912,12 +912,12 @@
 	            </tfoot>
 	        </table>
 	        <script>
-	            $(function(){
+	          //  $(function(){
 	            //   $('[data-toggle="tooltip1"]').tooltip();   
-	            $('[data-toggle="tooltip2"]').tooltip();   
-	            $('[data-toggle="tooltip3"]').tooltip();   
-	            $('[data-toggle="tooltip4"]').tooltip();   
-	            });
+	          //  $('[data-toggle="tooltip2"]').tooltip();   
+	          //  $('[data-toggle="tooltip3"]').tooltip();   
+	          //  $('[data-toggle="tooltip4"]').tooltip();   
+	          //  });
 	        </script>
 	    </div> <!-- 결제 방법 끝 -->
 	
