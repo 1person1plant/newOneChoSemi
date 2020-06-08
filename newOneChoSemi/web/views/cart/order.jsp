@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Rank, cartList.model.vo.Cart, java.util.ArrayList"%>
+<%
+	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
+	System.out.println("주문 페이지 카트 정보 : " + cartList);
+	Rank rankDetail = (Rank)request.getAttribute("rankDetail");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -444,30 +449,23 @@
 	        <span>주문 정보를 확인해 주세요.</span>
 	        <table>
 	            <tbody>
+	            	<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 	                <tr>
 	                    <td rowspan="3" class="orderimg">
-	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="상품1">
+	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=cartList.get(i).getImageName() %>" alt="상품1">
 	                    </td>
-	                    <td colspan="2" class="orderItem_title"> </td>
+	                    <td colspan="2" class="orderItem_title"><%=cartList.get(i).getItemName() %></td>
 	                </tr>
 	                <tr>
 	                    <td>수량</td>
-	                    <td class="orderItem_count"> </td>
+	                    <td class="orderItem_count"><%=cartList.get(i).getCartListCount() %></td>
 	                </tr>
 	                <tr>
-	                    <td colspan="2" class="orderItem_price"> </td>
+	                    <td colspan="2" class="orderItem_price"><%=cartList.get(i).getItemPrice() %></td>
 	                </tr>
+	                <%} %>
 	            </tbody>
 	        </table>
-	        <!-- 상품정보 추가 (다중 상품에 대한 대책이 필요함)-->
-	        <script>
-	            $(function(){
-	                $(".orderItem_img").attr("src", orderItem_img);
-	                $(".orderItem_title").text(orderItem_title);
-	                $(".orderItem_count").text(orderItem_count);
-	                $(".orderItem_price").text(orderItem_price);
-	            });
-	        </script>
 	    </div>
 	
 	    <!-- 구매자 정보 -->
@@ -481,46 +479,31 @@
 	            <tbody>
 	                <tr>
 	                    <td>이름</td>
-	                    <td class="buyer_name"></td>
+	                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
 	                </tr>
 	                <tr>
 	                    <td>연락처</td>
 	                    <td class="buyer_phone">
-	                        <span class="buyer_phone1"></span>
-	                        <span class="buyer_phone2"></span>
-	                        <span class="buyer_phone3"></span>
+	                        <span class="buyer_phone1"><%=loginUser.getMemberPhone1() %></span>
+	                        <span class="buyer_phone2"><%=loginUser.getMemberPhone2() %></span>
+	                        <span class="buyer_phone3"><%=loginUser.getMemberPhone3() %></span>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>우편번호</td>
-	                    <td class="buyer_postcode"></td>
+	                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
 	                </tr>
 	                <tr>
 	                    <td>주소</td>
-	                    <td class="buyer_address"></td>
+	                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
 	                </tr>
 	                <tr>
 	                    <td>상세주소</td>
-	                    <td class="buyer_detailAddress"></td>
+	                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
 	                </tr>
 	            </tbody>
 	        </table>
-	
-	        <!-- 구매자 정보 추가 -->
-	        <script>
-	            $(function(){
-	                $(".buyer_name").text(buyer_name);
-	                $(".buyer_phone1").text(buyer_phone1);
-	                $(".buyer_phone2").text(buyer_phone2);
-	                $(".buyer_phone3").text(buyer_phone3);
-	                $(".buyer_postcode").text(buyer_postcode);
-	                $(".buyer_address").text(buyer_address);
-	                $(".buyer_detailAddress").text(buyer_detailAddress);
-	            });
-	        </script>
-	
 	    </div>
-	
 	
 	    <!-- 배송지 정보 -->
 	    <div class="orderinfo-Recipient" id="orderinfo-Recipient">
