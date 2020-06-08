@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	/* Member member = (Member)request.getAttribute("member"); */
+	 Member member = (Member)request.getAttribute("member"); 
 /* String memberId = member.getmemberId();
 String memberPwd = member.getMemberPwd();
 String memberName = member.getMemberName();
@@ -153,7 +153,7 @@ label {
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
-					<form id="updateForm" action="<%=request.getContextPath()%>/update.inf" method="post" onsubmit="return updateUser();">
+					<form id="updateForm" action="<%=request.getContextPath()%>/update.inf" method="post">
 						<table class="table information1">
 							<thead>
 								<tr>
@@ -166,7 +166,9 @@ label {
 							<tbody>
 								<tr>
 									<td scope="row" class="mt-2"><label>아이디 : </label></td>
-									<td colspan="2"><label name="memberId"><%=loginUser.getMemberId()%></label></td>
+									<td colspan="2"><input type='text' id='memberId'
+										name="memberId" class="inputBtn"
+										value="<%=loginUser.getMemberId()%>" readonly="readonly"></td>
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>비밀번호 : </label></td>
@@ -183,7 +185,9 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>이름 : </label></td>
-									<td colspan="2"><label name="memberName"><%=loginUser.getMemberName()%></label></td>
+									<td colspan="2"><input type='text' id='memberName'
+										name='memberName' class="inputBtn"
+										value="<%=loginUser.getMemberName()%>" readonly="readonly"></td>
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>휴대폰 번호 : </label></td>
@@ -209,10 +213,10 @@ label {
 									<td colspan="2"><input type='text' id='email1'
 										name='memberEmail1' class="inputBtn"
 										value="<%=loginUser.getMemberEmail1()%>"> @ <select
-										id='email2' name='memberEmail2'>
-											<option value="naver.com">naver.com</option>
-											<option value="gmail.com">gmail.com</option>
-											<option value="hanmail.net">hanmail.net</option>
+										id='email2' name='memberEmail2' value="<%=loginUser.getMemberEmail2()%>">
+											<option value="@naver.com">naver.com</option>
+											<option value="@gmail.com">gmail.com</option>
+											<option value="@hanmail.net">hanmail.net</option>
 
 									</select></td>
 								</tr>
@@ -249,11 +253,11 @@ label {
 									<td scope="row" class="mt-2"><label>상세 주소 : </label></td>
 									<td colspan="2"><input type='text'
 										id='sample3_detailAddress' name="memberAddress2" class="inputBtn"
-										value="<%=loginUser.getMemberAddress1()%>"></td>
+										value="<%=loginUser.getMemberAddress2()%>"></td>
 								</tr>
 								<tr>
-									<td scope="row" colspan='3' class="mt-2"><input
-											type='button' id='save' class='button1' value="변경저장"  onclick="saveBtn();">&nbsp;&nbsp;
+									<td scope="row" colspan='3' class="mt-2">
+									<input type='button' id='save' class='button1' value="변경저장"  onclick="saveBtn();">&nbsp;&nbsp;
 										<button type='button' class='button1' onclick="cancelBtn();">취소</button></td>
 								</tr>
 
@@ -366,7 +370,7 @@ label {
 					apiId.style.display = "table-row";
 				}
 			</script>
-			<script>
+			<!-- <script>
 				function updateUser(){
 					if ($("#password1").val() == "") {
 						alert("비밀번호를 입력해 주세요.");
@@ -389,7 +393,7 @@ label {
 					}
 					return true;
 				}
-			</script>
+			</script> -->
 
 			<script>
 				$(function() {
@@ -470,7 +474,7 @@ label {
 				});
 			</script>
 			<script>
-				/* function saveBtn() {
+				function saveBtn() {
 					if ($("#password1").val() == "") {
 						alert("비밀번호를 입력해 주세요.");
 					} else if ($("#password2").val() == "") {
@@ -490,7 +494,7 @@ label {
 					} else {
 						$("#updateForm").submit();
 					}
-				} */
+				} 
 			</script>
 
 			<script>

@@ -10,9 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div align="center" style="background-color:yellow;">
-	<h1><%= msg %></h1>
-	<a href="<%=request.getContextPath() %>/index.jsp">홈으로</a>
-	</div>
+	<script>
+		alert("정보 수정이 되어 다시 로그인이 필요합니다.");
+		document.location.href="<%=request.getContextPath()%>/index.jsp";
+	</script>
 </body>
 </html>
