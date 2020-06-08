@@ -822,6 +822,10 @@
 	                <td id="orderpayment_userPoint"></td>
 	            </tr>
 	            <tr>
+	                <td>포인트 적립</td>
+	                <td id="orderpayment_userPointAdd"></td>
+	            </tr>
+	            <tr>
 	                <th>최종 결제금액</th>
 	                <th id="orderpayment_total"></th>
 	            </tr>
@@ -848,6 +852,7 @@
 	                                    - orderpayment_discount
 	                                    - orderpayment_point
 	                $("#orderpayment_total").text(orderpayment_total);
+	                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*0.01);
 	                calculate_comp = false;
 	            }
 	        }

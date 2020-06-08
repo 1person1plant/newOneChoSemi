@@ -35,17 +35,15 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userNo = request.getParameter("userNo");
 		System.out.println("OrderServlet : " + userNo);
-//		String cartNo1 = request.getParameter("cartNo1");
-//		String cartCount1 = request.getParameter("cartCount1");
-//		String cartNo2 = request.getParameter("cartNo2");
-//		String cartCount2 = request.getParameter("cartCount2");
-//		System.out.println("cartNo1 : " + cartNo1);
-//		System.out.println("cartCount1 : " + cartCount1);
-//		System.out.println("cartNo2 : " + cartNo2);
-//		System.out.println("cartCount2 : " + cartCount2);
+		String cartNo1 = request.getParameter("cartNo1");
+		String cartCount1 = request.getParameter("cartCount1");
+		String cartNo2 = request.getParameter("cartNo2");
+		String cartCount2 = request.getParameter("cartCount2");
+		System.out.println("cartNo1 : " + cartNo1);
+		System.out.println("cartCount1 : " + cartCount1);
+		System.out.println("cartNo2 : " + cartNo2);
+		System.out.println("cartCount2 : " + cartCount2);
 		
-
-		System.out.println("여기옴? sev1");
 		// 멤버 정보는 세션에
 		
 		// 카트 정보
@@ -67,7 +65,6 @@ public class OrderServlet extends HttpServlet {
 			System.out.println("cartList : " + cartList);
 		}
 
-		System.out.println("여기옴? sev2");
 		
 		// 랭크 정보
 		Rank rankDetail = new RankService().rankDetail(userNo);

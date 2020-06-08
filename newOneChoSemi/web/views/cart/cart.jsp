@@ -318,12 +318,12 @@
 		        <%for(Cart c : (ArrayList<Cart>)cartList) {
 	        		i++;
 	        		out.println("<tr class='cartitem" + i + "'>");
-	        		out.println("<td><input type='checkbox' class='cart_checkbox' name='cartNo" + i + "'>" + c.getItemNo() + "</td>");
+	        		out.println("<td><input type='checkbox' class='cart_checkbox' name='cartNo" + i + "' value='" + c.getItemNo() + "'>" + c.getItemNo() + "</td>");
 	        		out.println("<td><img src='" + request.getContextPath() + "/items_uploadFiles/" + c.getImageName() + "' alt='상품'></td>");
 	        		out.println("<td>" + c.getItemName() + "</td>");
-	        		out.println("<td><input class='cart_count' name='cartCount" + i + "' type='number' min='1' max='" + c.getItemMax() + "' value='" + (int)c.getCartListCount() + "' step='1'></td>");
+	        		out.println("<td><input class='cart_count' name='cartCount" + i + "' type='number' min='1' max='" + c.getItemMax() + "' value='" + c.getCartListCount() + "' step='1'></td>");
 	        		out.println("<td><span class='cal_price'>" + c.getCartListCount() * c.getItemPrice() + "</span><span class='price'>" + c.getItemPrice() + "</span></td>");
-	        		out.println("<td><label for='trash1'><input type='button' id='trash1' class='trash'></input></label></td>");
+	        		out.println("<td><label for='trash1'><input type='button' id='trash" + i + "' class='trash'></input></label></td>");
 	        		out.println("</tr>");
 	        	} %>
 				</form>
@@ -356,7 +356,7 @@
 	                        el.val(function(i, oldval) { 
 	                        	return --oldval; 
 	                        });
-	                        console.log(el.val());
+	                        $(el).val(el.val());
 	                    }
 	
 	                        // 수량 감소 가격 계산 
