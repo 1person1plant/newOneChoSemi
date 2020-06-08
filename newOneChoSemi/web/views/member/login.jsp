@@ -6,15 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- 아라 스타일 적용 -->
-    <style>
-        #ara_btn_color {
-            background: #1F598C;
-            color: white;
-            text-align: center bold;
-        }
-    </style>
-    <!-- 아라 스타일 적용 -->
     <!-- 카카오 로그인 연결 (리소스) -->
     <script	src="<%=request.getContextPath() %>/resource/kakaoLogin.js"></script>	
     <script>
@@ -71,8 +62,8 @@
                     <br>
 
                     <div class="col-md-12" align="center">
-                        <input type="submit" value="로그인" class="btn btn-primary" id="ara_btn_color"
-                            style="width: 80%; margin-bottom: 5px;" onclick="loginGo();"><br>
+                        <input type="submit" value="로그인" class="btn btn-primary"
+                            style="width: 80%; margin-bottom: 5px; background: #1F598C;" onclick="loginGo();"><br>
                         <input class="btn btn-secondary" style="width: 80%;" onclick="joinGo();"value="회원가입">
                     </div>
                 </div>
@@ -83,7 +74,7 @@
                             <button type="button" class="btn btn-secondary" onclick="kakaoLogin();">카카오</button>
                         </div>
                         <div class="col-md-6" align="right">
-                            <button type="button" class="btn btn-primary" id="ara_btn_color" onclick="findAcctGo();">계정찾기</button>
+                            <button type="button" class="btn btn-primary" style="background: #1F598C;" onclick="findAcctGo();">계정찾기</button>
                         </div>
                     </div>
                 </div>
