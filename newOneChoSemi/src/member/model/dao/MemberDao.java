@@ -186,7 +186,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE MEMBER SET MEMBER_STATUS='N' WHERE MEMBER_ID=?";
+		String query = "UPDATE MEMBER SET MEMBER_STATUS='Y' WHERE MEMBER_ID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

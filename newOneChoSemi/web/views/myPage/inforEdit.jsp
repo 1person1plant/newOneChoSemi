@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	 Member member = (Member)request.getAttribute("member"); 
+	
 /* String memberId = member.getmemberId();
 String memberPwd = member.getMemberPwd();
 String memberName = member.getMemberName();
@@ -212,8 +212,8 @@ label {
 									<td scope="row" class="mt-2"><label>이메일 : </label></td>
 									<td colspan="2"><input type='text' id='email1'
 										name='memberEmail1' class="inputBtn"
-										value="<%=loginUser.getMemberEmail1()%>"> @ <select
-										id='email2' name='memberEmail2' value="<%=loginUser.getMemberEmail2()%>">
+										value="<%=loginUser.getMemberEmail1()%>"> @ 
+										<select id='email2' name='memberEmail2'>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
 											<option value="@hanmail.net">hanmail.net</option>
@@ -397,6 +397,9 @@ label {
 
 			<script>
 				$(function() {
+					$("#email2").val("<%=loginUser.getMemberEmail2()%>").prop("selected", true);
+					$("#phone1").val("<%=loginUser.getMemberPhone1()%>").prop("selected", true);
+					
 					$('#password2').change(
 							function() {
 								if ($('#password1').val() != $(this).val()) {
@@ -511,6 +514,7 @@ label {
 					}
 				}
 			</script>
+		
 			<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
