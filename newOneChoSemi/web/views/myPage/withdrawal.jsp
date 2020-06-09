@@ -250,38 +250,40 @@ label {
 							aria-hidden="='true'">&times;</button>
 					</div>
 					<div class='modal-body'>
-						<form>
+						<form action="<%=request.getContextPath()%>/reason.me" method="post" id="reasonForm">
 							<ul>
 								<li class='wdchk'>탈퇴사유(중복 체크 가능)
 									<ul>
-										<li class='wdchk'><input type='checkbox' id='chk1' name="no1"><label
+										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberId()%>" name="memberId"></li>
+										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberName()%>" name="memberName"></li>
+										<li class='wdchk'><input type='checkbox' id='chk1' name="reason" value="chk1"><label
 											for='chk1'>&nbsp;상품 다양성/품질 불만</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk2' name="no2"><label
+										<li class='wdchk'><input type='checkbox' id='chk2' name="reason" value="chk2"><label
 											for='chk2'>&nbsp;상품 정보 부족</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk3' name="no3"><label
+										<li class='wdchk'><input type='checkbox' id='chk3' name="reason" value="chk3"><label
 											for='chk3'>&nbsp;이용빈도 낮음</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk4' name="no4"><label
+										<li class='wdchk'><input type='checkbox' id='chk4' name="reason" value="chk4"><label
 											for='chk4'>&nbsp;개인정보 유출 우려</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk5' name="no5"><label
+										<li class='wdchk'><input type='checkbox' id='chk5' name="reason" value="chk5"><label
 											for='chk5'>&nbsp;시스템 오류 빈번</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk6' name="no6"><label
+										<li class='wdchk'><input type='checkbox' id='chk6' name="reason" value="chk6"><label
 											for='chk6'>&nbsp;아이디 변경</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk7' name="no7"><label
+										<li class='wdchk'><input type='checkbox' id='chk7' name="reason" value="chk7"><label
 											for='chk7'>&nbsp;초식 동물 입양</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk8' name="no8"><label
+										<li class='wdchk'><input type='checkbox' id='chk8' name="reason" value="chk8"><label
 											for='chk8'>&nbsp;배송지연</label></li>
 									</ul>
 								</li>
 							</ul>
+							<div class='modal-footer'>
+								<input type='button' class='btn btn-default' data-dismiss='modal'
+									value="탈퇴하기" onclick="altFunction(realt);">
+								<div id='area2' class='area'></div>
+		
+								<a href='grade.html'><button type='button'
+										class='btn btn-primary'>취소</button></a>
+							</div>
 						</form>
-					</div>
-					<div class='modal-footer'>
-						<input type='button' class='btn btn-default' data-dismiss='modal'
-							value="탈퇴하기" onclick="altFunction(realt);">
-						<div id='area2' class='area'></div>
-
-						<a href='grade.html'><button type='button'
-								class='btn btn-primary'>취소</button></a>
 					</div>
 				</div>
 
@@ -300,24 +302,15 @@ label {
 							alert("비밀번호가 일치하지 않습니다.");
 						}else if((inputPwd2 == Pwd)&&(inputPwd1==inputPwd2)){
 							var modal = document.getElementById("myModal");
-
-							// Get the button that opens the modal
 							var btn = document.getElementById("myBtn");
-
-							// Get the <span> element that closes the modal
 							var span = document.getElementsByClassName("close")[0];
 
-							// When the user clicks the button, open the modal 
 							btn.onclick = function() {
 								modal.style.display = "block";
 							}
-
-							// When the user clicks on <span> (x), close the modal
 							span.onclick = function() {
 								modal.style.display = "none";
 							}
-
-							// When the user clicks anywhere outside of the modal, close it
 							window.onclick = function(event) {
 								if (event.target == modal) {
 									modal.style.display = "none";
@@ -341,8 +334,10 @@ label {
 					if (result == true) {
 						alert("ㅂㅂ");
 						$("#withdrawalform").submit();
+						$("#reasonForm").submit();
 					} else {
 						alert('남아 주셔서 감사합니다.');
+						location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
 					}
 				}
 				function realt(i) {

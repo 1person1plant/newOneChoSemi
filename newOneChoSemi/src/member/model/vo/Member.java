@@ -70,6 +70,12 @@ public class Member implements Serializable{
 		this.memberPoint = memberPoint;
 		this.memberRank = memberRank;
 	}
+	public Member(String memberId, String memberName, String memberExit) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberExit = memberExit;
+	}
 	public Member(String memberNo, String memberAdmin, String memberId, String memberPwd, String memberName,
 			String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1, String memberEmail2,
 			String memberPostcode, String memberAddress1, String memberAddress2, Date memberJoinDate,

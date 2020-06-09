@@ -8,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class WithdrawalServlet
+ * Servlet implementation class WdReasonServlet
  */
-@WebServlet("/withdrawal.me")
-public class WithdrawalServlet extends HttpServlet {
+@WebServlet("/reason.me")
+public class WdReasonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WithdrawalServlet() {
+    public WdReasonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,10 +29,14 @@ public class WithdrawalServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberId = request.getParameter("withdrawalMemberId");
-		/* System.out.println("service넘어가기전"+memberId); */
-		int result = new MemberService().withdrawalMember(memberId);
-		/* System.out.println("탈퇴 servlet" + result); */
+		String memberId = request.getParameter("memberId");
+		String memberName = request.getParameter("memberName");
+		String[] reason = request.getParameterValues("reason");
+		String memberReason = "";
+		for(int i=0; i<reason.length;i++) {
+			memberReason += reason[i] +" ";
+		}
+		int result = new MemberService().reasonMember(new Member(memberId,memberName,memberReason));
 		request.getSession().invalidate();
 		if(result>0) {
 			request.getRequestDispatcher("views/common/withSuccessPage.jsp").forward(request, response);
