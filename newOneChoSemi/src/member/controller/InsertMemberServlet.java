@@ -52,7 +52,7 @@ public class InsertMemberServlet extends HttpServlet {
 		if(result > 0) {	// 회원가입이 되었다면
 			page = "views/common/successPage_join.jsp";
 			request.setAttribute("msg", "회원가입 성공");
-		}else{				// 회원가입이 실패했다면
+		}else{				// 회원가입이 실패했다면 
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 가입 실패");
 		}
