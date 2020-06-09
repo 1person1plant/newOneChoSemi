@@ -1,5 +1,6 @@
 package item.model.vo;
 
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -307,5 +308,6 @@ public class Item implements Serializable {
 	
 	
 	
+
 
 }

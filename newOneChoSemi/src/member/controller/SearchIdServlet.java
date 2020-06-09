@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
-
 /**
- * Servlet implementation class InforEditServlet
+ * Servlet implementation class SearchIdServlet
  */
-@WebServlet("/infor.me")
-public class InforEditServlet extends HttpServlet {
+@WebServlet("/SearchIdServlet")
+public class SearchIdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InforEditServlet() {
+    public SearchIdServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,18 +26,8 @@ public class InforEditServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberId = request.getParameter("memberId");
-		
-		Member member = new MemberService().inforMember(memberId);
-		
-		/* System.out.println("마이페이지" + member); */
-		if(member != null) {
-			request.setAttribute("member", member);
-			request.getRequestDispatcher("views/myPage/inforEdit.jsp").forward(request,response);
-		}else {
-			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
-		}
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

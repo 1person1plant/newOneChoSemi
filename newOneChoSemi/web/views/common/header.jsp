@@ -6,16 +6,16 @@
 	String userNo = "";
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
-		System.out.println("로그인 유저 정보 : " + loginUser);
+		/* System.out.println("로그인 유저 정보 : " + loginUser); */
 		if(loginUser == null){
 			result = true;
 		} else {
 			userNo = loginUser.getMemberNo();
-			System.out.println("userNo " + userNo);
+			/* System.out.println("userNo " + userNo); */
 			adminChk = loginUser.getMemberAdmin();
 			result = false;
 		}
-		System.out.println("result " + result);
+		/* System.out.println("result " + result); */
 	}
 %>
 <!DOCTYPE html>

@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
-
 /**
- * Servlet implementation class InforEditServlet
+ * Servlet implementation class KakaoLoginServlet
  */
-@WebServlet("/infor.me")
-public class InforEditServlet extends HttpServlet {
+@WebServlet("/KakaoLoginServlet")
+public class KakaoLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InforEditServlet() {
+    public KakaoLoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,18 +26,23 @@ public class InforEditServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberId = request.getParameter("memberId");
+		String kakaoId = request.getParameter("kakaoId");
+		String kakaoNm = request.getParameter("kakaoNm");
 		
-		Member member = new MemberService().inforMember(memberId);
 		
-		/* System.out.println("마이페이지" + member); */
-		if(member != null) {
-			request.setAttribute("member", member);
-			request.getRequestDispatcher("views/myPage/inforEdit.jsp").forward(request,response);
-		}else {
-			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
-		}
+		// 1. 카카오에서 준 id가 db에 존재하는지 체크 (joinIdChkMember 아이디 중복체크 메소드 재활용)
+		
+		// 1-1. 있으면 카카오 로그인
+//		new MemberService().kakaoLoginMember(new Member());
+		
+		// 1-2. 없으면 회원가입 후 로그인
+		// 회원가입
+//		int result = new MemberService().kakaoinsertMember(new Member());
+		// 1-1 로 돌아가기
+		
+//		request.getSession().setAttribute("", );
+//		response.sendRedirect("main.jsp");
+		
 	}
 
 	/**
