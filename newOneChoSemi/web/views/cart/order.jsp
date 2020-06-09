@@ -963,8 +963,8 @@
 	    var orderpayment_total = 0;
 	
 	    var calculate_comp = true;
-	               
-	 <!-- 주문고객과 동일 스크립트 -->
+
+		// 주문고객과 동일 스크립트
         $(".order_confirm_switch").change(function(){
             var result = $(".order_confirm_switch").prop("checked");
             if(result){
