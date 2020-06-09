@@ -227,7 +227,7 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			String query = "INSERT INTO MEMBER VALUES(MNO_SEQ.NEXTVAL,'N', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'N', null, 1000, 'R1')";
+			String query = "INSERT INTO MEMBER VALUES('M' || lpad(MNO_SEQ.NEXTVAL,5,0),'N', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'N', null, 1000, 'R1')";
 			
 			try {
 				pstmt = conn.prepareStatement(query);

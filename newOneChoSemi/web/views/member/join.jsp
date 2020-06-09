@@ -224,11 +224,11 @@
 															<input id="email1" name="memberEmail1" type="text" class="form-control" aria-describedby="basic-addon1" required style="width: 150px;">
 															<p class="ara-label-text">&nbsp;@&nbsp;</p>
 															<select id="email2" name="memberEmail2" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
-																<option value="email">naver.com</option>
-																<option value="email">daum.net</option>
-																<option value="email">gmail.com</option>
-																<option value="email">nate.com</option>
-																<option value="email">hanmail.net</option>
+																<option value="@naver.com">naver.com</option>
+																<option value="@daum.net">daum.net</option>
+																<option value="@gmail.com">gmail.com</option>
+																<option value="@nate.com">nate.com</option>
+																<option value="@hanmail.net">hanmail.net</option>
 															</select>
 														</div>
 													</div>
@@ -373,7 +373,7 @@
 						
 						<br><br>
 						<div class="test col-12" align="center">
-							<input type="submit" value="회 원 가 입" onclick="insertMember();" class="btn btn-default col-3" style="background: #1f598c; color: white;">&nbsp; 
+							<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;">회 원 가 입</button>&nbsp; 
 							<input type="reset" value="회 원 가 입 취소" class="btn btn-default col-3" onclick="goMain();" style="background: #F2F1DF; color: black;">
 						</div>
 					</div>
@@ -389,7 +389,7 @@
 		<!-- ------------------------- 스 크 립 트 구문  -->
 
 		<script>
-  		// 우편번호 찾기 찾기 화면을 넣을 element
+  			// 우편번호 찾기 찾기 화면을 넣을 element
   			var element_wrap = document.getElementById('wrap');
 
  		 	function foldDaumPostcode() {
@@ -559,10 +559,25 @@
 		<!-- 정규 표현식 스크립트 -->
 
 		<script>
-			function insertMember() {
-				$("#joinForm").submit();
-			}
-		
+			$("#insertMember").click(
+				function() {
+					var chkBox1 = document.getElementById("checkbox1");
+					var chkBox2 = document.getElementById("checkbox2");
+					if (checkbox1.checked == true && checkbox2.checked == true) {
+						$("#insertMember").submit();
+					} else {
+						alert("약관에 동의해 주세요.");
+					}
+			});
+			
+
+			// 입력폼 엔터키 눌렀을때 submit 막기
+			document.addEventListener('keydown', function(event) {
+				if (event.keyCode === 13) {
+					event.preventDefault();
+				}
+			}, true);
+
 			// 회원가입 취소
 			function goMain() {
 				var result = confirm("입력하신 회원정보가 지워집니다. 회원가입을 취소하시겠습니까?");
