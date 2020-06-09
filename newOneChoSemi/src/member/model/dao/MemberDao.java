@@ -95,7 +95,7 @@ public class MemberDao {
 		}finally {
 			close(pstmt);
 		}
-		System.out.println("dao" + result);
+//		System.out.println("dao" + result);
 		return result;
 	}
 
@@ -199,7 +199,7 @@ public class MemberDao {
 			close(pstmt);
 		}
 		
-		System.out.println("탈퇴dao"+result);
+//		System.out.println("탈퇴dao"+result);
 		return result;
 	}
 

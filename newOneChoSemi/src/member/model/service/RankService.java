@@ -14,7 +14,6 @@ public class RankService {
 		Connection conn = null;
 		conn = getConnection();
 
-		System.out.println("여기옴?dao");
 		Rank rankDetail = new RankDao().rankDetail(conn, userNo);
 		
 		close(conn);

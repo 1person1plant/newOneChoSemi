@@ -18,7 +18,6 @@ public class RankDao {
 
 		String query = "SELECT * FROM RANK JOIN (SELECT MEMBER_RANK FROM MEMBER WHERE MEMBER_NO = ?) ON (MEMBER_RANK = RANK_NO)";
 		
-		System.out.println("여기옴?");
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userNo);
@@ -34,7 +33,7 @@ public class RankDao {
 									   rs.getInt("RANK_POINTCAP")
 									   );
 			}
-			System.out.println("MemberDao rankDetail : " + rankDetail);
+//			System.out.println("RankDao rankDetail : " + rankDetail);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

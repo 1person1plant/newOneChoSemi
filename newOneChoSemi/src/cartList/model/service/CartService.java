@@ -11,10 +11,12 @@ import static common.JDBCTemplate.close;
 
 public class CartService {
 
-	public ArrayList<Cart> cartList(String userNo) {
+	public ArrayList<Cart> cartList(String userNo, ArrayList<Cart> cartOrderList) {
 		Connection conn = getConnection();
 
-		ArrayList<Cart> cartList = new CartDao().cartList(conn, userNo);
+		int result = new CartDao().cartUpdate(conn, userNo, cartOrderList);
+		
+		ArrayList<Cart> cartList = new CartDao().cartList(conn, cartOrderList);
 				
 		close(conn);
 		return cartList;

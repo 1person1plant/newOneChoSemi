@@ -291,7 +291,7 @@
 	            <td></td>
 	            <td></td>
 	            <td class="cart_total_count">0</td>
-	            <td><label for="trash0"><input type="button" id="trash0" class="trash"></input></label></td>
+	            <td><label for="allTrash"><input type="button" id="allTrash" class="trash"></input></label></td>
 	        </tr>
 	        <tr>
 	            <td></td>
@@ -309,11 +309,11 @@
 	            </tr>
 	        <%} else { %>
 			        <%for(int i = 0 ; i < cartList.size() ; i++) {%>
-	        		<tr class="cartitem<%=i%>">
-		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo<%=i%>" value="<%=cartList.get(i).getItemNo()%>"></input></td>
+	        		<tr>
+		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
 		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
 		        		<td><%=cartList.get(i).getItemName()%></td>
-		        		<td><input type="number" class="cart_count" name="cartNo<%=i%>" max="<%=cartList.get(i).getItemMax()%>" value="<%=cartList.get(i).getCartListCount()%>" step="1"></td>
+		        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" value="<%=cartList.get(i).getCartListCount()%>" step="1"></td>
 		        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
 		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
 	        		</tr>
@@ -377,6 +377,7 @@
     </script>
     
     <script>
+    	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
             var checkeds = $("[class=cart_checkbox]:checked");
 	        if(checkeds.length > 0){
@@ -411,7 +412,7 @@
                 }
                 $(".cart_total_count").html(count);
             }
-            $("#trash0").click(function(){
+            $("#allTrash").click(function(){
                 deleteChecked();
             });
             // 선택항목 한번에 삭제

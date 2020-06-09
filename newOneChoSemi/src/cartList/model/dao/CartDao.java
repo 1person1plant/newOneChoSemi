@@ -12,19 +12,52 @@ import static common.JDBCTemplate.close;
 
 public class CartDao {
 
-	public ArrayList<Cart> cartList(Connection conn, String userNo) {
+
+	public int cartUpdate(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		System.out.println("cart update : " + cartOrderList);
+		
+		String query = "UPDATE CARTLIST SET CARTLIST_COUNT = ?"
+				+ "WHERE MEMBER_NO = ?"
+				+ "AND CARTLIST_NO = ?";
+		
+		for(int i = 0 ; i < cartOrderList.size() ; i++) {
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, cartOrderList.get(i).getCartListCount());
+				pstmt.setString(2, userNo);
+				pstmt.setString(3, cartOrderList.get(i).getCartListNo());
+				
+				result += pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+
+		return result;
+	}
+	
+	public ArrayList<Cart> cartList(Connection conn, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		
 		ArrayList<Cart> cartList = new ArrayList<>();
 		
-		String query = "SELECT MEMBER_NO, CARTLIST_NO , ITEM_NO , ITEM_NAME , ITEM_PRICE , ITEM_MAX , CARTLIST_COUNT , IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO , ITEM_NO , ITEM_NAME , ITEM_PRICE , ITEM_MAX , CARTLIST_COUNT , IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? "
+				+ "AND CARTLIST_NO = ?";
 		
-		try {
+		try { // TODO 만드는 중
+			for(int i = 0 ; i < cartOrderList.size() ; i++) {
+				
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userNo);
-			
+			pstmt.setString(1, cartOrderList.get(i).getMemberNo());
 			rSet = pstmt.executeQuery();
+			}
+			
 			
 			while(rSet.next()) {
 				Cart c = new Cart(rSet.getString("MEMBER_NO")
@@ -38,7 +71,7 @@ public class CartDao {
 								 );
 				cartList.add(c);
 			}
-			System.out.println("CartDao : " + cartList);
+//			System.out.println("CartDao : " + cartList);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,5 +108,6 @@ public class CartDao {
 
 		return result;
 	}
+
 
 }
