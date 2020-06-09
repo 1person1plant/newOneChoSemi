@@ -35,23 +35,25 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userNo = request.getParameter("userNo");
 //		System.out.println("OrderServlet : " + userNo);
-		
+
 		String[] cartNoArr = request.getParameterValues("cartNo");
 		String[] cartItCoArr = request.getParameterValues("cartItCo");
 
 		System.out.println("cartNoArr[i] : " + cartNoArr[0]);
 		System.out.println(Arrays.toString(cartNoArr));
 		System.out.println(Arrays.toString(cartItCoArr));
-		
+	
 		// 카트 정보
 		ArrayList<Cart> cartOrderList = new ArrayList<>();
 		for(int i = 0 ; i < cartNoArr.length ; i++) {
 			cartOrderList.add(new Cart(cartNoArr[i],Integer.valueOf(cartItCoArr[i])));
 		}
+
 		
 		ArrayList<Cart> cartList = new CartService().cartList(userNo, cartOrderList);
 		
 		System.out.println("cartOrderList : " + cartOrderList);
+
 		// 랭크 정보
 		Rank rankDetail = new RankService().rankDetail(userNo);
 //		System.out.println("rankDetail : " + rankDetail);
