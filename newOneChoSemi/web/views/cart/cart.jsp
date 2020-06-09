@@ -319,7 +319,7 @@
 		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo<%=i%>" value="<%=cartList.get(i).getItemNo()%>"></input></td>
 		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
 		        		<td><%=cartList.get(i).getItemName()%></td>
-		        		<td><input type="number" class="cart_count" name="cartNo<%=i%>" max="<%=cartList.get(i).getItemMax()%>" value="<%=cartList.get(i).getCartListCount()%>" step="1"></td>
+		        		<td><input type="number" class="cart_count" name="cartNo<%=i%>" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1"></td>
 		        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
 		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
 	        		</tr>
@@ -353,9 +353,7 @@
                     // substract
                     el.parent().on('click', '.sub', function () {
                     if (el.val() > parseInt(el.attr('min'))){
-                        el.val(function(i, oldval) { 
-                        	return --oldval; 
-                        });
+                        el.val(function(i, oldval) { return --oldval; });
                         $(el).val(el.val());
                     }
 
