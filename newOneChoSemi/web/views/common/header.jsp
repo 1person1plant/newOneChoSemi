@@ -292,8 +292,8 @@
 		   <nav class="navbar navbar-expand navbar-light" id="navbar-top">
 		        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		            <ul class="navbar-nav ml-auto">
-		            	<li class="nav-item">
-							<label><%=loginUser.getMemberName() %>님의 방문을 환영합니다.</label>
+		            	<li class="nav-item" style="margin-top:8px">
+							<a><%=loginUser.getMemberName() %>님의 방문을 환영합니다.</a>
 						</li>
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
