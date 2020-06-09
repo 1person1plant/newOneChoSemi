@@ -75,8 +75,8 @@
 				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
 					<li class="list-group-item">개인 정보 수정</li>
 				</a>
-				<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-				<a href="orderHistory.jsp">
+				<a href="<%=request.getContextPath()%>/ohlist.bo">
+				<!-- <a href="orderHistory.jsp"> -->
 					<li class="list-group-item">주문 내역 조회</li>
 				</a>
 				<a href="wishList.jsp">
@@ -108,6 +108,8 @@
 										<td>기타</td>
 									</tr>
 								</thead>
+								
+								
 								<tr class='ollist' style='border-bottom: 2px solid black'>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'><img src='flo.jpg' width='150px'
@@ -143,8 +145,7 @@
 					</div>
 				</fieldset>
 			</div>
-			<div class="table">
-				
+			</div>
 			</div>
 			<script>
             	$(function(){

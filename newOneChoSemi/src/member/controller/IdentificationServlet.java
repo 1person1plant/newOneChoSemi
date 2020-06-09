@@ -36,10 +36,8 @@ public class IdentificationServlet extends HttpServlet {
 		Member idenUser = new MemberService().idenMember(new Member(memberId, memberPwd));
 		
 		if(idenUser != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("idenUser", idenUser);
-			response.sendRedirect("grade.jsp");
-			System.out.print(idenUser);
+			request.setAttribute("msg", "성공");
+			request.getRequestDispatcher("views/myPage/grade.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "실패");
 			request.getRequestDispatcher("views/myPage/identification.jsp").forward(request, response);

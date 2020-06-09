@@ -214,6 +214,8 @@
 				</fieldset>
 
 			</div>
+			</div>
+			</div>
 			<script>
 			 	<%-- switch("<%=loginUser.getMemberRank()%>"){
 				 	case "R1" : <%=loginUser.getMemberRank()%>="1단계"; break;

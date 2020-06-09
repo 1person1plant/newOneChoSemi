@@ -149,7 +149,8 @@
                     </table>
                 </form>
                 </fieldset>
-
+                </div>
+                </div>
             </div>
             <script>
                 $(function(){

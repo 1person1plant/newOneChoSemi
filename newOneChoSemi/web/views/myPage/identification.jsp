@@ -160,6 +160,8 @@ td {
 				</fieldset>
 
 			</div>
+			</div>
+			</div>
 			<script>
 				$(function(){
 					$("#idenBtn").click(function(){
