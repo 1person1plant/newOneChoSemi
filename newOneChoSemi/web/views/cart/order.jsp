@@ -595,7 +595,7 @@
 	                </tfoot>
 	            </tbody>
 	        </table> <!-- 배송지 정보 끝 -->
-	
+
 	        <!-- 주문고객과 동일 스크립트 -->
 	        <script>
 	            $(".order_confirm_switch").change(function(){
@@ -912,12 +912,12 @@
 	            </tfoot>
 	        </table>
 	        <script>
-	            $(function(){
+	          //  $(function(){
 	            //   $('[data-toggle="tooltip1"]').tooltip();   
-	            $('[data-toggle="tooltip2"]').tooltip();   
-	            $('[data-toggle="tooltip3"]').tooltip();   
-	            $('[data-toggle="tooltip4"]').tooltip();   
-	            });
+	          //  $('[data-toggle="tooltip2"]').tooltip();   
+	          //  $('[data-toggle="tooltip3"]').tooltip();   
+	          //  $('[data-toggle="tooltip4"]').tooltip();   
+	          //  });
 	        </script>
 	    </div> <!-- 결제 방법 끝 -->
 	
@@ -966,7 +966,7 @@
 	        function orderEnd_cancel() {
 	            var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
 	            if(result){
-	                location.replace("cart.html");
+	                location.replace("index.jsp");
 	            }
 	        }
 	        
@@ -981,6 +981,37 @@
 	        });
 	    </script>
 	</div>
+	
+	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
+	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
+	<div>
+		<input type="hidden" id="userNo" value="<%=userNo %>">
+		<!-- 상품정보 -->
+		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
+		<input type="hidden" id="comp_iNo" value="">
+		<input type="hidden" id="comp_iName" value="">
+		<input type="hidden" id="comp_imgName" value="">
+		<input type="hidden" id="comp_iCount" value="">
+		<input type="hidden" id="comp_iPrice" value="">
+        <%} %>
+		<!-- 수령자 정보 -->
+		<input type="hidden" id="comp_rName" value="">
+		<input type="hidden" id="comp_rPhone1" value="">
+		<input type="hidden" id="comp_rPhone2" value="">
+		<input type="hidden" id="comp_rPhone3" value="">
+		<input type="hidden" id="comp_rPostcode" value="">
+		<input type="hidden" id="comp_rAddress1" value="">
+		<input type="hidden" id="comp_rAddress2" value="">
+		<input type="hidden" id="comp_rMemo" value="">
+		<!-- 결제 정보 -->
+		<input type="hidden" id="comp_pPrice" value="">
+		<input type="hidden" id="comp_pDelivery" value="">
+		<input type="hidden" id="comp_pDiscount" value="">
+		<input type="hidden" id="comp_pPoint" value="">
+		<input type="hidden" id="comp_pAddPoint" value="">
+		<input type="hidden" id="comp_pTotal" value="">
+	</div>
+	</form>
 
 
 <%@ include file="../common/footer.jsp" %>
