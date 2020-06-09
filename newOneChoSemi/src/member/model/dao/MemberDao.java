@@ -1,14 +1,13 @@
 package member.model.dao;
 
-import static common.JDBCTemplate.close;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import member.model.vo.Member;
-import member.model.vo.Rank;
+
+import static common.JDBCTemplate.close;
 
 public class MemberDao {
 	/**
@@ -101,6 +100,7 @@ public class MemberDao {
 		}finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 
@@ -204,7 +204,7 @@ public class MemberDao {
 			close(pstmt);
 		}
 		
-		System.out.println("탈퇴dao"+result);
+//		System.out.println("탈퇴dao"+result);
 		return result;
 	}
 	
