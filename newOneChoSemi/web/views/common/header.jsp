@@ -298,7 +298,7 @@
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
 		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/views/admin/itemInsertForm.jsp">
-		                   ">관리자 페이지</a>
+		                   	관리자 페이지</a>
 		                </li>
 		                <%} %>
 		                <li class="nav-item">
