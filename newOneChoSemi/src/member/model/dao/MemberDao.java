@@ -224,7 +224,33 @@ public class MemberDao {
 		 * @return
 		 */
 		public int insertMember(Connection conn, Member member) {
-			return 0;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "INSERT INTO MEMBER VALUES(MNO_SEQ.NEXTVAL,'N', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'N', null, 1000, 'R1')";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberId());
+				pstmt.setString(2, member.getMemberPwd());
+				pstmt.setString(3, member.getMemberName());
+				pstmt.setString(4, member.getMemberPhone1());
+				pstmt.setString(5, member.getMemberPhone2());
+				pstmt.setString(6, member.getMemberPhone3());
+				pstmt.setString(7, member.getMemberEmail1());
+				pstmt.setString(8, member.getMemberEmail2());
+				pstmt.setString(9, member.getMemberPostcode());
+				pstmt.setString(10, member.getMemberAddress1());
+				pstmt.setString(11, member.getMemberAddress2());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 		
 		/**
