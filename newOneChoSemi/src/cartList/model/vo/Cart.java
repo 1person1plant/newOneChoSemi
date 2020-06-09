@@ -22,9 +22,9 @@ public class Cart implements Serializable{
 	private String imageName;	// 이미지 이름
 	public Cart() {
 	}
-	public Cart(String itemNo, int cartListCount) {
+	public Cart(String cartListNo, int cartListCount) {
 		super();
-		this.itemNo = itemNo;
+		this.cartListNo = cartListNo;
 		this.cartListCount = cartListCount;
 	}
 	public Cart(String memberNo, String itemNo, String itemName, int itemPrice, int itemMax, int cartListCount,

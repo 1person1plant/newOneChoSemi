@@ -12,22 +12,69 @@ import static common.JDBCTemplate.close;
 
 public class CartDao {
 
+	public ArrayList<Cart> cartList(Connection conn, String userNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+	      
+		ArrayList<Cart> cartList = new ArrayList<>();
+	      
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userNo);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next()) {
+				Cart c = new Cart(rSet.getString("MEMBER_NO")
+		                        , rSet.getString("CARTLIST_NO")
+		                        , rSet.getString("ITEM_NO")
+		                        , rSet.getString("ITEM_NAME")
+		                        , rSet.getInt("ITEM_PRICE")
+								, rSet.getInt("ITEM_DISCOUNT")
+		                        , rSet.getInt("ITEM_MAX")
+		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_NAME")
+	                         	);
+				
+				cartList.add(c);
+			}
 
+			System.out.println("CartDao : " + cartList);
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rSet);
+		}
+		
+		return cartList;
+	}
+
+	// Cart.jsp에서 가져온 카트 수량을 업데이트하려고 OrderServlet에서 왔다
 	public int cartUpdate(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		System.out.println("cart update : " + cartOrderList);
+		System.out.println("cart update Size : " + cartOrderList.size());
 		
 		String query = "UPDATE CARTLIST SET CARTLIST_COUNT = ?"
-				+ "WHERE MEMBER_NO = ?"
-				+ "AND CARTLIST_NO = ?";
+					 + "WHERE MEMBER_NO = ?"
+					 + "AND CARTLIST_NO = ?";
 		
 		for(int i = 0 ; i < cartOrderList.size() ; i++) {
+			System.out.println("cart 카트 정보 " + i +  " : " + cartOrderList.get(i));
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, cartOrderList.get(i).getCartListCount());
+				System.out.println("cart 카트 수량 " + i +  " : " + cartOrderList.get(i).getCartListCount());
 				pstmt.setString(2, userNo);
+				System.out.println("cart update : " + userNo);
 				pstmt.setString(3, cartOrderList.get(i).getCartListNo());
+				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
 				
 				result += pstmt.executeUpdate();
 				
@@ -37,41 +84,60 @@ public class CartDao {
 				close(pstmt);
 			}
 		}
+		
+		System.out.println("CartDao 카트 수량 업데이트 : " + result);
 
 		return result;
 	}
 	
-	public ArrayList<Cart> cartList(Connection conn, ArrayList<Cart> cartOrderList) {
+	// Order.jsp에 출력하려고 OrderServlet에서 왔다
+	public ArrayList<Cart> cartOrderList(Connection conn, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		
 		ArrayList<Cart> cartList = new ArrayList<>();
 
-		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? ";
+		// cartOrderList.size() 만큼 query문 만들기
+		for(int i = 0 ; i < cartOrderList.size() ; i++) {
+			if(i == 0) {
+				query += " AND CARTLIST_NO = ? ";
+			} else {
+				query += " OR CARTLIST_NO = ? ";
+			}
+		}
 		
+		System.out.println("query : " + query);
 		try { // TODO 만드는 중
-			for(int i = 0 ; i < cartOrderList.size() ; i++) {
-				
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, cartOrderList.get(i).getMemberNo());
-			rSet = pstmt.executeQuery();
+			pstmt.setString(1, cartOrderList.get(0).getMemberNo());
+			
+			// cartOrderList.size() 만큼 DB에 요청
+			int j = 2;
+			for(int i = 0 ; i < cartOrderList.size() ; i++) {
+				System.out.println(i);
+				System.out.println("cartOrderList.get(i).getCartListNo() " + j + " : " + cartOrderList.get(i).getCartListNo());
+				pstmt.setString(j, cartOrderList.get(i).getCartListNo());
+				j++;
 			}
 			
+			rSet = pstmt.executeQuery();
 			
 			while(rSet.next()) {
 				Cart c = new Cart(rSet.getString("MEMBER_NO")
-								, rSet.getString("CARTLIST_NO")
-								, rSet.getString("ITEM_NO")
-								, rSet.getString("ITEM_NAME")
-								, rSet.getInt("ITEM_PRICE")
+		                        , rSet.getString("CARTLIST_NO")
+		                        , rSet.getString("ITEM_NO")
+		                        , rSet.getString("ITEM_NAME")
+		                        , rSet.getInt("ITEM_PRICE")
 								, rSet.getInt("ITEM_DISCOUNT")
-								, rSet.getInt("ITEM_MAX")
-								, rSet.getInt("CARTLIST_COUNT")
-								, rSet.getString("IMAGE_NAME")
-								 );
+		                        , rSet.getInt("ITEM_MAX")
+		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_NAME")
+		                     	);
+								
 				cartList.add(c);
 			}
-//			System.out.println("CartDao : " + cartList);
+			System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,25 +155,28 @@ public class CartDao {
 		
 		String query = "";
 		// TODO 미완성
-		
-		try {
-			for(int i = 0 ; i < deleteCart.size() ; i++) {
-				Cart ca = deleteCart.get(i);
+		System.out.println("CartDao 카트 삭제 : 만드는 중");
 
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, ca.getCartListNo());
-				
-				result += pstmt.executeUpdate();
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
+//		try {
+//			for(int i = 0 ; i < deleteCart.size() ; i++) {
+//				Cart ca = deleteCart.get(i);
+//
+//				pstmt = conn.prepareStatement(query);
+//				pstmt.setString(1, ca.getCartListNo());
+//				
+//				result += pstmt.executeUpdate();
+//			}
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(pstmt);
+//		}
 
 		return result;
 	}
+
+
 
 
 }

@@ -35,31 +35,35 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userNo = request.getParameter("userNo");
 //		System.out.println("OrderServlet : " + userNo);
-
+		
+		// 카트 페이지에서 가져온 구매 상품 정보
+		// 카트번호
 		String[] cartNoArr = request.getParameterValues("cartNo");
+		// 카트 상품 수량
 		String[] cartItCoArr = request.getParameterValues("cartItCo");
 
-		System.out.println("cartNoArr[i] : " + cartNoArr[0]);
 		System.out.println(Arrays.toString(cartNoArr));
 		System.out.println(Arrays.toString(cartItCoArr));
 	
 		// 카트 정보
 		ArrayList<Cart> cartOrderList = new ArrayList<>();
 		for(int i = 0 ; i < cartNoArr.length ; i++) {
-			cartOrderList.add(new Cart(cartNoArr[i],Integer.valueOf(cartItCoArr[i])));
+			// cartOrderList 카트 번호와 상품 수량 저장
+			cartOrderList.add(new Cart(cartNoArr[i], Integer.valueOf(cartItCoArr[i])));
 		}
+		System.out.println("OrderServlet cartOrderList : " + cartOrderList);
 
+		// 구매할 카트 정보만 가져오기
+		ArrayList<Cart> cartList = new CartService().cartOrderList(userNo, cartOrderList);
 		
-		ArrayList<Cart> cartList = new CartService().cartList(userNo, cartOrderList);
-		
-		System.out.println("cartOrderList : " + cartOrderList);
+		System.out.println("OrderServlet cartList : " + cartList);
 
 		// 랭크 정보
 		Rank rankDetail = new RankService().rankDetail(userNo);
 //		System.out.println("rankDetail : " + rankDetail);
 		
-		if(!cartOrderList.isEmpty() && cartOrderList != null && rankDetail != null) {
-			request.setAttribute("cartList", cartOrderList);
+		if(!cartList.isEmpty() && cartList != null && rankDetail != null) {
+			request.setAttribute("cartList", cartList);
 			request.setAttribute("rankDetail", rankDetail);
 			request.getRequestDispatcher("views/cart/order.jsp").forward(request, response);
 		} else {
