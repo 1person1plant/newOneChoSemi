@@ -90,7 +90,7 @@ public class MemberDao {
 			pstmt.setString(3, member.getMemberPhone2());
 			pstmt.setString(4, member.getMemberPhone3());
 			pstmt.setString(5, member.getMemberEmail1());
-			pstmt.setString(6, member.getMemberEmail1());
+			pstmt.setString(6, member.getMemberEmail2());
 			pstmt.setString(7, member.getMemberPostcode());
 			pstmt.setString(8, member.getMemberAddress1());
 			pstmt.setString(9, member.getMemberAddress2());
@@ -101,7 +101,6 @@ public class MemberDao {
 		}finally {
 			close(pstmt);
 		}
-		System.out.println("dao" + result);
 		return result;
 	}
 
@@ -193,7 +192,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE MEMBER SET MEMBER_STATUS='N' WHERE MEMBER_ID=?";
+		String query = "UPDATE MEMBER SET MEMBER_STATUS='Y' WHERE MEMBER_ID=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

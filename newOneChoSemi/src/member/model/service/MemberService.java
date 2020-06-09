@@ -32,7 +32,6 @@ public class MemberService {
 		conn = getConnection();
 		
 		int result = new MemberDao().memberUpdate(conn, member);
-		System.out.println("service" + result);
 		if(result>0) {
 			commit(conn);
 		}else {
@@ -60,7 +59,7 @@ public class MemberService {
 		Connection conn = getConnection();
 		
 		int result = new MemberDao().withdrawalMember(conn,memberId);
-		System.out.println("탈퇴 service"+ result);
+//		System.out.println("탈퇴 service"+ result);
 		if(result>0) {
 			commit(conn);
 		}else {

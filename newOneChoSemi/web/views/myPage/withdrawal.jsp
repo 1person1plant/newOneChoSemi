@@ -214,7 +214,7 @@ label {
 							</thead>
 							<tbody>
 								<tr style="display:none;" >
-									<td colspan="3" class="deleteId"><label class="deleteId" name="withdrawalMemberId"><%=loginUser.getMemberId() %></label></td>
+									<td colspan="3" class="deleteId"><input type="text" class="deleteId" name="withdrawalMemberId" value="<%=loginUser.getMemberId() %>"></td>
 								</tr>
 								<tr style='border-bottom: 2px solid black'>
 									<td scope="row" class="mt-2"><label>비밀번호 : </label></td>
@@ -290,13 +290,11 @@ label {
 				var delText = document.getElementById("password2");
 				$(function(){
 					$("#myBtn").click(function(){
-						if(memberPwd.val() != delText.val()){
-							alert("비밀번호를 확인해 주세요.");
-						}else{
-							
-						}
+						if("<%=loginUser.getMemberPwd()%>");
 					})
 				})
+				
+				
 			</script>
 			<script>
 				function altFunction(otherFunction) {
@@ -308,6 +306,7 @@ label {
 						}
 					}
 					if (result == true) {
+						alert("ㅂㅂ");
 						$("#withdrawalform").submit();
 					} else {
 						alert('남아 주셔서 감사합니다.');
@@ -316,13 +315,13 @@ label {
 				function realt(i) {
 					var result = true;
 					if (i > 4) {
-						result = confirm('왜 탈퇴함?');
+						result = confirm('탈퇴하지 마세요.');
 					} else if (i > 3) {
-						result = confirm('하지 마라.');
+						result = confirm('하지 마세요.');
 					} else if (i > 1) {
 						result = confirm('하지 말라고 했다.');
 					} else {
-						result = confirm('잘 가라');
+						result = confirm('마지막 기회입니다.');
 					}
 					return result;
 				}
@@ -393,7 +392,7 @@ label {
             		});
             	});
             </script>
-
 			<%@ include file="../common/footer.jsp"%>
+
 </body>
 </html>
