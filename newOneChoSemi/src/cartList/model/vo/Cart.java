@@ -13,6 +13,7 @@ public class Cart implements Serializable{
 	private String itemNo;		// 상품 번호
 	private String itemName;	// 상품 이름
 	private int itemPrice;		// 상품 가격
+	private int itemDiscount;	// 상품 할인
 	private int itemMax;		// 상품 구매 최대 수량
 	private int cartListCount;	// 카트 상품 수량
 	private String itemImageNo;	// 상품 이미지 번호
@@ -42,6 +43,19 @@ public class Cart implements Serializable{
 		this.cartListCount = cartListCount;
 		this.imageName = imageName;
 	}
+	public Cart(String memberNo, String cartListNo, String itemNo, String itemName, int itemPrice, int itemDiscount,
+			int itemMax, int cartListCount, String imageName) {
+		super();
+		this.memberNo = memberNo;
+		this.cartListNo = cartListNo;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemDiscount = itemDiscount;
+		this.itemMax = itemMax;
+		this.cartListCount = cartListCount;
+		this.imageName = imageName;
+	}
 	public Cart(String memberNo, String cartListNo, String itemNo, String itemName, int itemPrice, int itemMax,
 			int cartListCount, String itemImageNo, String imageNo, String imagePath, String imageName) {
 		this.memberNo = memberNo;
@@ -49,6 +63,22 @@ public class Cart implements Serializable{
 		this.itemNo = itemNo;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
+		this.itemMax = itemMax;
+		this.cartListCount = cartListCount;
+		this.itemImageNo = itemImageNo;
+		this.imageNo = imageNo;
+		this.imagePath = imagePath;
+		this.imageName = imageName;
+	}
+	public Cart(String memberNo, String cartListNo, String itemNo, String itemName, int itemPrice, int itemDiscount,
+			int itemMax, int cartListCount, String itemImageNo, String imageNo, String imagePath, String imageName) {
+		super();
+		this.memberNo = memberNo;
+		this.cartListNo = cartListNo;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemDiscount = itemDiscount;
 		this.itemMax = itemMax;
 		this.cartListCount = cartListCount;
 		this.itemImageNo = itemImageNo;
@@ -85,6 +115,12 @@ public class Cart implements Serializable{
 	}
 	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
+	}
+	public int getItemDiscount() {
+		return itemDiscount;
+	}
+	public void setItemDiscount(int itemDiscount) {
+		this.itemDiscount = itemDiscount;
 	}
 	public int getItemMax() {
 		return itemMax;
@@ -125,8 +161,9 @@ public class Cart implements Serializable{
 	@Override
 	public String toString() {
 		return "Cart [memberNo=" + memberNo + ", cartListNo=" + cartListNo + ", itemNo=" + itemNo + ", itemName="
-				+ itemName + ", itemPrice=" + itemPrice + ", itemMax=" + itemMax + ", cartListCount=" + cartListCount
-				+ ", itemImageNo=" + itemImageNo + ", imageNo=" + imageNo + ", imagePath=" + imagePath + ", imageName="
-				+ imageName + "]";
+				+ itemName + ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount + ", itemMax=" + itemMax
+				+ ", cartListCount=" + cartListCount + ", itemImageNo=" + itemImageNo + ", imageNo=" + imageNo
+				+ ", imagePath=" + imagePath + ", imageName=" + imageName + "]";
 	}
+	
 }

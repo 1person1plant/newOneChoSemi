@@ -124,20 +124,4 @@ public class MemberService {
 		return null;
 	}
 	
-	/**
-	 * 등급 
-	 * @param userNo
-	 * @return
-	 */
-	public Rank rankDetail(String userNo) {
-		Connection conn = null;
-		conn = getConnection();
-
-		System.out.println("여기옴?dao");
-		Rank rankDetail = new MemberDao().rankDetail(conn, userNo);
-		
-		close(conn);
-		return rankDetail;
-	}
-
 }
