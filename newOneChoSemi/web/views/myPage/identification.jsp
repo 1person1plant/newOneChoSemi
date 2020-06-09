@@ -95,35 +95,35 @@ td {
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
 		<div class="row">
-		<div class="col-md-3">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<!-- 패널 타이틀1 -->
-				<h3 class="panel-title">
-					<span>마이 페이지</span>
-				</h3>
+			<div class="col-md-3">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<!-- 패널 타이틀1 -->
+						<h3 class="panel-title">
+							<span>마이 페이지</span>
+						</h3>
+					</div>
+					<!-- 사이드바 메뉴목록1 -->
+					<ul class="list-group">
+						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
+							<li class="list-group-item">회원 등급</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
+							<li class="list-group-item">개인 정보 수정</li>
+						</a>
+						<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
+						<a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">
+							<li class="list-group-item">주문 내역 조회</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/views/myPage/wishList.jsp">
+							<li class="list-group-item">위시리스트</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
+							<li class="list-group-item">회원 탈퇴</li>
+						</a>
+					</ul>
+				</div>
 			</div>
-			<!-- 사이드바 메뉴목록1 -->
-			<ul class="list-group">
-				<a href="grade.jsp">
-					<li class="list-group-item">회원 등급</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-					<li class="list-group-item">개인 정보 수정</li>
-				</a>
-				<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-				<a href="orderHistory.jsp">
-					<li class="list-group-item">주문 내역 조회</li>
-				</a>
-				<a href="wishList.jsp">
-					<li class="list-group-item">위시리스트</li>
-				</a>
-				<a href="withdrawal.jsp">
-					<li class="list-group-item">회원 탈퇴</li>
-				</a>
-			</ul>
-		</div>
-	</div>
 			<%@include file="myPageCategory.jsp"%>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
@@ -144,12 +144,12 @@ td {
 								</tr>
 								<tr style='border-bottom: 2px solid black'>
 									<td scope="row" class="mt-2"><label>비밀번호 : </label></td>
-									<td colspan="2"><input type='password' id='password-chk'
-										name='password-chk'></td>
+									<td colspan="2"><input type='password' id='password1'
+										name='password1'></td>
 								</tr>
 								<tr>
 									<td scope="row" colspan='3' class="mt-2"><a
-										href='orderlist.html'><input type='submit' id='save'
+										href='orderlist.html'><input type='submit' id='idenBtn'
 												class='button1' value="확인"></a>&nbsp;&nbsp; <a href="<%=request.getContextPath()%>/index.jsp"><button
 												type='button' class='button1'>취소</button></a></td>
 								</tr>
@@ -160,6 +160,25 @@ td {
 				</fieldset>
 
 			</div>
+			<script>
+				$(function(){
+					$("#idenBtn").click(function(){
+						var inputPwd1 = document.getElementById("password1").value;
+						<%String chkPwd = loginUser.getMemberPwd();%>
+						var Pwd = "<%=chkPwd%>";
+						
+						if((inputPwd1=="")||(inputPwd1==null)){
+							alert("비밀번호를 입력해 주세요.");
+						}else if(inputPwd1 != Pwd){
+							alert("비밀번호가 일치하지 않습니다.");
+						}else if((inputPwd1==Pwd)){
+							location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+						}
+					});
+				});
+				
+				
+			</script>
 			<script>
             	$(function(){
             		$(".button1").mouseenter(function(){

@@ -402,7 +402,7 @@
         	<%if(result){%>
     			document.getElementById('loginEx').style.display='block';
 			<%} else {%>
-        		location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp";
 	   		<%} %>
 		}
         function goCart(){	// 만드는 중...

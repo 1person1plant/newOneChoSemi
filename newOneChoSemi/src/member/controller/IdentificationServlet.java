@@ -39,9 +39,10 @@ public class IdentificationServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("idenUser", idenUser);
 			response.sendRedirect("grade.jsp");
+			System.out.print(idenUser);
 		}else {
 			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);;
+			request.getRequestDispatcher("views/myPage/identification.jsp").forward(request, response);
 		}
 	}
 

@@ -229,8 +229,8 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" colspan='3' class="mt-2">
-										<button id='myBtn' data-toggle='modal' data-target='#intro'
-											type='button' class='button1'>탈퇴하기</button> &nbsp;&nbsp; <a
+										<input id='myBtn' data-toggle='modal' data-target='#intro'
+											type='button' class='button1' value="탈퇴하기">&nbsp;&nbsp;<a
 										href='grade.html'><button type='button' class='button1'>취소</button></a>
 									</td>
 								</tr>
@@ -287,10 +287,43 @@ label {
 
 			</div>
 			<script>
-				var delText = document.getElementById("password2");
 				$(function(){
 					$("#myBtn").click(function(){
-						if("<%=loginUser.getMemberPwd()%>");
+						var inputPwd1 = document.getElementById("password1").value;
+						var inputPwd2 = document.getElementById("password2").value;
+						<%String chkPwd = loginUser.getMemberPwd();%>
+						var Pwd = "<%=chkPwd%>";
+						
+						if(((inputPwd1=="")||(inputPwd1==null))||((inputPwd2=="")||(inputPwd2==null))){
+							alert("비밀번호를 입력해 주세요.");
+						}else if((inputPwd1 != Pwd)||(inputPwd2 !=Pwd)){
+							alert("비밀번호가 일치하지 않습니다.");
+						}else if((inputPwd2 == Pwd)&&(inputPwd1==inputPwd2)){
+							var modal = document.getElementById("myModal");
+
+							// Get the button that opens the modal
+							var btn = document.getElementById("myBtn");
+
+							// Get the <span> element that closes the modal
+							var span = document.getElementsByClassName("close")[0];
+
+							// When the user clicks the button, open the modal 
+							btn.onclick = function() {
+								modal.style.display = "block";
+							}
+
+							// When the user clicks on <span> (x), close the modal
+							span.onclick = function() {
+								modal.style.display = "none";
+							}
+
+							// When the user clicks anywhere outside of the modal, close it
+							window.onclick = function(event) {
+								if (event.target == modal) {
+									modal.style.display = "none";
+								}
+							}
+						}
 					})
 				})
 				
