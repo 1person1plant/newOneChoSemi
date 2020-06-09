@@ -35,11 +35,11 @@ public class InforEditServlet extends HttpServlet {
 		
 		/* System.out.println("마이페이지" + member); */
 		if(member != null) {
-			request.getRequestDispatcher("views/myPage/inforEdit.jsp").forward(request,response);
 			request.setAttribute("member", member);
+			request.getRequestDispatcher("views/myPage/inforEdit.jsp").forward(request,response);
 		}else {
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
 			request.setAttribute("msg", "실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
 		}
 	}
 

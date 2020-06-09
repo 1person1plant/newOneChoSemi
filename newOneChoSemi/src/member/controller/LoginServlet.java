@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		
 		Member member = new Member(id, pwd);
 		
-		System.out.println("LoginServlet 아이디/비번 : " + id + " / " + pwd);
+//		System.out.println("LoginServlet 아이디/비번 : " + id + " / " + pwd);
 		
 		Member loginUser = new MemberService().loginMember(member);
 		

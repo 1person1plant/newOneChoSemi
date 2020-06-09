@@ -35,22 +35,12 @@ public class OrderServlet extends HttpServlet {
 		String userNo = request.getParameter("userNo");
 		System.out.println("OrderServlet : " + userNo);
 		
+		// TODO 왜 cartNo가 넘어오지 않는가
 		
-		// 카트 정보
-		ArrayList<Cart> cartList = new CartService().cartList(userNo);
-		for(int i = 0 ; i < cartList.size() ; i++) {
-		System.out.println("cartNo1 : " + cartList);
-		String temp = "carNo" + i;
-		System.out.println("temp : " + temp);
-		String result = request.getParameter(temp);
-		System.out.println(result);
-			if(request.getParameter("cartNo"+ i) == "on") {
-			}
-		}
-//		String cartNo1 = request.getParameter("cartNo0");
-//		String cartCount1 = request.getParameter("cartCount0");
-//		String cartNo2 = request.getParameter("cartNo1");
-//		String cartCount2 = request.getParameter("cartCount1");
+//		String cartNo1 = request.getParameter("cartNo1");
+//		String cartCount1 = request.getParameter("cartCount1");
+//		String cartNo2 = request.getParameter("cartNo2");
+//		String cartCount2 = request.getParameter("cartCount2");
 //		System.out.println("cartNo1 : " + cartNo1);
 //		System.out.println("cartCount1 : " + cartCount1);
 //		System.out.println("cartNo2 : " + cartNo2);
@@ -58,6 +48,8 @@ public class OrderServlet extends HttpServlet {
 		
 		// 멤버 정보는 세션에
 		
+		// 카트 정보
+		ArrayList<Cart> cartList = new CartService().cartList(userNo);
 		System.out.println("cartList.size() : " + cartList.size());
 //		for(int i = 0 ; i < cartList.size() ; i++) {
 //			String cartNo = (String)request.getParameter("cartNo" + i);
