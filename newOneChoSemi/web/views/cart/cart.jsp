@@ -319,7 +319,7 @@
 		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
 		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
 		        		<td><%=cartList.get(i).getItemName()%></td>
-		        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1"></td>
+		        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
 		        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
 		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
 	        		</tr>
@@ -354,7 +354,7 @@
                     el.parent().on('click', '.sub', function () {
                     if (el.val() > parseInt(el.attr('min'))){
                         el.val(function(i, oldval) { return --oldval; });
-                        $(el).val(el.val());
+                        //console.log(el.val());
                     }
 
                         // 수량 감소 가격 계산 
@@ -366,7 +366,7 @@
                     el.parent().on('click', '.add', function () {
                     if (el.val() < parseInt(el.attr('max'))){
                         el.val(function(i, oldval) { return ++oldval; });
-                        console.log(el.val());
+                        //console.log(el.val());
                     } else {
                     	alert("1회 구매 최대 수량입니다.");
                     }
@@ -383,8 +383,19 @@
     <script>
     	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
-            var checkeds = $("[class=cart_checkbox]:checked");
-	        if(checkeds.length > 0){
+            var orderCheckeds = $("input:checkbox[class=cart_checkbox]");
+	        if(orderCheckeds.length > 0){
+	        	
+	        	// 구매 해려는 상품의 수량만 폼태그에 담아 보내기 위해 input number의 값 전송을 막는 속성인 disabled를 false로 변환
+	        	for(var i = 0 ; i < orderCheckeds.length ; i++) {
+		        	if(orderCheckeds[i].checked == true){
+		        		console.log(orderCheckeds[i]);
+		        		console.log(orderCheckeds[i].checked);
+		        		console.log($("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count"));
+		        		$("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count").prop("disabled",false);
+		        	}
+	        	}
+	        	            	
 				$("#orderForm").submit();
             } else {
             	alert("구입하려는 상품을 체크 해주세요.");
@@ -403,7 +414,7 @@
             });
             // 개별 선택 카운트
             $(".carttable tbody input:checkbox").click(function(){
-                checkCount();
+            	checkCount();
             });
             // 전체 선택 카운트
             function checkCount(){
@@ -453,7 +464,7 @@
 	<div class="container wishlist-container">
 	    <div class="listhead">
 	        <h2>위시 리스트</h2>
-	        <h6>즐겨찾은 상품에 메모를 남겨보세요.</h3>
+	        <h3>즐겨찾은 상품에 메모를 남겨보세요.</h3>
 	        <div class="emptyWish">즐겨 찾기가 없습니다.</div>
 	    </div>
 	

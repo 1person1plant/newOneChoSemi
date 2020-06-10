@@ -52,9 +52,9 @@ public class OrderServlet extends HttpServlet {
 			// cartOrderList 카트 번호와 상품 수량 저장
 			cartOrderList.add(new Cart(cartNoArr[i], Integer.valueOf(cartItCoArr[i])));
 		}
-		System.out.println("OrderServlet cartOrderList : " + cartOrderList);
+//		System.out.println("OrderServlet cartOrderList : " + cartOrderList);
 
-		// 구매할 카트 정보만 가져오기
+		// 구매할 카트 정보 업데이트하고 구매할 카트만 가져오기
 		ArrayList<Cart> cartList = new CartService().cartOrderList(userNo, cartOrderList);
 		
 		System.out.println("OrderServlet 주문페이지 출력 전 cartList : " + cartList);

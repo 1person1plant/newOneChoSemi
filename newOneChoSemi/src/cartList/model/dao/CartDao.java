@@ -41,8 +41,7 @@ public class CartDao {
 				
 				cartList.add(c);
 			}
-
-			System.out.println("CartDao : " + cartList);
+//			System.out.println("CartDao : " + cartList);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,24 +57,25 @@ public class CartDao {
 	public int cartUpdate(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		System.out.println("cart update : " + cartOrderList);
-		System.out.println("cart update Size : " + cartOrderList.size());
+//		System.out.println("CartDao update : " + cartOrderList);
+//		System.out.println("CartDao update Size : " + cartOrderList.size());
 		
 		String query = "UPDATE CARTLIST SET CARTLIST_COUNT = ?"
 					 + "WHERE MEMBER_NO = ?"
 					 + "AND CARTLIST_NO = ?";
 		
 		for(int i = 0 ; i < cartOrderList.size() ; i++) {
-			System.out.println("cart 카트 정보 " + i +  " : " + cartOrderList.get(i));
+//			System.out.println("CartDao 카트 정보 " + i +  " : " + cartOrderList.get(i));
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, cartOrderList.get(i).getCartListCount());
-				System.out.println("cart 카트 수량 " + i +  " : " + cartOrderList.get(i).getCartListCount());
 				pstmt.setString(2, userNo);
-				System.out.println("cart update : " + userNo);
 				pstmt.setString(3, cartOrderList.get(i).getCartListNo());
-				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
+//				System.out.println("cart 카트 수량 " + i +  " : " + cartOrderList.get(i).getCartListCount());
+//				System.out.println("cart update : " + userNo);
+//				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
 				
+				// TODO 다중 결과 값 처리가 필요하다... 지금은 임시
 				result += pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -84,14 +84,13 @@ public class CartDao {
 				close(pstmt);
 			}
 		}
-		
-		System.out.println("CartDao 카트 수량 업데이트 : " + result);
+//		System.out.println("CartDao 카트 수량 업데이트 : " + result);
 
 		return result;
 	}
 	
 	// Order.jsp에 출력하려고 OrderServlet에서 왔다
-	public ArrayList<Cart> cartOrderList(Connection conn, ArrayList<Cart> cartOrderList) {
+	public ArrayList<Cart> cartOrderList(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		
@@ -106,25 +105,25 @@ public class CartDao {
 				query += " OR CARTLIST_NO = ? ";
 			}
 		}
-		
-		System.out.println("query : " + query);
+
+//		System.out.println("query : " + query);
 		try { // TODO 만드는 중
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, cartOrderList.get(0).getMemberNo());
+			pstmt.setString(1, userNo);
 			
 			// cartOrderList.size() 만큼 DB에 요청
 			int j = 2;
 			for(int i = 0 ; i < cartOrderList.size() ; i++) {
-				System.out.println(i);
-				System.out.println("cartOrderList.get(i).getCartListNo() " + j + " : " + cartOrderList.get(i).getCartListNo());
+				System.out.println("cartOrderList.get(" + j + ").getCartListNo() : " + cartOrderList.get(i).getCartListNo() + " j : " + j);
 				pstmt.setString(j, cartOrderList.get(i).getCartListNo());
 				j++;
 			}
 			
 			rSet = pstmt.executeQuery();
+			System.out.println("rSet : "+ rSet);
 			
 			while(rSet.next()) {
-				Cart c = new Cart(rSet.getString("MEMBER_NO")
+				Cart cr = new Cart(rSet.getString("MEMBER_NO")
 		                        , rSet.getString("CARTLIST_NO")
 		                        , rSet.getString("ITEM_NO")
 		                        , rSet.getString("ITEM_NAME")
@@ -135,7 +134,7 @@ public class CartDao {
 		                        , rSet.getString("IMAGE_NAME")
 		                     	);
 								
-				cartList.add(c);
+				cartList.add(cr);
 			}
 			System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
 			

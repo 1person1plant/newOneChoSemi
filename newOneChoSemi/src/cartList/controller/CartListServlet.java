@@ -32,7 +32,7 @@ public class CartListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 카트리스트 조회
 		String userNo = request.getParameter("userNo");
-		System.out.println("CartListServlet : " + userNo);
+//		System.out.println("CartListServlet : " + userNo);
 		
 		ArrayList<Cart> cartList = new CartService().cartList(userNo);
 

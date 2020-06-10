@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			String adminChk = loginUser.getMemberAdmin();
-			System.out.println("LoginServlet 관리자 확인 : "+ adminChk);
+//			System.out.println("LoginServlet 관리자 확인 : "+ adminChk);
 			
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("admin", adminChk);
