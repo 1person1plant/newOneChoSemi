@@ -1,11 +1,15 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import member.model.service.MemberService;
 
 /**
  * Servlet implementation class JoinIdChk
@@ -26,8 +30,20 @@ public class JoinIdChkServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String userId = request.getParameter("userId");
+		
+		int result = new MemberService().joinIdChkMember(userId);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result == 0) {
+			out.print("permit");
+		}else {
+			out.print("fail");
+		}
+		
+		out.flush();
+		out.close();
 	}
 
 	/**
