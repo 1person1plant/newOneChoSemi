@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, item.model.vo.*"%>
+    
+    
+<%
+ ArrayList<Item> items=(ArrayList<Item>)request.getAttribute("items");
+ ArrayList<ItemImage> images=(ArrayList<ItemImage>)request.getAttribute("images");
+ 	
+ 	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +30,9 @@
 
         <!--datatable-->
        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-  		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.css"/>
+  	   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.css"/>
+  	   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
+        
         
         <!--jQuery-->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -201,7 +210,9 @@
                         </tr>
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">재고수량</th>
-                        <td colspan="4" style="position: relative;top:2px;"><input type="number" id="min" placeholder="이상"><label>~</label><input type="number" id="max" placeholder="이하"><label>  개</label></td>
+                        <td colspan="4" style="position: relative;top:2px;">
+                        <input type="number" id="min" placeholder="이상">
+                        <label>~</label><input type="number" id="max" placeholder="이하"><label>  개</label></td>
                         </tr>
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">전시상태</th>
@@ -244,63 +255,102 @@
                     </form>
                 </div>
                 
+                <script>
+                    $(function(){
+                        $("#min").change(function(){
+
+                            var min=$("#min").val();
+                            $("#max").attr("min",min);
+                        })
+                    })
+                </script>
+                
                 <div class="row">
                    
-                  
-                        
+                  <%if(!items.isEmpty()){ %>
+                    
                         <table id="productlist" class="display" style="width:100%;text-align: center;">
                             <thead>
                                 <tr>
+                                	<th></th>
                                     <th>번호</th>
                                     <th>상품</th>
-                                    <th>전시</th>
-                                    <th>정가</th>
-                                    <th>할인</th>
-                                    <th>평점</th>
+                                    <th>재고수량</th>
+                                    <th>품절여부</th>
+                                    <th>누적구매수량</th>
+                                    <th>전시상태</th>
                                     <th>카테고리</th>
-                                    <th>키워드</th>
-                                    <th>등록일</th>
-                                    <th>수정일</th>
                                     <th>수정/삭제</th>
                                 </tr>
                      
                             </thead>
                             <tbody>
-                               
+                            
+                            <%if(!items.isEmpty()){ %>
+                               		<%for(int i=0;i<items.size();i++){
+                               			
+                               			String display=items.get(i).getItemDisplay();
+                               			switch(display){
+                               			case "Y": display="전시중";break;
+                               			case "N": display="전시중지";break;
+                               			}
+                               			
+                               			int stock=items.get(i).getItemStock();
+                               			
+                               			String stockStatus="";
+                               			if(stock==0){
+                               				stockStatus="품절";
+                               			}else if(stock>0&&stock<=5){
+                               				stockStatus="품절임박";
+                               			}
+                               			
+                               			%>
+                               		
+                               			<tr id="row<%=i%>">
+                               			<td></td>
+                               			<td><%=items.get(i).getItemNo() %></td>
+                                		<td><%=items.get(i).getItemName()%></td>
+                                		<td><input type="number" value="<%=items.get(i).getItemStock()%>"></td>
+                                		<td><%=stockStatus %></td>
+                                		<td><%=items.get(i).getItemSCount() %></td>
+                                		<td><%=display %></td>
+                                		<td><%=items.get(i).getItemCategory()%></td>
+                                		<td><button>수정</button><button>삭제</button></td>
+                               			</tr>
+                               		
+                               		<%} %>
+                               <%} %>
                                		
                                
                             </tbody>
                             <tfoot>
                                 <tr>
+                                	<th></th>
                                     <th>번호</th>
                                     <th>상품</th>
-                                    <th>전시</th>
-                                    <th>정가</th>
-                                    <th>할인</th>
-                                    <th>평점</th>
+                                    <th>재고수량</th>
+                                    <th>품절여부</th>
+                                    <th>누적구매수량</th>
+                                    <th>전시상태</th>
                                     <th>카테고리</th>
-                                    <th>키워드</th>
-                                    <th>등록일</th>
-                                    <th>수정일</th>
                                     <th>수정/삭제</th>
                                 </tr>
                             </tfoot>
                         </table>
 
-                      
+					<%}else{ %> 
                        		<div class="container">
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
                        		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/list.it'">새로고침</button></p>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/stock.it'">새로고침</button></p>
                        		
                       
                        		</div>
                        		<div>
+                       <%} %>
+						
                       
-                        
-                        
-                
             
                  </div>
                     <!--제품 상세 내용 Modal-->
@@ -333,16 +383,9 @@
                                             
                                         </select>
                                     </li>
-                                    <li><label>정가</label><br><input required type="number" readonly id="price" name="modifyPrice" style="width:80%"></li>
-                                    <li><label>할인</label><br><input required type="number" readonly id="discount" name="modifyDiscount" style="width:80%"></li>
-                                    <div id="warning" style="display:none;position: relative;top: -2rem;">
-                                    	할인가는 정가를 초과할 수 없어요.
-                                    </div>
-                                    <li><label>상품설명</label><br><textarea readonly rows="5" cols="45" id="itemInfo" name="modifyInfo"></textarea>
-                                    <div id="countText"><span>0</span>/<span>1000</span></div>
-                                    </li>
                                     
-                               
+                                    <li><label>재고수량</label><br><input type="number" readonly id="stock" name="stock"></li>
+                                    <li><label>품절여부</label><br><input type="text" readonly id="stockStatus"></li>
                                     <li><label>카테고리</label><br><input required type="text" readonly id="category" name="modifyCategoryText">
                                         <select id="modifyCategory"  style="width:38%" name="modifyCategory">
                                             <option selected value="null">상태수정</option>
@@ -351,46 +394,7 @@
                                             <option value="SOIL">SOIL</option>
                                         </select>
                                     </li>
-                                    <li><label>키워드</label><br><input required type="text" readonly id="keyword" name="modifyKeywordText">
-                                        <select id="modifyKeyword" style="width:38%" name="modifyKeyword">
-                                            <option selected value="null">상태수정</option>
-                                            <option value="K1">산소뿜뿜</option>
-                                            <option value="K2">반려동물 친화</option>
-                                            <option value="K3">산소&반려동물 친화</option>
-                                            
-                                        </select>
-                                    </li>
-                                    <li><label>상품등록일</label><br><input type="date" readonly id="registerDate" style="width:80%"></li>
-                                    <li><label>상품수정일</label><br><input type="date" readonly id="modifyDate" style="width:80%"></li>
-                                    
-                                    <li>
-                                    	<label>대표이미지</label><br>
-                                        <div class="input-group mb-3" style="width:80%">
-                                            <div class="input-group-prepend">
-                                              <span class="input-group-text">대표이미지</span>
-                                            </div>
-                                            <div class="custom-file">
-                                              <input type="file"  disabled class="custom-file-input" id="mainImg" name="modifyMainImg" aria-describedby="fileadd01" accept="image/*" onchange="loadFile(this,1)">
-                                              <label class="custom-file-label" for="mainImg">파일을 선택하세요.</label>
-                                            </div>
-                                          </div>
-                                          <img id="mpreview" alt="[ 미리보기 ]" style="width: 300px;height: 300px;" />
-
-                                    </li>
-                                    <li>
-                                    	<label>상세이미지</label><br>
-                                        <div class="input-group mb-3" style="width:80%">
-                                            <div class="input-group-prepend">
-                                              <span class="input-group-text">상세이미지</span>
-                                            </div>
-                                            <div class="custom-file">
-                                              <input type="file" disabled class="custom-file-input" id="subImg" name="modifySubImg" aria-describedby="fileadd01" accept="image/*" onchange="loadFile(this,2)">
-                                              <label class="custom-file-label" for="mainImg">파일을 선택하세요.</label>
-                                            </div>
-                                          </div>
-                                          <img id="spreview" alt="[ 미리보기 ]" style="width: 300px;height: 300px;" />
-
-                                    </li>
+                                   
                                     
                                 </ul> 
                                 
@@ -544,17 +548,20 @@
 
 <!--datatable 관련 script-->
  
+ <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
  <script>
      $(document).ready(function(){
-    	 
     	 
     	$('#productlist thead tr').clone(true).appendTo('#productlist thead');
      	$('#productlist thead tr:eq(1) th').each(function(i){
      		
      		var title=$(this).text();
+     		
+     		console.log("this:"+$(this));
+     		
      		$(this).html('<input type="text" placeholder="search '+title+'"/>');
      		
      		$('input',this).on('keyup change',function(){
@@ -574,7 +581,17 @@
        
     	  	orderCellsTop:true,
 	   		fixedHeader:true,
-	   		scrollX:true
+	   		scrollX:true,
+	   		columnDefs:[{
+	   			orderable:false,
+	   			className:'select-checkbox',
+	   			targets:0
+	   		}],
+	   		select:{
+	   			style:'os',
+	   			selector:'td:first-child'
+	   		},
+	   		order:[[1,'asc']]
         	
          });
        
@@ -758,61 +775,7 @@
         </script>
 
 
-        <!--date 관련-->
-        <script>
-
-            $(function(){
-            	
-            	var date= new Date();
-                var month=date.getMonth()+1;
-                var day=date.getDate();
-                var today=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
-
-                $("#today").click(function(){
-
-                    
-                    
-                    $("#date1").val(today);
-                    $("#date2").val(today);
-
-                   
-                })
-
-
-                $("#aweek").click(function(){
-
-                    var date=new Date();
-                    date.setDate(date.getDate()-7);
-                    var month=date.getMonth()+1;
-                    var day=date.getDate();
-                    var aweek=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
-                    
-
-                    
-                    $("#date1").val(aweek);
-                    $("#date2").val(today);
-
-                })
-
-                $("#amonth").click(function(){
-
-                    var date=new Date();
-                    date.setMonth(date.getMonth()-1);
-                    var month=date.getMonth()+1;
-                    var day=date.getDate();
-                    var amonth=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
-
-                    $("#date1").val(amonth);
-                    $("#date2").val(today);
-
-                    
-                })
-
-
-                
-            })
        
-        </script>
         
         <%@ include file="../common/footer.jsp" %>
 

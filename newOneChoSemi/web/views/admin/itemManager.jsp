@@ -116,7 +116,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
                     <span data-feather="shopping-cart"></span>
                    	 재고관리
                   </a>

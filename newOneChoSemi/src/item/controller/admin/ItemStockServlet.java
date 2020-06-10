@@ -1,6 +1,8 @@
-package item.controller;
+package item.controller.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
+import item.model.vo.Item;
 import item.model.vo.ItemImage;
 
 /**
- * Servlet implementation class ItemDetailServlet
+ * Servlet implementation class ItemStockServlet
  */
-@WebServlet("/detail.it")
-public class ItemDetailServlet extends HttpServlet {
+@WebServlet("/stock.it")
+public class ItemStockServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemDetailServlet() {
+    public ItemStockServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +33,26 @@ public class ItemDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String pNum=request.getParameter("productNum");
-		System.out.println(pNum);
+		ItemService is=new ItemService();
+		//아이템리스트 가지러가기
+		ArrayList<Item> items=is.selectAllItems();
+		//이미지 가지러가기
+		ArrayList<ItemImage> images=is.selectItemImg();
 		
-		//이미지 가지러 가자..
-		ItemImage itemImg=new ItemService().selectItemImg(pNum);
 		
-		if(itemImg!=null) {
+		
+		if(!items.isEmpty()&&!images.isEmpty()) {
 			
-			request.setAttribute("itemImg", itemImg);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
+			request.setAttribute("items", items);
+			request.setAttribute("images", images);
+			request.getRequestDispatcher("views/admin/stockManager.jsp").forward(request, response);
 			
 		}else {
 			
-			request.setAttribute("msg", "사진 조회 실패");
+			request.setAttribute("msg", "상품 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
+	
 	}
 
 	/**
