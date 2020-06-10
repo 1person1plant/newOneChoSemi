@@ -54,9 +54,10 @@ public class CartDao {
 	}
 
 	// Cart.jsp에서 가져온 카트 수량을 업데이트하려고 OrderServlet에서 왔다
-	public int cartUpdate(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
+	public boolean cartUpdate(Connection conn, String userNo, ArrayList<Cart> cartOrderList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
+		boolean chk = true;
 //		System.out.println("CartDao update : " + cartOrderList);
 //		System.out.println("CartDao update Size : " + cartOrderList.size());
 		
@@ -76,7 +77,12 @@ public class CartDao {
 //				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
 				
 				// TODO 다중 결과 값 처리가 필요하다... 지금은 임시
-				result += pstmt.executeUpdate();
+				result = pstmt.executeUpdate();
+				if(result > 0 && chk == true) {
+					chk = true;
+				} else {
+					chk = false;
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -86,7 +92,7 @@ public class CartDao {
 		}
 //		System.out.println("CartDao 카트 수량 업데이트 : " + result);
 
-		return result;
+		return chk;
 	}
 	
 	// Order.jsp에 출력하려고 OrderServlet에서 왔다

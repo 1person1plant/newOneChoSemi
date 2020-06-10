@@ -27,12 +27,12 @@ public class CartService {
 		Connection conn = getConnection();
 
 		// DB 카트 수량 증가
-		int result = new CartDao().cartUpdate(conn, userNo, cartOrderList);
+		boolean result = new CartDao().cartUpdate(conn, userNo, cartOrderList);
 		
 		ArrayList<Cart> cartList = new ArrayList<>();
 		
 		// 카트 업데이트가 정상적이라면 구매 정보 다시 가져오기
-		if(result>0) {
+		if(result) {
 			commit(conn);
 			// 카트 수량 다시 받아오기
 			cartList = new CartDao().cartOrderList(conn, userNo, cartOrderList);
