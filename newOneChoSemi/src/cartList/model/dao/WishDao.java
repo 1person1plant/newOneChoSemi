@@ -39,7 +39,7 @@ public class WishDao {
 				
 				wishList.add(wi);
 			}
-			System.out.println("WishDao : " + wishList);
+//			System.out.println("WishDao : " + wishList);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,6 +49,28 @@ public class WishDao {
 		}
 		
 		return wishList;
+	}
+
+	public int updateWMemo(Connection conn, WishList wi) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+	      
+		String query = "UPDATE WISHLIST SET WISHLIST_MEMO = ? WHERE WISHLIST_NO = ?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, wi.getWishListMemo());
+			pstmt.setString(2, wi.getWishListNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
