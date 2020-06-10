@@ -91,8 +91,8 @@ public class ItemUpdateServlet extends HttpServlet {
 			}	
 		}
 		
-		
 		ItemImage im=null;
+		if(!saveFiles.isEmpty()) {
 		
 		im=new ItemImage();
 		im.setmPath(savePath);
@@ -103,6 +103,7 @@ public class ItemUpdateServlet extends HttpServlet {
 		im.setsCategory(2);
 		
 		System.out.println("상품수정이미지:"+im);
+		}
 		
 		//서비스로 넘길 준비
 		ItemService is=new ItemService();
@@ -114,7 +115,7 @@ public class ItemUpdateServlet extends HttpServlet {
 		int result3=0;
 		//상품이미지 수정 메소드
 		
-		
+		//넘어온 파일이 있을 경우에 메소드를 실행한다.
 		if(!saveFiles.isEmpty()) {
 			
 			System.out.println("실행이 되는가?");
@@ -122,6 +123,9 @@ public class ItemUpdateServlet extends HttpServlet {
 			result2=is.insertImage(im);
 			result3=is.updateItemImage(item);
 		}
+		
+		
+		
 		
 		if(result1+result2+result3>0) {
 			System.out.println("상품 조회 페이지로 이동!");

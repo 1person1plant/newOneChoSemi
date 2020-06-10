@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, item.model.vo.*"%>
-    
- <%
- ArrayList<Item> items=(ArrayList<Item>)request.getAttribute("items");
- ArrayList<ItemImage> images=(ArrayList<ItemImage>)request.getAttribute("images");
- 	
- 	%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,10 +27,9 @@
         
         <!--jQuery-->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-
-
-<style>
+        
+        
+        <style>
 
 /* font 추가*/
     @font-face {
@@ -72,7 +65,7 @@
 
 
 </style>
-
+        
 </head>
 <body>
 
@@ -195,7 +188,7 @@
     <!--form 시작-->
     
     <div class="col-10">
-        <h1 style="margin-top: 30px;margin-bottom: 80px;">상품조회/수정</h1>
+        <h1 style="margin-top: 30px;margin-bottom: 80px;">재고관리</h1>
         
         <div class="row">
             
@@ -207,21 +200,8 @@
                         
                         </tr>
                         <tr style="height: 3rem;">
-                        <th style="text-align: center; width: 10rem;">기간</th>
-                        <td>
-                            <select style="position: relative;margin-left: 6px; width: 7rem;right: 9px;height: 2rem;" id="searchDate" name="searchDate">
-                            	<option value="">전체</option>
-                                <option value="ITEM_CDATE">상품등록일</option>
-                                <option value="ITEM_UDATE">최종수정일</option>
-                            </select>
-                        </td>
-                        <td>
-                            <button type="button" id="today">오늘</button>
-                            <button type="button" id="aweek">1주일</button>
-                            <button type="button" id="amonth">1개월</button>
-                        </td>
-                        <td colspan="2" style="position: relative;top:2px;"><input type="date" id="date1" name="date1"><label>~</label><input type="date" id="date2" name="date2"></td>
-                        
+                        <th style="text-align: center; width: 10rem;">재고수량</th>
+                        <td colspan="4" style="position: relative;top:2px;"><input type="number" id="min" placeholder="이상"><label>~</label><input type="number" id="max" placeholder="이하"><label>  개</label></td>
                         </tr>
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">전시상태</th>
@@ -266,7 +246,7 @@
                 
                 <div class="row">
                    
-                   <%if(!items.isEmpty()){ %>
+                  
                         
                         <table id="productlist" class="display" style="width:100%;text-align: center;">
                             <thead>
@@ -286,41 +266,7 @@
                      
                             </thead>
                             <tbody>
-                               <%if(!items.isEmpty()){ %>
-                               		<%for(int i=0;i<items.size();i++){
-                               			
-                               			String display=items.get(i).getItemDisplay();
-                               			switch(display){
-                               			case "Y": display="전시중";break;
-                               			case "N": display="전시중지";break;
-                               			}
-                               			
-                               			String keyword=items.get(i).getItemKeywordNo();
-                               			switch(keyword){
-                               			case "K1": keyword="산소뿜뿜"; break;
-                               			case "K2": keyword="반려동물 친화"; break;
-                               			case "K3": keyword="산소&반려동물 친화";break;
-                               			}
-                               			
-                               			
-                               			%>
-                               		
-                               			<tr id="row<%=i%>">
-                               			<td><%=items.get(i).getItemNo() %></td>
-                                		<td><%=items.get(i).getItemName()%></td>
-                                		<td><%=display %></td>
-                                		<td><%=items.get(i).getItemPrice() %></td>
-                                		<td><%=items.get(i).getItemDiscount()%></td>
-                                		<td><%=items.get(i).getItemRate() %></td>
-                                		<td><%=items.get(i).getItemCategory()%></td>
-                                		<td><%=keyword %></td>
-                                		<td><%=items.get(i).getCDate()%></td>
-                                		<td><%=items.get(i).getUDate()%></td>
-                                		<td><button>수정</button><button>삭제</button></td>
-                               			</tr>
-                               		
-                               		<%} %>
-                               <%} %>
+                               
                                		
                                
                             </tbody>
@@ -341,7 +287,7 @@
                             </tfoot>
                         </table>
 
-                       <%}else{ %> 
+                      
                        		<div class="container">
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
@@ -351,7 +297,7 @@
                       
                        		</div>
                        		<div>
-                       <%} %>
+                      
                         
                         
                 
@@ -683,14 +629,7 @@
              $("#price").val($(this).children().eq(3).text());
              $("#discount").val($(this).children().eq(4).text());
             // $("#itemInfo").val($(this).children().eq(6).text());
-             <%for(int i=0;i<items.size();i++){%>
-         	
-             if($(this).children().eq(0).text()=='<%=items.get(i).getItemNo()%>'){
-             	
-             	$("#itemInfo").val('<%=items.get(i).getItemInfo()%>');
-             }
              
-             <%}%>
             
              $("#category").val($(this).children().eq(6).text());
              $("#keyword").val($(this).children().eq(7).text());
@@ -700,20 +639,7 @@
              $("#countText").children('span').first().text( $("#itemInfo").val().length);
              
              
-             <%for(int i=0;i<images.size();i++){%>
              
-         	if($(this).children().eq(0).text()=='<%=images.get(i).getItemNo()%>'){
-         		
-         		console.log($(this).children().eq(0).text());
-         		console.log('<%=images.get(i).getItemNo()%>');
-			
-         	
-         	$("#mpreview").attr("src","<%=request.getContextPath()%>/items_uploadFiles/<%=images.get(i).getmImgName()%>");
-            	$("#spreview").attr("src","<%=request.getContextPath()%>/items_uploadFiles/<%=images.get(i).getsImgName()%>");
-            	
-         	}
-			
-				<%}%>
             
              
              
@@ -889,6 +815,8 @@
         </script>
         
         <%@ include file="../common/footer.jsp" %>
+
+
 
 </body>
 </html>

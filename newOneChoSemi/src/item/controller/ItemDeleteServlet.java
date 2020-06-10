@@ -1,8 +1,8 @@
 package item.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class ItemDeleteServlet
  */
-@WebServlet("/list.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/delete.it")
+public class ItemDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public ItemDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +31,26 @@ public class ItemListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		//테이블에서 삭제 눌렀을 때, 모달 안에서 삭제 눌렀을 때 (어떤 때이든 변수 name이 같음)
+		String itemNum=request.getParameter("itemNum");
+//		System.out.println("테이블 행 버튼 클릭:"+itemNum);
+//		
+//		String modalItemNum=request.getParameter("modalItemNum");
+//		System.out.println("모달 안 버튼 클릭"+modalItemNum);
 		
+		//상품 판매 상태를 N로 업데이트 하러 가자
+		int result=new ItemService().deleteItem(itemNum);
 		
-		
-		if(!items.isEmpty()&&!images.isEmpty()) {
-			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
+		if(result>0) {
+			System.out.println("상품 조회 페이지로 이동!");
+			response.sendRedirect("list.it");
 			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "상품 삭제 실패");
+			views.forward(request, response);
 		}
-		
 	}
 
 	/**

@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static common.JDBCTemplate.*;
 
@@ -123,7 +125,7 @@ public class ItemDao {
 		ResultSet rset=null;
 		ArrayList<Item> items = new ArrayList<>();
 		
-		String query="SELECT * FROM ITEM";
+		String query="SELECT * FROM ITEM WHERE ITEM_SALE='Y'";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -286,6 +288,128 @@ public class ItemDao {
 		}
 		
 		return result;
+	}
+
+	public int deleteItem(Connection conn, String itemNum) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="UPDATE ITEM SET ITEM_SALE='N' WHERE ITEM_NO=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, itemNum);
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public ArrayList<Item> searchItems(Connection conn, Map<String, String> list) {
+		
+		Statement stmt=null;
+		ResultSet rset=null;
+		ArrayList<Item> items=new ArrayList<>();
+		
+		String searchDate=list.get("searchDate");
+		String date1=list.get("date1");
+		String date2=list.get("date2");
+		String display=list.get("display");
+		String name=list.get("name");
+		String category=list.get("category");
+		
+		System.out.println("searchDate:"+searchDate);
+		System.out.println("category:"+category);
+		
+		String query="SELECT * FROM ITEM";
+		
+		int count=0;
+		if(searchDate!="") {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+=searchDate+" BETWEEN "+"'"+date1+"'"+" AND "+"'"+date2+"'";
+				
+			}
+			
+			count++;
+			
+		}
+		
+		if(display!=null) {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_DISPLAY="+"'"+display+"'";
+			}else {
+				query+=" AND ";
+				query+="ITEM_DISPLAY="+"'"+display+"'";
+			}
+			
+			count++;
+			
+		}
+		
+		if(name!="") {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_NAME LIKE '%'||"+"'"+name+"'"+"||'%' ";
+			}else {
+				query+=" AND ";
+				query+="ITEM_NAME LIKE '%'||"+"'"+name+"'"+"||'%' ";
+			}
+			count++;
+			
+		}
+		
+		if(category!="") {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_CATEGORY="+"'"+category+"'";
+			}else {
+				query+=" AND ";
+				query+="ITEM_CATEGORY="+"'"+category+"'";
+				
+			}
+			
+			count++;
+			
+		}
+		
+		
+		System.out.println(query);
+		
+		try {
+			stmt=conn.createStatement();
+			rset=stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				
+				Item i=new Item(rset.getString("ITEM_NO"),rset.getString("ITEM_NAME"),rset.getString("ITEM_CATEGORY"),rset.getString("KEYWORD_NO"),rset.getInt("ITEM_PRICE"),
+						rset.getInt("ITEM_DISCOUNT"),rset.getInt("ITEM_RATE"),rset.getInt("ITEM_STOCK"),rset.getString("ITEM_DISPLAY"),rset.getString("ITEM_INFO"),
+						rset.getDate("ITEM_CDATE"),rset.getDate("ITEM_UDATE"),rset.getInt("ITEM_SCOUNT"),rset.getInt("ITEM_MAX"),rset.getString("ITEM_SALE"));
+				
+				items.add(i);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return items;
 	}
 
 	

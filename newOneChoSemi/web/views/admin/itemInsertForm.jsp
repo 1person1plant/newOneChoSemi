@@ -24,7 +24,20 @@
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
    
-    <style>
+   <style>
+   
+   /* font 추가*/
+    @font-face {
+      font-family: 'basicFont';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* font 적용할 때는 아래와 같이*/
+    * {
+      font-family: "basicFont";
+    }
 
 
   </style>
@@ -172,7 +185,7 @@
                                   <option value="none">...</option>
                                   <option value="HANGING">HANGING</option>
                                   <option value="WATER">WATER</option>
-                                  <option value="PLANT">PLANT</option>
+                                  <option value="SOIL">SOIL</option>
                                  
                                 </select>
                               </div>

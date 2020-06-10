@@ -8,6 +8,7 @@ import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ItemService {
 
@@ -109,6 +110,26 @@ public class ItemService {
 		
 		close(conn);
 		return result;
+	}
+
+	public int deleteItem(String itemNum) {
+		
+		Connection conn=getConnection();
+		int result=0;
+		
+		result=new ItemDao().deleteItem(conn,itemNum);
+		
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<Item> searchItems(Map<String, String> list) {
+		
+		Connection conn=getConnection();
+		ArrayList<Item> items=new ItemDao().searchItems(conn,list);
+		
+		close(conn);
+		return items;
 	}
 
 	
