@@ -182,85 +182,56 @@
 					</ul>
 				</div>
 			</div>
+			<%for(int i = 0; i < 2; i++) {%>
 			<div class="row item-row">
+				<%if(i == 0) {%>
+				<%for(int j = 0; j < 4; j++) {%>
 				<div class="col-sm item-col">
 					<div class="card item-card">
 						<div class="card-image-zoom">
 							<img
-								src="<%=request.getContextPath()%>/images/plant/water_scindapsus_main.jpg"
-								class="card-img-top" alt="...">
+								src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 						</div>
 						<div class="card-body item-card-body">
-							<span class="badge badge-pill badge-warning item-badge">new</span>
-							<p class="card-title item-card-title">고무나무</p>
-							<p class="card-text item-card-text">48,000원</p>
-							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-								DETAIL</a>
+							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
+							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
+							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
 				</div>
+				<%}%>
+				<%}else {%>
+				<%for(int k = 4; k < 8; k++) {%>
 				<div class="col-sm item-col">
 					<div class="card item-card">
 						<div class="card-image-zoom">
 							<img
-								src="<%=request.getContextPath()%>/images/plant/water_snowsapphire_main.jpg"
-								class="card-img-top" alt="...">
+								src="<%=request.getContextPath()%>/<%=((Item) allList.get(k)).getItemImagePath()%>/<%=((Item) allList.get(k)).getItemImageName()%>" class="card-img-top" alt="...">
 						</div>
 						<div class="card-body item-card-body">
-							<span class="badge badge-pill badge-warning item-badge">new</span>
-							<p class="card-title item-card-title">고무나무</p>
-							<p class="card-text item-card-text">48,000원</p>
-							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-								DETAIL</a>
+							<p class="card-title item-card-title"><%=((Item) allList.get(k)).getItemName()%></p>
+							<p class="card-text item-card-text"><%=((Item) allList.get(k)).getItemPrice()%></p>
+							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm item-col">
-					<div class="card item-card">
-						<div class="card-image-zoom">
-							<img
-								src="<%=request.getContextPath()%>/images/plant/water_spath_main.jpg"
-								class="card-img-top" alt="...">
-						</div>
-						<div class="card-body item-card-body">
-							<span class="badge badge-pill badge-warning item-badge">new</span>
-							<p class="card-title item-card-title">고무나무</p>
-							<p class="card-text item-card-text">48,000원</p>
-							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-								DETAIL</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm item-col">
-					<div class="card item-card">
-						<div class="card-image-zoom">
-							<img
-								src="<%=request.getContextPath()%>/images/plant/water_tablepalm_main.jpg"
-								class="card-img-top" alt="...">
-						</div>
-						<div class="card-body item-card-body">
-							<span class="badge badge-pill badge-warning item-badge">new</span>
-							<p class="card-title item-card-title">고무나무</p>
-							<p class="card-text item-card-text">48,000원</p>
-							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-								DETAIL</a>
-						</div>
-					</div>
-				</div>
+				<%}%>
+				<%}%>
 			</div>
+			<%}%>
 			<nav class="review-pagination mx-auto">
 				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/mainList.it?currentPage=<%=currentPage=1%>">맨 처음</a></li>
-					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/mainList.it?currentPage=<%=currentPage-1%>">이전</a></li>
+					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage=1%>">맨 처음</a></li>
+					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage-1%>">이전</a></li>
 				<%for(int p = startPage; p < endPage; p++) {%>
 					<%if(p == currentPage) {%>
-					<li class="page-item active"><span class="page-link"><%=p%></span class="sr-only"></span></li>
+					<li class="page-item active"><span class="page-link"><%=p%></span class="sr-only"></li>
 					<%}else {%>
-					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/mainList.it?currentPage=<%=p%>"><%=p%></a></li>
+					<li class="page-item active"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=p%>"><%=p%></a></li>
 					<%}%>
 				<%}%>
-					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/mainList.it?currentPage=<%=currentPage+1%>">다음</a></li>
-					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/mainList.it?currentPage=<%=ultimatePage%>">맨 끝</a></li>
+					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage+1%>">다음</a></li>
+					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=ultimatePage%>">맨 끝</a></li>
 				</ul>
 			</nav>
 		</div>

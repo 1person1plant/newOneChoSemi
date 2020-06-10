@@ -78,6 +78,7 @@ public class ItemListServlet extends HttpServlet {
 		ArrayList<Item> allList = itService.allList(currentPage, howManyAtOnce);
 		
 		request.setAttribute("pagination", pagination);
+		request.setAttribute("allList", allList);
 		// ALL PAGINATION END
 		
 		
