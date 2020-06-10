@@ -502,7 +502,7 @@
 				            </table>
 				        </div>
 				        <div class="card-foot mb-2 wishbutton">
-				            <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
+				            <button type="button" class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button type="button" class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
 				        </div>
 				    </div>
 				</div>
@@ -568,10 +568,9 @@
 	            if(result){
 	            	
 	            	// ajax 부분
-					var wishNo = $(this).parents("tr").children().first().children("span").text();
-					
-					console.log(wishNo);
-					
+					var wishNo = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
+						//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
+												
 						$.ajax({
 						url:"<%=request.getContextPath()%>/deleteWish.wi",
 						type:"post",
