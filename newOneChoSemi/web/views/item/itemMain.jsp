@@ -45,8 +45,9 @@
 /* item page */
             .item-container {margin-top:10rem;}
             .item-card {border-radius:0px; border:none; text-align:center;}
+            #item-card {width:15rem; height:25rem;}
             .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
-            .item-card-title {margin-bottom:0rem; font-size:1.5rem;}
+            .item-card-title {margin-bottom:0rem; font-size:1.3rem;}
             .item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
             .item-order li {padding:0 0.5rem;}
             .item-card-text {margin-bottom:0.5rem; color:gray;}
@@ -57,6 +58,16 @@
             .title-col-order {padding:0rem; padding-top:1.2rem;}
             #all-item-order li::hover {font-color:black; !important}
 /* item page end */
+
+/* pagination */
+#item-pagination * {color:#2d2d2d;}
+#item-pagination  li > a:focus,
+#item-pagination  li > a:hover, 
+#item-pagination  li > span:focus, 
+#item-pagination  li > span:hover {color: #2d2d2d; background-color: lightgray;}
+/* pagination */
+
+
 </style>
 </head>
 <body>
@@ -112,8 +123,8 @@
 				</div>
 				<div class="row item-row">
 					<%for (int i = 0; i < bestList.size(); i++) {%>
-					<div class="col-sm item-col">
-						<div class="card item-card">
+					<div class="col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
 							<div class="card-image-zoom">
 								<img src="<%=request.getContextPath()%>/<%=((Item)bestList.get(i)).getItemImagePath()%>/<%=((Item)bestList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
@@ -142,8 +153,8 @@
 					<%
 						for (int i = 0; i < newList.size(); i++) {
 					%>
-					<div class="col-sm item-col">
-						<div class="card item-card">
+					<div class="col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
 							<div class="card-image-zoom">
 								<img
 									src="<%=request.getContextPath()%>/<%=((Item) newList.get(i)).getItemImagePath()%>/<%=((Item) newList.get(i)).getItemImageName()%>"
@@ -182,12 +193,34 @@
 					</ul>
 				</div>
 			</div>
+			
+			<%if(allList.size() <= 4) {%>
+			<%for(int i = 0; i < 1; i++) {%>
+			<div class="row item-row">
+				<%for(int j = 0; j < allList.size(); j++) {%>
+				<div class="col-sm item-col" id="item-col">
+					<div class="card item-card" id="item-card">
+						<div class="card-image-zoom">
+							<img
+								src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+						</div>
+						<div class="card-body item-card-body">
+							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
+							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
+							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
+						</div>
+					</div>
+				</div>
+				<%}%>
+			</div>		
+			<%}%>			
+			<%}else {%>
 			<%for(int i = 0; i < 2; i++) {%>
 			<div class="row item-row">
 				<%if(i == 0) {%>
 				<%for(int j = 0; j < 4; j++) {%>
-				<div class="col-sm item-col">
-					<div class="card item-card">
+				<div class="col-sm item-col" id="item-col">
+					<div class="card item-card" id="item-card">
 						<div class="card-image-zoom">
 							<img
 								src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
@@ -201,16 +234,16 @@
 				</div>
 				<%}%>
 				<%}else {%>
-				<%for(int k = 4; k < 8; k++) {%>
-				<div class="col-sm item-col">
-					<div class="card item-card">
+				<%for(int j = 4; j < allList.size(); j++) {%>
+				<div class="col-sm item-col" id="item-col">
+					<div class="card item-card" id="item-card">
 						<div class="card-image-zoom">
 							<img
-								src="<%=request.getContextPath()%>/<%=((Item) allList.get(k)).getItemImagePath()%>/<%=((Item) allList.get(k)).getItemImageName()%>" class="card-img-top" alt="...">
+								src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 						</div>
 						<div class="card-body item-card-body">
-							<p class="card-title item-card-title"><%=((Item) allList.get(k)).getItemName()%></p>
-							<p class="card-text item-card-text"><%=((Item) allList.get(k)).getItemPrice()%></p>
+							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
+							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
 							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
@@ -219,15 +252,16 @@
 				<%}%>
 			</div>
 			<%}%>
-			<nav class="review-pagination mx-auto">
+			<%}%>
+			<nav class="item-pagination mx-auto" id="item-pagination">
 				<ul class="pagination justify-content-center">
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage=1%>">맨 처음</a></li>
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage-1%>">이전</a></li>
-				<%for(int p = startPage; p < endPage; p++) {%>
+				<%for(int p = startPage; p <= endPage; p++) {%>
 					<%if(p == currentPage) {%>
-					<li class="page-item active"><span class="page-link"><%=p%></span class="sr-only"></li>
+					<li class="page-item"><span class="page-link"><%=p%></span class="sr-only"></li>
 					<%}else {%>
-					<li class="page-item active"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=p%>"><%=p%></a></li>
+					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=p%>"><%=p%></a></li>
 					<%}%>
 				<%}%>
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage+1%>">다음</a></li>
