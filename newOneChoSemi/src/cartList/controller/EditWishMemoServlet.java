@@ -1,59 +1,62 @@
-package item.controller;
+package cartList.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import item.model.service.ItemService;
-import item.model.vo.ItemImage;
+import com.google.gson.Gson;
+
+import cartList.model.service.WishService;
+import cartList.model.vo.WishList;
 
 /**
- * Servlet implementation class ItemDetailServlet
+ * Servlet implementation class EditWishMemoServlet
  */
-@WebServlet("/detail.it")
-public class ItemDetailServlet extends HttpServlet {
+@WebServlet("/editWMemo.wi")
+public class EditWishMemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemDetailServlet() {
+    public EditWishMemoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String wishNo = request.getParameter("wishNo");
+		String content = request.getParameter("content");
 		
-		String pNum=request.getParameter("productNum");
-		System.out.println(pNum);
+		WishList wi = new WishList(wishNo, content); 
 		
-		//이미지 가지러 가자..
-		ItemImage itemImg=new ItemService().selectItemImg(pNum);
+		System.out.println("EditWishMemoServlet : " + wi);
 		
-		if(itemImg!=null) {
-			
-			request.setAttribute("itemImg", itemImg);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
-			
-		}else {
-			
-			request.setAttribute("msg", "사진 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		int result = new WishService().updateWMemo(wi);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result > 0) {
+			out.print("permit");
+		} else {
+			out.print("fail");
 		}
 		
+		out.flush();
+		out.close();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
