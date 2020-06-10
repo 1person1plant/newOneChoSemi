@@ -3,7 +3,6 @@
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
 	ArrayList<WishList> wishList =  (ArrayList<WishList>)request.getAttribute("wishList");
-	System.out.println(wishList.size());
 %>
 <!DOCTYPE html>
 <html>
@@ -299,14 +298,14 @@
 		        </tr>
 	        </thead>
 	        <%if(cartList.isEmpty() || cartList.size() == 0) {%>
-	        <tbody>
+	        <tbody class="cartList_tbody">
 	            <tr>
 	                <td class="emptyCart" colspan="6" style="font-size:1.5rem">장바구니에 상품이 없습니다.</td>
 	            </tr>
 	        </tbody>
 	        <%} else { %>
+	        <tbody class="cartList_tbody">
 			        <%for(int i = 0 ; i < cartList.size() ; i++) {%>
-	        <tbody>
 	        		<tr>
 		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
 		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
@@ -439,6 +438,7 @@
             // 개별항목 삭제
             $(".carttable tbody tr td input:button").click(function(){
                 var result = confirm("삭제 하시겠습니까?");
+                console.log(result);
                 // 삭제 재확인 후 삭제
                 if(result){
                     $(this).parents("tr").remove();
@@ -446,11 +446,24 @@
                     checkEmptyCart();
                 }
             });
+			// 상품이 없으면 상품 없음 행 보임
+            function checkEmptyCart(){
+				//console.log($(".carttable > tbody tr").length);
+                if($(".carttable > tbody tr").length == 0){
+                	// 상품 없음 테이블 추가
+                	$cartListTbody = $(".cartList_tbody");
+					var $tr = $("<tr>");
+					var $writerTd = $("<td>").addClass("emptyCart").attr("colspan","6").css("font-size","1.5rem").text("장바구니에 상품이 없습니다.");
+					$tr.append($writerTd);
+					$cartListTbody.append($tr);
+				}
+			}
+
         });
     </script>
 	<!-- 위시 리스트 -->
 	<div class="container wishlist-container">
-	    <div class="listhead">
+	    <div class="listhead wishListhead">
 	        <h2>위시 리스트</h2>
 	        <h6>즐겨찾은 상품에 메모를 남겨보세요.</h6>
 	
@@ -553,11 +566,14 @@
 	            var result = confirm("삭제 하시겠습니까?");
 	            // 삭제 재확인 후 삭제
 	            if(result){
+	            	console.log($(".wishcardcol").length);
 	                $(this).parents(".wishcardcol").remove();
-	                //  부모의 크기가 1이면 자식이 없음
-	                //if($(".wishCardRow").length == 1){
-	                //    $(".emptyWish").css("display","block");
-	                //}
+	                if($(".wishcardcol").length == 0){
+	                   	// 상품 없음 테이블 추가
+	                   	$wishListhead = $(".wishListhead");
+	   					var $div = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
+	   					$wishListhead.append($div);
+	                }
 	            }
 	        });
 	    </script>
