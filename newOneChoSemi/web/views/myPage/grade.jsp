@@ -133,7 +133,7 @@
 				<a href="orderHistory.jsp">
 					<li class="list-group-item">주문 내역 조회</li>
 				</a>
-				<a href="wishList.jsp">
+				<a href="<%=request.getContextPath() %>/wish.me">
 					<li class="list-group-item">위시리스트</li>
 				</a>
 				<a href="withdrawal.jsp">

@@ -115,7 +115,7 @@ td {
 						<a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">
 							<li class="list-group-item">주문 내역 조회</li>
 						</a>
-						<a href="<%=request.getContextPath()%>/views/myPage/wishList.jsp">
+						<a href="<%=request.getContextPath() %>/wish.me?memberNo=<%=loginUser.getMemberNo()%>">
 							<li class="list-group-item">위시리스트</li>
 						</a>
 						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">

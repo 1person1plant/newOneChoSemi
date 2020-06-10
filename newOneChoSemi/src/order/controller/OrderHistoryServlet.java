@@ -57,7 +57,14 @@ public class OrderHistoryServlet extends HttpServlet {
 		
 		Page pg = new Page(currentPage, listCount, limit, maxPage, startPage, endPage);
 		ArrayList<Order> list = os.historyList(currentPage,limit);
-		
+		if(list != null) {
+			request.setAttribute("list", list);
+			request.setAttribute("pg", pg);
+			request.getRequestDispatcher("views/myPage/orderHistory.jsp").forward(request, response);
+		}else {
+			request.setAttribute("msg", "실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp");
+		}
 		
 	}
 
