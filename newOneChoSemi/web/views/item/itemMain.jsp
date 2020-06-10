@@ -24,39 +24,34 @@
 
 <style>
 /* font start */
-@font-face {
-        font-family: 'basicFont';
-                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
-                font-weight: normal;
-                font-style: normal;
-            }
-
-            * {font-family: "basicFont";}
-            /* font end */
+@font-face {font-family:'basicFont'; src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff'); font-weight: normal; font-style: normal;}
+* {font-family: "basicFont";}
+/* font end */
             
 /* item search start */
-            .item-search {margin-top:5rem;}
-            .itemsearch-row {border: 0.1rem solid lightgray; margin:0 0.5rem; border-radius:1rem;}
-            .itemsearch-form {margin:auto; padding:2rem;}
-            .form-group {padding-left:1rem; padding-right:1rem;}
-            .itemsearch-label {margin-right:1rem;}
+.item-search {margin-top:5rem;}
+.itemsearch-row {border: 0.1rem solid lightgray; margin:0 0.5rem; border-radius:1rem;}
+.itemsearch-form {margin:auto; padding:2rem;}
+.form-group {padding-left:1rem; padding-right:1rem;}
+.itemsearch-label {margin-right:1rem;}
 /* item search end */
 
 /* item page */
-            .item-container {margin-top:10rem;}
-            .item-card {border-radius:0px; border:none; text-align:center;}
-            #item-card {width:15rem; height:25rem;}
-            .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
-            .item-card-title {margin-bottom:0rem; font-size:1.3rem;}
-            .item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
-            .item-order li {padding:0 0.5rem;}
-            .item-card-text {margin-bottom:0.5rem; color:gray;}
-            .card-image-zoom {overflow: hidden;}
-            .card-image-zoom img {transition-duration: 0.3s; transition-timing-function: ease;}
-            .card-image-zoom:hover img {transform: scale(1.1);}
-            .title-col {padding:0rem;}
-            .title-col-order {padding:0rem; padding-top:1.2rem;}
-            #all-item-order li::hover {font-color:black; !important}
+.item-container {margin-top:10rem;}
+.item-card {border-radius:0px; border:none; text-align:center;}
+#item-card {width:15rem; height:30rem;}
+.title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
+.item-card-title {margin-bottom:0rem; font-size:1.3rem;}
+.item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
+.item-order li {padding:0 0.5rem;}
+.item-card-text {margin-bottom:0rem; color:gray;}
+#keyword-badge {margin-bottom:0.5rem;}
+.card-image-zoom {overflow: hidden;}
+.card-image-zoom img {transition-duration: 0.3s; transition-timing-function: ease;}
+.card-image-zoom:hover img {transform: scale(1.1);}
+.title-col {padding:0rem;}
+.title-col-order {padding:0rem; padding-top:1.2rem;}
+#all-item-order li::hover {font-color:black; !important}
 /* item page end */
 
 /* pagination */
@@ -66,8 +61,6 @@
 #item-pagination  li > span:focus, 
 #item-pagination  li > span:hover {color: #2d2d2d; background-color: lightgray;}
 /* pagination */
-
-
 </style>
 </head>
 <body>
@@ -131,7 +124,11 @@
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-danger item-badge">best</span>
 								<p class="card-title item-card-title"><%=((Item)bestList.get(i)).getItemName()%></p>
-								<p class="card-text item-card-text"><%=((Item)bestList.get(i)).getItemDiscount()%>원</p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
+								<%if() %>
+								<%((Item)bestList.get(i)).getKeywordName().split(",")
+								%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight:lighter">#<%=((Item)bestList.get(i)).getKeywordName().split(",")%></a>
 								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
@@ -150,29 +147,21 @@
 					<h1 class="display-6">NEW</h1>
 				</div>
 				<div class="row item-row">
-					<%
-						for (int i = 0; i < newList.size(); i++) {
-					%>
+					<%for (int i = 0; i < newList.size(); i++) {%>
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<div class="card-image-zoom">
-								<img
-									src="<%=request.getContextPath()%>/<%=((Item) newList.get(i)).getItemImagePath()%>/<%=((Item) newList.get(i)).getItemImageName()%>"
-									class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item) newList.get(i)).getItemImagePath()%>/<%=((Item) newList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-warning item-badge">new</span>
 								<p class="card-title item-card-title"><%=((Item) newList.get(i)).getItemName()%></p>
-								<p class="card-text item-card-text"><%=((Item) newList.get(i)).getItemDiscount()%>원
-								</p>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-									DETAIL</a>
+								<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
-					<%
-						}
-					%>
+					<%}%>
 				</div>
 			</div>
 		</form>
@@ -192,12 +181,11 @@
 						<li><a href="#" style="color: grey">제품명</a></li>
 					</ul>
 				</div>
-			</div>
-			
-			<%if(allList.size() <= 4) {%>
-			<%for(int i = 0; i < 1; i++) {%>
+			</div>			
+			<%if (allList.size() <= 4) {%>
+			<%for (int i = 0; i < 1; i++) {%>
 			<div class="row item-row">
-				<%for(int j = 0; j < allList.size(); j++) {%>
+				<%for (int j = 0; j < allList.size(); j++) {%>
 				<div class="col-sm item-col" id="item-col">
 					<div class="card item-card" id="item-card">
 						<div class="card-image-zoom">
@@ -206,7 +194,7 @@
 						</div>
 						<div class="card-body item-card-body">
 							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
+							<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
 							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
@@ -215,10 +203,10 @@
 			</div>		
 			<%}%>			
 			<%}else {%>
-			<%for(int i = 0; i < 2; i++) {%>
+			<%for (int i = 0; i < 2; i++) {%>
 			<div class="row item-row">
 				<%if(i == 0) {%>
-				<%for(int j = 0; j < 4; j++) {%>
+				<%for (int j = 0; j < 4; j++) {%>
 				<div class="col-sm item-col" id="item-col">
 					<div class="card item-card" id="item-card">
 						<div class="card-image-zoom">
@@ -227,23 +215,22 @@
 						</div>
 						<div class="card-body item-card-body">
 							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
+							<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
 							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
 				</div>
 				<%}%>
 				<%}else {%>
-				<%for(int j = 4; j < allList.size(); j++) {%>
+				<%for (int j = 4; j < allList.size(); j++) {%>
 				<div class="col-sm item-col" id="item-col">
 					<div class="card item-card" id="item-card">
 						<div class="card-image-zoom">
-							<img
-								src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+							<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 						</div>
 						<div class="card-body item-card-body">
 							<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-							<p class="card-text item-card-text"><%=((Item) allList.get(j)).getItemPrice()%></p>
+							<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
 							<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 						</div>
 					</div>
@@ -257,9 +244,9 @@
 				<ul class="pagination justify-content-center">
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage=1%>">맨 처음</a></li>
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=currentPage-1%>">이전</a></li>
-				<%for(int p = startPage; p <= endPage; p++) {%>
+				<%for (int p = startPage; p <= endPage; p++) {%>
 					<%if(p == currentPage) {%>
-					<li class="page-item"><span class="page-link"><%=p%></span class="sr-only"></li>
+					<li class="page-item"><a class="page-link"><%=p%></a></li>
 					<%}else {%>
 					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/allPage.it?currentPage=<%=p%>"><%=p%></a></li>
 					<%}%>
