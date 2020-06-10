@@ -538,18 +538,18 @@
 				//console.log(content);
 				//console.log(wishNo);
 				
-				$.ajax({
-				url:"<%=request.getContextPath()%>/editWMemo.wi",
-				type:"post",
-				data:{wishNo:wishNo, content:content},
-				success:function(data){// data(받는 데이터)
-					if(data == "fail"){
-						alert("메모를 다시 작성해주세요.");
+					$.ajax({
+					url:"<%=request.getContextPath()%>/editWMemo.wi",
+					type:"post",
+					data:{wishNo:wishNo, content:content},
+					success:function(data){// data(받는 데이터)
+						if(data == "fail"){
+							alert("메모를 다시 작성해주세요.");
+						}
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
-				},
-				error:function(request,status,error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
 				});
 	        });
 	        // 메모입력시 엔터키 완료
@@ -566,8 +566,31 @@
 	            var result = confirm("삭제 하시겠습니까?");
 	            // 삭제 재확인 후 삭제
 	            if(result){
-	            	console.log($(".wishcardcol").length);
-	                $(this).parents(".wishcardcol").remove();
+	            	
+	            	// ajax 부분
+					var wishNo = $(this).parents("tr").children().first().children("span").text();
+					
+					console.log(wishNo);
+					
+						$.ajax({
+						url:"<%=request.getContextPath()%>/deleteWish.wi",
+						type:"post",
+						data:{wishNo:wishNo},
+						success:function(data){
+							if(data == "fail"){
+								alert("삭제에 실패 했습니다.");
+							} else {
+				            	$(this).parents(".wishcardcol").remove();
+							}
+						},
+						error:function(request,status,error){
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+	                
+	            	
+	            	
+	                
 	                if($(".wishcardcol").length == 0){
 	                   	// 상품 없음 테이블 추가
 	                   	$wishListhead = $(".wishListhead");
