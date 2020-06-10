@@ -39,7 +39,7 @@ public class WishDao {
 				
 				wishList.add(wi);
 			}
-			System.out.println("WishDao : " + wishList);
+//			System.out.println("WishDao : " + wishList);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
