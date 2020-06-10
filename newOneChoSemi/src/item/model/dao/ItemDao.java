@@ -15,6 +15,162 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 
 public class ItemDao {
+	
+	
+	
+	public ArrayList<Item> bestList(Connection conn) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Item> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM V_BESTLIST";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Item it = new Item(rset.getString("item_no"),
+								   rset.getString("item_name"),
+								   rset.getString("keyword_name"),
+								   rset.getInt("item_price"),
+								   rset.getInt("item_discount"),
+								   rset.getInt("item_stock"),
+								   rset.getDate("item_cdate"),
+								   rset.getInt("item_scount"),
+								   rset.getInt("item_max"),
+								   rset.getString("image_path"),
+								   rset.getString("image_name"));
+				
+				list.add(it);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+	
+		return list;
+	}
+
+	public ArrayList<Item> newList(Connection conn) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Item> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM V_NEWLIST";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Item it = new Item(rset.getString("item_no"),
+								   rset.getString("item_name"),
+								   rset.getString("keyword_name"),
+								   rset.getInt("item_price"),
+								   rset.getInt("item_discount"),
+								   rset.getInt("item_stock"),
+								   rset.getDate("item_cdate"),
+								   rset.getInt("item_scount"),
+								   rset.getInt("item_max"),
+								   rset.getString("image_path"),
+								   rset.getString("image_name"));
+				
+				list.add(it);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+	
+		return list;
+	}
+
+	public int itemCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT COUNT(*) FROM ITEM";
+		
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Item> allList(Connection conn, int currentPage, int howManyAtOnce) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Item> list = new ArrayList<>();
+		
+		int startRow = (currentPage-1) * howManyAtOnce + 1;
+		int endRow = currentPage * howManyAtOnce;
+		
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM V_ALLLIST A) WHERE RNUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Item it = new Item(rset.getString("item_no"),
+								   rset.getString("item_name"),
+								   rset.getString("keyword_name"),
+								   rset.getInt("item_price"),
+								   rset.getInt("item_discount"),
+								   rset.getInt("item_stock"),
+								   rset.getDate("item_cdate"),
+								   rset.getInt("item_scount"),
+								   rset.getInt("item_max"),
+								   rset.getString("image_path"),
+								   rset.getString("image_name"));
+				
+				list.add(it);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+	
+		return list;
+	}
 
 	public int insertItem(Connection conn, Item item) {
 		
