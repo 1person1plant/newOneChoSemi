@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="cartList.model.vo.Cart, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="cartList.model.vo.Cart, cartList.model.vo.WishList, java.util.ArrayList"%>
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
+	ArrayList<WishList> wishList =  (ArrayList<WishList>)request.getAttribute("wishList");
 %>
 <!DOCTYPE html>
 <html>
@@ -203,7 +204,6 @@
         text-align: center;
     }
     .wishlist-container .emptyWish{
-        display: none;
         padding: 150px;
     }
     .wishcardcol {
@@ -220,8 +220,9 @@
     .wishcardcol td {
         height: 30px;
     }
-    .wishcardcol tbody td:nth-child(2){ 
-    	min-width: 100px 
+    .wishcardcol .cards_imgSize {
+    	width: 273px;
+    	height: 273px;
     }
     .wishcardcol td[class^=wishprice]{ 
     	text-align: right; 
@@ -270,13 +271,6 @@
         vertical-align: bottom;
     }
 </style>
-<!-- data sample -->
-<%-- <script> 
-    var cartitem_img = "<%=request.getContextPath() %>/images/고무나무.jpg";
-    var cartitem_title = "멜라닌고무나무 라탄바구니 세트";
-    var cartitem_count = 2;
-    var cartitem_price = "32000";
-</script> --%>
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
@@ -286,7 +280,7 @@
 	<div class="container carttable-container">
 	    <div class="listhead">
 	        <h2>장바구니</h2>
-	        <h3>주문하실 상풍명 및 수량을 정확하게 확인해 주세요.</h3>
+	        <h6>주문하실 상품명 및 수량을 확인해 주세요.</h6>
 	    </div>
 	    <table class="carttable">
 	        <thead>
@@ -465,252 +459,50 @@
 	<div class="container wishlist-container">
 	    <div class="listhead">
 	        <h2>위시 리스트</h2>
-	        <h3>즐겨찾은 상품에 메모를 남겨보세요.</h3>
-	        <div class="emptyWish">즐겨 찾기가 없습니다.</div>
-	    </div>
+	        <h6>즐겨찾은 상품에 메모를 남겨보세요.</h6>
 	
-	    <div class="wishCardRow row mb-2">
-	        <!-- card item 1 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무1</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 2 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무2</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 3 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무3</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 4 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무4</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 5 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무5</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 6 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무6</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 7 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무7</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
-	        <!-- card item 8 -->
-	        <div class="wishcardcol col-md-3 pb-3">
-	            <div class="card">
-	                <img class="card-img-top" src="<%=request.getContextPath() %>/images/고무나무.jpg" alt="Card image cap">
-	                <div class="card-body tablepadding">
-	                    <table>
-	                        <tbody>
-	                            <tr><th colspan="3">고목나무8</th></tr>
-	                            <tr>
-	                                <td>가격</td>
-	                                <td class="wishprice" colspan="2">32000</td>
-	                            </tr>
-	                            <tr>
-	                                <td colspan="2">
-	                                    <label class="wishmemo">memo</label><br>
-	                                    <input class="memo" type="text" placeholder="메모를 남겨보세요." readonly>
-	                                </td>
-	                                <td class="memoicon">
-	                                    <i class='pen far fa-edit'></i>
-	                                    <i class='save far fa-check-circle'></i>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                </div>
-	                <div class="card-foot mb-2 wishbutton">
-	                    <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
-	                </div>
-	            </div>
-	        </div>
+    	<%if(wishList.isEmpty() || wishList.size() == 0) {%>
+			
+			<div class="emptyWish" style="font-size:1.5rem">즐겨 찾기가 비어 있습니다.</div>
+
+    	<%} else { %>
 	    </div>
+	    <div class="wishCardRow row mb-2">
+			<%for(int i = 0 ; i < wishList.size() ; i++) {%>
+				<!-- card item <%=i %> -->
+				<div class="wishcardcol col-md-3 pb-3">
+				    <div class="card">
+				        <img class="card-img-top cards_imgSize" src="<%=request.getContextPath()%>/items_uploadFiles/<%=wishList.get(i).getImageName() %>" alt="Wish List <%=wishList.get(i).getImageName() %>">
+				        <div class="card-body tablepadding">
+				            <table>
+				                <tbody>
+				                    <tr><th colspan="3">고목나무1</th></tr>
+				                    <tr>
+				                        <td>가격</td>
+				                        <td class="wishprice" colspan="2"><%=wishList.get(i).getItemPrice() %></td>
+				                    </tr>
+				                    <tr>
+				                        <td colspan="2">
+				                            <label class="wishmemo">memo</label><br>
+				                            <input class="memo" type="text" placeholder="메모를 남겨보세요." value="<%=wishList.get(i).getWishListMemo() %>" readonly>
+				                        </td>
+				                        <td class="memoicon">
+				                            <i class='pen far fa-edit'></i>
+				                            <i class='save far fa-check-circle'></i>
+				                        </td>
+				                    </tr>
+				                </tbody>
+				            </table>
+				        </div>
+				        <div class="card-foot mb-2 wishbutton">
+				            <button class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
+				        </div>
+				    </div>
+				</div>
+			<%} %>
+        <%} %>
+	    </div>
+	    
 	    <script>
 	        // 메모 펜 아이콘 클릭
 	        $(".pen").click(function(){
@@ -748,9 +540,9 @@
 	            if(result){
 	                $(this).parents(".wishcardcol").remove();
 	                //  부모의 크기가 1이면 자식이 없음
-	                if($(".wishCardRow").length == 1){
-	                    $(".emptyWish").css("display","block");
-	                }
+	                //if($(".wishCardRow").length == 1){
+	                //    $(".emptyWish").css("display","block");
+	                //}
 	            }
 	        });
 	    </script>
