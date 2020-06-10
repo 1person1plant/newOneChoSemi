@@ -3,6 +3,7 @@
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
 	ArrayList<WishList> wishList =  (ArrayList<WishList>)request.getAttribute("wishList");
+	System.out.println(wishList.size());
 %>
 <!DOCTYPE html>
 <html>
@@ -219,10 +220,6 @@
     }
     .wishcardcol td {
         height: 30px;
-    }
-    .wishcardcol .cards_imgSize {
-    	width: 273px;
-    	height: 273px;
     }
     .wishcardcol td[class^=wishprice]{ 
     	text-align: right; 
@@ -523,39 +520,24 @@
 	            
 	            // ajax 부분
 				var content = $(this).parents("tr").children().first().children("input").val();
-
-				//alert(writer + " / " + bid + " / " + content);
+				var wishNo = $(this).parents("tr").children().first().children("span").text();
 				
-				<%-- $.ajax({
-					url:"<%=request.getContextPath()%>/editMemo.wi",
-					type:"post",
-					data:{writer:writer, content:content, bid:bid},
-					success:function(data){// data(받는 데이터)
-						$replyTable = $("#replySelectTable");
-						$replyTable.html("");	// 기존 댓글을 삭제
-						
-						// 새로 받아온 갱신 된 댓글리스트 들을 for문을 통해 다시 table에 추가
-						for(var key in data){
-							var $tr = $("<tr>");
-							var $writerTd = $("<td>").text(data[key].rWriter).css("width","100px");
-							var $contentTd = $("<td>").text(data[key].rContent).css("width","400px");
-							var $dateTd = $("<td>").text(data[key].createDate).css("width","200px");
-							
-							$tr.append($writerTd);
-							$tr.append($contentTd);
-							$tr.append($dateTd);
-							$replyTable.append($tr);
-							
-						}
-
-						
-					},
-					error:function(request,status,error){
-		                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	               } --%>
-	            
-	            
-	            
+				//console.log(content);
+				//console.log(wishNo);
+				
+				$.ajax({
+				url:"<%=request.getContextPath()%>/editWMemo.wi",
+				type:"post",
+				data:{wishNo:wishNo, content:content},
+				success:function(data){// data(받는 데이터)
+					if(data == "fail"){
+						alert("메모를 다시 작성해주세요.");
+					}
+				},
+				error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+				});
 	        });
 	        // 메모입력시 엔터키 완료
 	        $(".memo").keydown(function(key){

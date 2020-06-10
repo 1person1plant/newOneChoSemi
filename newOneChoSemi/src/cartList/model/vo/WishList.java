@@ -20,6 +20,11 @@ public class WishList implements Serializable{
 	public WishList() {
 		super();
 	}
+	public WishList(String wishListNo, String wishListMemo) {
+		super();
+		this.wishListNo = wishListNo;
+		this.wishListMemo = wishListMemo;
+	}
 	public WishList(String wishListNo, String itemNo, String itemName, int itemPrice, String wishListMemo,
 			String imageNo, String imagePath, String imageName) {
 		super();
