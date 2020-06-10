@@ -210,7 +210,7 @@
                             <div class="card-body item-card-body">
                                 <span class="badge badge-pill badge-warning item-badge">new</span>                                                             
                                 <p class="card-title item-card-title">고무나무</p>
-                                <p class="card-text item-card-text">48,000원</p>
+                                <p class="card-text item-card-text">48,050원</p>
                                 <a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
                             </div>
                         </div>
