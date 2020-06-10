@@ -477,39 +477,39 @@ Insert into ONECHO.IMAGE (IMAGE_NO,IMAGE_PATH,IMAGE_NAME) values ('IMG00004','/I
 REM INSERTING into ONECHO.ITEM
 SET DEFINE OFF;
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00001','야자수염틸란드시아','HANGING','K3',26500,1500,0,28,'Y','집에 싱그러움을 더해줄 뿐 아니라 공기정화 능력도 뛰어난 야자수염틸란드시아',to_date('20/05/21','RR/MM/DD'),to_date('20/05/21','RR/MM/DD'),13,10,'Y');
+values ('I00001','야자수염틸란드시아','HANGING','K3',26500,25000,0,28,'Y','집에 싱그러움을 더해줄 뿐 아니라 공기정화 능력도 뛰어난 야자수염틸란드시아',to_date('20/05/21','RR/MM/DD'),to_date('20/05/21','RR/MM/DD'),13,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00002','문샤인','SOIL','K1',25000,1000,0,34,'Y','이름 그대로 달빛을 머금은듯한 오묘한 색이 매력적인 문샤인',to_date('20/05/22','RR/MM/DD'),to_date('20/05/22','RR/MM/DD'),8,10,'Y');
+values ('I00002','문샤인','SOIL','K1',25000,24000,0,34,'Y','이름 그대로 달빛을 머금은듯한 오묘한 색이 매력적인 문샤인',to_date('20/05/22','RR/MM/DD'),to_date('20/05/22','RR/MM/DD'),8,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00003','몬스테라','SOIL','K1',27000,1000,0,21,'Y','넓은 잎이 주는 이국적인 분위기를 내는 몬스테라',to_date('20/05/23','RR/MM/DD'),to_date('20/05/23','RR/MM/DD'),1,10,'Y');
+values ('I00003','몬스테라','SOIL','K1',27000,26000,0,21,'Y','넓은 잎이 주는 이국적인 분위기를 내는 몬스테라',to_date('20/05/23','RR/MM/DD'),to_date('20/05/23','RR/MM/DD'),1,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00004','디시디아','HANGING','K3',19500,1000,0,15,'Y','동글동글한 입사귀에 흰색 테두리가 매력적인 디시디아',to_date('20/05/24','RR/MM/DD'),to_date('20/05/24','RR/MM/DD'),1,10,'Y');
+values ('I00004','디시디아','HANGING','K3',19500,17000,0,15,'Y','동글동글한 입사귀에 흰색 테두리가 매력적인 디시디아',to_date('20/05/24','RR/MM/DD'),to_date('20/05/24','RR/MM/DD'),1,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00005','라탄포레스트','SOIL','K1',28900,1000,0,19,'Y','스파티필름과 스노우사파이어가 라탄바구니에 담겨 이국적인 분위기를 업 ',to_date('20/05/25','RR/MM/DD'),to_date('20/05/25','RR/MM/DD'),2,10,'Y');
+values ('I00005','라탄포레스트','SOIL','K1',28900,26900,0,19,'Y','스파티필름과 스노우사파이어가 라탄바구니에 담겨 이국적인 분위기를 업 ',to_date('20/05/25','RR/MM/DD'),to_date('20/05/25','RR/MM/DD'),2,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00006','스파티필름','WATER','K1',22000,1000,0,31,'Y','사계절 내내 아름다운 꽃과 함께하는 즐거움 스파티필름',to_date('20/05/26','RR/MM/DD'),to_date('20/05/26','RR/MM/DD'),3,10,'Y');
+values ('I00006','스파티필름','WATER','K1',22000,21000,0,31,'Y','사계절 내내 아름다운 꽃과 함께하는 즐거움 스파티필름',to_date('20/05/26','RR/MM/DD'),to_date('20/05/26','RR/MM/DD'),3,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00007','행운목','WATER','K1',20000,1000,0,28,'Y','이산화탄소, 포름알데히드, 벤젠 등의 유해물질을 모두 흡수해주는 행운목',to_date('20/05/27','RR/MM/DD'),to_date('20/05/27','RR/MM/DD'),1,10,'Y');
+values ('I00007','행운목','WATER','K1',20000,17000,0,28,'Y','이산화탄소, 포름알데히드, 벤젠 등의 유해물질을 모두 흡수해주는 행운목',to_date('20/05/27','RR/MM/DD'),to_date('20/05/27','RR/MM/DD'),1,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00008','산세베리아','SOIL','K1',23500,1500,0,21,'Y','사막에 있는 선인장, 생명력 왕이라 불리는 산세베리아',to_date('20/05/28','RR/MM/DD'),to_date('20/05/28','RR/MM/DD'),1,10,'Y');
+values ('I00008','산세베리아','SOIL','K1',23500,22500,0,21,'Y','사막에 있는 선인장, 생명력 왕이라 불리는 산세베리아',to_date('20/05/28','RR/MM/DD'),to_date('20/05/28','RR/MM/DD'),1,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00009','틸란테라리움','SOIL','K3',24500,1000,0,55,'Y','지구상에서 가장 강력한 공기청정기 틸란드시아',to_date('20/05/29','RR/MM/DD'),to_date('20/05/29','RR/MM/DD'),2,10,'Y');
+values ('I00009','틸란테라리움','SOIL','K3',24500,23000,0,55,'Y','지구상에서 가장 강력한 공기청정기 틸란드시아',to_date('20/05/29','RR/MM/DD'),to_date('20/05/29','RR/MM/DD'),2,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00010','스킨답서스','WATER','K1',15000,1000,0,43,'Y','환경적응력이 뛰어나 반려식물 초보자도 친구가 될 수 있는 스킨답서스',to_date('20/05/30','RR/MM/DD'),to_date('20/05/30','RR/MM/DD'),3,10,'Y');
+values ('I00010','스킨답서스','WATER','K1',15000,14000,0,43,'Y','환경적응력이 뛰어나 반려식물 초보자도 친구가 될 수 있는 스킨답서스',to_date('20/05/30','RR/MM/DD'),to_date('20/05/30','RR/MM/DD'),3,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00011','수경몬스테라','WATER','K1',27000,1000,0,5,'Y','정화능력이 뛰어나 새 집이나 사무실에서 각광받는 수경몬스테라',to_date('20/05/31','RR/MM/DD'),to_date('20/05/31','RR/MM/DD'),5,10,'Y');
+values ('I00011','수경몬스테라','WATER','K1',27000,24000,0,5,'Y','정화능력이 뛰어나 새 집이나 사무실에서 각광받는 수경몬스테라',to_date('20/05/31','RR/MM/DD'),to_date('20/05/31','RR/MM/DD'),5,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00012','테이블야자','WATER','K3',22500,1500,0,7,'Y','공기정화는 물론 가습효과까지 탁월한 테이블야자',to_date('20/06/01','RR/MM/DD'),to_date('20/06/01','RR/MM/DD'),2,10,'Y');
+values ('I00012','테이블야자','WATER','K3',22500,19500,0,7,'Y','공기정화는 물론 가습효과까지 탁월한 테이블야자',to_date('20/06/01','RR/MM/DD'),to_date('20/06/01','RR/MM/DD'),2,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00013','스노우사파이어','WATER','K1',28000,1000,0,9,'Y','부와 행운을 가져다준다는 스노우사파이어',to_date('20/06/02','RR/MM/DD'),to_date('20/06/02','RR/MM/DD'),7,10,'Y');
+values ('I00013','스노우사파이어','WATER','K1',28000,27000,0,9,'Y','부와 행운을 가져다준다는 스노우사파이어',to_date('20/06/02','RR/MM/DD'),to_date('20/06/02','RR/MM/DD'),7,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00014','이오난사','HANGING','K3',20000,1500,0,30,'Y','크기는 작지만 공기를 정화시켜주는 이오난사',to_date('20/06/03','RR/MM/DD'),to_date('20/06/03','RR/MM/DD'),3,10,'Y');
+values ('I00014','이오난사','HANGING','K3',20000,16500,0,30,'Y','크기는 작지만 공기를 정화시켜주는 이오난사',to_date('20/06/03','RR/MM/DD'),to_date('20/06/03','RR/MM/DD'),3,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00015','필레아페페','WATER','K3',30000,1000,0,9,'Y','귀여운 비주얼에 걸맞는 귀여운 이름, 필레아페페',to_date('20/06/04','RR/MM/DD'),to_date('20/06/04','RR/MM/DD'),5,10,'Y');
+values ('I00015','필레아페페','WATER','K3',30000,26000,0,9,'Y','귀여운 비주얼에 걸맞는 귀여운 이름, 필레아페페',to_date('20/06/04','RR/MM/DD'),to_date('20/06/04','RR/MM/DD'),5,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00016','스투키','SOIL','K1',21500,1500,0,11,'Y','미국 NASA에서도 인증한 공기정화 능력을 가진 스투키',to_date('20/06/05','RR/MM/DD'),to_date('20/06/05','RR/MM/DD'),20,10,'Y');
+values ('I00016','스투키','SOIL','K1',21500,19500,0,11,'Y','미국 NASA에서도 인증한 공기정화 능력을 가진 스투키',to_date('20/06/05','RR/MM/DD'),to_date('20/06/05','RR/MM/DD'),20,10,'Y');
 Insert into ONECHO.ITEM (ITEM_NO,ITEM_NAME,ITEM_CATEGORY,KEYWORD_NO,ITEM_PRICE,ITEM_DISCOUNT,ITEM_RATE,ITEM_STOCK,ITEM_DISPLAY,ITEM_INFO,ITEM_CDATE,ITEM_UDATE,ITEM_SCOUNT,ITEM_MAX,ITEM_SALE) 
-values ('I00017','마리모','WATER','K2',25000,1500,0,20,'Y','기분이 좋을땐 물 위를 둥둥, 보기만 해도 행복해지는 귀여운 마리모',to_date('20/06/06','RR/MM/DD'),to_date('20/06/06','RR/MM/DD'),19,10,'Y');
+values ('I00017','마리모','WATER','K2',25000,22500,0,20,'Y','기분이 좋을땐 물 위를 둥둥, 보기만 해도 행복해지는 귀여운 마리모',to_date('20/06/06','RR/MM/DD'),to_date('20/06/06','RR/MM/DD'),19,10,'Y');
 
 
 REM INSERTING into ONECHO.ITEMIMAGE
@@ -578,15 +578,15 @@ values ('Q00001','M00006','화분색 선택 가능한가요?',to_date('20/06/02'
 --- VIEW ADD
 -- 카트리스트 뷰
 CREATE OR REPLACE VIEW MEMBER_CARTLIST AS
-SELECT CARTLIST_NO, CA.ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, MEMBER_NO, CARTLIST_COUNT, II.IMAGE_NO, IMAGE_NAME
+SELECT CARTLIST_NO, CA.ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_MAX, MEMBER_NO, CARTLIST_COUNT, II.IMAGE_NO, IMAGE_NAME
 FROM CARTLIST CA
 JOIN (
-      SELECT I.ITEM_NO, ITEMIMAGE_NO, IMAGE_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX
-      FROM ITEM I
-      JOIN (SELECT *
+      select I.item_no, itemimage_no, IMAGE_NO, ITEM_NAME, ITEM_PRICE, ITEM_MAX
+      from item I
+      join (SELECT *
             FROM ITEMIMAGE
-            WHERE ITEMIMAGE_CATEGORY=1) M ON (I.ITEM_NO=M.ITEM_NO)
-      ) II ON (CA.ITEM_NO=II.ITEM_NO)
+            WHERE itemimage_category=1) M on (I.item_no=M.item_no)
+      ) II on (CA.item_no=II.item_no)
 JOIN IMAGE IM ON (II.IMAGE_NO = IM.IMAGE_NO);
 
 -- 위시리스트 뷰
