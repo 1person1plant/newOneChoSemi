@@ -312,7 +312,7 @@
                     
                             <!-- Modal Header -->
                             <div class="modal-header">
-                            <h4 class="modal-title">상품 수정</h4>
+                            <h4 class="modal-title">재고 조회</h4>
                             
                             <button type="button" class="close" data-dismiss="modal" id="modalClose">&times;</button>
                             </div>

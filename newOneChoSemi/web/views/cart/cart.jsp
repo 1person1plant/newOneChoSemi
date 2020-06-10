@@ -212,8 +212,8 @@
         padding: 5px;
         min-width: 253px;
     }
-    .wishcardcol tbody{
-        text-align: left;
+    .wishcardcol tbody{ 
+    	text-align: left; 
     }
     .wishcardcol tbody th{
         font-size: 25px;
@@ -221,11 +221,11 @@
     .wishcardcol td {
         height: 30px;
     }
-    .wishcardcol tbody td:nth-child(2){
-        min-width: 100px
+    .wishcardcol tbody td:nth-child(2){ 
+    	min-width: 100px 
     }
-    .wishcardcol td[class^=wishprice]{
-        text-align: right;
+    .wishcardcol td[class^=wishprice]{ 
+    	text-align: right; 
     }
     .wishcardcol td[class^=wishprice]::after{
         content: " 원";
@@ -283,6 +283,7 @@
 <%@ include file="../common/header.jsp" %>
 
 	<!-- 장바구니 -->
+	<form id="orderForm" action="<%=request.getContextPath() %>/order.or?userNo=<%=userNo %>" method="post">
 	<div class="container carttable-container">
 	    <div class="listhead">
 	        <h2>장바구니</h2>
@@ -296,7 +297,7 @@
 	            <td></td>
 	            <td></td>
 	            <td class="cart_total_count">0</td>
-	            <td><label for="trash0"><input type="button" id="trash0" class="trash"></input></label></td>
+	            <td><label for="allTrash"><input type="button" id="allTrash" class="trash"></input></label></td>
 	        </tr>
 	        <tr>
 	            <td></td>
@@ -313,153 +314,157 @@
 	                <td class="emptyCart" colspan="6">상품이 없습니다.</td>
 	            </tr>
 	        <%} else { %>
-				<form id="orderForm" action="<%=request.getContextPath() %>/order.or?userNo=<%=userNo %>" method="post">
-	        	<%int i = 0; %>
-		        <%for(Cart c : (ArrayList<Cart>)cartList) {
-	        		i++;
-	        		out.println("<tr class='cartitem" + i + "'>");
-	        		out.println("<td><input type='checkbox' class='cart_checkbox' name='cartNo" + i + "' value='" + c.getItemNo() + "'>" + c.getItemNo() + "</td>");
-	        		out.println("<td><img src='" + request.getContextPath() + "/items_uploadFiles/" + c.getImageName() + "' alt='상품'></td>");
-	        		out.println("<td>" + c.getItemName() + "</td>");
-	        		out.println("<td><input class='cart_count' name='cartCount" + i + "' type='number' min='1' max='" + c.getItemMax() + "' value='" + c.getCartListCount() + "' step='1'></td>");
-	        		out.println("<td><span class='cal_price'>" + c.getCartListCount() * c.getItemPrice() + "</span><span class='price'>" + c.getItemPrice() + "</span></td>");
-	        		out.println("<td><label for='trash1'><input type='button' id='trash" + i + "' class='trash'></input></label></td>");
-	        		out.println("</tr>");
-	        	} %>
-				</form>
+			        <%for(int i = 0 ; i < cartList.size() ; i++) {%>
+	        		<tr>
+		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
+		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
+		        		<td><%=cartList.get(i).getItemName()%></td>
+		        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
+		        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
+		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
+	        		</tr>
+		        	<%} %>
 	        <%} %>
 			</tbody>
 	        <tfoot>
 	        <tr>
 	            <td colspan="6">
 	            <button class="btn btn-outline-info my-5 my-sm-0" onclick="location.href='index.jsp'">계속쇼핑</button>
-	            <button class="btn btn-outline-info my-5 my-sm-0" onclick="order()">주문하기</button>
+	            <button class="btn btn-outline-info my-5 my-sm-0" type="button" onclick="order()">주문하기</button>
 	            </td>
 	        </tr>
 	        </tfoot>
 	    </table>
-	    <!-- 수량 버튼 스크립트 -->
-	    <script>
-	        (function ($) {
-	            $.fn.spinner = function() {
-	                this.each(function() {
-	                    var el = $(this);
-	
-	                    // add elements
-	                    el.wrap('<span class="spinner"></span>');
-	                    el.before('<span class="sub">-</span>');
-	                    el.after('<span class="add">+</span>');
-	
-	                    // substract
-	                    el.parent().on('click', '.sub', function () {
-	                    if (el.val() > parseInt(el.attr('min'))){
-	                        el.val(function(i, oldval) { 
-	                        	return --oldval; 
-	                        });
-	                        $(el).val(el.val());
-	                    }
-	
-	                        // 수량 감소 가격 계산 
-	                        var td = el.parents("tr").children("td:nth-child(5)").children(".price").text();
-	                        el.parents("tr").children("td:nth-child(5)").children(".cal_price").text(td*el.val());
-	                    });
-	
-	                    // increment
-	                    el.parent().on('click', '.add', function () {
-	                    if (el.val() < parseInt(el.attr('max'))){
-	                        el.val(function(i, oldval) { return ++oldval; });
-	                        console.log(el.val());
-	                    } else {
-	                    	alert("1회 구매 최대 수량입니다.");
-	                    }
-	                        // 수량 증가 가격 계산
-	                        var td = el.parents("tr").children("td:nth-child(5)").children(".price").text();
-	                        el.parents("tr").children("td:nth-child(5)").children(".cal_price").text(td*el.val());
-	                    });
-	                });
-	            };
-	        })(jQuery);// 수량 버튼 스크립트 끝
-	        $('input[class=cart_count]').spinner();
-	    </script>
-	    
-	    <script>
-			function order() {
-				/* var checkboxs= $("[class=cart_checkbox]");
-                for(var i = 0; i < checkboxs.length ; i++){
-                    if(checkboxs[i].checked == false){
-                    	checkboxs[i].attr("disabled",true);
-                    	console.log(checkboxs[i].val());
-                    }
-                } */
-				$("#orderForm").submit();
-			}	
-	    
-		</script>
-
-	    <!-- 상품 삭제 스크립트 -->
-	    <script>
-	        $(function(){
-	            // 전체 선택
-	            $(".carttable thead input:checkbox").change(function(){
-	                var bool = $(this).prop("checked");
-	                $(".carttable tbody input:checkbox").prop("checked",bool);
-	                checkCount();
-	            });
-	            // 개별 선택 카운트
-	            $(".carttable tbody input:checkbox").click(function(){
-	                checkCount();
-	            });
-	            // 전체 선택 카운트
-	            function checkCount(){
-	                var checkeds = $("[class=cart_checkbox]:checked");
-	                var count = 0;
-	                for(var i = 0; i < checkeds.length ; i++){
-	                    if(checkeds[i].checked == true){
-	                        count++;
-	                    }
-	                }
-	                $(".cart_total_count").html(count);
-	            }
-	            $("#trash0").click(function(){
-	                deleteChecked();
-	            });
-	            // 선택항목 한번에 삭제
-	            function deleteChecked(){
-	                var index = $(".carttable input:checkbox[class=cart_checkbox]:checked");
-	                var count = $(".cart_total_count").text();
-	                // 선택 항목이 있을 때 작동
-	                if(count != 0){
-	                    var result = confirm("삭제 하시겠습니까?");
-	                    // 삭제 재확인 후 삭제
-	                    if(result){
-	                        for(var i=index.length ; i>-1 ; i--){
-	                            index.eq(i).closest("tr").remove();
-	                        }
-	                        $(".carttable thead input:checkbox").prop("checked",false);
-	                        checkCount();
-	                        checkEmptyCart();
-	                    }
-	                }
-	            }
-	            // 개별항목 삭제
-	            $(".carttable tbody tr td input:button").click(function(){
-	                var result = confirm("삭제 하시겠습니까?");
-	                // 삭제 재확인 후 삭제
-	                if(result){
-	                    $(this).parents("tr").remove();
-	                    checkCount();
-	                    checkEmptyCart();
-	                }
-	            });
-	        });
-	    </script>
 	    
 	</div>
+	</form>
+    <!-- 수량 버튼 스크립트 -->
+    <script>
+        (function ($) {
+            $.fn.spinner = function() {
+                this.each(function() {
+                    var el = $(this);
+
+                    // add elements
+                    el.wrap('<span class="spinner"></span>');
+                    el.before('<span class="sub">-</span>');
+                    el.after('<span class="add">+</span>');
+
+                    // substract
+                    el.parent().on('click', '.sub', function () {
+                    if (el.val() > parseInt(el.attr('min'))){
+                        el.val(function(i, oldval) { return --oldval; });
+                        //console.log(el.val());
+                    }
+
+                        // 수량 감소 가격 계산 
+                        var td = el.parents("tr").children("td:nth-child(5)").children(".price").text();
+                        el.parents("tr").children("td:nth-child(5)").children(".cal_price").text(td*el.val());
+                    });
+
+                    // increment
+                    el.parent().on('click', '.add', function () {
+                    if (el.val() < parseInt(el.attr('max'))){
+                        el.val(function(i, oldval) { return ++oldval; });
+                        //console.log(el.val());
+                    } else {
+                    	alert("1회 구매 최대 수량입니다.");
+                    }
+                        // 수량 증가 가격 계산
+                        var td = el.parents("tr").children("td:nth-child(5)").children(".price").text();
+                        el.parents("tr").children("td:nth-child(5)").children(".cal_price").text(td*el.val());
+                    });
+                });
+            };
+        })(jQuery);// 수량 버튼 스크립트 끝
+        $('input[class=cart_count]').spinner();
+    </script>
+    
+    <script>
+    	// 구매 상품 확인 후 결제 페이지로 이동
+		function order() {
+            var orderCheckeds = $("input:checkbox[class=cart_checkbox]");
+	        if(orderCheckeds.length > 0){
+	        	
+	        	// 구매 해려는 상품의 수량만 폼태그에 담아 보내기 위해 input number의 값 전송을 막는 속성인 disabled를 false로 변환
+	        	for(var i = 0 ; i < orderCheckeds.length ; i++) {
+		        	if(orderCheckeds[i].checked == true){
+		        		console.log(orderCheckeds[i]);
+		        		console.log(orderCheckeds[i].checked);
+		        		console.log($("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count"));
+		        		$("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count").prop("disabled",false);
+		        	}
+	        	}
+	        	            	
+				$("#orderForm").submit();
+            } else {
+            	alert("구입하려는 상품을 체크 해주세요.");
+            }
+		}
+	</script>
+
+    <!-- 상품 삭제 스크립트 -->
+    <script>
+        $(function(){
+            // 전체 선택
+            $(".carttable thead input:checkbox").change(function(){
+                var bool = $(this).prop("checked");
+                $(".carttable tbody input:checkbox").prop("checked",bool);
+                checkCount();
+            });
+            // 개별 선택 카운트
+            $(".carttable tbody input:checkbox").click(function(){
+            	checkCount();
+            });
+            // 전체 선택 카운트
+            function checkCount(){
+                var checkeds = $("[class=cart_checkbox]:checked");
+                var count = 0;
+                for(var i = 0; i < checkeds.length ; i++){
+                    if(checkeds[i].checked == true){
+                        count++;
+                    }
+                }
+                $(".cart_total_count").html(count);
+            }
+            $("#allTrash").click(function(){
+                deleteChecked();
+            });
+            // 선택항목 한번에 삭제
+            function deleteChecked(){
+                var index = $(".carttable input:checkbox[class=cart_checkbox]:checked");
+                var count = $(".cart_total_count").text();
+                // 선택 항목이 있을 때 작동
+                if(count != 0){
+                    var result = confirm("삭제 하시겠습니까?");
+                    // 삭제 재확인 후 삭제
+                    if(result){
+                        for(var i=index.length ; i>-1 ; i--){
+                            index.eq(i).closest("tr").remove();
+                        }
+                        $(".carttable thead input:checkbox").prop("checked",false);
+                        checkCount();
+                        checkEmptyCart();
+                    }
+                }
+            }
+            // 개별항목 삭제
+            $(".carttable tbody tr td input:button").click(function(){
+                var result = confirm("삭제 하시겠습니까?");
+                // 삭제 재확인 후 삭제
+                if(result){
+                    $(this).parents("tr").remove();
+                    checkCount();
+                    checkEmptyCart();
+                }
+            });
+        });
+    </script>
 	<!-- 위시 리스트 -->
 	<div class="container wishlist-container">
 	    <div class="listhead">
 	        <h2>위시 리스트</h2>
-	        <h6>즐겨찾은 상품에 메모를 남겨보세요.</h3>
+	        <h3>즐겨찾은 상품에 메모를 남겨보세요.</h3>
 	        <div class="emptyWish">즐겨 찾기가 없습니다.</div>
 	    </div>
 	
