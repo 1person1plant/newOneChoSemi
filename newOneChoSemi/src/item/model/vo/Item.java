@@ -26,10 +26,34 @@ public class Item implements Serializable {
 	private int itemMax;//최대 구매 가능 수량
 	private String itemSale;//삭제 여부 
 	
+	// 김경남: LIST에서 쓴다
+	private String keywordName;
+	private String itemImagePath;
+	private String itemImageName;
+	//
 	
 	public Item() {
 		super();
 	}
+	
+	
+	// 김경남 LIST들 담아주는 생성자
+	public Item(String itemNo, String itemName, String keywordName, int itemPrice, int itemDiscount, int itemStock, Date cDate,
+			int itemSCount, int itemMax, String itemImagePath, String itemImageName) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.keywordName = keywordName;
+		this.itemPrice = itemPrice;
+		this.itemDiscount = itemDiscount;
+		this.itemStock = itemStock;
+		CDate = cDate;
+		this.itemSCount = itemSCount;
+		this.itemMax = itemMax;
+		this.itemImagePath = itemImagePath;
+		this.itemImageName = itemImageName;
+	}
+
 
 
 	public Item(String itemName, String itemCategory, String itemKeywordNo, int itemPrice, int itemDiscount,
@@ -137,176 +161,150 @@ public class Item implements Serializable {
 		this.itemSale = itemSale;
 	}
 
-
 	public String getItemNo() {
 		return itemNo;
 	}
-
 
 	public void setItemNo(String itemNo) {
 		this.itemNo = itemNo;
 	}
 
-
 	public String getItemName() {
 		return itemName;
 	}
-
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
 
-
 	public String getItemCategory() {
 		return itemCategory;
 	}
-
 
 	public void setItemCategory(String itemCategory) {
 		this.itemCategory = itemCategory;
 	}
 
-
 	public String getItemKeywordNo() {
 		return itemKeywordNo;
 	}
-
 
 	public void setItemKeywordNo(String itemKeywordNo) {
 		this.itemKeywordNo = itemKeywordNo;
 	}
 
-
 	public int getItemPrice() {
 		return itemPrice;
 	}
-
 
 	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
-
 	public int getItemDiscount() {
 		return itemDiscount;
 	}
-
 
 	public void setItemDiscount(int itemDiscount) {
 		this.itemDiscount = itemDiscount;
 	}
 
-
 	public int getItemRate() {
 		return itemRate;
 	}
-
 
 	public void setItemRate(int itemRate) {
 		this.itemRate = itemRate;
 	}
 
-
 	public int getItemStock() {
 		return itemStock;
 	}
-
 
 	public void setItemStock(int itemStock) {
 		this.itemStock = itemStock;
 	}
 
-
 	public String getItemDisplay() {
 		return itemDisplay;
 	}
-
 
 	public void setItemDisplay(String itemDisplay) {
 		this.itemDisplay = itemDisplay;
 	}
 
-
 	public String getItemInfo() {
 		return itemInfo;
 	}
-
 
 	public void setItemInfo(String itemInfo) {
 		this.itemInfo = itemInfo;
 	}
 
-
 	public Date getCDate() {
 		return CDate;
 	}
-
 
 	public void setCDate(Date cDate) {
 		CDate = cDate;
 	}
 
-
 	public Date getUDate() {
 		return UDate;
 	}
 
-
 	public void setUDate(Date uDate) {
 		UDate = uDate;
 	}
-	
 
 	public int getItemSCount() {
 		return itemSCount;
 	}
 
-
 	public void setItemSCount(int itemSCount) {
 		this.itemSCount = itemSCount;
 	}
-
 
 	public int getItemMax() {
 		return itemMax;
 	}
 
-
 	public void setItemMax(int itemMax) {
 		this.itemMax = itemMax;
 	}
-
 
 	public String getItemSale() {
 		return itemSale;
 	}
 
-
 	public void setItemSale(String itemSale) {
 		this.itemSale = itemSale;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Item [itemNo=" + itemNo + ", itemName=" + itemName + ", itemCategory=" + itemCategory
-				+ ", itemKeywordNo=" + itemKeywordNo + ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount
-				+ ", itemRate=" + itemRate + ", itemStock=" + itemStock + ", itemDisplay=" + itemDisplay + ", itemInfo="
-				+ itemInfo + ", CDate=" + CDate + ", UDate=" + UDate + ", itemSCount=" + itemSCount + ", itemMax="
-				+ itemMax + ", itemSale=" + itemSale + "]";
+	public String getKeywordName() {
+		return keywordName;
 	}
 
+	public void setKeywordName(String keywordName) {
+		this.keywordName = keywordName;
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public String getItemImagePath() {
+		return itemImagePath;
+	}
+
+	public void setItemImagePath(String itemImagePath) {
+		this.itemImagePath = itemImagePath;
+	}
+
+	public String getItemImageName() {
+		return itemImageName;
+	}
+
+	public void setItemImageName(String itemImageName) {
+		this.itemImageName = itemImageName;
+	}
+
 	
 
 
