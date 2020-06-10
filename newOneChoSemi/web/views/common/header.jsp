@@ -6,16 +6,16 @@
 	String userNo = "";
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
-		System.out.println("로그인 유저 정보 : " + loginUser);
+		/* System.out.println("로그인 유저 정보 : " + loginUser); */
 		if(loginUser == null){
 			result = true;
 		} else {
 			userNo = loginUser.getMemberNo();
-			System.out.println("userNo " + userNo);
+			/* System.out.println("userNo " + userNo); */
 			adminChk = loginUser.getMemberAdmin();
 			result = false;
 		}
-		System.out.println("result " + result);
+		/* System.out.println("result " + result); */
 	}
 %>
 <!DOCTYPE html>
@@ -292,12 +292,13 @@
 		   <nav class="navbar navbar-expand navbar-light" id="navbar-top">
 		        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		            <ul class="navbar-nav ml-auto">
-		            	<li class="nav-item">
-							<label><%=loginUser.getMemberName() %>님의 방문을 환영합니다.</label>
+		            	<li class="nav-item" style="margin-top:8px">
+							<a><%=loginUser.getMemberName() %>님의 방문을 환영합니다.</a>
 						</li>
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
-		                    <a class="nav-link" style="cursor: pointer" href="#">관리자 페이지</a>
+		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/views/admin/itemInsertForm.jsp">
+		                   	관리자 페이지</a>
 		                </li>
 		                <%} %>
 		                <li class="nav-item">

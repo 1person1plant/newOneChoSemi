@@ -214,6 +214,9 @@
 				</fieldset>
 
 			</div>
+			<script>
+				
+			</script>
 
 			<%@ include file="../common/footer.jsp"%>
 </body>

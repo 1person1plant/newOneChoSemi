@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		
 		Member member = new Member(id, pwd);
 		
-		System.out.println("LoginServlet 아이디/비번 : " + id + " / " + pwd);
+//		System.out.println("LoginServlet 아이디/비번 : " + id + " / " + pwd);
 		
 		Member loginUser = new MemberService().loginMember(member);
 		
@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			String adminChk = loginUser.getMemberAdmin();
-			System.out.println("serv "+ adminChk);
+//			System.out.println("LoginServlet 관리자 확인 : "+ adminChk);
 			
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("admin", adminChk);

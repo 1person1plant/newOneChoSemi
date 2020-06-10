@@ -2,8 +2,17 @@
     pageEncoding="UTF-8" import="member.model.vo.Rank, cartList.model.vo.Cart, java.util.ArrayList"%>
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
-	System.out.println("주문 페이지 카트 정보 : " + cartList);
+	//System.out.println("주문 페이지 카트 정보 : " + cartList);
 	Rank rankDetail = (Rank)request.getAttribute("rankDetail");
+	int totalPrice = 0;
+	int totalDiscount = 0;
+	for(int i = 0 ; i < cartList.size() ; i++){
+		totalPrice += cartList.get(i).getItemPrice();
+		totalDiscount += cartList.get(i).getItemDiscount();
+	System.out.println("totalDiscount" + i + " : " + totalDiscount);
+	}
+	System.out.println("totalPrice : " + totalPrice);
+	System.out.println("totalDiscount : " + totalDiscount);
 %>
 <!DOCTYPE html>
 <html>
@@ -127,6 +136,10 @@
 
     .orderinfo-buyer td:last-child {
         text-align: right;
+    }
+    .orderinfo-buyer .buyer_phone1:after,
+    .orderinfo-buyer .buyer_phone2:after{
+    	content: " - ";
     }
 
     /* 배송지 정보 */
@@ -399,45 +412,6 @@
         transition: all .30s ease .35s;
     }
 </style>
-<!-- data sample -->
-<script>
-    // 상품 정보
-    var orderItem_img = "<%=request.getContextPath() %>/images/고무나무.jpg";
-    var orderItem_title = "멜라닌고무나무 라탄바구니 세트";
-    var orderItem_count = "1";
-    var orderItem_price = "32000";
-
-    // 구매자 정보
-    var buyer_name = "홍길동";
-    var buyer_phone1 = "010";
-    var buyer_phone2 = "1234";
-    var buyer_phone3 = "5678";
-    var buyer_postcode = "12345";
-    var buyer_address = "서울시 강남구 태혜란로";
-    var buyer_detailAddress = "123-1 201호";
-
-    // 유저 보유 포인트
-    var orderpayment_price = Number("30000");
-    var orderpayment_discount = Number("2500");
-    var user_maxPoint = Number("2000");
-    // 유저 포인트 사용 최대치
-    var user_pointSpendCap = Number("5000");
-    // 사용 가능 포인트 최대치 계산
-    var userAvailablePoints = 0;
-    if(user_maxPoint > user_pointSpendCap) {
-        userAvailablePoints = user_pointSpendCap;
-    } else {
-        userAvailablePoints = user_maxPoint;
-    }
-    // 배송비 관련
-    var orderpayment_point = 0;
-    var Additional = false;
-    var delivery = Number("2500");
-    var orderpayment_total = 0;
-
-    var calculate_comp = true;
-               
-</script>
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
@@ -595,44 +569,7 @@
 	                </tfoot>
 	            </tbody>
 	        </table> <!-- 배송지 정보 끝 -->
-	
-	        <!-- 주문고객과 동일 스크립트 -->
-	        <script>
-	            $(".order_confirm_switch").change(function(){
-	                var result = $(".order_confirm_switch").prop("checked");
-	                if(result){
-	                    $("#recipient_name").val(buyer_name);
-	                    $("#recipient_phone1").val(buyer_phone1);
-	                    $("#recipient_phone2").val(buyer_phone2);
-	                    $("#recipient_phone3").val(buyer_phone3);
-	                    $("#recipient_postcode").val(buyer_postcode);
-	                    $("#recipient_address").val(buyer_address);
-	                    $("#recipient_detailAddress").val(buyer_detailAddress);
-	                    recipient_name_check();
-	                    recipient_phone_check();
-	                    recipient_address_check();
-	                } else {
-	                    $("#recipient_name").val("");
-	                    $("#recipient_phone1").val("010");
-	                    $("#recipient_phone2").val("");
-	                    $("#recipient_phone3").val("");
-	                    $("#recipient_postcode").val("");
-	                    $("#recipient_address").val("");
-	                    $("#recipient_detailAddress").val("");
-	                    recipient_name_check();
-	                    recipient_phone_check();
-	                    recipient_address_check();
-	                }
-	                calculate_comp = true;
-	                Calculate();
-	            });
-	            $("#recipient_name, #recipient_phone, #recipient_postcode, #recipient_address, #recipient_detailAddress").change(function(){
-	                $(".order_confirm_switch").prop("checked",false);
-	                calculate_comp = true;
-	                Calculate();
-	            });
-	        </script><!-- 주문고객과 동일 스크립트 끝 -->
-	
+	        
 	        <!-- 배송지정보 필수 입력 스크립트 -->
 	        <script>
 	            // .orderinfo-Recipient tbody td:first-child i:first-child
@@ -648,9 +585,11 @@
 	            // 이름 입력
 	            function recipient_name_check(){
 	                if($("#recipient_name").val() != ""){
+	                	// 수령자 이름 있음
 	                    $(".recipient_name_facheck").css("display","none");
 	                    $(".recipient_name_faseedling").css("display","inline");
 	                } else {
+	                	// 수령자 이름 없음
 	                    $(".recipient_name_facheck").css("display","inline");
 	                    $(".recipient_name_faseedling").css("display","none");
 	                }
@@ -658,9 +597,11 @@
 	            // 전화번호 입력
 	            function recipient_phone_check(){
 	                if($("#recipient_phone2").val() != "" && $("#recipient_phone3").val() != ""){
+	                	// 전화번호 값 전부 있음
 	                    $(".recipient_phone_facheck").css("display","none");
 	                    $(".recipient_phone_faseedling").css("display","inline");
 	                } else {
+	                	// 전화번호 값 빈 값 있음
 	                    $(".recipient_phone_facheck").css("display","inline");
 	                    $(".recipient_phone_faseedling").css("display","none");
 	                }
@@ -668,9 +609,11 @@
 	            // 주소 입력
 	            function recipient_address_check(){
 	                if($("#recipient_postcode").val() != "" && $("#recipient_address").val() != "" && $("#recipient_detailAddress").val() != ""){
+	                	// 주소 입력 값 전부 있음
 	                    $(".recipient_address_facheck").css("display","none");
 	                    $(".recipient_address_faseedling").css("display","inline");
 	                } else {
+	                	// 주소 입력 빈값 있음
 	                    $(".recipient_address_facheck").css("display","inline");
 	                    $(".recipient_address_faseedling").css("display","none");
 	                }
@@ -835,13 +778,14 @@
 	                                    - orderpayment_discount
 	                                    - orderpayment_point
 	                $("#orderpayment_total").text(orderpayment_total);
-	                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*0.01);
+	                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100));
 	                calculate_comp = false;
 	            }
 	        }
+	        // 더미값 계산 (차후 없어질꺼임)
 	        $(function(){
 	            var orderpayment_delivery = Number(delivery);
-	            var orderpayment_userPoint = Number(user_maxPoint);
+	            var orderpayment_userPoint = Number(user_point);
 	            $("#orderpayment_price").text(orderpayment_price);
 	            $("#orderpayment_delivery").text(orderpayment_delivery);
 	            $("#orderpayment_discount").text(orderpayment_discount);
@@ -903,22 +847,16 @@
 	            </tbody>
 	            <tfoot>
 	                <tr>
-	                    <td colspan="4">
-	                        은행 : 농협<br>
-	                        계좌번호 : 123-123456-335<br>
-	                        입급 기한 : 2020년 6월 22일 23:59:59
+                    	<td colspan="4">
+                        	<p>
+	                        	은행 : 농협<br>
+								계좌번호 : 123-123456-335<br>
+								입급 기한 : 2020년 6월 22일 23:59:59
+							</p>
 	                    </td>
 	                </tr>
 	            </tfoot>
 	        </table>
-	        <script>
-	            $(function(){
-	            //   $('[data-toggle="tooltip1"]').tooltip();   
-	            $('[data-toggle="tooltip2"]').tooltip();   
-	            $('[data-toggle="tooltip3"]').tooltip();   
-	            $('[data-toggle="tooltip4"]').tooltip();   
-	            });
-	        </script>
 	    </div> <!-- 결제 방법 끝 -->
 	
 	
@@ -959,28 +897,141 @@
 	    </div> <!-- 결제 약관 끝 -->
 	
 	    <div class="orderEnd">
-	        <button class="orderEnd_cancel btn btn-info" onclick="orderEnd_cancel()">취소하기</button>
-	        <button id="order_confirm" class="btn btn-outline-info">결제하기</button>
+	        <button type="button" class="orderEnd_cancel btn btn-info" onclick="orderEnd_cancel()">취소하기</button>
+	        <button type="button" id="order_confirm" class="btn btn-outline-info">결제하기</button>
 	    </div>
 	    <script>
 	        function orderEnd_cancel() {
 	            var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
 	            if(result){
-	                location.replace("cart.html");
+	                location.replace("index.jsp");
 	            }
 	        }
 	        
 	        $("#order_confirm").click(function(){
-	            var orderterm1 = document.getElementById("inP-cBox1");
-	            var orderterm2 = document.getElementById("inP-cBox2");
-	            if(orderterm1.checked == true && orderterm2.checked == true){
-	                $(location).attr("href","views/cart/receipt.jsp");
-	            } else {
+                if($("#recipient_name").val() != "") {
+	            	alert("수령자 이름을 입력해 주세요.");
+                } else if($("#recipient_phone2").val() != "" && $("#recipient_phone3").val() != "") {
+	            	alert("전화 번호를 입력해 주세요.");
+	            } else if($("#recipient_postcode").val() != "" && $("#recipient_address").val() != "" && $("#recipient_detailAddress").val() != ""){
+	            	alert("주소를 입력해 주세요.");
+	            } else if(document.getElementById("inP-cBox1").checked != true && document.getElementById("inP-cBox2").checked != true) {
 	                alert("약관에 동의해 주세요.");
+	            } else {
+
+
+	            	$("#orderCompForm").submit();
 	            }
 	        });
 	    </script>
 	</div>
+	
+		
+	<!-- data sample -->
+	<script>
+	    // 구매자 정보
+	    var buyer_name = $(".buyer_name").text();	// 이름
+	    var buyer_phone1 = $(".buyer_phone1").text();	// 전화번호1
+	    var buyer_phone2 = $(".buyer_phone2").text();	// 전화번호2
+	    var buyer_phone3 = $(".buyer_phone3").text();	// 전화번호3
+	    var buyer_postcode = $(".buyer_postcode").text();	// 우편번호
+	    var buyer_address = $(".buyer_address").text();	// 주소
+	    var buyer_detailAddress = $(".buyer_detailAddress").text();	// 상세 주소
+	
+	    var totalPrice = <%=totalPrice%>;	// 구매 총가격
+	    var totalDiscount = <%=totalDiscount%>;	// 구매 총 할인
+	    
+	    // 유저 보유 포인트
+	    var orderpayment_price = totalPrice;
+	    var orderpayment_discount = totalDiscount;
+	    // 구매자 보유 포인트
+	    var user_point = Number(<%=loginUser.getMemberPoint()%>);
+	    // 유저 포인트 사용 최대치
+	    var user_pointSpendCap = Number(<%=rankDetail.getRankPonintCap()%>);
+	    // 사용 가능 포인트 최대치 계산
+	    var userAvailablePoints = 0;
+	    if(user_point > user_pointSpendCap) {
+	        userAvailablePoints = user_pointSpendCap;
+	    } else {
+	        userAvailablePoints = user_point;
+	    }
+	    // 배송비 관련
+	    var orderpayment_point = 0;	// 초기 사용 포인트 값
+	    var additional = false;	// 추가 배송비 지역 어부
+	    var delivery = Number("2500");	// 기본 배송비
+	    var additionalDelivery = Number("5000");
+	    var orderpayment_total = 0;
+	
+	    var calculate_comp = true;
+
+		// 주문고객과 동일 스크립트
+        $(".order_confirm_switch").change(function(){
+            var result = $(".order_confirm_switch").prop("checked");
+            if(result){
+                $("#recipient_name").val(buyer_name);
+                $("#recipient_phone1").val(buyer_phone1).prop("selected",true);
+                $("#recipient_phone2").val(buyer_phone2);
+                $("#recipient_phone3").val(buyer_phone3);
+                $("#recipient_postcode").val(buyer_postcode);
+                $("#recipient_address").val(buyer_address);
+                $("#recipient_detailAddress").val(buyer_detailAddress);
+                recipient_name_check();
+                recipient_phone_check();
+                recipient_address_check();
+            } else {
+                $("#recipient_name").val("");
+                $("#recipient_phone1").val("010");
+                $("#recipient_phone2").val("");
+                $("#recipient_phone3").val("");
+                $("#recipient_postcode").val("");
+                $("#recipient_address").val("");
+                $("#recipient_detailAddress").val("");
+                recipient_name_check();
+                recipient_phone_check();
+                recipient_address_check();
+            }
+            calculate_comp = true;
+            Calculate();
+        });
+        $("#recipient_name, #recipient_phone, #recipient_postcode, #recipient_address, #recipient_detailAddress").change(function(){
+            $(".order_confirm_switch").prop("checked",false);
+            calculate_comp = true;
+            Calculate();
+        });
+    </script><!-- 주문고객과 동일 스크립트 끝 -->
+	
+	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
+	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
+	<div>
+		<input type="hidden" id="userNo" value="<%=userNo %>">
+		<!-- 상품정보 -->
+		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
+		<div class="orderComp_item<%=i%>">
+			<input type="hidden" name="comp_iNo" value="<%=cartList.get(i).getItemNo() %>">
+			<input type="hidden" name="comp_iName" value="<%=cartList.get(i).getItemName() %>">
+			<input type="hidden" name="comp_imgName" value="<%=cartList.get(i).getImageName() %>">
+			<input type="hidden" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
+			<input type="hidden" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
+		</div>
+        <%} %>
+		<!-- 수령자 정보 -->
+		<input type="hidden" name="comp_rName" value="">
+		<input type="hidden" name="comp_rPhone1" value="">
+		<input type="hidden" name="comp_rPhone2" value="">
+		<input type="hidden" name="comp_rPhone3" value="">
+		<input type="hidden" name="comp_rPostcode" value="">
+		<input type="hidden" name="comp_rAddress1" value="">
+		<input type="hidden" name="comp_rAddress2" value="">
+		<input type="hidden" name="comp_rMemo" value="">
+		<!-- 결제 정보 -->
+		<input type="hidden" name="comp_pPrice" value="">
+		<input type="hidden" name="comp_pDelivery" value="">
+		<input type="hidden" name="comp_pDiscount" value="">
+		<input type="hidden" name="comp_pPoint" value="">
+		<input type="hidden" name="comp_pAddPoint" value="">
+		<input type="hidden" name="comp_pTotal" value="">
+	</div>
+	</form>
 
 
 <%@ include file="../common/footer.jsp" %>

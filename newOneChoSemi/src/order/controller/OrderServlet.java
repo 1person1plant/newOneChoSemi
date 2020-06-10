@@ -2,6 +2,7 @@ package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,50 +34,41 @@ public class OrderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userNo = request.getParameter("userNo");
-		System.out.println("OrderServlet : " + userNo);
+//		System.out.println("OrderServlet : " + userNo);
 		
-		// TODO 왜 cartNo가 넘어오지 않는가
-		
-//		String cartNo1 = request.getParameter("cartNo1");
-//		String cartCount1 = request.getParameter("cartCount1");
-//		String cartNo2 = request.getParameter("cartNo2");
-//		String cartCount2 = request.getParameter("cartCount2");
-//		System.out.println("cartNo1 : " + cartNo1);
-//		System.out.println("cartCount1 : " + cartCount1);
-//		System.out.println("cartNo2 : " + cartNo2);
-//		System.out.println("cartCount2 : " + cartCount2);
-		
-		// 멤버 정보는 세션에
-		
-		// 카트 정보
-		ArrayList<Cart> cartList = new CartService().cartList(userNo);
-		System.out.println("cartList.size() : " + cartList.size());
-//		for(int i = 0 ; i < cartList.size() ; i++) {
-//			String cartNo = (String)request.getParameter("cartNo" + i);
-////			if(request.getParameter("cartCount" + i) != null || request.getParameter("cartCount" + i) != "") {
-////				int cartCount = Integer.valueOf(request.getParameter("cartCount" + i).trim());
-////			}
-//			System.out.println("cartNo : " + cartNo);
-//			if(cartNo != "on") {
-//				cartList.remove(i);
-//			} else {
-////				Cart temp = cartList.get(i);
-////				temp.setCartListCount(cartCount);
-////				cartList.set(i, temp);
-//			}
-//			System.out.println("cartList : " + cartList);
-//		}
+		// 카트 페이지에서 가져온 구매 상품 정보
+		// 카트번호
+		String[] cartNoArr = request.getParameterValues("cartNo");
+		// 카트 상품 수량
+		String[] cartItCoArr = request.getParameterValues("cartItCo");
 
+		// cart.jps cart 폼태그 값 확인용
+//		System.out.println(Arrays.toString(cartNoArr));
+//		System.out.println(Arrays.toString(cartItCoArr));
+	
+		// 카트 정보
+		ArrayList<Cart> cartOrderList = new ArrayList<>();
+		for(int i = 0 ; i < cartNoArr.length ; i++) {
+			// cartOrderList 카트 번호와 상품 수량 저장
+			cartOrderList.add(new Cart(cartNoArr[i], Integer.valueOf(cartItCoArr[i])));
+		}
+//		System.out.println("OrderServlet cartOrderList : " + cartOrderList);
+
+		// 구매할 카트 정보 업데이트하고 구매할 카트만 가져오기
+		ArrayList<Cart> cartList = new CartService().cartOrderList(userNo, cartOrderList);
 		
+		System.out.println("OrderServlet 주문페이지 출력 전 cartList : " + cartList);
+		System.out.println("OrderServlet 주문페이지 출력 전 cartList.size() : " + cartList.size());
+
 		// 랭크 정보
 		Rank rankDetail = new RankService().rankDetail(userNo);
-		System.out.println("rankDetail : " + rankDetail);
+//		System.out.println("rankDetail : " + rankDetail);
 		
-		if(cartList != null && rankDetail != null) {
+		if(!cartList.isEmpty() && cartList != null && rankDetail != null) {
 			request.setAttribute("cartList", cartList);
 			request.setAttribute("rankDetail", rankDetail);
 			request.getRequestDispatcher("views/cart/order.jsp").forward(request, response);
-		}else {
+		} else {
 			request.setAttribute("msg", "주문 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
