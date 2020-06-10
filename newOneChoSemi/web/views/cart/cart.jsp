@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width" initial-scale="1">
+	<meta name="viewport" content="width=device-width" initial-scale="1">	
 	<title>Cho-당신을 위한 반려식물</title>
 	<!-- 타이틀 아이콘 -->
 	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
@@ -82,7 +82,6 @@
         padding: 10px 10px 10px 10px;
     }
     .carttable .emptyCart {
-        /* display: none; */
         height: 300px;
     }
     .carttable thead td:nth-child(1) {
@@ -287,34 +286,36 @@
 	<div class="container carttable-container">
 	    <div class="listhead">
 	        <h2>장바구니</h2>
-	        <h6>주문하실 상풍명 및 수량을 정확하게 확인해 주세요.</h3>
+	        <h3>주문하실 상풍명 및 수량을 정확하게 확인해 주세요.</h3>
 	    </div>
 	    <table class="carttable">
 	        <thead>
-	        <tr>
-	            <td><input type="checkbox" name="clearCart"></td>
-	            <td>전체</td>
-	            <td></td>
-	            <td></td>
-	            <td class="cart_total_count">0</td>
-	            <td><label for="allTrash"><input type="button" id="allTrash" class="trash"></input></label></td>
-	        </tr>
-	        <tr>
-	            <td></td>
-	            <td></td>
-	            <td>상품명</td>
-	            <td>수량</td>
-	            <td>상품금액</td>
-	            <td></td>
-	        </tr>
+		        <tr>
+					<td><input type="checkbox" name="clearCart"></td>
+					<td>전체</td>
+					<td></td>
+					<td></td>
+					<td class="cart_total_count">0</td>
+					<td><label for="allTrash"><input type="button" id="allTrash" class="trash"></input></label></td>
+		        </tr>
+		        <tr>
+		            <td></td>
+		            <td></td>
+		            <td>상품명</td>
+		            <td>수량</td>
+		            <td>상품금액</td>
+		            <td></td>
+		        </tr>
 	        </thead>
+	        <%if(cartList.isEmpty() || cartList.size() == 0) {%>
 	        <tbody>
-	        <%if(cartList.isEmpty()) {%>
 	            <tr>
-	                <td class="emptyCart" colspan="6">상품이 없습니다.</td>
+	                <td class="emptyCart" colspan="6" style="font-size:1.5rem">장바구니에 상품이 없습니다.</td>
 	            </tr>
+	        </tbody>
 	        <%} else { %>
 			        <%for(int i = 0 ; i < cartList.size() ; i++) {%>
+	        <tbody>
 	        		<tr>
 		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
 		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
@@ -324,8 +325,8 @@
 		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
 	        		</tr>
 		        	<%} %>
-	        <%} %>
 			</tbody>
+	        <%} %>
 	        <tfoot>
 	        <tr>
 	            <td colspan="6">

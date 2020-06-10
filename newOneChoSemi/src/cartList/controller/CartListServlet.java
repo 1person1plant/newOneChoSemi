@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cartList.model.service.CartService;
+import cartList.model.service.WishService;
 import cartList.model.vo.Cart;
+import cartList.model.vo.WishList;
 
 /**
  * Servlet implementation class CartListServlet
@@ -35,14 +37,19 @@ public class CartListServlet extends HttpServlet {
 //		System.out.println("CartListServlet : " + userNo);
 		
 		ArrayList<Cart> cartList = new CartService().cartList(userNo);
+		ArrayList<WishList> wishList = new WishService().wishList(userNo);
 
 //		System.out.println("CartListServlet cartList : " + cartList);
 //		System.out.println("cartList is empty? : " + cartList.isEmpty());
-		if(cartList != null) {
+		System.out.println("CartListServlet wishList : " + wishList);
+		System.out.println("wishList is empty? : " + wishList.isEmpty());
+		
+		if(cartList != null && wishList != null) {
 			request.setAttribute("cartList", cartList);
+			request.setAttribute("wishList", wishList);
 			request.getRequestDispatcher("views/cart/cart.jsp").forward(request, response);
-		}else {
-			request.setAttribute("msg", "카트 조회 실패!");
+		} else {
+			request.setAttribute("msg", "조회 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
