@@ -38,11 +38,12 @@ public class Item implements Serializable {
 	
 	
 	// 김경남 LIST들 담아주는 생성자
-	public Item(String itemNo, String itemName, String keywordName, int itemPrice, int itemDiscount, int itemStock, Date cDate,
+	public Item(String itemNo, String itemName, String itemKeywordNo, String keywordName, int itemPrice, int itemDiscount, int itemStock, Date cDate,
 			int itemSCount, int itemMax, String itemImagePath, String itemImageName) {
 		super();
 		this.itemNo = itemNo;
 		this.itemName = itemName;
+		this.itemKeywordNo = itemKeywordNo;
 		this.keywordName = keywordName;
 		this.itemPrice = itemPrice;
 		this.itemDiscount = itemDiscount;

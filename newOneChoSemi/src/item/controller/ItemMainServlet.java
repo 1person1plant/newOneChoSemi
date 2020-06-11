@@ -17,14 +17,14 @@ import item.model.vo.Pagination;
 /**
  * Servlet implementation class ItemListServlet
  */
-@WebServlet("/allPage.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/itemMain.it")
+public class ItemMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public ItemMainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -69,8 +69,6 @@ public class ItemListServlet extends HttpServlet {
 		
 		if(ultimatePage < endPage) {
 			endPage = ultimatePage;
-		}else if(currentPage < startPage) {
-			startPage = currentPage;
 		}
 		
 		Pagination pagination = new Pagination(currentPage, itemCount, howManyAtOnce, ultimatePage, startPage, endPage);
@@ -78,6 +76,7 @@ public class ItemListServlet extends HttpServlet {
 		ArrayList<Item> allList = itService.allList(currentPage, howManyAtOnce);
 		
 		request.setAttribute("pagination", pagination);
+		request.setAttribute("allList", allList);
 		// ALL PAGINATION END
 		
 		

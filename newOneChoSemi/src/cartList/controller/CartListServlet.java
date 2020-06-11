@@ -41,8 +41,8 @@ public class CartListServlet extends HttpServlet {
 
 //		System.out.println("CartListServlet cartList : " + cartList);
 //		System.out.println("cartList is empty? : " + cartList.isEmpty());
-		System.out.println("CartListServlet wishList : " + wishList);
-		System.out.println("wishList is empty? : " + wishList.isEmpty());
+//		System.out.println("CartListServlet wishList : " + wishList);
+//		System.out.println("wishList is empty? : " + wishList.isEmpty());
 		
 		if(cartList != null && wishList != null) {
 			request.setAttribute("cartList", cartList);

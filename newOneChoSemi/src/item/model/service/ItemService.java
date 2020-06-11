@@ -172,6 +172,7 @@ public class ItemService {
 		return items;
 	}
 
+
 	public int updateStock(ArrayList<Item> items) {
 		
 		Connection conn=getConnection();
@@ -191,5 +192,6 @@ public class ItemService {
 	}
 
 	
+
 
 }

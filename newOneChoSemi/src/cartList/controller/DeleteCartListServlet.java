@@ -1,7 +1,7 @@
-package member.controller;
+package cartList.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,48 +9,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
+import cartList.model.service.CartService;
+import cartList.model.vo.Cart;
 
 /**
- * Servlet implementation class JoinIdChk
+ * Servlet implementation class CartListDeleteServlet
  */
-@WebServlet("/joinIdChk.me")
-public class JoinIdChkServlet extends HttpServlet {
+@WebServlet("/deleteCartList.ca")
+public class DeleteCartListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinIdChkServlet() {
+    public DeleteCartListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
+		// TODO 카트 리스트 삭제 만드는 중
+
+		ArrayList<Cart> deleteCart = new ArrayList<>();
 		
-		int result = new MemberService().joinIdChkMember(userId);
+		int result = new CartService().deleteCartList(deleteCart);
 		
-		PrintWriter out = response.getWriter();
-		
-		if(result == 0) {
-			out.print("permit");
-		}else {
-			out.print("fail");
-		}
-		
-		out.flush();
-		out.close();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

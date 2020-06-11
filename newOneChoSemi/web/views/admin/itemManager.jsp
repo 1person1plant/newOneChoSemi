@@ -197,7 +197,7 @@
     <div class="col-10">
         <h1 style="margin-top: 30px;margin-bottom: 80px;">상품조회/수정</h1>
         
-        <div class="row"> 
+        <div class="row">    
             
             <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/search.it">
                 

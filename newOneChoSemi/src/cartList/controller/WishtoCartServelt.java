@@ -25,7 +25,9 @@ public class WishtoCartServelt extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO 카트 위시리스트에서 카트리스트 추가 
+
+		
+		
 	}
 
 	/**

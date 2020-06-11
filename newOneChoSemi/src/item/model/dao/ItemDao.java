@@ -35,6 +35,7 @@ public class ItemDao {
 			while(rset.next()) {
 				Item it = new Item(rset.getString("item_no"),
 								   rset.getString("item_name"),
+								   rset.getString("keyword_no"),
 								   rset.getString("keyword_name"),
 								   rset.getInt("item_price"),
 								   rset.getInt("item_discount"),
@@ -76,6 +77,7 @@ public class ItemDao {
 			while(rset.next()) {
 				Item it = new Item(rset.getString("item_no"),
 								   rset.getString("item_name"),
+								   rset.getString("keyword_no"),
 								   rset.getString("keyword_name"),
 								   rset.getInt("item_price"),
 								   rset.getInt("item_discount"),
@@ -148,6 +150,7 @@ public class ItemDao {
 			while(rset.next()) {
 				Item it = new Item(rset.getString("item_no"),
 								   rset.getString("item_name"),
+								   rset.getString("keyword_no"),
 								   rset.getString("keyword_name"),
 								   rset.getInt("item_price"),
 								   rset.getInt("item_discount"),

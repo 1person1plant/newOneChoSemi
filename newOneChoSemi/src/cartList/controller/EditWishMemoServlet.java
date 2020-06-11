@@ -1,4 +1,4 @@
-package member.controller;
+package cartList.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,36 +9,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
+import com.google.gson.Gson;
+
+import cartList.model.service.WishService;
+import cartList.model.vo.WishList;
 
 /**
- * Servlet implementation class JoinIdChk
+ * Servlet implementation class EditWishMemoServlet
  */
-@WebServlet("/joinIdChk.me")
-public class JoinIdChkServlet extends HttpServlet {
+@WebServlet("/editWMemo.wi")
+public class EditWishMemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinIdChkServlet() {
+    public EditWishMemoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
+		String wishNo = request.getParameter("wishNo");
+		String content = request.getParameter("content");
 		
-		int result = new MemberService().joinIdChkMember(userId);
+		WishList wi = new WishList(wishNo, content); 
+		
+//		System.out.println("EditWishMemoServlet : " + wishNo + ", " + content);
+		
+		int result = new WishService().updateWMemo(wi);
 		
 		PrintWriter out = response.getWriter();
 		
-		if(result == 0) {
+		if(result > 0) {
 			out.print("permit");
-		}else {
+		} else {
 			out.print("fail");
 		}
 		
@@ -50,7 +57,6 @@ public class JoinIdChkServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

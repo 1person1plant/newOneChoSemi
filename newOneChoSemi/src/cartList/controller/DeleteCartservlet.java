@@ -1,23 +1,27 @@
 package cartList.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cartList.model.service.CartService;
+
 /**
- * Servlet implementation class WishDelelteServlet
+ * Servlet implementation class DeleteCartservlet
  */
-@WebServlet("/wishDel.wi")
-public class WishDelelteServlet extends HttpServlet {
+@WebServlet("/deleteCart.ca")
+public class DeleteCartservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishDelelteServlet() {
+    public DeleteCartservlet() {
         super();
     }
 
@@ -25,7 +29,21 @@ public class WishDelelteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO 카트리스트에서 즐겨찾기 삭제
+		String cartNo = request.getParameter("cartNo");
+		
+		int result = new CartService().deleteCart(cartNo);
+		
+		PrintWriter out = response.getWriter();
+//		System.out.println("개별 항목 삭제 : " + result);
+		
+		if(result > 0) {
+			out.print("permit");
+		} else {
+			out.print("fail");
+		}
+		
+		out.flush();
+		out.close();
 	}
 
 	/**

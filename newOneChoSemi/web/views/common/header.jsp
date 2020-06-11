@@ -320,7 +320,7 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-home"></i> HOME</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="goAll();">ALL</a>
@@ -406,7 +406,7 @@
         	<%if(result){%>
     			document.getElementById('loginEx').style.display='block';
 			<%} else {%>
-        		location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp";
 	   		<%} %>
 		}
         function goCart(){	// 만드는 중...
@@ -437,7 +437,19 @@
 		
 		// 메인 페이지로 가는 펑션
 		function goAll() {
-			location.href="<%=request.getContextPath()%>/allPage.it";
+			location.href="<%=request.getContextPath()%>/itemMain.it";
+		}
+		// 흙에 사는 친구들 페이지로 가는 펑션
+		function goSoil() {
+			location.href="<%=request.getContextPath()%>/itemSoil.it";
+		}
+		// 물에 사는 친구들 페이지로 가는 펑션
+		function goWater() {
+			location.href="<%=request.getContextPath()%>/itemWater.it";
+		}
+		// 공중에 사는 친구들 페이지로 가는 펑션
+		function goHanging() {
+			location.href="<%=request.getContextPath()%>/itemHanging.it";
 		}
         
     </script>

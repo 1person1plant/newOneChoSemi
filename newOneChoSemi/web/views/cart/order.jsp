@@ -631,10 +631,15 @@
 	                }else{
 	                    $("#recipient_request_count").css("color","red");
 	                }
-	            });
-	            $("#recipient_request").keydown(function(){
+	            }).keydown(function(){
 	                var inputLength = $(this).val().length;
 	                $("#recipient_request_count").text(inputLength);
+	                var remain = 149 - inputLength;
+	                if(remain>=0){
+	                    $("#recipient_request_count").css("color","black");
+	                }else{
+	                    $("#recipient_request_count").css("color","red");
+	                }
 	            });
 	        </script> <!-- 요청사항 스크립트  끝 -->
 	

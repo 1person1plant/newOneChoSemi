@@ -109,7 +109,7 @@
 													</p>
 												</div>
 												<div class="test col-2" style="margin-left: -70px">
-													<button type="button" class="btn btn-default" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
+													<button class="btn btn-default" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
 												</div>
 											</div>
 										</th>
@@ -221,7 +221,7 @@
 												<div class="test col-8">
 													<div class="test col-8">
 														<div class="row">
-															<input id="email1" name="memberEmail1" type="text" class="form-control" aria-describedby="basic-addon1" required style="width: 150px;">
+															<input id="email1" name="memberEmail1" type="text" class="form-control" aria-describedby="basic-addon1" required style="width: 150px;" maxlength="16">
 															<p class="ara-label-text">&nbsp;@&nbsp;</p>
 															<select id="email2" name="memberEmail2" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
 																<option value="@naver.com">naver.com</option>
@@ -292,7 +292,7 @@
 						<h4><strong>전체 동의</strong></h4>
 		
 						<div class="test col-12">
-							<input onclick="chkAll();" class="allChk" type="checkbox" id="allChk"> <label for="allChk"><strong>이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다.</strong></label>
+							<input onclick="chkAll();" class="allChk" type="checkbox" id="allChk" name="allChk"> <label for="allChk"><strong>이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다.</strong></label>
 						</div>
 						<br><br>
 
@@ -305,7 +305,7 @@
 										<div class="row">
 											<div align="left" class="test col-10" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">이용약관 동의</div>
 											<div align="right" class="test col-2">
-												<label for="checkbox1"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox1">
+												<label for="checkbox1"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox1" name="chkBox">
 											</div>
 										</div>
 									</div>
@@ -335,7 +335,7 @@
 										<div class="row">
 											<div align="left" class="test col-10" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">개인정보 수집 및 이용 동의</div>
 											<div align="right" class="test col-2">
-												<label for="checkbox2"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox2">
+												<label for="checkbox2"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox2" name="chkBox">
 											</div>
 										</div>
 									</div>
@@ -354,7 +354,7 @@
 										<div class="row">
 											<div align="left" class="test col-10" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">[선택] 쇼핑정보 수신 동의</div>
 											<div align="right" class="test col-2">
-												<label for="checkbox3"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox3">
+												<label for="checkbox3"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox3" name="chkBox">
 											</div>
 										</div>
 									</div>
@@ -373,7 +373,7 @@
 						
 						<br><br>
 						<div class="test col-12" align="center">
-							<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;">회 원 가 입</button>&nbsp; 
+							<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;" onclick="joinSubmit();">회 원 가 입</button>&nbsp; 
 							<input type="reset" value="회 원 가 입 취소" class="btn btn-default col-3" onclick="goMain();" style="background: #F2F1DF; color: black;">
 						</div>
 					</div>
@@ -462,7 +462,40 @@
 		</script>
 
 		<!-- 체크박스 클릭 이벤트 리스너 -->
-		<script>		
+		<script>
+			function oneCheck(a){
+	    		var allChkBox = $("[name=allChk]");
+	    		var chkBoxName = $(a).attr("name");
+	 
+	    		if($(a).prop("checked")){
+	        		checkBoxLength = $("[name="+ chkBoxName +"]").length;
+	         		//전체체크박스 수(모두동의하기 체크박스 제외)
+	        		checkedLength = $("[name="+ chkBoxName +"]:checked").length;
+	        		//체크된 체크박스 수 
+	        		if(checkBoxLength == checkedLength){
+						allChkBox.prop("checked", true);
+	            		//전체체크박스수 == 체크된 체크박스 수 같다면 모두체크
+	 				} else {
+	            	allChkBox.prop("checked", false);
+					}
+	    		} else {
+	        		allChkBox.prop("checked", false);
+	    		}
+			}
+	 
+			$(function(){
+	    		$("[name=allChk]").click(function(){
+	        		allCheck(this);
+	        		//모두동의하기 체크박스 클릭시
+	    		});
+	    		$("[name=chkBox]").each(function(){
+	        		$(this).click(function(){
+	           	 		oneCheck(this);
+	        		});
+	    		});
+			});
+
+
 			// 동의함 체크박스 
 			function chkAction() {
 			// debugger;  // 콘솔창에서 실시간으로 테스트 해볼수 있는 작업(꿀팁)
@@ -493,7 +526,7 @@
         	            chk[i].previousElementSibling.innerText = '동의 안함';
 					}
 				}
-			}
+			}   
 		</script>
 		<!-- 체크박스 클릭 이벤트 리스너 -->
 
@@ -516,13 +549,17 @@
 				});
 
 				// 비밀번호 일치 여부
-				$("#pwdChk").change(function () {
-					if ($("#pwd").val() != $(this).val()) {
-						$("#pwdresult").html("비밀번호가 일치하지 않습니다.").css("color", "red");
-						$(this).val('');
-          				$(this).focus();
-					} else {
-						$("#pwdresult").html("비밀번호가 일치합니다.").css("color", "blue");
+				$('#pwd').keyup(function(){
+					$('#pwdresult').html('');
+				});
+				
+				$('#pwdChk').keyup(function(){
+					if($('#pwd').val() != $('#pwdChk').val()){
+						$('#pwdresult').html('비밀번호가 일치하지 않습니다.');
+						$('#pwdresult').attr('color', 'red');
+					} else{
+						$('#pwdresult').html('비밀번호가 일치합니다.');
+						$('#pwdresult').attr('color', 'blue');
 					}
 				});
                 
@@ -559,18 +596,33 @@
 		<!-- 정규 표현식 스크립트 -->
 
 		<script>
-			$("#insertMember").click(
-				function() {
-					var chkBox1 = document.getElementById("checkbox1");
-					var chkBox2 = document.getElementById("checkbox2");
-					if (checkbox1.checked == true && checkbox2.checked == true) {
-						$("#insertMember").submit();
-					} else {
-						alert("약관에 동의해 주세요.");
-					}
-			});
-			
-
+			// 회원가입 폼에 빈칸이 있을 시 submit 안되게 하고 알림창으로 알려주기
+			function joinSubmit() {
+				var chkAll = $(".allChk");
+				var chk = $(".chkbox");
+				
+				console.log("뭐야");
+				if( $("#userid").val() == null || $("#userid").val() == ""){
+  					alert('아이디를 입력해주세요');
+				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
+					alert('비밀번호를 입력해주세요');
+				}else if( $("#pwdChk").val() == null || $("#pwdChk").val() == "" ){
+					alert('비밀번호를 다시 한번 더 입력해주세요');
+				} else if( $("#name").val() == null || $("#name").val() == "" ){
+					alert('이름을 입력해주세요');
+				} else if( $("#phone2").val() == null || $("#phone2").val() == "" ){
+					alert('핸드폰 번호를 입력해주세요');
+				} else if( $("#phone3").val() == null || $("#phone3").val() == "" ){
+					alert('핸드폰 번호를 입력해주세요');
+				} else if( $("#email1").val() == null || $("#email1").val() == "" ){
+					alert('이메일을 입력해주세요');
+				} else if( chk[0].checked != true || chk[1].checked != true) {
+					alert('약관에 동의를 해주세요');
+				} else{
+  					$('#joinForm').submit();
+				}
+			}
+		
 			// 입력폼 엔터키 눌렀을때 submit 막기
 			document.addEventListener('keydown', function(event) {
 				if (event.keyCode === 13) {
@@ -587,8 +639,31 @@
 			}
 				
 			// 아이디 중복체크
-        	function joinIdChk() {
-					
+        	function joinIdChk(){
+				var userId = $("#joinForm input[name='memberId']");
+			
+				if(userId.val().length<4){
+					alert("최소 영문소문자/숫자 4자 이상이어야 합니다.");
+					userId.focus();
+				}else{
+					$.ajax({
+						url:"<%=request.getContextPath()%>/joinIdChk.me",
+						type:"post",
+						data:{userId:userId.val()},
+						success:function(data){
+							if(data=="permit"){
+								alert("아이디를 사용 하실 수 있습니다.");
+							}else{
+								alert("아이디가 중복됩니다. 다시 입력해주세요");
+								userId.focus();
+								$("input[name='memberId']").val('');	// 입력값 초기화
+							}
+						},
+						error:function(request,status,error){
+					    	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+				}
 			}
 		</script>
 		
