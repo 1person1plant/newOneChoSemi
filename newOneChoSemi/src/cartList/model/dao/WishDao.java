@@ -73,4 +73,25 @@ public class WishDao {
 		return result;
 	}
 
+	public int deleteWish(Connection conn, String wishNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+	      
+		String query = "DELETE FROM WISHLIST WHERE WISHLIST_NO = ?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, wishNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

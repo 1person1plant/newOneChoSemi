@@ -76,6 +76,7 @@ public class MemberDao {
 		
 		return loginUser;
 	}
+	
 	public int memberUpdate(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -203,8 +204,27 @@ public class MemberDao {
 		}finally {
 			close(pstmt);
 		}
-		
 //		System.out.println("탈퇴dao"+result);
+		return result;
+	}
+	
+	public int reasonMember(Connection conn, Member memberReason) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE MEMBER SET MEMBER_EXIT=?,MEMBER_STATUS='Y' WHERE MEMBER_ID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberReason.getMemberExit()); 
+			pstmt.setString(2, memberReason.getMemberId()); 
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
 		return result;
 	}
 	
@@ -268,8 +288,32 @@ public class MemberDao {
 		 * <br> Count 쿼리문을 통해서 0이면 중복이 없고 1이면 중복이 있다만 체크
 		 * @return
 		 */
-		public int joinIdChkMember(Connection conn, String id) {
-			return 0;
+		public int joinIdChkMember(Connection conn, String userId) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			int result = 0;
+			
+			String query = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1,userId);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					result = rs.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+			
+			return result;
 		}
 		
 		/**

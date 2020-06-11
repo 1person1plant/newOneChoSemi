@@ -1,5 +1,12 @@
+<%@page import="member.model.vo.MyWishList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <% MyWishList mwl = (MyWishList)request.getAttribute("mwl"); 
+    	String mwlNo = mwl.getWishlistNo();
+		String mwlPath = mwl.getImagePath();
+    	String mwlItemName = mwl.getItemName();
+    	String mwlMemo = mwl.getWishlistMemo();
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,6 +110,7 @@
                         <thead>
                             <tr><br>
                                 <th colspan="9" scope="col" style='border-bottom:2px solid black'>
+                                <input style="display:none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
                                     <h1>위시리스트</h1>
                                 </th>
                             </tr>
@@ -116,40 +124,25 @@
                                 <th colspan="2" class='wishmenu'>기타</th>
                             </tr>
                             <tr style='border-bottom:2px solid black'>
-                                <td colspan='1' class="mt-2">???</td>
-                                <td colspan="2" class='mt-2'><a href='#'><img src='flo.jpg' width='150px' height='150px'></a></td>
-                                <td scope="row" colspan='2' class="mt-2">???</td>
-                                <td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' size="resize:none;" disabled></textarea><br>
+                                <td colspan='1' class="mt-2"><%=mwlNo%></td>
+                                <td colspan="2" class='mt-2'><a href='<%=mwlPath%>'><img src='<%=mwlPath%>' width='150px' height='150px'></a></td>
+                                <td scope="row" colspan='2' class="mt-2"><%=mwlItemName%></td>
+                                <td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' size="resize:none;" disabled><%=mwlMemo%></textarea><br>
                                     <p id='countp'><span id='counter1'>0</span>/100</p>
                                 </td>
-                                <td id='orderbutton' colspan="2"><button type='button'
+                                <td id='orderbutton' colspan="2"><input type='button'
                                             class='button1' id='changeM'>메모수정</button><br>
                                     <a href='main.jsp' id='delete'><button type='button'
                                             class='button1'>상품구매</button></a><br>
                                     <a href='main.jsp' id='delete'><button type='button'
                                             class='button1'>상품삭제</button></a></td>
                             </tr>
-                            <tr style='border-bottom:2px solid black'>
-                                <td colspan='1' class="mt-2">???</td>
-                                <td colspan="2" class='mt-2'><a href='#'><img src='flo.jpg' width='150px' height='150px'></a></td>
-                                <td scope="row" colspan='2' class="mt-2">???</td>
-                                <td colspan="2" class='mt-2'><textarea id='memo2' cols='25' rows='5' disabled size="resize:none;"></textarea><br>
-                                    <p id='countp'><span id='counter2'>0</span>/100</p>
-                                </td>
-                                <td id='orderbutton' colspan="2"><a href='main.jsp' id='delete'><button type='button'
-                                            class='button1'>메모수정</button></a><br>
-                                    <a href='main.jsp' id='delete'><button type='button'
-                                            class='button1'>상품구매</button></a><br>
-                                    <a href='main.jsp' id='delete'><button type='button'
-                                            class='button1'>상품삭제</button></a></td>
-
-                            </tr>
-
                         </tbody>
                     </table>
                 </form>
                 </fieldset>
-
+                </div>
+                </div>
             </div>
             <script>
                 $(function(){
@@ -164,17 +157,7 @@
                             alert('입력 가능한 글자수를 초과하였습니다.');
                         }
                     })
-                    $('#memo2').keyup(function(){
-                        var minL = $(this).val().length;
-                        $('#counter2').text(minL);
-                        var maxL = 100-minL;
-                        if(maxL>=0){
-                            $('#counter2').parent().css('color','black');
-                        }else{
-                            $('#counter2').parent().css('color','red');
-                            alert('입력 가능한 글자수를 초과하였습니다.');
-                        }
-                    })
+                    
                     $('#changeM').click(function(){
                         if($('.textA').prop('disabled')==true){
                             $('.textA').attr('disabled',false);

@@ -37,7 +37,7 @@ public class EditWishMemoServlet extends HttpServlet {
 		
 		WishList wi = new WishList(wishNo, content); 
 		
-		System.out.println("EditWishMemoServlet : " + wi);
+//		System.out.println("EditWishMemoServlet : " + wishNo + ", " + content);
 		
 		int result = new WishService().updateWMemo(wi);
 		
