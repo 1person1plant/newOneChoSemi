@@ -1,8 +1,6 @@
 package member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class JoinIdChk
+ * Servlet implementation class WdReasonServlet
  */
-@WebServlet("/joinIdChk.me")
-public class JoinIdChkServlet extends HttpServlet {
+@WebServlet("/reason.me")
+public class WdReasonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinIdChkServlet() {
+    public WdReasonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +29,22 @@ public class JoinIdChkServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		
-		int result = new MemberService().joinIdChkMember(userId);
-		
-		PrintWriter out = response.getWriter();
-		
-		if(result == 0) {
-			out.print("permit");
-		}else {
-			out.print("fail");
+		String memberId = request.getParameter("memberId");
+		String memberName = request.getParameter("memberName");
+		String[] reason = request.getParameterValues("reason");
+		String memberReason = "";
+		for(int i=0; i<reason.length;i++) {
+			memberReason += reason[i] +" ";
 		}
-		
-		out.flush();
-		out.close();
+		int result = new MemberService().reasonMember(new Member(memberId,memberName,memberReason));
+		request.getSession().invalidate();
+		if(result>0) {
+			request.getRequestDispatcher("views/common/withSuccessPage.jsp").forward(request, response);
+			request.setAttribute("msg", "");
+		}else {
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg", "실패");
+		}
 	}
 
 	/**

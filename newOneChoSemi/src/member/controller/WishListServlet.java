@@ -1,27 +1,26 @@
 package member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
+import member.model.service.MyWishListService;
+import member.model.vo.MyWishList;
 
 /**
- * Servlet implementation class JoinIdChk
+ * Servlet implementation class WishListServlet
  */
-@WebServlet("/joinIdChk.me")
-public class JoinIdChkServlet extends HttpServlet {
+@WebServlet("/wish.me")
+public class WishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinIdChkServlet() {
+    public WishListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +29,18 @@ public class JoinIdChkServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		
-		int result = new MemberService().joinIdChkMember(userId);
-		
-		PrintWriter out = response.getWriter();
-		
-		if(result == 0) {
-			out.print("permit");
+		String memberNo = request.getParameter("memberNo");
+		System.out.println("넘버는 받아와 지냐?" + memberNo);
+		MyWishList mwl = new MyWishListService().memberWish(memberNo);
+		System.out.println("servlet"+mwl);
+		if(mwl != null) {
+			request.setAttribute("mwl", mwl);
+			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request,response);
 		}else {
-			out.print("fail");
+			request.setAttribute("msg", "실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		
-		out.flush();
-		out.close();
 	}
 
 	/**

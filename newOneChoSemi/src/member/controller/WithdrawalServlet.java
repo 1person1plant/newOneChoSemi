@@ -29,13 +29,13 @@ public class WithdrawalServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("withdrawalMemberId");
-		System.out.println("service넘어가기전"+memberId);
+		/* System.out.println("service넘어가기전"+memberId); */
 		int result = new MemberService().withdrawalMember(memberId);
-		System.out.println("탈퇴 servlet" + result);
+		/* System.out.println("탈퇴 servlet" + result); */
 		request.getSession().invalidate();
 		if(result>0) {
-			request.getRequestDispatcher("views/common/successPage.jsp").forward(request, response);
-			request.setAttribute("msg", "성공");
+			request.getRequestDispatcher("views/common/withSuccessPage.jsp").forward(request, response);
+			request.setAttribute("msg", "");
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "실패");
