@@ -5,11 +5,12 @@ import member.model.vo.MyWishList;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 public class MyWishListService {
 
-	public MyWishList memberWish(String memberNo) {
+	public ArrayList<MyWishList> memberWish(String memberNo) {
 		Connection conn = getConnection();
-		MyWishList mwl = new MyWishListDao().memberWish(conn,memberNo);
+		ArrayList<MyWishList> mwl = new MyWishListDao().memberWish(conn,memberNo);
 		/* System.out.println("service"+mwl); */
 		close(conn);
 		return mwl;

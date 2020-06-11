@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +33,10 @@ public class WishListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberNo = request.getParameter("memberNo");
 		/* System.out.println("넘버는 받아와 지냐?" + memberNo); */
-		MyWishList mwl = new MyWishListService().memberWish(memberNo);
+		
+		ArrayList<MyWishList> mwl = new MyWishListService().memberWish(memberNo);
 		/* System.out.println("servlet"+mwl); */
+		
 		if(mwl != null) {
 			request.setAttribute("mwl", mwl);
 			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request,response);
