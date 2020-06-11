@@ -544,7 +544,8 @@
 				            </table>
 				        </div>
 				        <div class="card-foot mb-2 wishbutton">
-				            <button type="button" class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;<button type="button" class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
+				            <button type="button" class="wishToCart btn btn-outline-info my-5 my-sm-0">장바구니 추가</button>&nbsp;
+				            <button type="button" class="wishDelete btn btn-outline-info my-5 my-sm-0">삭제</button>
 				        </div>
 				    </div>
 				</div>
