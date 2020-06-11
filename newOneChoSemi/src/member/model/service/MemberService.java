@@ -9,7 +9,6 @@ import java.sql.Connection;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
-import member.model.vo.Rank;
 
 public class MemberService {
 	/**
@@ -127,8 +126,14 @@ public class MemberService {
 	 * <br> Count 쿼리문을 통해서 0이면 중복이 없고 1이면 중복이 있다만 체크
 	 * @return
 	 */
-	public int joinIdChkMember(String id) {
-		return 0;
+	public int joinIdChkMember(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().joinIdChkMember(conn, userId);
+		
+		close(conn);
+		
+		return result;
 	}
 	
 	/**
