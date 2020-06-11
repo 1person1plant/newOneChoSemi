@@ -571,6 +571,137 @@ public class ItemDao {
 		return items;
 	}
 
+	public int updateStock(Connection conn, ArrayList<Item> items) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="UPDATE ITEM SET ITEM_STOCK=? WHERE ITEM_NO=?";
+		
+		try {
+			
+		for(int i=0;i<items.size();i++) {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, items.get(i).getItemStock());
+			pstmt.setString(2, items.get(i).getItemNo());
+			
+			result+=pstmt.executeUpdate();
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ArrayList<Item> searchStock(Connection conn, Map<String, String> list) {
+		
+		Statement stmt=null;
+		ResultSet rset=null;
+		ArrayList<Item> items=new ArrayList<>();
+		
+		//String searchDate=list.get("searchDate");
+		String minStock=list.get("minStock");
+		String maxStock=list.get("maxStock");
+		String display=list.get("display");
+		String name=list.get("name");
+		String category=list.get("category");
+		
+		
+		String query="SELECT * FROM ITEM";
+		
+		int count=0;
+		if(minStock!="") {
+			
+			if(maxStock!="") {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_STOCK BETWEEN "+minStock+" AND "+maxStock;
+				
+			}
+			
+			}else {
+				
+				query+=" WHERE ";
+				query+="ITEM_STOCK BETWEEN "+minStock+" AND (SELECT MAX(ITEM_STOCK) FROM ITEM) ";
+				
+				
+			}
+			
+			count++;
+			
+		}
+		
+		if(display!=null) {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_DISPLAY="+"'"+display+"'";
+			}else {
+				query+=" AND ";
+				query+="ITEM_DISPLAY="+"'"+display+"'";
+			}
+			
+			count++;
+			
+		}
+		
+		if(name!=null) {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_NAME LIKE '%'||"+"'"+name+"'"+"||'%' ";
+			}else {
+				query+=" AND ";
+				query+="ITEM_NAME LIKE '%'||"+"'"+name+"'"+"||'%' ";
+			}
+			count++;
+			
+		}
+		
+		if(category!="") {
+			
+			if(count==0) {
+				query+=" WHERE ";
+				query+="ITEM_CATEGORY="+"'"+category+"'";
+			}else {
+				query+=" AND ";
+				query+="ITEM_CATEGORY="+"'"+category+"'";
+				
+			}
+			
+			count++;
+			
+		}
+		
+		
+		System.out.println(query);
+		
+		try {
+			stmt=conn.createStatement();
+			rset=stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				
+				Item i=new Item(rset.getString("ITEM_NO"),rset.getString("ITEM_NAME"),rset.getString("ITEM_CATEGORY"),rset.getString("KEYWORD_NO"),rset.getInt("ITEM_PRICE"),
+						rset.getInt("ITEM_DISCOUNT"),rset.getInt("ITEM_RATE"),rset.getInt("ITEM_STOCK"),rset.getString("ITEM_DISPLAY"),rset.getString("ITEM_INFO"),
+						rset.getDate("ITEM_CDATE"),rset.getDate("ITEM_UDATE"),rset.getInt("ITEM_SCOUNT"),rset.getInt("ITEM_MAX"),rset.getString("ITEM_SALE"));
+				
+				items.add(i);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return items;
+	}
+
 	
 	
 

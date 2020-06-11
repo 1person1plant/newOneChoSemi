@@ -21,7 +21,7 @@ public class Item implements Serializable {
 	private String itemDisplay;//전시상태 여부
 	private String itemInfo;//세부 정보
 	private Date CDate;//생성일
-	private Date UDate;//수정일
+	private Date UDate;//수정일.
 	private int itemSCount;//누적 구매량
 	private int itemMax;//최대 구매 가능 수량
 	private String itemSale;//삭제 여부 

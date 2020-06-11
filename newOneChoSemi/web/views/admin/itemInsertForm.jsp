@@ -78,7 +78,7 @@
   
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/views/admin/itemInsertForm.jsp'">
                   <span data-feather="home"></span>
                   	상품등록 <span class="sr-only">(current)</span>
                 </a>
@@ -90,7 +90,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
                   <span data-feather="shopping-cart"></span>
                   	재고관리
                 </a>

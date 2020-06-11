@@ -116,7 +116,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
                     <span data-feather="shopping-cart"></span>
                    	 재고관리
                   </a>
@@ -197,7 +197,7 @@
     <div class="col-10">
         <h1 style="margin-top: 30px;margin-bottom: 80px;">상품조회/수정</h1>
         
-        <div class="row">
+        <div class="row">    
             
             <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/search.it">
                 
@@ -216,9 +216,9 @@
                             </select>
                         </td>
                         <td>
-                            <button type="button" id="today">오늘</button>
-                            <button type="button" id="aweek">1주일</button>
-                            <button type="button" id="amonth">1개월</button>
+                            <button type="button" id="today" class="btn btn-outline-dark btn-sm">오늘</button>
+                            <button type="button" id="aweek" class="btn btn-outline-dark btn-sm">1주일</button>
+                            <button type="button" id="amonth" class="btn btn-outline-dark btn-sm">1개월</button>
                         </td>
                         <td colspan="2" style="position: relative;top:2px;"><input type="date" id="date1" name="date1"><label>~</label><input type="date" id="date2" name="date2"></td>
                         

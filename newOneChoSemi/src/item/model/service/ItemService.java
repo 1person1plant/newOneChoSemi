@@ -172,4 +172,26 @@ public class ItemService {
 		return items;
 	}
 
+
+	public int updateStock(ArrayList<Item> items) {
+		
+		Connection conn=getConnection();
+		int result=new ItemDao().updateStock(conn,items);
+		
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<Item> searchStock(Map<String, String> list) {
+		
+		Connection conn=getConnection();
+		ArrayList<Item> items=new ItemDao().searchStock(conn,list);
+		
+		close(conn);
+		return items;
+	}
+
+	
+
+
 }

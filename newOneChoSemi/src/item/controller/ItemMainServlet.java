@@ -17,14 +17,14 @@ import item.model.vo.Pagination;
 /**
  * Servlet implementation class ItemListServlet
  */
-@WebServlet("/allPage.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/itemMain.it")
+public class ItemMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public ItemMainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
