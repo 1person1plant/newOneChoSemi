@@ -75,7 +75,6 @@ public class CartDao {
 //				System.out.println("cart update : " + userNo);
 //				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
 				
-				// TODO 다중 결과 값 처리가 필요하다... 지금은 임시
 				result = pstmt.executeUpdate();
 				if(result > 0 && chk == true) {
 					chk = true;
@@ -174,9 +173,34 @@ public class CartDao {
 		return result;
 	}
 
-	public int deleteCartList(Connection conn, ArrayList<Cart> deleteCart) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean deleteCartList(Connection conn, ArrayList<Cart> deleteCart) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		boolean chk = true;
+	      
+		String query = "DELETE FROM CARTLIST WHERE CARTLIST_NO = ?";
+	    
+		for(int i = 0 ; i < deleteCart.size() ; i++) {
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, deleteCart.get(i).getCartListNo());
+				
+				result = pstmt.executeUpdate();
+
+				if(result > 0 && chk == true) {
+					chk = true;
+				} else {
+					chk = false;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		
+		return chk;
 	}
 
 

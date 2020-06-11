@@ -59,11 +59,17 @@ public class CartService {
 		return result;
 	}
 
-	public int deleteCartList(ArrayList<Cart> deleteCart) {
+	public boolean deleteCartList(ArrayList<Cart> deleteCart) {
 		Connection conn = getConnection();
 
-		int result = new CartDao().deleteCartList(conn, deleteCart);
-				
+		boolean result = new CartDao().deleteCartList(conn, deleteCart);
+		
+		if(result) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		return result;
 	}

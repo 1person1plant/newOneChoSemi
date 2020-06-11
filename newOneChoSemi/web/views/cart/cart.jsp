@@ -430,6 +430,7 @@
                     	var cartArr = new Array();
                     	for(var i = 0 ; i < index.length ; i++){
                     		cartArr.push(index.eq(i).parents("tr").children("td:first-child").children(".cart_checkbox").val());
+	                   		console.log(index.eq(i).parents("tr").children("td:first-child").children(".cart_checkbox").val());
                     	}
                    		console.log(cartArr);
                     	
@@ -607,6 +608,7 @@
 	        // 즐겨찾기 삭제
 	        $(".wishDelete").click(function(){
 	            var result = confirm("삭제 하시겠습니까?");
+	           	var wishDelete = $(this);
 	            // 삭제 재확인 후 삭제
 	            if(result){
 	            	
@@ -622,7 +624,7 @@
 						if(data == "fail"){
 							alert("삭제에 실패 했습니다.");
 						} else {
-			            	$(this).parents(".wishcardcol").remove();
+							wishDelete.parents(".wishcardcol").remove();
 						}
 					},
 					error:function(request,status,error){

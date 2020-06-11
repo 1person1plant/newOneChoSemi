@@ -1,6 +1,7 @@
 package cartList.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -30,11 +31,27 @@ public class DeleteCartListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO 카트 리스트 삭제 만드는 중
+		String[] cartArr = request.getParameterValues("cartArr[]");
 
 		ArrayList<Cart> deleteCart = new ArrayList<>();
 		
-		int result = new CartService().deleteCartList(deleteCart);
+		for(int i = 0 ; i < cartArr.length ; i++) {
+			deleteCart.add(new Cart(cartArr[i]));
+		}
+		
+		boolean result = new CartService().deleteCartList(deleteCart);
+		
+		PrintWriter out = response.getWriter();
+//		System.out.println("개별 항목 삭제 : " + result);
+		
+		if(result) {
+			out.print("permit");
+		} else {
+			out.print("fail");
+		}
+		
+		out.flush();
+		out.close();
 		
 	}
 
