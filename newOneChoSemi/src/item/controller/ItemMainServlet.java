@@ -46,8 +46,7 @@ public class ItemMainServlet extends HttpServlet {
 		request.setAttribute("bestList", bestList);
 		request.setAttribute("newList", newList);
 		// ALL, BEST, NEW 끝
-		
-		
+				
 		// ALL PAGINATION START
 		int itemCount = itService.itemCount();
 		int currentPage;

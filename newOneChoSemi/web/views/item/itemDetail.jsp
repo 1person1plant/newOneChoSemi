@@ -6,7 +6,6 @@
 	String key1 = "";
 	String key2 = "";
 	int available = 0;
-	int finalPrice = (item.getItemPrice()-item.getItemDiscount());
 %>
 <!DOCTYPE html>
 <html>
@@ -133,7 +132,7 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row iteminfo-row">
 				<div class="col iteminfo-col-left">
 					<div class="iteminfo-itemmain-img" id="iteminfo-itemmain-img">
-						<img src="<%=request.getContextPath()%>/<%=item.getItemMainImg()%>/<%=item.getItemMainImgPath()%>" id="itemmain-img">
+						<img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" id="itemmain-img">
 					</div>
 				</div>
 				<div class="col iteminfo-col-right">
@@ -169,7 +168,7 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="row iteminfo-afterSale" id="iteminfo-afterSale">
 							<div class="col-10 iteminfo-afterSale-price" id="iteminfo-afterSale-price" style="color: #1f598c;">
-								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;<%=finalPrice%></p>
+								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;</p>
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
 								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
@@ -287,7 +286,7 @@ td:nth-of-type(2) {width:45rem;}
 
                         $("#whole-quantity").text(quantity);
                         
-                        var wholePrice = quantity * (<%=finalPrice%>);
+                        var wholePrice = quantity * (<%=item.getItemPrice()%>);
                         
                         $("#wholte-price").text(wholePrice);
                     });

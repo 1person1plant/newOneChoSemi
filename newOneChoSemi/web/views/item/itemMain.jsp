@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="item.model.vo.*, java.util.ArrayList"%>
 <%
-	ArrayList allList = (ArrayList)request.getAttribute("allList");
-	ArrayList bestList = (ArrayList)request.getAttribute("bestList");
-	ArrayList newList = (ArrayList)request.getAttribute("newList");
+	ArrayList<Item> allList = (ArrayList)request.getAttribute("allList");
+	ArrayList<Item> bestList = (ArrayList)request.getAttribute("bestList");
+	ArrayList<Item> newList = (ArrayList)request.getAttribute("newList");
 	Pagination pagination = (Pagination)request.getAttribute("pagination");
 	
 	int currentPage = pagination.getCurrentPage();
@@ -66,8 +66,6 @@
 	<section>
 		<%@ include file="itemSearch.jsp"%>
 
-
-
 		<!--BEST-->
 		<form>
 			<div class="container item-container">
@@ -76,13 +74,11 @@
 				</div>
 				<div class="row item-row">
 					<%for (int i = 0; i < bestList.size(); i++) {%>
-					<input type="hidden" id="itemNo" value="<%=((Item)bestList.get(i)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)bestList.get(i)).getItemNo()%>">
 							<div class="card-image-zoom" id="card-image-zoom">
-								<img
-									src="<%=request.getContextPath()%>/<%=((Item)bestList.get(i)).getItemImagePath()%>/<%=((Item)bestList.get(i)).getItemImageName()%>"
-									class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item)bestList.get(i)).getItemImagePath()%>/<%=((Item)bestList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-danger item-badge">best</span>
@@ -92,7 +88,7 @@
 								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item)bestList.get(i)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-									keyword = ((Item)bestList.get(i)).getKeywordName();
+									keyword = ((Item)bestList.get(i)).getKeywordName();				
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
@@ -350,10 +346,11 @@
 	<script>
 	// 아이템 카드 눌렀을 때 아이템 상세보기로 넘어가기
 	$(function(){
-		$("#item-card").click(function(){
-			var itemNo = $(this).parentUntil("itemNo").val();
+		$(".item-card").click(function(){
+			var itemNo = $(this).children("input").val();
 			
-			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo="+itemNo;
+			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
+			
 		})
 	})	
 	</script>
