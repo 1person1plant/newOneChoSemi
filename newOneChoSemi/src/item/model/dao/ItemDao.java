@@ -25,7 +25,7 @@ public class ItemDao {
 		
 		ArrayList<Item> list = new ArrayList<>();
 		
-		String query = "SELECT * FROM V_BESTLIST";
+		String query = "SELECT * FROM ITEM_BESTLIST";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -67,7 +67,7 @@ public class ItemDao {
 		
 		ArrayList<Item> list = new ArrayList<>();
 		
-		String query = "SELECT * FROM V_NEWLIST";
+		String query = "SELECT * FROM ITEM_NEWLIST";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -138,7 +138,7 @@ public class ItemDao {
 		int startRow = (currentPage-1) * howManyAtOnce + 1;
 		int endRow = currentPage * howManyAtOnce;
 		
-		String query = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM V_ALLLIST A) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM ITEM_ALLLIST A) WHERE RNUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -702,6 +702,46 @@ public class ItemDao {
 		return items;
 	}
 
+	// 김경남: ITEM DETAIL
+	public Item selectItemDetail(Connection conn, String itemNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Item item = null;
+		
+		String query = "SELECT * FROM ITEM_DETAIL WHERE ITEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				item = new Item(rset.getString("item_no")
+							   ,rset.getString("item_name")
+							   ,rset.getString("keyword_no")
+							   ,rset.getString("keyword_name")
+							   ,rset.getInt("item_price")
+							   ,rset.getInt("item_discount")
+							   ,rset.getInt("item_rate")
+							   ,rset.getInt("item_stock")
+							   ,rset.getString("item_info")
+							   ,rset.getInt("item_max")
+							   ,rset.getString("mainname")
+							   ,rset.getString("mainpath")
+							   ,rset.getString("subname")
+							   ,rset.getString("subpath"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return item;
+	}
 	
 	
 

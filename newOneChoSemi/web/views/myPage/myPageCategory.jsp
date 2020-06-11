@@ -51,11 +51,6 @@ ul .list-group-item :hover {
 		</div>
 		<!-- 사이드바 메뉴목록1 --> <!-- ${ sessionScope.loginUser.memberId} -->
 		<ul class="list-group">
-			<li class="list-group-item"><a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">회원 등급</a></li>
-			<li class="list-group-item"><a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberNo()%>">개인 정보 수정</a></li>
-			<li class="list-group-item"><a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">주문 내역 조회</a></li>
-			<li class="list-group-item"><a href="<%=request.getContextPath()%>/myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">위시리스트</a> </li>
-			<li class="list-group-item"><a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">회원 탈퇴</a></li>
 		</ul>
 	</div>
 </body>

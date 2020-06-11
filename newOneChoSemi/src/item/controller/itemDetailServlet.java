@@ -35,7 +35,8 @@ public class itemDetailServlet extends HttpServlet {
 		
 		Item itemDetail = new ItemService().selectItemDetail(itemNo);
 		
-		
+		request.setAttribute("item", itemDetail);
+		request.getRequestDispatcher("views/item/itemDetail.jsp").forward(request, response);
 		
 		
 	}
