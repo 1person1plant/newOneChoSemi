@@ -146,7 +146,6 @@
         cursor: pointer;
         vertical-align: center;
     }
-
     /* 장바구니 수량 css */
     .carttable input[type=number] {
         float: left;
@@ -190,7 +189,6 @@
         background: #1f598c;
         color: white;
     }
-    /* type=number 기본 화살표 제거 */
     .carttable input[type=number]::-webkit-inner-spin-button,
     .carttable input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -374,18 +372,20 @@
     <script>
     	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
-            var orderCheckeds = $("input:checkbox[class=cart_checkbox]");
-	        if(orderCheckeds.length > 0){
+            var orderCheckeds = $("input:checkbox[class=cart_checkbox]:checked");
+            var disabledChg = $("input:checkbox[class=cart_checkbox]");
+           	//console.log("구매하려는 상품 수량 : " + orderCheckeds.length);
+	        if(orderCheckeds.length == 0){
+            	alert("구입하려는 상품을 체크 해주세요.");
+            } else {
 	        	// 구매 해려는 상품의 수량만 폼태그에 담아 보내기 위해 input number의 값 전송을 막는 속성인 disabled를 false로 변환
-	        	for(var i = 0 ; i < orderCheckeds.length ; i++) {
-		        	if(orderCheckeds[i].checked == true){
+	        	for(var i = 0 ; i < disabledChg.length ; i++) {
+	        		//console.log(disabledChg[i]);
+		        	if(disabledChg[i].checked == true){
 		        		$("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count").prop("disabled",false);
 		        	}
 	        	}
-	        	            	
 				$("#orderForm").submit();
-            } else {
-            	alert("구입하려는 상품을 체크 해주세요.");
             }
 		}
 	</script>
