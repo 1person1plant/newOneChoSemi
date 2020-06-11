@@ -103,7 +103,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		Member idenUser = null;
 		
-		String query = "SELECT * FROM MEMBER WHERE MEMBER_ID=?, MEMBER_PWD=?";
+		String query = "SELECT * FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_PWD=?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

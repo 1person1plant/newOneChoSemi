@@ -11,16 +11,16 @@ import member.model.service.MyWishListService;
 import member.model.vo.MyWishList;
 
 /**
- * Servlet implementation class WishListServlet
+ * Servlet implementation class WishListMemoServlet
  */
-@WebServlet("/wish.me")
-public class WishListServlet extends HttpServlet {
+@WebServlet("/wishmemo.up")
+public class WishListMemoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishListServlet() {
+    public WishListMemoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,17 +29,20 @@ public class WishListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String itemNo = request.getParameter("itemNo");
+		String wishNo = request.getParameter("wishNo");
+		String wishMemo = request.getParameter("wishMemo");
 		String memberNo = request.getParameter("memberNo");
-		/* System.out.println("넘버는 받아와 지냐?" + memberNo); */
-		MyWishList mwl = new MyWishListService().memberWish(memberNo);
-		/* System.out.println("servlet"+mwl); */
-		if(mwl != null) {
-			request.setAttribute("mwl", mwl);
-			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request,response);
+		int result = new MyWishListService().memoUpdate(new MyWishList(itemNo,wishNo,wishMemo,memberNo));
+		System.out.println("servlet" + result);
+		if(result>0) {
+			request.setAttribute("msg", "성공");
+			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
+		
 		
 	}
 
@@ -52,3 +55,4 @@ public class WishListServlet extends HttpServlet {
 	}
 
 }
+

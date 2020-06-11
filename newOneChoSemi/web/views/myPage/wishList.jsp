@@ -3,9 +3,9 @@
     pageEncoding="UTF-8"%>
     <% MyWishList mwl = (MyWishList)request.getAttribute("mwl"); 
     	String mwlNo = mwl.getWishlistNo();
-		String mwlPath = mwl.getImagePath();
-    	String mwlItemName = mwl.getItemName();
     	String mwlMemo = mwl.getWishlistMemo();
+    	String mwlItemNo = mwl.getItemNo();
+    	
     %>
 <!DOCTYPE html>
 <html>
@@ -82,25 +82,25 @@
 			</div>
 			<!-- 사이드바 메뉴목록1 -->
 			<ul class="list-group">
-				<a href="grade.jsp">
-					<li class="list-group-item">회원 등급</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-					<li class="list-group-item">개인 정보 수정</li>
-				</a>
-				<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-				<a href="orderHistory.jsp">
-					<li class="list-group-item">주문 내역 조회</li>
-				</a>
-				<a href="wishList.jsp">
-					<li class="list-group-item">위시리스트</li>
-				</a>
-				<a href="withdrawal.jsp">
-					<li class="list-group-item">회원 탈퇴</li>
-				</a>
-			</ul>
-		</div>
-	</div>
+						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
+							<li class="list-group-item">회원 등급</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
+							<li class="list-group-item">개인 정보 수정</li>
+						</a>
+						<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
+						<a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">
+							<li class="list-group-item">주문 내역 조회</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/wish.me?memberNo=<%=loginUser.getMemberNo()%>">
+							<li class="list-group-item">위시리스트</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
+							<li class="list-group-item">회원 탈퇴</li>
+						</a>
+					</ul>
+				</div>
+			</div>
             <%@include file="myPageCategory.jsp" %>
             <!-- 9단길이의 첫번째 열 -->
             <div class='col-md-9'>
@@ -125,13 +125,13 @@
                             </tr>
                             <tr style='border-bottom:2px solid black'>
                                 <td colspan='1' class="mt-2"><%=mwlNo%></td>
-                                <td colspan="2" class='mt-2'><a href='<%=mwlPath%>'><img src='<%=mwlPath%>' width='150px' height='150px'></a></td>
-                                <td scope="row" colspan='2' class="mt-2"><%=mwlItemName%></td>
-                                <td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' size="resize:none;" disabled><%=mwlMemo%></textarea><br>
-                                    <p id='countp'><span id='counter1'>0</span>/100</p>
+                                <td colspan="2" class='mt-2'><a href='<%=mwlItemNo%>'><img src='#' width='150px' height='150px'></a></td>
+                                <td scope="row" colspan='2' class="mt-2">???</td>
+                                <td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwlMemo%></textarea><br>
+                                    <p id='countp'><span id='counter1'><%=mwlMemo%></span>/100</p>
                                 </td>
                                 <td id='orderbutton' colspan="2"><input type='button'
-                                            class='button1' id='changeM'>메모수정</button><br>
+                                            class='button1' id='changeM' value="메모수정"><br>
                                     <a href='main.jsp' id='delete'><button type='button'
                                             class='button1'>상품구매</button></a><br>
                                     <a href='main.jsp' id='delete'><button type='button'
@@ -147,7 +147,8 @@
             <script>
                 $(function(){
                     $('#memo1').keyup(function(){
-                        var minL = $(this).val().length;
+                    	var minL = "<%=mwlMemo%>";
+                        minL = $(this).val().length;
                         $('#counter1').text(minL);
                         var maxL = 100-minL;
                         if(maxL>=0){
