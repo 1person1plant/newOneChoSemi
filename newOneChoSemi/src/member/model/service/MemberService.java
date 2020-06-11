@@ -42,7 +42,7 @@ public class MemberService {
 	public Member idenMember(Member member) {
 		Connection conn = getConnection();
 		Member idenUser = new MemberDao().idenMember(conn, member);
-		
+		System.out.println("service"+idenUser);
 		close(conn);
 		return idenUser;
 	}

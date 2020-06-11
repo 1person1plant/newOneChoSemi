@@ -32,15 +32,16 @@ public class IdentificationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
-		String memberPwd = request.getParameter("memberPwd");
-		Member idenUser = new MemberService().idenMember(new Member(memberId, memberPwd));
-		
+		String memberPwd = request.getParameter("password1");
+		System.out.println("아이디 넘어오나"+memberId);
+		Member idenUser = new MemberService().idenMember(new Member(memberId,memberPwd));
+		System.out.println("servlet"+idenUser);
 		if(idenUser != null) {
-			request.setAttribute("msg", "성공");
+			request.setAttribute("idenUser", idenUser);
 			request.getRequestDispatcher("views/myPage/grade.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/myPage/identification.jsp").forward(request, response);
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
 

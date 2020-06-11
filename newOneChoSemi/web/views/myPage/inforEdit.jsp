@@ -130,7 +130,8 @@ label {
 					<!-- 사이드바 메뉴목록1 -->
 					<ul class="list-group">
 						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
-							<li class="list-group-item">회원 등급</li></a>
+							<li class="list-group-item">회원 등급</li>
+						</a>
 						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
 							<li class="list-group-item">개인 정보 수정</li>
 						</a>
@@ -138,7 +139,7 @@ label {
 						<a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">
 							<li class="list-group-item">주문 내역 조회</li>
 						</a>
-						<a href="<%=request.getContextPath()%>/views/myPage/wishList.jsp">
+						<a href="<%=request.getContextPath() %>/wish.me?memberNo=<%=loginUser.getMemberNo()%>">
 							<li class="list-group-item">위시리스트</li>
 						</a>
 						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">

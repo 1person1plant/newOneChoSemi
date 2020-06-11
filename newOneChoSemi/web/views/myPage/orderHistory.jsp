@@ -78,25 +78,25 @@
 			</div>
 			<!-- 사이드바 메뉴목록1 -->
 			<ul class="list-group">
-				<a href="grade.jsp">
-					<li class="list-group-item">회원 등급</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-					<li class="list-group-item">개인 정보 수정</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/ohlist.bo">
-				<!-- <a href="orderHistory.jsp"> -->
-					<li class="list-group-item">주문 내역 조회</li>
-				</a>
-				<a href="wishList.jsp">
-					<li class="list-group-item">위시리스트</li>
-				</a>
-				<a href="withdrawal.jsp">
-					<li class="list-group-item">회원 탈퇴</li>
-				</a>
-			</ul>
-		</div>
-	</div>
+						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
+							<li class="list-group-item">회원 등급</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
+							<li class="list-group-item">개인 정보 수정</li>
+						</a>
+						<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
+						<a href="<%=request.getContextPath()%>/views/myPage/orderHistory.jsp">
+							<li class="list-group-item">주문 내역 조회</li>
+						</a>
+						<a href="<%=request.getContextPath() %>/wish.me?memberNo=<%=loginUser.getMemberNo()%>">
+							<li class="list-group-item">위시리스트</li>
+						</a>
+						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
+							<li class="list-group-item">회원 탈퇴</li>
+						</a>
+					</ul>
+				</div>
+			</div>
 			<%@include file="myPageCategory.jsp" %>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>

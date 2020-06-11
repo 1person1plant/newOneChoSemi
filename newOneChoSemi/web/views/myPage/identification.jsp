@@ -128,7 +128,8 @@ td {
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
-					<form id="identification" action="<%=request.getContextPath()%>/identy.me" method="post" onsubmit="return iden();">
+					<form id="identification" action="<%=request.getContextPath()%>/identy.me" method="post">
+						<input style="display:none;" type="text" value="<%=loginUser.getMemberId()%>" id="memberId" name="memberId">
 						<table class="table">
 							<thead>
 								<tr>
@@ -148,10 +149,9 @@ td {
 										name='password1'></td>
 								</tr>
 								<tr>
-									<td scope="row" colspan='3' class="mt-2"><a
-										href='orderlist.html'><input type='submit' id='idenBtn'
-												class='button1' value="확인"></a>&nbsp;&nbsp; <a href="<%=request.getContextPath()%>/index.jsp"><button
-												type='button' class='button1'>취소</button></a></td>
+									<td scope="row" colspan='3' class="mt-2"><input type='submit' id='idenBtn'
+												class='button1' name="idenBtn" value="확인">&nbsp;&nbsp; 
+												<button type='button' id="cancelBtn" class='button1'>취소</button></td>
 								</tr>
 
 							</tbody>
@@ -169,18 +169,21 @@ td {
 						<%String chkPwd = loginUser.getMemberPwd();%>
 						var Pwd = "<%=chkPwd%>";
 						
-						if((inputPwd1=="")||(inputPwd1==null)){
+						if((inputPwd1==Pwd)){
+							location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+						}else if((inputPwd1=="")||(inputPwd1==null)){
 							alert("비밀번호를 입력해 주세요.");
 						}else if(inputPwd1 != Pwd){
 							alert("비밀번호가 일치하지 않습니다.");
-						}else if((inputPwd1==Pwd)){
-							location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
 						}
 					});
+					$("#cancelBtn").click(function(){
+						location.href="<%=request.getContextPath()%>/index.jsp";
+					})
 				});
 				
-				
 			</script>
+				
 			<script>
             	$(function(){
             		$(".button1").mouseenter(function(){
