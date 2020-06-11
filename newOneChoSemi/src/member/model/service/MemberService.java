@@ -77,6 +77,20 @@ public class MemberService {
 	public Member kakaoLoginMember(Member member) {
 		return null;
 	}
+
+	public int reasonMember(Member memberReason) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().reasonMember(conn, memberReason);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			close(conn);
+		}
+		close(conn);
+		return result;
+	}
 	
 	/**
 	 * 회원가입

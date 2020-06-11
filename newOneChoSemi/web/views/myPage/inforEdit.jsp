@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	
-/* String memberId = member.getmemberId();
+	/* String memberId = member.getmemberId();
 String memberPwd = member.getMemberPwd();
 String memberName = member.getMemberName();
 String memberPhone1 = member.getMemberPhone1();
@@ -13,7 +12,7 @@ String memberEmail2 = member.getMemberEmail2();
 String memberPostcode = member.getMemberPostcode();
 String memberAddress1 = member.getMemberAddress1();
 String memberAddress2 = member.getMemberAddress2();
- */
+*/
 %>
 <!DOCTYPE html>
 <html>
@@ -40,7 +39,7 @@ td.mt-2 {
 	padding: 12px;
 	text-align: right;
 	min-width: 33%;
-	padding-right:0 !important;
+	padding-right: 0 !important;
 }
 
 /* 테이블 우측 input td */
@@ -131,8 +130,7 @@ label {
 					<!-- 사이드바 메뉴목록1 -->
 					<ul class="list-group">
 						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
-							<li class="list-group-item">회원 등급</li>
-						</a>
+							<li class="list-group-item">회원 등급</li></a>
 						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
 							<li class="list-group-item">개인 정보 수정</li>
 						</a>
@@ -153,7 +151,8 @@ label {
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
-					<form id="updateForm" action="<%=request.getContextPath()%>/update.inf" method="post">
+					<form id="updateForm"
+						action="<%=request.getContextPath()%>/update.inf" method="post">
 						<table class="table information1">
 							<thead>
 								<tr>
@@ -166,9 +165,9 @@ label {
 							<tbody>
 								<tr>
 									<td scope="row" class="mt-2"><label>아이디 : </label></td>
-									<td colspan="2"><input type='text' id='memberId'
+									<td colspan="2"><input style="display:none;" type='text' id='memberId'
 										name="memberId" class="inputBtn"
-										value="<%=loginUser.getMemberId()%>" readonly="readonly"></td>
+										value="<%=loginUser.getMemberId()%>" readonly="readonly"><label><%=loginUser.getMemberId() %></label></td>
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>비밀번호 : </label></td>
@@ -178,16 +177,17 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>비밀번호 확인 : </label></td>
-									<td colspan="1" style="width:250px !important"><input type='password' id='password2'
-										name='memberPwd2' class="inputBtn"
-										value="<%=loginUser.getMemberPwd()%>"></td>
-									<td colspan='1' style="padding-left:0 !important"><label id='password3' style="padding-left:0 !important"></label></td>
+									<td colspan="1" style="width: 250px !important"><input
+										type='password' id='password2' name='memberPwd2'
+										class="inputBtn" value="<%=loginUser.getMemberPwd()%>"></td>
+									<td colspan='1' style="padding-left: 0 !important"><label
+										id='password3' style="padding-left: 0 !important"></label></td>
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>이름 : </label></td>
-									<td colspan="2"><input type='text' id='memberName'
+									<td colspan="2"><input style="display:none;"type='text' id='memberName'
 										name='memberName' class="inputBtn"
-										value="<%=loginUser.getMemberName()%>" readonly="readonly"></td>
+										value="<%=loginUser.getMemberName()%>" readonly="readonly"><label><%=loginUser.getMemberName() %></label></td>
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>휴대폰 번호 : </label></td>
@@ -212,8 +212,8 @@ label {
 									<td scope="row" class="mt-2"><label>이메일 : </label></td>
 									<td colspan="2"><input type='text' id='email1'
 										name='memberEmail1' class="inputBtn"
-										value="<%=loginUser.getMemberEmail1()%>"> @ 
-										<select id='email2' name='memberEmail2'>
+										value="<%=loginUser.getMemberEmail1()%>"> @ <select
+										id='email2' name='memberEmail2'>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
 											<option value="@hanmail.net">hanmail.net</option>
@@ -252,12 +252,13 @@ label {
 								<tr>
 									<td scope="row" class="mt-2"><label>상세 주소 : </label></td>
 									<td colspan="2"><input type='text'
-										id='sample3_detailAddress' name="memberAddress2" class="inputBtn"
-										value="<%=loginUser.getMemberAddress2()%>"></td>
+										id='sample3_detailAddress' name="memberAddress2"
+										class="inputBtn" value="<%=loginUser.getMemberAddress2()%>"></td>
 								</tr>
 								<tr>
-									<td scope="row" colspan='3' class="mt-2">
-									<input type='button' id='save' class='button1' value="변경저장"  onclick="saveBtn();">&nbsp;&nbsp;
+									<td scope="row" colspan='3' class="mt-2"><input
+										type='button' id='save' class='button1' value="변경저장"
+										onclick="saveBtn();">&nbsp;&nbsp;
 										<button type='button' class='button1' onclick="cancelBtn();">취소</button></td>
 								</tr>
 
@@ -267,22 +268,24 @@ label {
 				</fieldset>
 
 			</div>
+		</div>
+	</div>
 
-			<!-- <input type="text" id="sample3_postcode" placeholder="우편번호"> -->
-			<!-- <button type="button" onclick="sample3_execDaumPostcode()" value="우편번호 검색" class='button1' id='attBtn'><br> -->
-			<!-- <input type="text" id="sample3_address" placeholder="주소"><br> -->
-			<!-- <input type="text" id="sample3_detailAddress" placeholder="상세주소"> -->
-			<!-- <input type="text" id="sample3_extraAddress" placeholder="참고항목"> -->
+	<!-- <input type="text" id="sample3_postcode" placeholder="우편번호"> -->
+	<!-- <button type="button" onclick="sample3_execDaumPostcode()" value="우편번호 검색" class='button1' id='attBtn'><br> -->
+	<!-- <input type="text" id="sample3_address" placeholder="주소"><br> -->
+	<!-- <input type="text" id="sample3_detailAddress" placeholder="상세주소"> -->
+	<!-- <input type="text" id="sample3_extraAddress" placeholder="참고항목"> -->
 
-			<!-- <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+	<!-- <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 </div> -->
 
 
-			<script
-				src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script
+		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-			<script>
+	<script>
 				// 우편번호 찾기 찾기 화면을 넣을 element
 				var element_wrap = document.getElementById('wrap');
 
@@ -370,7 +373,7 @@ label {
 					apiId.style.display = "table-row";
 				}
 			</script>
-			<!-- <script>
+	<!-- <script>
 				function updateUser(){
 					if ($("#password1").val() == "") {
 						alert("비밀번호를 입력해 주세요.");
@@ -395,7 +398,7 @@ label {
 				}
 			</script> -->
 
-			<script>
+	<script>
 				$(function() {
 					$("#email2").val("<%=loginUser.getMemberEmail2()%>").prop("selected", true);
 					$("#phone1").val("<%=loginUser.getMemberPhone1()%>").prop("selected", true);
@@ -436,7 +439,7 @@ label {
 					}
 				}
 			</script>
-			<script>
+	<script>
 				$(function() {
 					$(".button1").mouseenter(function() {
 						$(this).css({
@@ -476,7 +479,7 @@ label {
 					});
 				});
 			</script>
-			<script>
+	<script>
 				function saveBtn() {
 					if ($("#password1").val() == "") {
 						alert("비밀번호를 입력해 주세요.");
@@ -500,7 +503,7 @@ label {
 				} 
 			</script>
 
-			<script>
+	<script>
 			
 				function cancelBtn() {
 					if ($(".inputBtn").val() == "") {
@@ -508,13 +511,14 @@ label {
 					} else if ($(".inputBtn").val() != "") {
 						var result = confirm("취소하시겠습니까?");
 						if (result == true) {
-							location.href = "<%=request.getContextPath()%>/views/myPage/grade.jsp";
-						} else {
-						}
-					}
+							location.href = "<%=request.getContextPath()%>
+		/views/myPage/grade.jsp";
+				} else {
 				}
-			</script>
-		
-			<%@ include file="../common/footer.jsp"%>
+			}
+		}
+	</script>
+
+	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
