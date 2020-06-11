@@ -44,10 +44,25 @@ public class CartService {
 		return cartList;
 	}
 
-	public int deleteCart(ArrayList<Cart> deleteCart) {
+	public int deleteCart(String cartNo) {
 		Connection conn = getConnection();
 
-		int result = new CartDao().deleteCart(conn, deleteCart);
+		int result = new CartDao().deleteCart(conn, cartNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+
+	public int deleteCartList(ArrayList<Cart> deleteCart) {
+		Connection conn = getConnection();
+
+		int result = new CartDao().deleteCartList(conn, deleteCart);
 				
 		close(conn);
 		return result;

@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cartList.model.service.WishService;
-import cartList.model.vo.WishList;
+import cartList.model.service.CartService;
 
 /**
- * Servlet implementation class WishDelelteServlet
+ * Servlet implementation class DeleteCartservlet
  */
-@WebServlet("/deleteWish.wi")
-public class DeleteWishServlet extends HttpServlet {
+@WebServlet("/deleteCart.ca")
+public class DeleteCartservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteWishServlet() {
+    public DeleteCartservlet() {
         super();
     }
 
@@ -30,11 +29,12 @@ public class DeleteWishServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String wishNo = request.getParameter("wishNo");
-			
-		int result = new WishService().deleteWish(wishNo);
+		String cartNo = request.getParameter("cartNo");
+		
+		int result = new CartService().deleteCart(cartNo);
 		
 		PrintWriter out = response.getWriter();
+//		System.out.println("개별 항목 삭제 : " + result);
 		
 		if(result > 0) {
 			out.print("permit");
@@ -44,7 +44,6 @@ public class DeleteWishServlet extends HttpServlet {
 		
 		out.flush();
 		out.close();
-		
 	}
 
 	/**

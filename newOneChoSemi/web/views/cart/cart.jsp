@@ -426,29 +426,71 @@
                     var result = confirm("삭제 하시겠습니까?");
                     // 삭제 재확인 후 삭제
                     if(result){
-                        for(var i=index.length ; i>-1 ; i--){
-                            index.eq(i).closest("tr").remove();
-                        }
-                        $(".carttable thead input:checkbox").prop("checked",false);
-                        checkCount();
-                        checkEmptyCart();
+                    	// ajax 부분
+                    	var cartArr = new Array();
+                    	for(var i = 0 ; i < index.length ; i++){
+                    		cartArr.push(index.eq(i).parents("tr").children("td:first-child").children(".cart_checkbox").val());
+                    	}
+                   		console.log(cartArr);
+                    	
+        				$.ajax({
+							url:"<%=request.getContextPath()%>/deleteCartList.ca",
+							type:"post",
+							data:{cartArr:cartArr},
+							success:function(data){
+								if(data == "fail"){
+									alert("삭제에 실패 했습니다.");
+								} else {
+									for(var i = index.length ; i > -1 ; i--){
+										console.log("삭제할 cartIndex : " + i);
+			                            index.eq(i).closest("tr").remove();
+			                        }
+			                        $(".carttable thead input:checkbox").prop("checked",false);
+			                        checkCount();
+			                        checkEmptyCart();
+								}
+							},
+							error:function(request,status,error){
+								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							}
+						});
                     }
                 }
             }
             // 개별항목 삭제
             $(".carttable tbody tr td input:button").click(function(){
                 var result = confirm("삭제 하시겠습니까?");
-                console.log(result);
+                var cartItem = $(this);
                 // 삭제 재확인 후 삭제
                 if(result){
-                    $(this).parents("tr").remove();
-                    checkCount();
-                    checkEmptyCart();
-                }
+                            	
+            	// ajax 부분
+				var cartNo = $(this).parents("tr").children("td:first-child").children(".cart_checkbox").val();
+				//console.log($(this).parents("tr").children("td:first-child").children(".cart_checkbox").val());
+											
+					$.ajax({
+						url:"<%=request.getContextPath()%>/deleteCart.ca",
+						type:"post",
+						data:{cartNo:cartNo},
+						success:function(data){
+							if(data == "fail"){
+								alert("삭제에 실패 했습니다.");
+							} else {
+								cartItem.parents("tr").remove();
+								checkCount();
+								checkEmptyCart();
+							}
+						},
+						error:function(request,status,error){
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+				}
+                
             });
 			// 상품이 없으면 상품 없음 행 보임
             function checkEmptyCart(){
-				//console.log($(".carttable > tbody tr").length);
+				//console.log("tr " + $(".carttable > tbody tr").length);
                 if($(".carttable > tbody tr").length == 0){
                 	// 상품 없음 테이블 추가
                 	$cartListTbody = $(".cartList_tbody");
@@ -567,37 +609,34 @@
 	            // 삭제 재확인 후 삭제
 	            if(result){
 	            	
-	            	// ajax 부분
-					var wishNo = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
-						//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
-												
-						$.ajax({
-						url:"<%=request.getContextPath()%>/deleteWish.wi",
-						type:"post",
-						data:{wishNo:wishNo},
-						success:function(data){
-							if(data == "fail"){
-								alert("삭제에 실패 했습니다.");
-							} else {
-				            	$(this).parents(".wishcardcol").remove();
-							}
-						},
-						error:function(request,status,error){
-							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            	// ajax 부분
+				var wishNo = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
+				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
+											
+					$.ajax({
+					url:"<%=request.getContextPath()%>/deleteWish.wi",
+					type:"post",
+					data:{wishNo:wishNo},
+					success:function(data){
+						if(data == "fail"){
+							alert("삭제에 실패 했습니다.");
+						} else {
+			            	$(this).parents(".wishcardcol").remove();
 						}
-					});
-	                
-	            	
-	            	
-	                
-	                if($(".wishcardcol").length == 0){
-	                   	// 상품 없음 테이블 추가
-	                   	$wishListhead = $(".wishListhead");
-	   					var $div = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
-	   					$wishListhead.append($div);
-	                }
-	            }
-	        });
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+                
+                if($(".wishcardcol").length == 0){
+                   	// 상품 없음 테이블 추가
+                   	$wishListhead = $(".wishListhead");
+   					var $div = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
+   					$wishListhead.append($div);
+                }
+            }
+        });
 	    </script>
 	</div> <!-- wish container end -->
 

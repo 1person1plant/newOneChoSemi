@@ -15,7 +15,7 @@ import cartList.model.vo.Cart;
 /**
  * Servlet implementation class CartListDeleteServlet
  */
-@WebServlet("/deleteCart.ca")
+@WebServlet("/deleteCartList.ca")
 public class DeleteCartListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,7 +34,7 @@ public class DeleteCartListServlet extends HttpServlet {
 
 		ArrayList<Cart> deleteCart = new ArrayList<>();
 		
-		int result = new CartService().deleteCart(deleteCart);
+		int result = new CartService().deleteCartList(deleteCart);
 		
 	}
 

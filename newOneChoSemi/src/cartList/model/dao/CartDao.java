@@ -153,31 +153,30 @@ public class CartDao {
 		return cartList;
 	}
 
-	public int deleteCart(Connection conn, ArrayList<Cart> deleteCart) {
+	public int deleteCart(Connection conn, String cartNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
+	      
+		String query = "DELETE FROM CARTLIST WHERE CARTLIST_NO = ?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cartNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
-		String query = "";
-		// TODO 미완성
-		System.out.println("CartDao 카트 삭제 : 만드는 중");
-
-//		try {
-//			for(int i = 0 ; i < deleteCart.size() ; i++) {
-//				Cart ca = deleteCart.get(i);
-//
-//				pstmt = conn.prepareStatement(query);
-//				pstmt.setString(1, ca.getCartListNo());
-//				
-//				result += pstmt.executeUpdate();
-//			}
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			close(pstmt);
-//		}
-
 		return result;
+	}
+
+	public int deleteCartList(Connection conn, ArrayList<Cart> deleteCart) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
