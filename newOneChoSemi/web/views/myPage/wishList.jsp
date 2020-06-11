@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="member.model.vo.MyWishList, java.util.ArrayList"%>
-<% ArrayList<MyWishList> mwl = (ArrayList<MyWishList>)request.getAttribute("mwl"); 
-	String mwlNo = mwl.get(0).getWishlistNo();
-	String mwlMemo = mwl.get(0).getWishlistMemo();
-	String mwlItemNo = mwl.get(0).getItemNo();
+<%
+	ArrayList<MyWishList> mwl = (ArrayList<MyWishList>)request.getAttribute("mwl"); 
 %>
 <!DOCTYPE html>
 <html>
@@ -154,7 +152,7 @@
 	<script>
 		$(function(){
 		    $('#memo1').keyup(function(){
-		    	var minL = "<%=mwlMemo%>";
+		    	var minL = $("#counter1").text();
 		        minL = $(this).val().length;
 		        $('#counter1').text(minL);
 		        var maxL = 100-minL;

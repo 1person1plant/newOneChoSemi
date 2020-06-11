@@ -52,4 +52,13 @@ public class WishService {
 		return result;
 	}
 
+	public ArrayList<WishList> myWishList(String memberNo) {
+		Connection conn = getConnection();
+
+		ArrayList<WishList> mwl = new WishDao().myWishList(conn, memberNo);
+		
+		close(conn);
+		return mwl;
+	}
+
 }
