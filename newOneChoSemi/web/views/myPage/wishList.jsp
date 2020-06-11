@@ -45,13 +45,13 @@
 			padding-top: 2%;
 		}
 		
-		fieldset {
-			height: auto;
-			margin: 5px;
+		.fieldset {
+			/* height: auto;
+			margin: 5px; */
 			margin-bottom: 50px;
-			background: white;
-			padding-left: 50px;
-			padding-right: 50px;
+			/* background: white; */
+			padding-left: 10px;
+			padding-right: 10px;
 			text-align: center;
 		}
 		
@@ -108,9 +108,9 @@
 				<%@include file="myPageCategory.jsp"%>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
-			<div class='col-md-9'>
-				<fieldset>
-					<form>
+			<div class='col-md-9 fieldset'>
+				<!-- <fieldset> -->
+					<!-- <form> -->
 						<table class="table">
 							<thead>
 								<tr>
@@ -129,12 +129,13 @@
 									<th colspan="2" class='wishmenu'>메모</th>
 									<th colspan="2" class='wishmenu'>기타</th>
 								</tr>
+								<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 								<tr style='border-bottom: 2px solid black'>
-									<td colspan='1' class="mt-2"><%=mwlNo%></td>
-									<td colspan="2" class='mt-2'><a href='<%=mwlItemNo%>'><img src='#' width='150px' height='150px'></a></td>
+									<td colspan='1' class="mt-2"><%=mwl.get(i).getWishlistNo()%></td>
+									<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='#' width='150px' height='150px'></a></td>
 									<td scope="row" colspan='2' class="mt-2">???</td>
-									<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwlMemo%></textarea><br>
-										<p id='countp'><span id='counter1'><%=mwlMemo.length()%></span>/100</p>
+									<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwl.get(i).getWishlistMemo() %></textarea><br>
+										<p id='countp'><span id='counter1'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
 									</td>
 									<td id='orderbutton' colspan="2">
 										<input type='button' class='button1' id='changeM' value="메모수정"><br>
@@ -142,10 +143,11 @@
 										<a href='main.jsp' id='delete2'><button type='button' class='button1'>상품삭제</button></a>
 									</td>
 								</tr>
+								<%} %>
 							</tbody>
 						</table>
-					</form>
-				</fieldset>
+					<!-- </form> -->
+				<!-- </fieldset> -->
 			</div>
 		</div>
 	</div>

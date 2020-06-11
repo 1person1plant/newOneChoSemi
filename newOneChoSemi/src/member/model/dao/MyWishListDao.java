@@ -22,7 +22,7 @@ public class MyWishListDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberNo);
 			rset = pstmt.executeQuery();
-			if(rset.next()) {
+			while(rset.next()) {
 				MyWishList mwlTemp = new MyWishList(rset.getString("WISHLIST_NO"),
 									rset.getString("ITEM_NO"),
 									rset.getString("MEMBER_NO"),
