@@ -534,7 +534,7 @@
 				                        <td colspan="2">
 				                            <label class="wishmemo">memo</label><br>
 				                            <input class="memo" type="text" placeholder="메모를 남겨보세요." value="<%=wishList.get(i).getWishListMemo() %>" readonly>
-				                            <span style="display:none"><%=wishList.get(i).getWishListNo() %></span>
+				                            <span class="wishNumber" style="display:none"><%=wishList.get(i).getWishListNo() %></span>
 				                        </td>
 				                        <td class="memoicon">
 				                            <i class='pen far fa-edit'></i>
@@ -605,6 +605,57 @@
 	                $(this).parents("tr").children().last().children(".pen").css("display","inline");
 	            }
 	        });
+	        // 즐겨찾기에서 카트로 추가
+	        $(".wishToCart").click(function() {
+	        	var cartAdd = $(this);
+	        	
+	        	// ajax 부분
+				var wishNum = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
+				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
+											
+					$.ajax({
+					url:"<%=request.getContextPath()%>/cartListAdd.ca",
+					type:"post",
+					data:{wishNo:wishNo},
+					success:function(data){
+						if(data == "fail"){
+							alert("삭제에 실패 했습니다.");
+						} else {
+			                console.log($(".carttable > tbody tr td input:button").length);
+							if($(".carttable > tbody tr td input:button").length == 0){
+			                	// 상품 없으면 상품 추가 시 상품없음 테이블행 삭제
+			                	$(".cartList_tbody").children("tr").remove();
+							}
+		                   	// 테이블에 상품 추가
+		                   	// TODO 잰장 추가 
+<%-- <tr>
+		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
+		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
+		<td><%=cartList.get(i).getItemName()%></td>
+		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
+		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
+		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
+	 </tr> --%>
+		                   	$cartListTbody = $(".cartList_tbody");
+		   					var $tr = $("<tr>");
+		   					var $fst = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
+		   					$wishListhead.append($tr);
+
+						}
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+                
+                if($(".wishcardcol").length == 0){
+                   	// 상품 없음 테이블 추가
+                   	$wishListhead = $(".wishListhead");
+   					var $div = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
+   					$wishListhead.append($div);
+                }
+			});
+	        
 	        // 즐겨찾기 삭제
 	        $(".wishDelete").click(function(){
 	            var result = confirm("삭제 하시겠습니까?");
