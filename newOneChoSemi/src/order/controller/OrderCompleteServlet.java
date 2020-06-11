@@ -30,15 +30,6 @@ public class OrderCompleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO 폼에서 받아와
-		
-		// TODO 넣어서
-		ArrayList<Order> orderComp = new ArrayList<Order>();
-		
-		// dao까지 출발
-		int result = new OrderService().orderComp(orderComp);
-		
-		// TODO 결과값 마무리...
 		
 	}
 

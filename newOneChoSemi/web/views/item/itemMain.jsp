@@ -87,24 +87,18 @@
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-danger item-badge">best</span>
 								<p class="card-title item-card-title"><%=((Item)bestList.get(i)).getItemName()%></p>
-								<p class="card-text item-card-text">
-									&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
 								<%if(!((Item)bestList.get(i)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item)bestList.get(i)).getKeywordName()%></a><br>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item)bestList.get(i)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-										keyword = ((Item)bestList.get(i)).getKeywordName();
-										key1 = keyword.split(",")[0];
-										key2 = keyword.split(",")[1];
-									%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#"
-									class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key2%></a><br>
+									keyword = ((Item)bestList.get(i)).getKeywordName();
+									key1 = keyword.split(",")[0];
+									key2 = keyword.split(",")[1];
+								%>
+								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
 								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-									DETAIL</a>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
@@ -119,30 +113,26 @@
 		<form>
 			<div class="container item-container">
 				<div class="row title-row">
-					<h1 class="display-6">BEST</h1>
+					<h1 class="display-6">NEW</h1>
 				</div>
 				<div class="row item-row">
-					<%for (int i = 0; i < bestList.size(); i++) {%>
-					<input type="hidden"
-						value="<%=((Item)bestList.get(i)).getItemNo()%>">
+					<%for (int i = 0; i < newList.size(); i++) {%>
+					<input type="hidden" value="<%=((Item)newList.get(i)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<div class="card-image-zoom" id="card-image-zoom">
-								<img
-									src="<%=request.getContextPath()%>/<%=((Item)bestList.get(i)).getItemImagePath()%>/<%=((Item)bestList.get(i)).getItemImageName()%>"
-									class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item)newList.get(i)).getItemImagePath()%>/<%=((Item)newList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
-								<span class="badge badge-pill badge-danger item-badge">best</span>
-								<p class="card-title item-card-title"><%=((Item)bestList.get(i)).getItemName()%></p>
-								<p class="card-text item-card-text">
-									&#8361;<%=(((Item)bestList.get(i)).getItemPrice())-(((Item)bestList.get(i)).getItemDiscount())%></p>
-								<%if(!((Item)bestList.get(i)).getItemKeywordNo().equals("K3")) {%>
+								<span class="badge badge-pill badge-warning item-badge">new</span>
+								<p class="card-title item-card-title"><%=((Item)newList.get(i)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item)newList.get(i)).getItemPrice())-(((Item)newList.get(i)).getItemDiscount())%></p>
+								<%if(!((Item)newList.get(i)).getItemKeywordNo().equals("K3")) {%>
 								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item)bestList.get(i)).getKeywordName()%></a><br>
+									style="font-weight: lighter">#<%=((Item)newList.get(i)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-										keyword = ((Item)bestList.get(i)).getKeywordName();
+										keyword = ((Item)newList.get(i)).getKeywordName();
 										key1 = keyword.split(",")[0];
 										key2 = keyword.split(",")[1];
 									%>
@@ -151,8 +141,7 @@
 									class="badge badge-info" id="keyword-badge"
 									style="font-weight: lighter">#<%=key2%></a><br>
 								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-									DETAIL</a>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
@@ -299,8 +288,8 @@
 								%>
 								<%
 									keyword = ((Item) allList.get(i)).getKeywordName();
-								key1 = keyword.split(",")[0];
-								key2 = keyword.split(",")[1];
+									key1 = keyword.split(",")[0];
+									key2 = keyword.split(",")[1];
 								%>
 								<a href="#" class="badge badge-info" id="keyword-badge"
 									style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#"
@@ -366,8 +355,7 @@
 			
 			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo="+itemNo;
 		})
-	})
-	
+	})	
 	</script>
 	<%@ include file="../common/footer.jsp"%>
 	<!-- 제이쿼리 -->

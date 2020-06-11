@@ -191,6 +191,19 @@ public class ItemService {
 		return items;
 	}
 
+	// 김경남: ItemDetail
+	public Item selectItemDetail(String itemNo) {
+
+		Connection conn = getConnection();
+		
+		Item itemDetail = new ItemDao().selectItemDetail(conn, itemNo);
+		
+		close(conn);
+		
+		return itemDetail;
+
+	}
+
 	
 
 
