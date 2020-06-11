@@ -172,4 +172,10 @@ public class ItemService {
 		return items;
 	}
 
+	public Item selectItemDetail(String itemNo) {
+		
+		
+		return null;
+	}
+
 }

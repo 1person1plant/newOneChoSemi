@@ -437,7 +437,19 @@
 		
 		// 메인 페이지로 가는 펑션
 		function goAll() {
-			location.href="<%=request.getContextPath()%>/allPage.it";
+			location.href="<%=request.getContextPath()%>/itemMain.it";
+		}
+		// 흙에 사는 친구들 페이지로 가는 펑션
+		function goSoil() {
+			location.href="<%=request.getContextPath()%>/itemSoil.it";
+		}
+		// 물에 사는 친구들 페이지로 가는 펑션
+		function goWater() {
+			location.href="<%=request.getContextPath()%>/itemWater.it";
+		}
+		// 공중에 사는 친구들 페이지로 가는 펑션
+		function goHanging() {
+			location.href="<%=request.getContextPath()%>/itemHanging.it";
 		}
         
     </script>
