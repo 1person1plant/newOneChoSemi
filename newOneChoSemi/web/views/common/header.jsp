@@ -323,13 +323,16 @@
                     <a class="nav-link" href="#"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ALL</a>
+                    <a class="nav-link" onclick="goAll();">ALL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">HANGING</a>
+                    <a class="nav-link" onclick="goSoil();">SOIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">PLANT</a>
+                    <a class="nav-link" onclick="goWater();">WATER</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="goHanging();">HANGING</a>
                 </li>
             </ul>
         </div>
@@ -430,6 +433,11 @@
 		}
 		function logout() {
 			location.href="<%=request.getContextPath()%>/logout.me";
+		}
+		
+		// 메인 페이지로 가는 펑션
+		function goAll() {
+			location.href="<%=request.getContextPath()%>/allPage.it";
 		}
         
     </script>

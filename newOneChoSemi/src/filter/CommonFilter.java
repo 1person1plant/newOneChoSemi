@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class CommonFilter
  */
-@WebFilter("/CommonFilter")
+@WebFilter(filterName = "encoding", urlPatterns="/*")
 public class CommonFilter implements Filter {
 
     /**

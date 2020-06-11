@@ -201,7 +201,7 @@
         
         <div class="row">
             
-            <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/search.it">
+            <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/stockSearch.it">
                 
                 <table class="mx-auto" style="border: double black; width: 100%;" id="searchTable">
                         <tr>
@@ -211,8 +211,10 @@
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">재고수량</th>
                         <td colspan="4" style="position: relative;top:2px;">
-                        <input type="number" id="min" placeholder="이상">
-                        <label>~</label><input type="number" id="max" placeholder="이하"><label>  개</label></td>
+                        <button type="button" id="zero" class="btn btn-outline-dark btn-sm">품절</button>
+                        <button type="button" id="almost" class="btn btn-outline-dark btn-sm">품절임박</button>
+                        <input type="number" id="min" name="minStock" placeholder="이상">
+                        <label>~</label><input type="number" id="max" name="maxStock" placeholder="이하"><label>  개</label></td>
                         </tr>
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">전시상태</th>
@@ -254,18 +256,10 @@
                         </table>
                     </form>
                 </div>
-                
-                <script>
-                    $(function(){
-                        $("#min").change(function(){
-
-                            var min=$("#min").val();
-                            $("#max").attr("min",min);
-                        })
-                    })
-                </script>
-                
+               
                 <div class="row">
+                
+                <form class="mx-auto">
                    
                   <%if(!items.isEmpty()){ %>
                     
@@ -280,7 +274,7 @@
                                     <th>누적구매수량</th>
                                     <th>전시상태</th>
                                     <th>카테고리</th>
-                                    <th>수정/삭제</th>
+                                   
                                 </tr>
                      
                             </thead>
@@ -305,17 +299,18 @@
                                			}
                                			
                                			%>
-                               		
-                               			<tr id="row<%=i%>">
+                               			
+                               			
+                               			<tr>
                                			<td></td>
                                			<td><%=items.get(i).getItemNo() %></td>
                                 		<td><%=items.get(i).getItemName()%></td>
-                                		<td><input type="number" value="<%=items.get(i).getItemStock()%>"></td>
-                                		<td><%=stockStatus %></td>
+                                		<td><input id="<%=items.get(i).getItemNo()%>" type="number" value="<%=items.get(i).getItemStock()%>"></td>
+                                		<td id="status"><%=stockStatus %></td>
                                 		<td><%=items.get(i).getItemSCount() %></td>
                                 		<td><%=display %></td>
                                 		<td><%=items.get(i).getItemCategory()%></td>
-                                		<td><button>수정</button><button>삭제</button></td>
+                                		
                                			</tr>
                                		
                                		<%} %>
@@ -333,12 +328,14 @@
                                     <th>누적구매수량</th>
                                     <th>전시상태</th>
                                     <th>카테고리</th>
-                                    <th>수정/삭제</th>
+                                    
                                 </tr>
                             </tfoot>
                         </table>
-
-					<%}else{ %> 
+						
+						<button type="button" id="modifyBtn" class="btn btn-secondary btn-lg btn-block">재고 수정하기</button>
+						</form>
+					 <%}else{ %> 
                        		<div class="container">
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
@@ -347,182 +344,26 @@
                        		
                       
                        		</div>
-                       		<div>
+                       		</div>
                        <%} %>
+                       
+                       <form id="hiddenForm" method="post" action="<%=request.getContextPath()%>/stockUpdate.it" onsubmit="return validate();">
+                       </form>
 						
                       
             
                  </div>
                     <!--제품 상세 내용 Modal-->
                     
-                    <!-- The Modal -->
-                    <div class="modal" id="myModal">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
                     
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                            <h4 class="modal-title">재고 조회</h4>
-                            
-                            <button type="button" class="close" data-dismiss="modal" id="modalClose">&times;</button>
-                            </div>
                     
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                            <form id="modalForm"  method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/update.it" onsubmit="return validate();">
-
-                                
-                                <ul>
-                                    <li><label>상품번호</label><br><input required type="text" readonly id="productNum" name="productNum" style="width:80%"></li>
-                                    <li><label>상품명</label><br><input required type="text" readonly id="productName" style="width:80%" name="modifyName"></li>
-                                    <li><label>전시상태</label><br><input required type="text" readonly id="exhibitStatus" name="modifyExhibitText">
-                                        <select id="modifyExhibitStatus" style="width:35%" name="modifyExhibit">
-                                            <option selected value="null">상태수정</option>
-                                            <option value="Y">전시중</option>
-                                            <option value="N">전시중지</option>
-                                            
-                                        </select>
-                                    </li>
-                                    
-                                    <li><label>재고수량</label><br><input type="number" readonly id="stock" name="stock"></li>
-                                    <li><label>품절여부</label><br><input type="text" readonly id="stockStatus"></li>
-                                    <li><label>카테고리</label><br><input required type="text" readonly id="category" name="modifyCategoryText">
-                                        <select id="modifyCategory"  style="width:38%" name="modifyCategory">
-                                            <option selected value="null">상태수정</option>
-                                            <option value="HANGING">HANGING</option>
-                                            <option value="WATER">WATER</option>
-                                            <option value="SOIL">SOIL</option>
-                                        </select>
-                                    </li>
-                                   
-                                    
-                                </ul> 
-                                
-                            </div>
                     
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                            <button type="submit" class="btn btn-outline-success" >수정하기</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteConfirm();">삭제하기</button>
-                            </div>
-                            
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                    <script>
-                        $(function(){
-
-                            $("#discount").change(function(){
-                                
-                                var price=$("#price").val();
-                                var discount=$("#discount").val();
-                                console.log(price);
-                                console.log(discount);
-
-                                if((price-discount)<0){
-                                    console.log("할인 심하다~")
-                                    $("#warning").css("display","block").css("color","#d9534f");
-                                    $("#discount").val(null);
-                                }else{
-                                    $("#warning").css("display","none");
-                                }
-                            })
-                            
-                            
-                            $("#price").change(function(){
-                                
-                                var price=$("#price").val();
-                                var discount=$("#discount").val();
-                                console.log(price);
-                                console.log(discount);
-
-                                if((price-discount)<0){
-                                    console.log("할인 심하다~")
-                                    $("#warning").css("display","block").css("color","#d9534f");
-                                    $("#discount").val(null);
-                                }else{
-                                    $("#warning").css("display","none");
-                                }
-                            })
-                            
-                        })
-                    </script>
-                    <script>
-                    
-										//파일로드시 레이블 수정
-										$(function(){
-											
-											$("#mainImg").change(function(){
-												
-												$("#mainImg").next().text($("#mainImg").val());
-												
-											});
-											
-											$("#subImg").change(function(){
-												$("#subImg").next().text($("#subImg").val());
-											})
-											
-										})
-										
-                    				
-                                        //preview
-                                        function loadFile(value,num){
-                                        	
-                                        	console.log("프리뷰 실행중");
-											
-                                        	var reader=new FileReader();
-                                        	reader.onload=function(){
-                                        		
-                                        		if(num==1){
-                                        			
-                                        			var preview=document.getElementById("mpreview");
-                                        			preview.src=reader.result;
-                                        		}else{
-                                        			
-                                        			var preview=document.getElementById("spreview");
-                                        			preview.src=reader.result;
-                                        		}
-                                        		
-                                        	}
-                                            
-                                                reader.readAsDataURL(value.files[0]);
-                                            }
-
-                                        
-
-                 </script>   
-                  <script>
-                  //상품설명 글자수 세기
-                  $(function(){
-                	  
-
-                    $("#itemInfo").keyup(function(){
-
-                      var count=$("#itemInfo").val().length;
-
-                      $("#countText").children('span').first().text(count);
-
-                    })
-
-                      $('button[type=reset]').click(function(){
-                        $("#countText").children('span').first().text('0');
-                      })
-                  })
-
-                </script>
                  </div>
         
         
         
     </div>  
        
-</div>
-</div>
-
-
-
-
 </div>
 
 
@@ -548,7 +389,9 @@
 
 <!--datatable 관련 script-->
  
- <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+ <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
@@ -560,7 +403,7 @@
      		
      		var title=$(this).text();
      		
-     		console.log("this:"+$(this));
+     		if(title!=""){
      		
      		$(this).html('<input type="text" placeholder="search '+title+'"/>');
      		
@@ -575,10 +418,12 @@
      			
      		});
      		
+     		}
      	}); 
     	 
        var table=$('#productlist').DataTable({
-       
+       		
+    	    responsive:true,
     	  	orderCellsTop:true,
 	   		fixedHeader:true,
 	   		scrollX:true,
@@ -588,153 +433,69 @@
 	   			targets:0
 	   		}],
 	   		select:{
-	   			style:'os',
+	   			style:'multi',
 	   			selector:'td:first-child'
 	   		},
 	   		order:[[1,'asc']]
         	
          });
+              
        
-       var flag=true;
+      //체크박스로 선택된 행의 데이터 뽑아오고 submit하기
+       $("#modifyBtn").on('click',function(){
+    	   
+    	   var selectedRows=table.rows('.selected').data();
+    	   var length=table.rows('.selected').data().length;
+    	   
+    	   //선택된 행들의 아이템 넘버를 배열에 담는다
+    	   var ids=[];
+    	   
+    	   for(var i=0;i<length;i++){
+    		   
+    		   var id=selectedRows[i][1];
+    		   ids.push(id);
+    		
+    	   }
+    	   
+    	   
+    	   console.log(table.rows('.selected').data());
+    	   console.log(length);
+    	   
+    	   console.log(ids);
+    	   
+    	   var value=[];
+    	   
+    	   for(var i=0;i<length;i++){
+    		   
+    		   value.push(document.getElementById(ids[i]).value)
+    	   }
+    	  
+    	   console.log(value);
+    	   
+    	   $hiddenForm=$("#hiddenForm");
+    	   $hiddenForm.html(""); //기존의 tag 지우기
+    	   
+    	   for(var i=0;i<length;i++){
+    		   
+    		   var $div=$("<div>");
+    		   var $id=$("<input>").attr("type","hidden").attr("name","id").val(ids[i]);
+    		   var $stock=$("<input>").attr("type","hidden").attr("name","stock").val(value[i]);
+    		   
+    		   $div.append($id);
+    		   $div.append($stock);
+    		   
+    		   $hiddenForm.append($div);
+    		   
+    	   }
+    	   
+    	   
+    	   $("#hiddenForm").submit();
+    	  
+    	   
+       });
        
-       $("#productlist tbody").on('click','button',function(){
-     		
-     		if($(this).text()=="삭제"){
-     			
-     			console.log("삭제버튼 클릭");
-     			flag=false;
-     			console.log("삭제 버튼 클릭 안 플래그"+flag);
-     			$(this).parent().parent().removeAttr("data-toggle");
-     			
-     			var agree=confirm("정말 삭제하시겠어요?"+$(this).parent().parent().children().eq(0).text());
-     			var clicked=$(this).parent().parent().children().eq(0).text();
-     			
-     			if(agree){
-     				
-     				location.href="<%=request.getContextPath()%>/delete.it?itemNum="+clicked;
-     			}
-     			
-     			
-     			
-     		}else{
-     			flag=true;
-     			console.log("수정버튼 클릭");
-     			console.log("수정 버튼 클릭 안 플래그"+flag);
-     		}
-     		
-     	})
-       
-         
-         $("#productlist tbody").on('click','tr',function(){
-        	 
-        	 console.log("행 클릭 안 플래그"+flag);
-        	 
-
-        	 console.log("행에 토글달기");
-        	 
-        	if(flag){
-        	
-        	 $(this).attr({"data-toggle":"modal","data-target":"#myModal"});
-        	 
-        	}
-        	 
-        	 var pNum=$(this).children().eq(0).text();
-         	
-             $("#productNum").val(pNum);
-             $("#productName").val($(this).children().eq(1).text());
-             $("#exhibitStatus").val($(this).children().eq(2).text());
-             $("#price").val($(this).children().eq(3).text());
-             $("#discount").val($(this).children().eq(4).text());
-            // $("#itemInfo").val($(this).children().eq(6).text());
-             
-            
-             $("#category").val($(this).children().eq(6).text());
-             $("#keyword").val($(this).children().eq(7).text());
-             $("#registerDate").val($(this).children().eq(8).text());
-             $("#modifyDate").val($(this).children().eq(9).text());
-             
-             $("#countText").children('span').first().text( $("#itemInfo").val().length);
-             
-             
-             
-            
-             
-             
-             if($("#exhibitStatus").val()=="전시중지"){
-          	   
-          	   $(".modal-body input").not($("#productNum")).not($("#category")).not($("#registerDate")).not($("#modifyDate")).prop("readonly",false);
-                $("#mainImg").prop("disabled",false);
-                $("#subImg").prop("disabled",false);
-                $("#itemInfo").prop("readonly",false);
-          	   
-             }
-         })
-         
-         
-         
-         	
-       	
-       	
-         
-
-            $(".modal-body input").click(function(){
-                if($("#exhibitStatus").val()=="전시중"){
-                    alert("전시상태를 전시중지로 수정해야 값을 수정할 수 있습니다.");
-                 }
-                })
-            
-           
-            
-            
-            $("#modifyExhibitStatus").change(function(){
-                var selected=$('#modifyExhibitStatus').children("option:selected").text();
-                $("#exhibitStatus").val(selected);
-
-                if(selected=="전시중지"){
-                    $(".modal-body input").not($("#productNum")).not($("#registerDate")).not($("#modifyDate")).prop("readonly",false);
-                    $("#mainImg").prop("disabled",false);
-                    $("#subImg").prop("disabled",false);
-                    $("#itemInfo").prop("readonly",false);
-                    
-                }else if(selected=="전시중"){
-                    $(".modal-body input").prop("readonly",true);
-                }
-            })
-
-            $("#modifyCategory").change(function(){
-
-                var display=$("#exhibitStatus").val();
-                var selected=$('#modifyCategory').children("option:selected").text();
-
-                if(display=="전시중지"){
-                    $("#category").val(selected);
-                    $("#category").css("background","yellow");
-                }
-            })
-            
-            $("#modifyKeyword").change(function(){
-            	
-            	var display=$("#exhibitStatus").val();
-            	var selected=$("#modifyKeyword").children("option:selected").text();
-            	
-            	if(display=="전시중지"){
-            		$("#keyword").val(selected);
-            		$("#keyword").css("background","yellow");
-            	}
-            })
-            
-            $("#itemInfo").change(function(){
-            	$(this).css("background","yellow");
-            })
-            
-            
-            $(".modal-body input").change(function(){
-            	
-            	$(this).css("background","yellow");
-            })
-            
-			
-            
+		
+      
            
                
         });
@@ -742,37 +503,89 @@
         
         </script>
        
-        <!--모달에서 수정/삭제 시 서버로 값 넘기기-->
+        
         <script>
+        
+        
+       
             
         function validate(){
+        	//재고에 입력된 값이 숫자인지 확인
+        	//행이 선택되었는지 확인
         	
-        	if($("#exhibitStatus").val()=="상태수정"){
-        		alert("전시상태를 선택하세요");
+        	
+        	var regExp=/^[0-9]{1,}$/;
+        	
+        	var testName=$("input[name='stock']");
+        	
+        	var testLength=testName.length;
+        	
+        	if(testLength==0){
+        		alert("수정될 값이 없어요.");
         		return false;
         	}
         	
-        	else if($("#modifyKeyword").val()==null){
-        		alert("키워드를 선택하세요.");
-        		return false;
-        	}else{
-        		return true;
+        	for(var i=0;i<testLength;i++){
+        		
+        		var testValue=testName.eq(i).val();
+        		
+        		if(regExp.test(testValue)){
+        			 var agree=confirm(testLength+"개의 상품 재고를 수정하시겠습니까?")
+            		 if(agree){
+            			 return true;
+            		 }
+        			
+        		}else{
+        			alert("재고 수량을 확인해주세요.");
+        			return false;
+        		}
+        		
         	}
+        	
+        	console.log(testName.eq(1).val())
+        	console.log(testLength);
+        	
+        	
+        	
         	
         }
         
-        function deleteConfirm(){
-            
-            var answer=confirm("삭제하시겠습니까?");
-            var modalItemNum=$("#productNum").val();
-            
-            if(answer){
-            	location.href="<%=request.getContextPath()%>/delete.it?itemNum="+modalItemNum;
-            }
-            
-        }
+       
         
         </script>
+        <script>
+                
+                	$(function(){
+                	
+                		 $("#zero").click(function(){
+                        
+                         	$("#min").val(0);
+                         	$("#max").val(0);
+                         });
+                         
+                         $("#almost").click(function(){
+                         	$("#min").val(1);
+                         	$("#max").val(5);
+                         });
+                         
+                		
+                		
+                	})
+                	
+                
+                </script>
+                
+                <script>
+                    $(function(){
+                        $("#min").change(function(){
+
+                            var min=$("#min").val();
+                            $("#max").attr("min",min);
+                        });
+                        
+                       
+                    })
+                </script>
 
 
        

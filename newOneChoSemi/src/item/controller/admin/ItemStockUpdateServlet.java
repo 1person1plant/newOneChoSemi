@@ -3,6 +3,7 @@ package item.controller.admin;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
 import item.model.vo.Item;
-import item.model.vo.ItemImage;
 
 /**
- * Servlet implementation class ItemStockServlet
+ * Servlet implementation class ItemStockUpdateServlet
  */
-@WebServlet("/stock.it")
-public class ItemStockServlet extends HttpServlet {
+@WebServlet("/stockUpdate.it")
+public class ItemStockUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemStockServlet() {
+    public ItemStockUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,28 +33,40 @@ public class ItemStockServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
+		String[] ids=request.getParameterValues("id");
+		String[] stocks=request.getParameterValues("stock");
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		ArrayList<Item> items=new ArrayList();
 		
-		
-		
-		if(!items.isEmpty()&&!images.isEmpty()) {
+		for(int i=0;i<ids.length;i++) {
+			System.out.println("id:"+ids[i]);
+			System.out.println("stock:"+stocks[i]);
 			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/stockManager.jsp").forward(request, response);
+			Item it=new Item();
+			it.setItemNo(ids[i]);
+			it.setItemStock(Integer.valueOf(stocks[i]));
+			
+			items.add(it);
+		}
+		
+		//재고 업데이트 하러 가즈아
+		int result=new ItemService().updateStock(items);
+		
+		//업데이트된 재고목록 가져오기
+		if(result>0) {
+			
+			response.sendRedirect("stock.it");
 			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "재고 수정 실패");
+			views.forward(request, response);
+			
 		}
-	
+		
+		
+		
 	}
 
 	/**

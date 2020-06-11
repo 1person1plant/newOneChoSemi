@@ -2,6 +2,8 @@ package item.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +16,16 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 
 /**
- * Servlet implementation class ItemStockServlet
+ * Servlet implementation class ItemStockSearchServlet
  */
-@WebServlet("/stock.it")
-public class ItemStockServlet extends HttpServlet {
+@WebServlet("/stockSearch.it")
+public class ItemStockSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemStockServlet() {
+    public ItemStockSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,26 +37,46 @@ public class ItemStockServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
+		String minStock=request.getParameter("minStock");
+		String maxStock=request.getParameter("maxStock");
+		String display=request.getParameter("display");
+		String pName=request.getParameter("pName");
+		String category=request.getParameter("category");
+		
+		Map<String,String> list=new HashMap<>();
+		list.put("minStock", minStock);
+		list.put("maxStock", maxStock);
+		list.put("display",display);
+		list.put("pName",pName);
+		list.put("category",category);
+		
+		System.out.println(list);
+		
+		//검색 조건을 넘기자
 		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
+		ArrayList<Item> items=is.searchStock(list);
+		
+		//이미지 가져오기..쓰게 될 수도 있으니까 
 		ArrayList<ItemImage> images=is.selectItemImg();
 		
-		
-		
-		if(!items.isEmpty()&&!images.isEmpty()) {
-			
+		if(items!=null) {
+			System.out.println("화면으로 보내기!");
 			request.setAttribute("items", items);
 			request.setAttribute("images", images);
 			request.getRequestDispatcher("views/admin/stockManager.jsp").forward(request, response);
 			
+			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
+			request.setAttribute("msg", "재고 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-	
+				
+		
+		
+		
+		
+		
 	}
 
 	/**
