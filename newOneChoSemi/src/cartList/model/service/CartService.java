@@ -92,5 +92,14 @@ public class CartService {
 		return cartList;
 	}
 
+	public boolean cartContainChk(String userNo, String itemId) {
+		Connection conn = getConnection();
+
+		boolean result = new CartDao().cartContainChk(conn, userNo, itemId);
+		
+		close(conn);
+		return result;
+	}
+
 
 }

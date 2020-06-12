@@ -38,29 +38,41 @@ public class WishtoCartServelt extends HttpServlet {
 		String itemId = request.getParameter("itemId");
 		String userNo = request.getParameter("userNo");
 		System.out.println("WishtoCartServelt : " + wishNum + " : " + itemId  + " : " + userNo);
-		
-		ArrayList<Cart> cartList = new CartService().wishtoCartList(wishNum,itemId,userNo);
-
-		System.out.println("cartList is empty? : " + cartList.isEmpty());
-		System.out.println("CartListServlet cartList : " + cartList);
-		
-		
+		ArrayList<Cart> cartList = new ArrayList<>();
 		PrintWriter out = response.getWriter();
 		
-		if(cartList.isEmpty()) {
-			out.print("fail");
+		boolean result = new CartService().cartContainChk(userNo,itemId);
+
+		System.out.println("WishtoCartServelt : " + result);
+		
+		if(!result) {
+			cartList = new CartService().wishtoCartList(wishNum,itemId,userNo);
+	
+			System.out.println("cartList is empty? : " + cartList.isEmpty());
+			System.out.println("CartListServlet cartList : " + cartList);
 			
+			if(cartList.isEmpty()) {
+				out.print("fail");		
+				out.flush();
+				out.close();
+			} else {
+				response.setContentType("application/json;");
+				
+				Gson gson = new Gson();
+				gson.toJson(cartList, response.getWriter());
+			}
+		} else {
+			out.print("duplication");		
 			out.flush();
 			out.close();
-
-		} else {
-			response.setContentType("application/json;");
-			
-			Gson gson = new Gson();
-			
-			gson.toJson(cartList, response.getWriter());
-
 		}
+		
+		if(cartList.isEmpty()) {
+			out.print("fail");		
+			out.flush();
+			out.close();
+		}
+		
 	}
 
 	/**
