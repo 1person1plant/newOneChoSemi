@@ -740,6 +740,8 @@ public class ItemDao {
 			close(rset);
 		}
 		
+		System.out.println(item);
+		
 		return item;
 	}
 	
