@@ -152,7 +152,7 @@ td {
 										name='password1'></td>
 								</tr>
 								<tr>
-									<td scope="row" colspan='3' class="mt-2"><input type='submit' id='idenBtn' class='button1' name="idenBtn" value="확인">&nbsp;&nbsp; 
+									<td scope="row" colspan='3' class="mt-2"><input type='button' id='idenBtn' class='button1' name="idenBtn" value="확인">&nbsp;&nbsp; 
 										<button type='button' id="cancelBtn" class='button1'>취소</button>
 									</td>
 								</tr>

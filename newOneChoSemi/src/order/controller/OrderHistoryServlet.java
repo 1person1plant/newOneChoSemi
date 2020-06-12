@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import order.model.service.OrderService;
-import order.model.vo.Order;
-import order.model.vo.Page;
+import order.model.vo.OrderHis;
 
 /**
  * Servlet implementation class OrderHistoryServlet
@@ -32,40 +31,19 @@ public class OrderHistoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		OrderService os = new OrderService();
-		int listCount = os.getListCount();
+		String memberNo = request.getParameter("memberNo");
+//		System.out.println("servlet no들어오나"+memberNo);
+		ArrayList<OrderHis> oh = new OrderService().historyOrder(memberNo);
 		
-		int currentPage;
-		int limit;
-		int maxPage;
-		int startPage;
-		int endPage;
-		
-		currentPage = 1;
-		if(request.getParameter("currentPage")!=null) {
-			currentPage = Integer.valueOf(request.getParameter("currentPage"));
-		}
-		
-		limit = 5;
-		maxPage = (int)((double)listCount/limit + 0.8);
-		
-		startPage =(((int)((double)currentPage/limit+0.8))-1)*limit+1;
-		endPage = startPage + limit -1;
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		Page pg = new Page(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<Order> list = os.historyList(currentPage,limit);
-		if(list != null) {
-			request.setAttribute("list", list);
-			request.setAttribute("pg", pg);
+//		System.out.println("servlet 반환"+oh);
+//		System.out.println(oh.size());
+		if(oh != null) {
+			request.setAttribute("oh", oh);
 			request.getRequestDispatcher("views/myPage/orderHistory.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

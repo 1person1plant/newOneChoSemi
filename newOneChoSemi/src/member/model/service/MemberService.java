@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 
 import member.model.dao.MemberDao;
+import member.model.vo.Grade;
 import member.model.vo.Member;
 
 public class MemberService {
@@ -152,6 +153,13 @@ public class MemberService {
 	 */
 	public Member searchPwdMember(Member member) {
 		return null;
+	}
+
+	public Grade memberGrade(String memberNo) {
+		Connection conn = getConnection();
+		Grade grade = new MemberDao().memberGrade(conn,memberNo);
+		close(conn);
+		return grade;
 	}
 	
 }

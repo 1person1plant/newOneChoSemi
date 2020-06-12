@@ -48,8 +48,8 @@
 			margin: 5px; */
 			margin-bottom: 50px;
 			/* background: white; */
-			padding-left: 10px;
-			padding-right: 10px;
+			padding-left: 0;
+			padding-right: 0;
 			text-align: center;
 		}
 		
@@ -126,6 +126,11 @@
 								<th colspan="2" class='wishmenu'>메모</th>
 								<th colspan="2" class='wishmenu'>기타</th>
 							</tr>
+							<%if(mwl.isEmpty()||mwl.size()==0){ %>
+							<tr style='border-bottom: 2px solid black'>
+								<td class='mt-2' colspan="9" style="font-size:1rem">위시리스트가 존재하지 않습니다.</td>
+							</tr>
+							<%}else{%>
 							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 							<tr style='border-bottom: 2px solid black'>
 								<td colspan='1' class="mt-2"><%=mwl.get(i).getWishListNo()%></td>
@@ -140,6 +145,7 @@
 									<a href='main.jsp' id='delete2'><button type='button' class='button1'>상품삭제</button></a>
 								</td>
 							</tr>
+							<%} %>
 							<%} %>
 						</tbody>
 					</table>

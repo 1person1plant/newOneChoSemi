@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width" initial-scale="1">
+    <meta name="viewport" co	ntent="width=device-width" initial-scale="1">
     <title>Cho-당신을 위한 반려식물</title>
     <!--타이틀 아이콘-->
     <link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">

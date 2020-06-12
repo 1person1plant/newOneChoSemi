@@ -38,6 +38,7 @@
 ul .list-group-item :hover {
 	color: white;
 }
+
 /* 좌측 메뉴 리스트 끝 */
 </style>
 </head>
@@ -53,17 +54,16 @@ ul .list-group-item :hover {
 					</div>
 					<!-- 사이드바 메뉴목록1 -->
 					<ul class="list-group">
-						<a href="<%=request.getContextPath()%>/views/myPage/grade.jsp">
+						<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>">
 							<li class="list-group-item">회원 등급</li>
 						</a>
 						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
 							<li class="list-group-item">개인 정보 수정</li>
 						</a>
-						<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-						<a href="<%=request.getContextPath()%>/ohlist.bo">
+						<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>">
 							<li class="list-group-item">주문 내역 조회</li>
 						</a>
-						<a href="<%=request.getContextPath() %>/wish.me?memberNo=<%=loginUser.getMemberNo()%>">
+						<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">
 							<li class="list-group-item">위시리스트</li>
 						</a>
 						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">

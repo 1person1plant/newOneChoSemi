@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="member.model.vo.*"%>
 	<%-- <%
 		Member userGrade = null;
 	   String chkRank = "";
@@ -16,6 +16,59 @@
 	      }
 	   }
 	%> --%>
+	<%
+	Grade grade = (Grade)request.getAttribute("grade");
+	String rank = "";
+	String price = "";
+	int point = 0;
+	String seed = "";
+	String sprout = "";
+	String branch = "";
+	String fruit = "";
+	String tree = "";
+	String rankImg = "";
+	if(grade != null){
+		rank = grade.getMemberRank();
+		price = String.valueOf(grade.getTotalPrice());
+		point = grade.getMemberPoint();
+		seed = "images/rank/seed1.png";
+		sprout = "images/rank/sprout2.png";
+		branch = "images/rank/branch3.png";
+		fruit = "images/rank/fruit4.png";
+		tree = "images/rank/tree5.png";
+		if(price.isEmpty()||price==null){
+			price = "0";
+		}
+				
+		switch(rank){
+		case "R1" : rank = "1단계";
+		break;
+		case "R2" : rank = "2단계";
+		break;
+		case "R3" : rank = "3단계";
+		break;
+		case "R4" : rank = "4단계";
+		break;
+		case "R5" : rank = "5단계";
+		break;
+		}
+		
+		switch(rank){
+		case "1단계" : rankImg = seed;
+		break;
+		case "2단계" : rankImg = sprout;
+		break;
+		case "3단계" : rankImg = branch;
+		break;
+		case "4단계" : rankImg = fruit;
+		break;
+		case "5단계" : rankImg = tree;
+		break;
+		
+		}
+	}
+	
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,6 +131,8 @@
         }
         td.mt-2{
         	text-align:right;
+        	margin:0% !important;
+        	vertical-align: middle;
         }
         
         /* 등급별 혜택 */
@@ -108,6 +163,14 @@
         .lasttr{
           border-bottom:1px solid lightgray;
         }
+        label{
+        	margin-bottom:0 !important;
+        	padding:3%;
+        	padding-left:0% !important;
+        }
+        h1{
+        margin:0 !important;
+        }
 	</style>
 </head>
 <body>
@@ -125,19 +188,20 @@
 							<thead>
 								<tr>
 									<br>
-									<th colspan="5" scope="col"><h1><%=loginUser.getMemberName()%>님의 등급은 <%=loginUser.getMemberRank()%></h1></th>
+									<th colspan="5" scope="col"><h1><%=loginUser.getMemberName()%>님의 등급은 <%=rank%>
+									<img style="width:50px;height:50px" src="<%=request.getContextPath()%>/<%=rankImg%>"></h1></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td></td>
 									<td scope="row" class="mt-2"><label>누적 구매 금액 : </label></td>
-									<td colspan="3"><label id='gradelb'>???</label></td>
+									<td colspan="3"><label id='gradelb'><%=price %>원</label></td>
 								</tr>
 								<tr>
 									<td></td>
 									<td scope="row" class="mt-2"><label>보유 포인트 : </label></td>
-									<td colspan="3"><label id='gradelb'><%=loginUser.getMemberPoint() %></label></td>
+									<td colspan="3"><label id='gradelb'><%=point%>P</label></td>
 								</tr>
 								<tr>
 									<td scope="row" colspan='3' class="mt-2"><label><h1>
