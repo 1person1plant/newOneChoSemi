@@ -29,10 +29,27 @@ public class Member implements Serializable{
 	private String memberRank;		// 등급번호 (R1~R5)
 	public Member() {
 	}
+	
 	public Member(String memberId, String memberPwd) {
 		this.memberId = memberId;
 		this.memberPwd = memberPwd;
 	}
+	
+	
+	
+	public Member(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1,
+			String memberEmail2) {
+		this.memberPhone1 = memberPhone1;
+		this.memberPhone2 = memberPhone2;
+		this.memberPhone3 = memberPhone3;
+		this.memberEmail1 = memberEmail1;
+		this.memberEmail2 = memberEmail2;
+	}
+
 	public Member(String memberId, String memberPwd, String memberName, String memberPhone1, String memberPhone2,
 			String memberPhone3, String memberEmail1, String memberEmail2, String memberPostcode, String memberAddress1,
 			String memberAddress2) {
