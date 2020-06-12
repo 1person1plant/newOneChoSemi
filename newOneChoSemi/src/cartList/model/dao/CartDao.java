@@ -111,7 +111,7 @@ public class CartDao {
 		}
 
 //		System.out.println("query : " + query);
-		try { // TODO 만드는 중
+		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userNo);
 			
@@ -203,7 +203,122 @@ public class CartDao {
 		return chk;
 	}
 
+	public int wishtoCartUpdate(Connection conn, String cartNum, String itemId, String userNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		System.out.println("CartDao update itemId : " + itemId + " : " + userNo);
+		
+		String query = "INSERT INTO CARTLIST VALUES('C'||LPAD(SEQ_CID.NEXTVAL,5,'0'), ?, ?, 1)";
 
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemId);
+			pstmt.setString(2, userNo);
 
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("CartDao 카트 수량 업데이트 : " + result);
+
+		return result;
+	}
+
+	public ArrayList<Cart> wishtoCartList(Connection conn, String itemId, String userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+	      
+		ArrayList<Cart> cartList = new ArrayList<>();
+	      
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO = ? AND ITEM_NO = ?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userNo);
+			pstmt.setString(2, itemId);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next()) {
+				Cart c = new Cart(rSet.getString("MEMBER_NO")
+		                        , rSet.getString("CARTLIST_NO")
+		                        , rSet.getString("ITEM_NO")
+		                        , rSet.getString("ITEM_NAME")
+		                        , rSet.getInt("ITEM_PRICE")
+								, rSet.getInt("ITEM_DISCOUNT")
+		                        , rSet.getInt("ITEM_MAX")
+		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_NAME")
+								 );
+				
+				cartList.add(c);
+			}
+			System.out.println("CartDao wishtoCartList : " + cartList);
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rSet);
+		}
+		
+		return cartList;
+	}
+
+	public boolean cartContainChk(Connection conn, String userNo, String itemId) {
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		boolean result = true;
+		
+		System.out.println("CartDao cartContainChk : " + userNo + " : " + itemId);
+	      
+		ArrayList<Cart> cartList = new ArrayList<>();
+	      
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? AND  ITEM_NO =?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userNo);
+			pstmt.setString(2, itemId);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next()) {
+				Cart c = new Cart(rSet.getString("MEMBER_NO")
+		                        , rSet.getString("CARTLIST_NO")
+		                        , rSet.getString("ITEM_NO")
+		                        , rSet.getString("ITEM_NAME")
+		                        , rSet.getInt("ITEM_PRICE")
+								, rSet.getInt("ITEM_DISCOUNT")
+		                        , rSet.getInt("ITEM_MAX")
+		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_NAME")
+	                         	);
+				
+				cartList.add(c);
+			}
+			System.out.println("cartContainChk : " + cartList);
+
+			if(cartList.isEmpty()) {
+				// false는 추가 가능하다
+				result = false;
+			} else {
+				result = true;
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rSet);
+		}
+		
+		return result;
+	}
 
 }
