@@ -203,6 +203,46 @@ public class CartDao {
 		return chk;
 	}
 
+	public boolean wishtoCartUpdate(Connection conn, String cartNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		boolean chk = true;
+//		System.out.println("CartDao update : " + cartOrderList);
+//		System.out.println("CartDao update Size : " + cartOrderList.size());
+		
+		String query = "UPDATE CARTLIST SET CARTLIST_COUNT = ?"
+					 + "WHERE MEMBER_NO = ?"
+					 + "AND CARTLIST_NO = ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cartOrderList.get(i).getCartListCount());
+			pstmt.setString(2, userNo);
+			pstmt.setString(3, cartOrderList.get(i).getCartListNo());
+//				System.out.println("cart 카트 수량 " + i +  " : " + cartOrderList.get(i).getCartListCount());
+//				System.out.println("cart update : " + userNo);
+//				System.out.println("cart 카트 번호 " + i +  " : " + cartOrderList.get(i).getCartListNo());
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+//		System.out.println("CartDao 카트 수량 업데이트 : " + result);
+
+		return chk;
+		
+		
+		return result;
+	}
+
+	public ArrayList<Cart> wishtoCartList(Connection conn, String itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

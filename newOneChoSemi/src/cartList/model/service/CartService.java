@@ -74,5 +74,22 @@ public class CartService {
 		return result;
 	}
 
+	public ArrayList<Cart> wishtoCartList(String cartNum, String itemId) {
+		Connection conn = getConnection();
+
+		boolean result = new CartDao().wishtoCartUpdate(conn, cartNum);
+
+		if(result) {
+			commit(conn);
+			ArrayList<Cart> cartList = new CartDao().wishtoCartList(conn, itemId);
+			// 카트 수량 다시 받아오기
+		}else {
+			rollback(conn);
+		}
+				
+		close(conn);
+		return cartList;
+	}
+
 
 }
