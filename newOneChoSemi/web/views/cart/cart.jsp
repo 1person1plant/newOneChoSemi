@@ -637,7 +637,7 @@
 				                	$(".cartList_tbody").children("tr").remove();
 								}
 								
-								// TODO 데이터 추가 해야함
+								// TODO 데이터 추가 해야함 해야함....
 				              	$cartListTbody = $(".cartList_tbody");
 								
 				              	var $tr = $("<tr>");
