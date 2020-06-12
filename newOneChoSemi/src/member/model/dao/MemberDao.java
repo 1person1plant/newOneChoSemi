@@ -1,13 +1,13 @@
 package member.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import member.model.vo.Member;
-
-import static common.JDBCTemplate.close;
 
 public class MemberDao {
 	/**
@@ -305,11 +305,10 @@ public class MemberDao {
 		public Member searchIdMember(Connection conn, Member member) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			Member searchId = null;
+			Member searchId_A = null;
+			System.out.println("dao" + searchId_A);
 
-			String query = "SELECT MEMBER_ID FROM MEMBER" +
-							"WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? " +
-							"AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
+			String query = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -321,26 +320,7 @@ public class MemberDao {
 				
 				rs = pstmt.executeQuery();
 				
-				if(rs.next()) {
-					searchId = new Member(rs.getString("MEMBER_NO"),
-										   rs.getString("MEMBER_ADMIN"),
-										   rs.getString("MEMBER_ID"),
-										   rs.getString("MEMBER_PWD"),
-										   rs.getString("MEMBER_NAME"),
-										   rs.getString("MEMBER_PHONE1"),
-										   rs.getString("MEMBER_PHONE2"),
-										   rs.getString("MEMBER_PHONE3"),
-										   rs.getString("MEMBER_EMAIL1"),
-										   rs.getString("MEMBER_EMAIL2"),
-										   rs.getString("MEMBER_POSTCODE"),
-										   rs.getString("MEMBER_ADDRESS1"),
-										   rs.getString("MEMBER_ADDRESS2"),
-										   rs.getString("MEMBER_STATUS"),
-										   rs.getInt("MEMBER_POINT"),
-										   rs.getString("MEMBER_RANK")
-										   );
-				}
-				System.out.println("MemberDao : " + searchId);
+
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -349,7 +329,7 @@ public class MemberDao {
 				close(pstmt);
 			}
 			
-			return searchId;
+			return searchId_A;
 		}
 		
 		/**

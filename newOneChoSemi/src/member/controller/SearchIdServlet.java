@@ -41,12 +41,15 @@ public class SearchIdServlet extends HttpServlet {
 		String memberEmail1 = request.getParameter("memberEmail1");
 		String memberEmail2 = request.getParameter("memberEmail2");
 		
-		Member member = new Member(memberPhone1, memberPhone2, memberPhone3, memberEmail1, memberEmail2);
+		Member searchId_A = new MemberService().searchIdMember(new Member(memberPhone1, memberPhone2, memberPhone3, memberEmail1, memberEmail2 ));
 		
-		Member searchId = new MemberService().searchIdMember(member);
-		
-		if(searchId != null) {
-			
+		if(searchId_A != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("searchId_A", searchId_A);
+			response.sendRedirect("find_Account.jsp");
+//			response.setContentType("text/html; charset=UTF-8"); 
+//			msg.println("<script>alert('성공'); location.href='views/member/find_Account.jsp';</script>"); 
+//			msg.close();
 		} else {
 			response.setContentType("text/html; charset=UTF-8"); 
 			msg.println("<script>alert('내용과 일치하는 회원정보가 없습니다'); location.href='views/member/find_Account.jsp';</script>"); 

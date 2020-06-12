@@ -78,7 +78,7 @@
                       							<div class="test col-md-2 ara-label-text">휴대폰 번호</div>
                       							<div class="test col-md-8">
                         							<div class="row">
-                          								<select id="mPhone1" name="memberPhone1" class="form-control" aria-describedby="basic-addon1" style="width: 20%;">
+                          								<select id="memberPhone1" name="memberPhone1" class="form-control" aria-describedby="basic-addon1" style="width: 20%;">
                             								<option value="010">010</option>
                             								<option value="011">011</option>
                            									<option value="016">016</option>
@@ -87,10 +87,10 @@
                             								<option value="019">019</option>
                           								</select>
                           								<p class="ara-label-text">&nbsp;-&nbsp;</p>
-                          								<input id="mPhone2" name="memberPhone2" type="text" maxlength="4" required class="form-control" aria-describedby="basic-addon1"
+                          								<input id="memberPhone2" name="memberPhone2" type="text" maxlength="4" required class="form-control" aria-describedby="basic-addon1"
                             								style="width: 20%;"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                           								<p class="ara-label-text">&nbsp;-&nbsp;</p>
-                          								<input id="mPhone3" name="memberPhone3" type="text" maxlength="4" required class="form-control" aria-describedby="basic-addon1"
+                          								<input id="memberPhone3" name="memberPhone3" type="text" maxlength="4" required class="form-control" aria-describedby="basic-addon1"
                             								style="width: 20%;"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                         							</div>
                       							</div>
@@ -105,9 +105,9 @@
                       							<div class="test col-md-2 ara-label-text">이메일</div>
                       							<div class="test col-md-8">
                         							<div class="row">
-                          								<input id="mEmail1" name="memberEmail1" type="text" required maxlength="16" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                          								<input id="memberEmail1" name="memberEmail1" type="text" required maxlength="16" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                           								<p class="ara-label-text">&nbsp;@&nbsp;</p>
-                         	 							<select id="mEmail2" name="memberEmail2" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                         	 							<select id="memberEmail2" name="memberEmail2" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                             								<option value="@naver.com">naver.com</option>
                       	      								<option value="@daum.net">daum.net</option>
                      								       	<option value="@gmail.com">gmail.com</option>
@@ -200,11 +200,11 @@
     
     <script>
     	function searchId() {
-			if($("#mPhone2").val() == null || $("#mPhone2").val() == "" ){
+			if($("#memberPhone2").val() == null || $("#memberPhone2").val() == "" ){
 				alert('핸드폰 번호를 입력해주세요');
-			} else if($("#mPhone3").val() == null || $("#mPhone3").val() == "" ){
+			} else if($("#memberPhone3").val() == null || $("#memberPhone3").val() == "" ){
 				alert('핸드폰 번호를 입력해주세요');
-			} else if( $("#mEmail1").val() == null || $("#mEmail1").val() == "" ){
+			} else if( $("#memberEmail1").val() == null || $("#memberEmail1").val() == "" ){
 				alert('이메일을 입력해주세요');
 			} else{
     			$('#searchMemberid').submit();
