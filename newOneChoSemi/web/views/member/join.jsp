@@ -600,8 +600,7 @@
 			function joinSubmit() {
 				var chkAll = $(".allChk");
 				var chk = $(".chkbox");
-				
-				console.log("뭐야");
+
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){

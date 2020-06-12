@@ -129,7 +129,12 @@ public class MemberService {
 	 * @return
 	 */
 	public Member searchIdMember(Member member) {
-		return null;
+		Connection conn = getConnection();
+		
+		Member searchId = new MemberDao().searchIdMember(conn, member);
+		
+		close(conn);
+		return searchId;
 	}
 	
 	/**

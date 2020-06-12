@@ -303,7 +303,53 @@ public class MemberDao {
 		 * @return
 		 */
 		public Member searchIdMember(Connection conn, Member member) {
-			return null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Member searchId = null;
+
+			String query = "SELECT MEMBER_ID FROM MEMBER" +
+							"WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? " +
+							"AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberPhone1());
+				pstmt.setString(2, member.getMemberPhone2());
+				pstmt.setString(3, member.getMemberPhone3());
+				pstmt.setString(4, member.getMemberEmail1());
+				pstmt.setString(5, member.getMemberEmail2());
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					searchId = new Member(rs.getString("MEMBER_NO"),
+										   rs.getString("MEMBER_ADMIN"),
+										   rs.getString("MEMBER_ID"),
+										   rs.getString("MEMBER_PWD"),
+										   rs.getString("MEMBER_NAME"),
+										   rs.getString("MEMBER_PHONE1"),
+										   rs.getString("MEMBER_PHONE2"),
+										   rs.getString("MEMBER_PHONE3"),
+										   rs.getString("MEMBER_EMAIL1"),
+										   rs.getString("MEMBER_EMAIL2"),
+										   rs.getString("MEMBER_POSTCODE"),
+										   rs.getString("MEMBER_ADDRESS1"),
+										   rs.getString("MEMBER_ADDRESS2"),
+										   rs.getString("MEMBER_STATUS"),
+										   rs.getInt("MEMBER_POINT"),
+										   rs.getString("MEMBER_RANK")
+										   );
+				}
+				System.out.println("MemberDao : " + searchId);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return searchId;
 		}
 		
 		/**
