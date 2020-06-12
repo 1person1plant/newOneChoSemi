@@ -74,5 +74,10 @@ public class CartService {
 		return result;
 	}
 
+	public ArrayList<Cart> wishtoCartList(String cartNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

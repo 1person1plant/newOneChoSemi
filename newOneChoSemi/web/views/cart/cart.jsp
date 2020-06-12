@@ -318,7 +318,7 @@
 	        <tfoot>
 	        <tr>
 	            <td colspan="6">
-	            <button class="btn btn-outline-info my-5 my-sm-0" onclick="location.href='index.jsp'">계속쇼핑</button>
+	            <button class="btn btn-outline-info my-5 my-sm-0" type="button" onclick="goHome()">계속쇼핑</button>
 	            <button class="btn btn-outline-info my-5 my-sm-0" type="button" onclick="order()">주문하기</button>
 	            </td>
 	        </tr>
@@ -370,6 +370,10 @@
     </script>
     
     <script>
+    	function goHome() {
+    		location.href="<%=request.getContextPath()%>/index.jsp";
+		}
+    
     	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
             var orderCheckeds = $("input:checkbox[class=cart_checkbox]:checked");
