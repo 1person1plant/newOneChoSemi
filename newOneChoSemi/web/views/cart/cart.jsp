@@ -284,7 +284,7 @@
 					<td></td>
 					<td></td>
 					<td class="cart_total_count">0</td>
-					<td><label for="allTrash"><input type="button" id="allTrash" class="trash"></input></label></td>
+					<td><label for="allTrash"><input type="button" id="allTrash" class="trash"></label></td>
 		        </tr>
 		        <tr>
 		            <td></td>
@@ -306,11 +306,11 @@
 			        <%for(int i = 0 ; i < cartList.size() ; i++) {%>
 	        		<tr>
 		        		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
-		        		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
-		        		<td><%=cartList.get(i).getItemName()%></td>
+		        		<td><img class="cartImg" src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
+		        		<td class="cartName"><%=cartList.get(i).getItemName()%></td>
 		        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
 		        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
-		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
+		        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></label></td>
 	        		</tr>
 		        	<%} %>
 			</tbody>
@@ -345,7 +345,6 @@
                         el.val(function(i, oldval) { return --oldval; });
                         //console.log(el.val());
                     }
-
                         // 수량 감소 가격 계산 
                         var td = el.parents("tr").children("td:nth-child(5)").children(".price").text();
                         el.parents("tr").children("td:nth-child(5)").children(".cal_price").text(td*el.val());
@@ -525,7 +524,7 @@
 				        <div class="card-body tablepadding">
 				            <table>
 				                <tbody>
-				                    <tr><th colspan="3"><%=wishList.get(i).getItemName() %></th></tr>
+				                    <tr><th class="wishName" colspan="3"><%=wishList.get(i).getItemName() %></th></tr>
 				                    <tr>
 				                        <td>가격</td>
 				                        <td class="wishprice" colspan="2"><%=wishList.get(i).getItemPrice() %></td>
@@ -608,46 +607,88 @@
 	        // 즐겨찾기에서 카트로 추가
 	        $(".wishToCart").click(function() {
 	        	var cartAdd = $(this);
-	        	
+	        	var wishName = $(this).parents(".card").find(".wishName").text();
+	        	console.log(wishName);
+	        	var wishImg = $(this).parents(".card").find(".cards_imgSize").attr("src");
+	        	console.log(wishImg);
+	        	var wishPrice = $(this).parents(".card").find(".wishprice").text();
+	        	console.log(wishPrice);
+	        		        	
 	        	// ajax 부분
-				var wishNum = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
-				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
-											
+				var wishNum = $(this).parents(".card").find(".wishNumber").text();
+				console.log($(this).parents(".card").find(".wishNumber").text());
+				
+				
 					$.ajax({
 					url:"<%=request.getContextPath()%>/cartListAdd.ca",
 					type:"post",
-					data:{wishNo:wishNo},
+					data:{wishNum:wishNum},
 					success:function(data){
 						if(data == "fail"){
 							alert("삭제에 실패 했습니다.");
 						} else {
-			                console.log($(".carttable > tbody tr td input:button").length);
-							if($(".carttable > tbody tr td input:button").length == 0){
-			                	// 상품 없으면 상품 추가 시 상품없음 테이블행 삭제
-			                	$(".cartList_tbody").children("tr").remove();
-							}
-		                   	// 테이블에 상품 추가
-		                   	// TODO 잰장 추가 
-<%-- <tr>
-		<td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
-		<td><img src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
-		<td><%=cartList.get(i).getItemName()%></td>
-		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
-		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
-		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></input></label></td>
-	 </tr> --%>
-		                   	$cartListTbody = $(".cartList_tbody");
-		   					var $tr = $("<tr>");
-		   					var $fst = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
-		   					$wishListhead.append($tr);
+			                
+			                if(data == "fail"){
+			                	alert("장바구니 등록에 실패 했습니다.");
+			                } else {
+				                console.log("장바구니 상품 수 : " + $(".carttable > tbody tr td input:button").length);
+								if($(".carttable > tbody tr td input:button").length == 0){
+				                	// 상품 없으면 상품 추가 시 상품없음 테이블행 삭제
+				                	$(".cartList_tbody").children("tr").remove();
+								}
+								
+								// TODO 데이터 추가 해야함
+				              	$cartListTbody = $(".cartList_tbody");
+								
+				              	var $tr = $("<tr>");
+								// 1 td
+								var $fstTd = $("<td>");
+								var $fstInput = $("<input>").addClass("cart_checkbox").attr("type","checkbox").attr("name","cartNo").val("data");
+								var $firstChd = $fstTd.append($fstInput);
+								// 2 td
+								var $scdTd = $("<td>");
+								var $scdImg = $("<img>").attr("src","<%=request.getContextPath()%>/items_uploadFiles/<%=wishList.get(0).getImageName() %>").attr("alt","상품");
+								var $secondChd = $scdTd.append($scdImg);
+								// 3 td
+							 	var $trdTd = $("<td>").addClass("cartName");
+								var $thirdChd = $trdTd;
+								// 4 td
+								var $fouTd = $("<td>");
+								var $fouInput = $("<input>").addClass("cart_count").attr("type","number").attr("name","cartItCo").attr({max:10, min:1, step:1}).attr("disabled",true).val("1");
+								var $fourthChd = $fouTd.append($fouInput);
+								// 5 td
+								var $fifTd = $("<td>");
+								var $fifSpan1 = $("<span>").addClass("cal_price").text("");
+								var $fifSpan2 = $("<span>").addClass("price").text("");
+								var $fifthChd = $fifTd.append($fifSpan1).append($fifSpan2);
+								// 6 td
+								var $sixTd = $("<td>");
+								var $sixLabel = $("<label>").attr("for", "trash99");
+								var $sixInput = $("<input>").addClass("trash").attr("type","button").attr("id","trash99");
+								var $sixLabelAdd = $sixLabel.append($sixInput);
+								var $sixthChd = $sixTd.append($sixLabelAdd);
+								
+								$tr.append($firstChd);
+								$tr.append($secondChd);
+								$tr.append($thirdChd);
+								$tr.append($fourthChd);
+								$tr.append($fifthChd);
+								$tr.append($sixthChd);
+								$cartListTbody.append($tr);
+								
+								$('input[class=cart_count]:last').spinner();
+								
 
+			                }
 						}
+						//alert("에이작스 끝");
 					},
 					error:function(request,status,error){
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
+					
 				});
-                
+					
                 if($(".wishcardcol").length == 0){
                    	// 상품 없음 테이블 추가
                    	$wishListhead = $(".wishListhead");
@@ -664,7 +705,9 @@
 	            if(result){
 	            	
             	// ajax 부분
-				var wishNo = $(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text();
+            	var wishNum = $(this).parents(".card").find(".wishNumber").text();
+				console.log($(this).parents(".card").find(".wishNumber").text());
+				//console.log($(this).parents(".card").children().children("table").children().children(":nth-child(3)").children(":first").children(":last").text());
 				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
 											
 					$.ajax({
