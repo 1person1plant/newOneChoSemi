@@ -13,6 +13,7 @@ import static common.JDBCTemplate.*;
 
 import item.model.vo.Item;
 import item.model.vo.ItemImage;
+import order.model.vo.admin.AdminOrder;
 
 public class ItemDao {
 	
@@ -474,7 +475,7 @@ public class ItemDao {
 
 	public ArrayList<Item> searchItems(Connection conn, Map<String, String> list) {
 		
-		Statement stmt=null;
+		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		ArrayList<Item> items=new ArrayList<>();
 		
@@ -549,8 +550,8 @@ public class ItemDao {
 		System.out.println(query);
 		
 		try {
-			stmt=conn.createStatement();
-			rset=stmt.executeQuery(query);
+			pstmt=conn.prepareStatement(query);
+			rset=pstmt.executeQuery();
 			
 			while(rset.next()) {
 				
@@ -564,6 +565,9 @@ public class ItemDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		
@@ -591,13 +595,17 @@ public class ItemDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
+		
+		
 		return result;
 	}
 
 	public ArrayList<Item> searchStock(Connection conn, Map<String, String> list) {
 		
-		Statement stmt=null;
+		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		ArrayList<Item> items=new ArrayList<>();
 		
@@ -680,8 +688,8 @@ public class ItemDao {
 		System.out.println(query);
 		
 		try {
-			stmt=conn.createStatement();
-			rset=stmt.executeQuery(query);
+			pstmt=conn.prepareStatement(query);
+			rset=pstmt.executeQuery();
 			
 			while(rset.next()) {
 				
@@ -695,6 +703,9 @@ public class ItemDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		
@@ -702,6 +713,38 @@ public class ItemDao {
 		return items;
 	}
 
+	public int nameCheck(Connection conn, String itemName) {
+		
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		int result=0;
+		
+		String query="SELECT COUNT(*) FROM ITEM WHERE ITEM_NAME=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, itemName);
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result=rset.getInt(1);
+			}
+			
+			System.out.println(result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return result;
+	}
+
+	
 	
 	
 

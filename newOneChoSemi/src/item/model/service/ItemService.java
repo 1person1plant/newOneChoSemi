@@ -191,6 +191,16 @@ public class ItemService {
 		return items;
 	}
 
+	public int nameCheck(String itemName) {
+		
+		Connection conn=getConnection();
+		int result=new ItemDao().nameCheck(conn,itemName);
+		
+		
+		close(conn);
+		return result;
+	}
+
 	
 
 
