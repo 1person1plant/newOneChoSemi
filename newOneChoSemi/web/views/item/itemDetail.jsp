@@ -137,7 +137,7 @@ td:nth-of-type(2) {width:45rem;}
 				</div>
 				<div class="col iteminfo-col-right">
 					<div class="row iteminfo-title">
-						<p class="h2 font-weight-bold my-auto iteminfo-title">산세베리아</p>
+						<p class="h2 font-weight-bold my-auto iteminfo-title"><%=item.getItemName()%></p>
 					</div>
 					<div class="row iteminfo-keyword" id="iteminfo-keyword">
 					<%if(!(item.getItemKeywordNo().equals("K3"))) {%>
@@ -168,7 +168,7 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="row iteminfo-afterSale" id="iteminfo-afterSale">
 							<div class="col-10 iteminfo-afterSale-price" id="iteminfo-afterSale-price" style="color: #1f598c;">
-								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;</p>
+								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
 								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
@@ -241,58 +241,48 @@ td:nth-of-type(2) {width:45rem;}
 			</div>
 		</div>
 
-		<script>
-            	$(function(){
-            		$("#iteminfo-share-btn").popover({
-            			title:"공유하기",
-            			html:true,
-            			animation:true,
-            			placement:"top",
-            			content:"왜 안나오는데"            			
-            		})
-            	})
-            </script>
-
 
 
 		<!--수량 체크와 관련된 script-->
 		<script>
-                $(function(){
-                    $(".cancel-button").click(function(e){
+			$(function(){
+				$(".cancel-button").click(function(e){
+					
+					$("#quantityNumber").val("0");
 
-                        $("#quantityNumber").val("0");
+                    if($("#quantityNumber").val()==0){
+                    	$(".iteminfo-quantity").css("background","white");
+                        $(".iteminfo-quantity-result").css("display","none");
+                    }
 
-                        if($("#quantityNumber").val()==0){
-                            $(".iteminfo-quantity").css("background","white");
-                            $(".iteminfo-quantity-result").css("display","none");
-                        }
+                    })
+                })
+                
+                
+                
+			$(function(){
+				$("#quantityNumber").change(function(e){
+					
+					var quantity = $("#quantityNumber").val();
 
-                    });
-                });
+					if(quantity>0){
+						$(".iteminfo-quantity").css("background","lightgray");
+						$(".iteminfo-quantity").css("margin-bottom","0");
+						$(".iteminfo-quantity-result").css("display","block");
+					}else {
+						$(".iteminfo-quantity").css("background","white");
+						$(".iteminfo-quantity-result").css("display","none");
+					}
+					
+					$("#whole-quantity").text(quantity);
 
-                $(function(){
-                    $("#quantityNumber").change(function(e){
+					var wholePrice = quantity * (<%=item.getItemPrice()-item.getItemDiscount()%>);
 
-                        var quantity = $("#quantityNumber").val();
-
-                        if(quantity>0){   
-                            $(".iteminfo-quantity").css("background","lightgray");
-                            $(".iteminfo-quantity").css("margin-bottom","0");
-                            $(".iteminfo-quantity-result").css("display","block");
-                        }else {
-                            $(".iteminfo-quantity").css("background","white");
-                            $(".iteminfo-quantity-result").css("display","none");
-                        }                        
-
-                        $("#whole-quantity").text(quantity);
-                        
-                        var wholePrice = quantity * (<%=item.getItemPrice()%>);
-                        
-                        $("#wholte-price").text(wholePrice);
-                    });
-                });
-            </script>
-
+					$("#whole-price").text(wholePrice);
+				})
+				
+			})
+		</script>
 
 
 
@@ -305,7 +295,7 @@ td:nth-of-type(2) {width:45rem;}
 			</div>
 			<div class="row detail-row">
 				<img id="detail-image"
-					src="<%=request.getContextPath()%>/images/plant/soil_sansevieria.jpg">
+					src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
 			</div>
 		</div>
 
@@ -334,11 +324,10 @@ td:nth-of-type(2) {width:45rem;}
 				<table class="table table-hover myReview-table">
 					<tbody>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/fruit4.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
-								<a href="#" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;<a
-								href="#" style="font-size: 0.8rem; color: grey;">삭제하기</a></td>
+							<td>
+								<img src="<%=request.getContextPath()%>/images/rank/fruit4.png" class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
+							 	<a href="#" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;<a href="#" style="font-size: 0.8rem; color: grey;">삭제하기</a>
+							</td>
 							<td>
 								<div class="row review-star-score">
 									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -358,10 +347,7 @@ td:nth-of-type(2) {width:45rem;}
 										style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img
-								src="<%=request.getContextPath()%>/images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="<%=request.getContextPath()%>/images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -371,18 +357,20 @@ td:nth-of-type(2) {width:45rem;}
 
 		<!--리뷰 사진 확대-->
 		<script>
-                $(function(){
-                    $("tr").click(function(){
-                        if($(this).find("#big-review-image").css("display")=="none") {
-                            $(this).find("#big-review-image").css("display","block");
-                            $(this).find("#mini-review-image").css("visibility","hidden");
-                        }else {
-                            $(this).find("#big-review-image").css("display","none");
-                            $(this).find("#mini-review-image").css("visibility","visible");
-                        }                        
-                    });
-                });
-            </script>
+			$(function(){
+				$("tr").click(function(){
+					if($(this).find("#big-review-image").css("display")=="none") {
+						$(this).find("#big-review-image").css("display","block");
+                        $(this).find("#mini-review-image").css("visibility","hidden");
+                    }else {
+                        $(this).find("#big-review-image").css("display","none");
+                        $(this).find("#mini-review-image").css("visibility","visible");
+                    }                        
+                })
+            })
+        </script>
+
+
 
 
 
@@ -392,8 +380,7 @@ td:nth-of-type(2) {width:45rem;}
 				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header" id="modal-header">
-						<button type="button" class="close modal-close"
-							data-dismiss="modal">&times;</button>
+						<button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="row title-modal">
@@ -421,14 +408,12 @@ td:nth-of-type(2) {width:45rem;}
 								<p class="h5 my-auto" style="text-align: center">상품은 어떠셨나요?</p>
 							</div>
 							<div class="container-fluid starRating">
-								<span class="fa fa-star-o" data-rating="1"
-									style="font-size: 3rem"></span> <span class="fa fa-star-o"
-									data-rating="2" style="font-size: 3rem"></span> <span
-									class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
-								<span class="fa fa-star-o" data-rating="4"
-									style="font-size: 3rem"></span> <span class="fa fa-star-o"
-									data-rating="5" style="font-size: 3rem"></span> <input
-									type="hidden" name="whatever" class="rating-value" value="3">
+								<span class="fa fa-star-o" data-rating="1" style="font-size: 3rem"></span>
+								<span class="fa fa-star-o" data-rating="2" style="font-size: 3rem"></span>
+								<span class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
+								<span class="fa fa-star-o" data-rating="4" style="font-size: 3rem"></span>
+								<span class="fa fa-star-o" data-rating="5" style="font-size: 3rem"></span>
+								<input type="hidden" name="starScore" class="rating-value" value="3">
 							</div>
 						</div>
 						<hr>
@@ -438,19 +423,15 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="container textarea-modal-container">
 								<div class="row textarea-row">
-									<textarea class="form-control review-textarea"
-										id="review-textarea" rows="5" placeholder="이곳에 작성해주세요."
-										style="background-color: lightgray; resize: none;"></textarea>
+									<textarea class="form-control review-textarea" id="review-textarea" rows="5" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
 								</div>
 								<div class="row float-right textarea-count-row">
-									<span id="counter">0</span><span class="textarea-count"
-										style="margin-right: 0.5rem;">/150자</span>
+									<span id="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
 								</div>
 							</div>
 						</div>
 						<hr>
 						<div class="row attachPhoto-modal">
-							<input type="file" id="reviewPhoto-file" hidden>
 						</div>
 					</div>
 					<div class="modal-footer justify-content-center">
@@ -461,27 +442,34 @@ td:nth-of-type(2) {width:45rem;}
 			</div>
 		</div>
 
+
+
+
+
 		<!--별 평점 주기(script)-->
 		<script>
-                var starRating=$(".starRating .fa");
+            var starRating=$(".starRating .fa");
 
-                var SetRatingStar = function () {
-                    return starRating.each(function () {
-                        if (parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-                            return $(this).removeClass('fa-star-o').addClass('fa-star');
-                        } else {
-                            return $(this).removeClass('fa-star').addClass('fa-star-o');
-                        }
-                    });
-                };
-
-                starRating.on('click', function () {
-                    starRating.siblings('input.rating-value').val($(this).data('rating'));
-                    return SetRatingStar();
+            var SetRatingStar = function () {
+                return starRating.each(function () {
+                    if (parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                        return $(this).removeClass('fa-star-o').addClass('fa-star');
+                    } else {
+                        return $(this).removeClass('fa-star').addClass('fa-star-o');
+                    }
                 });
+            };
+            
+            starRating.on('click', function () {
+            	starRating.siblings('input.rating-value').val($(this).data('rating'));
+            	
+            	return SetRatingStar();
+            });
+            
+            SetRatingStar();
+        </script>
 
-                SetRatingStar();
-            </script>
+
 
 
 
@@ -493,24 +481,24 @@ td:nth-of-type(2) {width:45rem;}
                     $("#counter").text(inputLength);
                 })
             })
-                $(function(){
-                    $("#review-textarea").keyup(function(){
-                        var inputLength=$(this).val().length;
-
-                        $("#counter").text(inputLength);
-
-                        var remain=150-inputLength;
-
-                        if(remain>=0) {
-                            $("#counter").parent().css("color","black");
-                        }else {
-                            $("#counter").parent().css("color","red");
-                        }
-                    })
-                })
-
-                
-            </script>
+            
+            $(function(){
+            	
+            	$("#review-textarea").keyup(function(){
+            		var inputLength=$(this).val().length;
+            		
+            		$("#counter").text(inputLength);
+            		
+            		var remain=150-inputLength;
+            		
+            		if(remain>=0) {
+            			$("#counter").parent().css("color","black");
+            		}else {
+            			$("#counter").parent().css("color","red");
+            		}
+            	})
+            })
+        </script>
 
 
 
@@ -525,146 +513,115 @@ td:nth-of-type(2) {width:45rem;}
 				<table class="table table-hover review-table">
 					<tbody>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/seed1.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;">
-							</td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o"></i>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
+									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
 								</div>
 								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
+									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
 								</div>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/sprout2.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;">
-							</td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o"></i>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
+									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
 								</div>
 								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
+									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
 								</div>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/branch3.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;">
-							</td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o"></i>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
+									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
 								</div>
 								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
+									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
 								</div>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/fruit4.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;">
-							</td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o"></i>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
+									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
 								</div>
 								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
+									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
 								</div>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<tr>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/tree5.png"
-								class="user-grade-image" style="width: 5rem; height: 5rem;">
-							</td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i> 
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o"></i>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
+									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
 								</div>
 								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
+									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
 								</div>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
+							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
-
 					</tbody>
 				</table>
 				<nav class="review-pagination mx-auto">
@@ -689,17 +646,10 @@ td:nth-of-type(2) {width:45rem;}
 	<!-- 제이쿼리 -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- popper 툴팁 -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<!-- 아이콘 -->
-	<script src="https://kit.fontawesome.com/4b6b63d8f6.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
 </body>
 </html>

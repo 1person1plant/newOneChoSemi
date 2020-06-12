@@ -45,16 +45,18 @@ public class ItemMainServlet extends HttpServlet {
 		
 		request.setAttribute("bestList", bestList);
 		request.setAttribute("newList", newList);
-		// ALL, BEST, NEW 끝
+		// BEST, NEW 끝
 				
 		// ALL PAGINATION START
 		int itemCount = itService.itemCount();
 		int currentPage;
 		int howManyAtOnce;
+		int beginPage;
 		int ultimatePage;
 		int startPage;
 		int endPage;
 		
+		beginPage = 1;
 		currentPage = 1;
 		
 		if(request.getParameter("currentPage")!=null) {
@@ -68,6 +70,8 @@ public class ItemMainServlet extends HttpServlet {
 		
 		if(ultimatePage < endPage) {
 			endPage = ultimatePage;
+		}else if(currentPage < 1){
+			currentPage=1;
 		}
 		
 		Pagination pagination = new Pagination(currentPage, itemCount, howManyAtOnce, ultimatePage, startPage, endPage);
