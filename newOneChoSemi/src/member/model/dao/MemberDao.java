@@ -334,7 +334,7 @@ public class MemberDao {
 		
 		/**
 		 * 비밀번호 찾기
-		 * @param member 입력된 아이디 +이메일 
+		 * @param member 입력된 아이디 +이메일  
 		 * @return
 		 */
 		public Member searchPwdMember(Connection conn, Member member) {
