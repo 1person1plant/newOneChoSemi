@@ -127,6 +127,7 @@ td {
 		<div class="row">
 			<div class="col-md-3">
 				<%@include file="myPageCategory.jsp"%>
+				
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
