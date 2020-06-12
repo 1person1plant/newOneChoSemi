@@ -1,4 +1,4 @@
-package cartList.controller;
+package member.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import cartList.model.service.CartService;
-import cartList.model.vo.Cart;
+import cartList.model.service.WishService;
+import cartList.model.vo.WishList;
 
 /**
- * Servlet implementation class WishtoCartServelt
+ * Servlet implementation class MyWishListServlet
  */
-@WebServlet("/wishtoCart.wi")
-public class WishtoCartServelt extends HttpServlet {
+@WebServlet("/myWishList.my")
+public class MyWishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishtoCartServelt() {
+    public MyWishListServlet() {
         super();
     }
 
@@ -32,25 +30,19 @@ public class WishtoCartServelt extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 카트리스트 조회
-		String cartNum = request.getParameter("cartNum");
-		String itemId = request.getParameter("itemId");
-		System.out.println("WishtoCartServelt : " + cartNum);
-		System.out.println("WishtoCartServelt : " + cartNum);
+		String memberNo = request.getParameter("memberNo");
+		/* System.out.println("넘버는 받아와 지냐?" + memberNo); */
 		
+		ArrayList<WishList> mwl = new WishService().myWishList(memberNo);
+		/* System.out.println("servlet"+mwl); */
 		
-		ArrayList<Cart> cartList = new CartService().wishtoCartList(cartNum,itemId);
-
-		System.out.println("CartListServlet cartList : " + cartList);
-		System.out.println("cartList is empty? : " + cartList.isEmpty());
-		
-		response.setContentType("application/json;");
-
-		Gson gson = new Gson();
-		
-		gson.toJson(cartList, response.getWriter());
-		
-		
+		if(mwl != null) {
+			request.setAttribute("mwl", mwl);
+			request.getRequestDispatcher("views/myPage/myWishList.jsp").forward(request,response);
+		}else {
+			request.setAttribute("msg", "실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**
