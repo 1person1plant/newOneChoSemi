@@ -260,33 +260,7 @@
     
     <!-- 로그인 모달 붙이기 -->
     <%@ include file="../member/login.jsp" %>
-<%--         <div id="loginSample"><!-- 로그인 샘플 시작 -->
-	        <div id="loginEx" class="modal">
-			  <form class="modal-content animate" action = "<%=request.getContextPath() %>/login.me" method="post" onsubmit="return validate();">
-			    <div class="imgcontainer">
-			      <span onclick="document.getElementById('loginEx').style.display='none'" class="loginSample_close" title="Close Modal">&times;</span>
-			    </div>
-			
-			    <div class="container">
-			      <label for="uname"><b>User Id</b></label>
-			      <input type="text" placeholder="Enter Username" id="userId" name="userId" required>
-			
-			      <label for="psw"><b>Password</b></label>
-			      <input type="password" placeholder="Enter Password" id="userPwd" name="userPwd" required>
-			        
-			      <button type="submit">Login</button>
-			      <label>
-			        <input type="checkbox" checked="checked" name="remember"> Remember me
-			      </label>
-			    </div>
 
-			    <div class="container" style="background-color:#f1f1f1">
-			      <button type="button" onclick="document.getElementById('loginEx').style.display='none'" class="loginSample_cancelbtn">Cancel</button>
-			      <span class="psw">Forgot <a href="#">password?</a></span>
-			    </div>
-			  </form>
-			</div>
-        </div><!-- 로그인 샘플 끝 --> --%>
 	<%} else { %>
 	<!-- 로그인 성공 -->
 		   <nav class="navbar navbar-expand navbar-light" id="navbar-top">
@@ -404,12 +378,12 @@
 		}
         function myPageBtn(){
         	<%if(result){%>
-    			document.getElementById('loginEx').style.display='block';
+    			$("#loginBtn").click();
 			<%} else {%>
-        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp";
+        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 	   		<%} %>
 		}
-        function goCart(){	// 만드는 중...
+        function goCart(){
         	var userNo = $("#userNo").val();
         	<%if(result){%>
         		$("#loginBtn").click();

@@ -2,20 +2,18 @@ package member.model.vo;
 
 public class MyWishList {
 	private String wishlistNo;
-	private String imagePath;
-	private String itemName;
-	private String wishlistMemo;
+	private String itemNo;
 	private String memberNo;
+	private String wishlistMemo;
 	public MyWishList() {
 		super();
 	}
-	public MyWishList(String wishlistNo, String imagePath, String itemName, String wishlistMemo, String memberNo) {
+	public MyWishList(String wishlistNo, String itemNo, String memberNo, String wishlistMemo) {
 		super();
 		this.wishlistNo = wishlistNo;
-		this.imagePath = imagePath;
-		this.itemName = itemName;
-		this.wishlistMemo = wishlistMemo;
+		this.itemNo = itemNo;
 		this.memberNo = memberNo;
+		this.wishlistMemo = wishlistMemo;
 	}
 	public String getWishlistNo() {
 		return wishlistNo;
@@ -23,23 +21,11 @@ public class MyWishList {
 	public void setWishlistNo(String wishlistNo) {
 		this.wishlistNo = wishlistNo;
 	}
-	public String getImagePath() {
-		return imagePath;
+	public String getItemNo() {
+		return itemNo;
 	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-	public String getItemName() {
-		return itemName;
-	}
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-	public String getWishlistMemo() {
-		return wishlistMemo;
-	}
-	public void setWishlistMemo(String wishlistMemo) {
-		this.wishlistMemo = wishlistMemo;
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
 	}
 	public String getMemberNo() {
 		return memberNo;
@@ -47,13 +33,18 @@ public class MyWishList {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
+	public String getWishlistMemo() {
+		return wishlistMemo;
+	}
+	public void setWishlistMemo(String wishlistMemo) {
+		this.wishlistMemo = wishlistMemo;
+	}
 	@Override
 	public String toString() {
-		return "MyWishList [wishlistNo=" + wishlistNo + ", imagePath=" + imagePath + ", itemName=" + itemName
-				+ ", wishlistMemo=" + wishlistMemo + ", memberNo=" + memberNo + "]";
+		return "MyWishList [wishlistNo=" + wishlistNo + ", itemNo=" + itemNo + ", memberNo=" + memberNo
+				+ ", wishlistMemo=" + wishlistMemo + "]";
 	}
 	
 	
-	
-	
+		
 }

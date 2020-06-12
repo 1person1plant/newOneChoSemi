@@ -1,28 +1,27 @@
-package member.controller;
+package order.controller.admin;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
+import order.model.service.admin.AdminOrderService;
 
 /**
- * Servlet implementation class IdentificationServlet
+ * Servlet implementation class OrderAdminDeleteServlet
  */
-@WebServlet("/identy.me")
-public class IdentificationServlet extends HttpServlet {
+@WebServlet("/orderDelete.or")
+public class OrderAdminDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdentificationServlet() {
+    public OrderAdminDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +30,28 @@ public class IdentificationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberId = request.getParameter("memberId");
-		String memberPwd = request.getParameter("password1");
-		System.out.println("아이디 넘어오나"+memberId);
-		Member idenUser = new MemberService().idenMember(new Member(memberId,memberPwd));
-		System.out.println("servlet"+idenUser);
-		if(idenUser != null) {
-			request.setAttribute("idenUser", idenUser);
-			request.getRequestDispatcher("views/myPage/grade.jsp").forward(request, response);
+		
+		String orderNum=request.getParameter("orderNum");
+		String itemNum=request.getParameter("itemNum");
+		
+		System.out.println("주문번호"+orderNum);
+		System.out.println("상품번호"+itemNum);
+		
+		//주문취소 컬럼을 업데이트 하러 가자
+		int result=new AdminOrderService().deleteOrder(orderNum,itemNum);
+		
+		if(result>0) {
+			System.out.println("주문조회 페이지로 이동!");
+			response.sendRedirect("adminList.or");
 		}else {
-			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "주문 삭제 실패");
+			views.forward(request, response);
+			
 		}
+		
+		
 	}
 
 	/**

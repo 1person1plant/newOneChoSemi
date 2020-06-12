@@ -59,11 +59,44 @@ public class CartService {
 		return result;
 	}
 
-	public int deleteCartList(ArrayList<Cart> deleteCart) {
+	public boolean deleteCartList(ArrayList<Cart> deleteCart) {
 		Connection conn = getConnection();
 
-		int result = new CartDao().deleteCartList(conn, deleteCart);
+		boolean result = new CartDao().deleteCartList(conn, deleteCart);
+		
+		if(result) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<Cart> wishtoCartList(String cartNum, String itemId, String userNo) {
+		Connection conn = getConnection();
+
+		int result = new CartDao().wishtoCartUpdate(conn, cartNum, itemId, userNo);
+
+		ArrayList<Cart> cartList = new ArrayList<>();
+		
+		if(result > 0) {
+			commit(conn);
+			cartList = new CartDao().wishtoCartList(conn, itemId, userNo);
+		}else {
+			rollback(conn);
+		}
 				
+		close(conn);
+		return cartList;
+	}
+
+	public boolean cartContainChk(String userNo, String itemId) {
+		Connection conn = getConnection();
+
+		boolean result = new CartDao().cartContainChk(conn, userNo, itemId);
+		
 		close(conn);
 		return result;
 	}

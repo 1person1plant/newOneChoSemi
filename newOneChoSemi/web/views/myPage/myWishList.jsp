@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.MyWishList, java.util.ArrayList"%>
+	pageEncoding="UTF-8" import="cartList.model.vo.WishList, java.util.ArrayList"%>
 <%
-	ArrayList<MyWishList> mwl = (ArrayList<MyWishList>)request.getAttribute("mwl"); 
+	ArrayList<WishList> mwl = (ArrayList<WishList>)request.getAttribute("mwl"); 
 %>
 <!DOCTYPE html>
 <html>
@@ -98,8 +98,8 @@
 	</style>
 </head>
 <body>
+<%@ include file="../common/header.jsp"%>
 
-	<%@ include file="../common/header.jsp"%>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
@@ -107,45 +107,43 @@
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9 fieldset'>
-				<!-- <fieldset> -->
-					<!-- <form> -->
-						<table class="table">
-							<thead>
-								<tr>
-									<br>
-									<th colspan="9" scope="col" style='border-bottom: 2px solid black'>
-										<input style="display: none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
-										<h1>위시리스트</h1>
-									</th>
-								</tr>
-							</thead>
-							<tbody class='bodycss'>
-								<tr style='border-bottom: 2px solid black'>
-									<th colspan='1'>번호</th>
-									<th colspan="2" class='wishmenu'>상품이미지</th>
-									<th scope="row" colspan='2' class="wishmenu">상품명</th>
-									<th colspan="2" class='wishmenu'>메모</th>
-									<th colspan="2" class='wishmenu'>기타</th>
-								</tr>
-								<%for(int i = 0 ; i < mwl.size() ; i++) {%>
-								<tr style='border-bottom: 2px solid black'>
-									<td colspan='1' class="mt-2"><%=mwl.get(i).getWishlistNo()%></td>
-									<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='#' width='150px' height='150px'></a></td>
-									<td scope="row" colspan='2' class="mt-2">???</td>
-									<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwl.get(i).getWishlistMemo() %></textarea><br>
-										<p id='countp'><span id='counter1'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
-									</td>
-									<td id='orderbutton' colspan="2">
-										<input type='button' class='button1' id='changeM' value="메모수정"><br>
-										<a href='main.jsp' id='delete1'><button type='button' class='button1'>상품구매</button></a><br>
-										<a href='main.jsp' id='delete2'><button type='button' class='button1'>상품삭제</button></a>
-									</td>
-								</tr>
-								<%} %>
-							</tbody>
-						</table>
-					<!-- </form> -->
-				<!-- </fieldset> -->
+				<form id="wishListForm" action="#" method="post">
+					<table class="table">
+						<thead>
+							<tr>
+								<br>
+								<th colspan="9" scope="col" style='border-bottom: 2px solid black'>
+									<input style="display: none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
+									<h1>위시리스트</h1>
+								</th>
+							</tr>
+						</thead>
+						<tbody class='bodycss'>
+							<tr style='border-bottom: 2px solid black'>
+								<th colspan='1'>번호</th>
+								<th colspan="2" class='wishmenu'>상품이미지</th>
+								<th scope="row" colspan='2' class="wishmenu">상품명</th>
+								<th colspan="2" class='wishmenu'>메모</th>
+								<th colspan="2" class='wishmenu'>기타</th>
+							</tr>
+							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
+							<tr style='border-bottom: 2px solid black'>
+								<td colspan='1' class="mt-2"><%=mwl.get(i).getWishListNo()%></td>
+								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=mwl.get(i).getImageName()%>' width='150px' height='150px'></a></td>
+								<td scope="row" colspan='2' class="mt-2"><%=mwl.get(i).getItemName()%></td>
+								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwl.get(i).getWishListMemo() %></textarea><br>
+									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishListMemo().length()%></span>/100</p>
+								</td>
+								<td id='orderbutton' colspan="2">
+									<input type='button' class='button1' id='changeM' value="메모수정"><br>
+									<a href='main.jsp' id='delete1'><button type='button' class='button1'>상품구매</button></a><br>
+									<a href='main.jsp' id='delete2'><button type='button' class='button1'>상품삭제</button></a>
+								</td>
+							</tr>
+							<%} %>
+						</tbody>
+					</table>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -184,6 +182,6 @@
 		});
 	</script>
 
-	<%@ include file="../common/footer.jsp"%>
+<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

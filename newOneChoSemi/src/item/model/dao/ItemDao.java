@@ -26,7 +26,7 @@ public class ItemDao {
 		
 		ArrayList<Item> list = new ArrayList<>();
 		
-		String query = "SELECT * FROM V_BESTLIST";
+		String query = "SELECT * FROM ITEM_BESTLIST";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -68,7 +68,7 @@ public class ItemDao {
 		
 		ArrayList<Item> list = new ArrayList<>();
 		
-		String query = "SELECT * FROM V_NEWLIST";
+		String query = "SELECT * FROM ITEM_NEWLIST";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -139,7 +139,7 @@ public class ItemDao {
 		int startRow = (currentPage-1) * howManyAtOnce + 1;
 		int endRow = currentPage * howManyAtOnce;
 		
-		String query = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM V_ALLLIST A) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, A.* FROM ITEM_ALLLIST A) WHERE RNUM BETWEEN ? AND ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -713,6 +713,7 @@ public class ItemDao {
 		return items;
 	}
 
+
 	public int nameCheck(Connection conn, String itemName) {
 		
 		PreparedStatement pstmt=null;
@@ -745,7 +746,137 @@ public class ItemDao {
 	}
 
 	
+
+	// 김경남: ITEM DETAIL
+	public Item selectItemDetail(Connection conn, String itemNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Item item = null;
+		
+		String query = "SELECT * FROM ITEM_DETAIL WHERE ITEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				item = new Item(rset.getString("item_no")
+							   ,rset.getString("item_name")
+							   ,rset.getString("keyword_no")
+							   ,rset.getString("keyword_name")
+							   ,rset.getInt("item_price")
+							   ,rset.getInt("item_discount")
+							   ,rset.getInt("item_rate")
+							   ,rset.getInt("item_stock")
+							   ,rset.getString("item_info")
+							   ,rset.getInt("item_max")
+							   ,rset.getString("mainname")
+							   ,rset.getString("mainpath")
+							   ,rset.getString("subname")
+							   ,rset.getString("subpath"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		System.out.println(item);
+		
+		return item;
+	}
+
+	public ArrayList<Item> searchResult(Connection conn, ArrayList searchList) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Item> resultList = null;
+		
+		String priceMin = searchList.get(0).toString();
+		String priceMax = searchList.get(1).toString();
+		String what = searchList.get(2).toString();
+		String query = "";
+		
+		if(what.equals("anything")) {
+			query = "SELECT * FROM ITEM_SEARCHLIST WHERE (FINAL_PRICE > ?) AND (ITEM_PRICE < ?)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, priceMin);
+				pstmt.setString(2, priceMax);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					Item it = new Item(rset.getString("item_no")
+									 , rset.getString("item_name")
+									 , rset.getString("keyword_no")
+									 , rset.getString("keyword_name")
+									 , rset.getInt("item_price")
+									 , rset.getInt("item_discount")
+									 , rset.getInt("item_stock")
+									 , rset.getDate("item_cdate")
+									 , rset.getInt("item_scount")
+									 , rset.getInt("item_max")
+									 , rset.getString("image_path")
+									 , rset.getString("image_name"));
+					resultList.add(it);
+				}	
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return resultList;
+			
+		}else {
+			query = "SELECT * FROM ITEM_SEARCHLIST WHERE (FINAL_PRICE > ?) AND (ITEM_PRICE < ?) AND (ITEM_NAME = %?%) AND (KEYWORD_NAME = %?%)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, priceMin);
+				pstmt.setString(2, priceMax);
+				pstmt.setString(3, what);
+				pstmt.setString(4, what);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					Item it = new Item(rset.getString("item_no")
+									 , rset.getString("item_name")
+									 , rset.getString("keyword_no")
+									 , rset.getString("keyword_name")
+									 , rset.getInt("item_price")
+									 , rset.getInt("item_discount")
+									 , rset.getInt("item_stock")
+									 , rset.getDate("item_cdate")
+									 , rset.getInt("item_scount")
+									 , rset.getInt("item_max")
+									 , rset.getString("image_path")
+									 , rset.getString("image_name"));
+					resultList.add(it);
+				}	
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return resultList;
+		
+		}		
 	
+	}
+
 	
 
 }
