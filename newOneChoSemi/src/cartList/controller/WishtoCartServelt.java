@@ -1,6 +1,7 @@
 package cartList.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -33,24 +34,33 @@ public class WishtoCartServelt extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 카트리스트 조회
-		String cartNum = request.getParameter("cartNum");
+		String wishNum = request.getParameter("wishNum");
 		String itemId = request.getParameter("itemId");
-		System.out.println("WishtoCartServelt : " + cartNum);
-		System.out.println("WishtoCartServelt : " + cartNum);
+		String userNo = request.getParameter("userNo");
+		System.out.println("WishtoCartServelt : " + wishNum + " : " + itemId  + " : " + userNo);
 		
-		
-		ArrayList<Cart> cartList = new CartService().wishtoCartList(cartNum,itemId);
+		ArrayList<Cart> cartList = new CartService().wishtoCartList(wishNum,itemId,userNo);
 
-		System.out.println("CartListServlet cartList : " + cartList);
 		System.out.println("cartList is empty? : " + cartList.isEmpty());
+		System.out.println("CartListServlet cartList : " + cartList);
 		
-		response.setContentType("application/json;");
+		
+		PrintWriter out = response.getWriter();
+		
+		if(cartList.isEmpty()) {
+			out.print("fail");
+			
+			out.flush();
+			out.close();
 
-		Gson gson = new Gson();
-		
-		gson.toJson(cartList, response.getWriter());
-		
-		
+		} else {
+			response.setContentType("application/json;");
+			
+			Gson gson = new Gson();
+			
+			gson.toJson(cartList, response.getWriter());
+
+		}
 	}
 
 	/**

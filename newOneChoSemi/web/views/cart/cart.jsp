@@ -10,17 +10,22 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" initial-scale="1">	
 	<title>Cho-당신을 위한 반려식물</title>
-	<!-- 타이틀 아이콘 -->
+	<!--타이틀 아이콘-->
 	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
-	<!-- 부트스트랩 -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<!-- popper -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	
 	<!-- 아이콘 -->
 	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
-	<!-- jQuery -->
+	
+	<!-- 제이쿼리 -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    
+	
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
 <style>
 	/* font start */
 	@font-face {
@@ -610,6 +615,8 @@
 	        	var cartAdd = $(this);
 				var wishNum = $(this).parents(".card").find(".wishNumber").text();
 	        	var itemId = $(this).parents(".card").find(".wishId").val();
+	        	var userNo = "<%=loginUser.getMemberNo() %>";
+	        	
 	        	var itemName = $(this).parents(".card").find(".wishName").text();
 	        	var itemImg = $(this).parents(".card").find(".cards_imgSize").attr("src");
 	        	var itemPrice = $(this).parents(".card").find(".wishprice").text();
@@ -618,14 +625,13 @@
 				// TODO 카트리스트와 중복 되는지 검사 추가 해야함 
 				
 					$.ajax({
-					url:"<%=request.getContextPath()%>/cartListAdd.ca",
+					url:"<%=request.getContextPath()%>/wishtoCart.wi",
 					type:"post",
-					data:{wishNum:wishNum,itemId:itemId},
+					data:{wishNum:wishNum, itemId:itemId, userNo:userNo},
 					success:function(data){	
 						if(data == "fail"){
 							alert("삭제에 실패 했습니다.");
 						} else {
-			                
 			                if(data == "fail"){
 			                	alert("장바구니 등록에 실패 했습니다.");
 			                } else {
@@ -638,10 +644,17 @@
 								// TODO 데이터로 받은 값 추가 해야함 해야함....
 				              	$cartListTbody = $(".cartList_tbody");
 								
-				              	var $tr = $("<tr>");
+				              	<%-- <td><input type="checkbox" class="cart_checkbox" name="cartNo" value="<%=cartList.get(i).getCartListNo()%>"></td>
+				        		<td><img class="cartImg" src="<%=request.getContextPath()%>/items_uploadFiles/<%=cartList.get(i).getImageName()%>" alt="상품(<%=cartList.get(i).getImageName()%>)"></td>
+				        		<td class="cartName"><%=cartList.get(i).getItemName()%></td>
+				        		<td><input type="number" class="cart_count" name="cartItCo" max="<%=cartList.get(i).getItemMax()%>" min="1" value="<%=cartList.get(i).getCartListCount()%>" step="1" disabled></td>
+				        		<td><span class="cal_price"><%=cartList.get(i).getCartListCount() * cartList.get(i).getItemPrice()%></span><span class="price"><%=cartList.get(i).getItemPrice()%></span></td>
+				        		<td><label for="trash<%=i%>"><input type="button" id="trash<%=i%>" class='trash'></label></td> --%>
+								
+				              	var $tr = $("<tr>");	
 								// 1 td
 								var $fstTd = $("<td>");
-								var $fstInput = $("<input>").addClass("cart_checkbox").attr("type","checkbox").attr("name","cartNo").val("data");
+								var $fstInput = $("<input>").addClass("cart_checkbox").attr("type","checkbox").attr("name","cartNo").val("a");
 								var $firstChd = $fstTd.append($fstInput);
 								// 2 td
 								var $scdTd = $("<td>");
