@@ -34,24 +34,30 @@ public class ItemSearchServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
-		String priceMin = request.getParameter("searchPriceMin");
-		String priceMax = request.getParameter("searchPriceMax");
+		int priceMin = Integer.valueOf(request.getParameter("searchPriceMin"));
+		int priceMax = Integer.valueOf(request.getParameter("searchPriceMax"));
 		String what = request.getParameter("searchWhat");
 		
+
 		ArrayList searchList = new ArrayList();
 		
 		searchList.add(priceMin);
 		searchList.add(priceMax);
 		searchList.add(what);
-		
+				
 		ItemService itService = new ItemService();
+		
 		ArrayList<Item> resultList = new ArrayList<>();
 		
 		resultList = itService.searchResult(searchList);
 		
-		request.setAttribute("searchResult", resultList);
+		if(resultList != null) {
+			request.setAttribute("searchResult", resultList);			
+			request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
+		}else {
+			System.out.println("널 이야~");
+		}
 		
-		request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
 
 	}
 

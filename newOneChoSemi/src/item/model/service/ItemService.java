@@ -225,6 +225,8 @@ public class ItemService {
 		
 		ArrayList<Item> resultList = new ItemDao().searchResult(conn, searchList);
 		
+		close(conn);
+		
 		return resultList;
 
 	}
