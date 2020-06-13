@@ -34,7 +34,7 @@
 
 /* item page */
 .item-container {margin-top:10rem;}
-#item-card {width:15rem; height:28rem; margin-right:0; border-radius:0px; border:none; text-align:center;}
+#item-card {width:15rem; height:28rem; margin:auto; border-radius:0px; border:none; text-align:center;}
 #item-card:focus,
 #item-card:hover {cursor:pointer;}
 .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
@@ -43,9 +43,9 @@
 .item-order li {padding:0 0.5rem;}
 .item-card-text {margin-bottom:0rem; color:gray;}
 #keyword-badge {margin-bottom:0.5rem;}
-#card-image-zoom {overflow: hidden;}
-#card-image-zoom img {transition-duration: 0.3s; transition-timing-function: ease;}
-#card-image-zoom:hover img {transform: scale(1.1);}
+.card-image-zoom {overflow: hidden;}
+.card-image-zoom img {transition-duration: 0.3s; transition-timing-function: ease;}
+.card-image-zoom:hover img {transform: scale(1.1);}
 .title-col {padding:0rem;}
 .title-col-order {padding:0rem; padding-top:1.2rem;}
 #all-item-order li::hover {font-color:black; !important}
@@ -65,6 +65,10 @@
 	<%@ include file="../common/header.jsp"%>
 	<section>
 		<%@ include file="itemSearch.jsp"%>
+
+
+
+
 
 		<!--BEST-->
 		<form>
@@ -105,6 +109,8 @@
 
 
 
+
+
 		<!--NEW-->
 		<form>
 			<div class="container item-container">
@@ -113,9 +119,9 @@
 				</div>
 				<div class="row item-row">
 					<%for (int i = 0; i < newList.size(); i++) {%>
-					<input type="hidden" value="<%=((Item)newList.get(i)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)newList.get(i)).getItemNo()%>">
 							<div class="card-image-zoom" id="card-image-zoom">
 								<img src="<%=request.getContextPath()%>/<%=((Item)newList.get(i)).getItemImagePath()%>/<%=((Item)newList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
@@ -124,31 +130,27 @@
 								<p class="card-title item-card-title"><%=((Item)newList.get(i)).getItemName()%></p>
 								<p class="card-text item-card-text">&#8361;<%=(((Item)newList.get(i)).getItemPrice())-(((Item)newList.get(i)).getItemDiscount())%></p>
 								<%if(!((Item)newList.get(i)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item)newList.get(i)).getKeywordName()%></a><br>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item)newList.get(i)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-										keyword = ((Item)newList.get(i)).getKeywordName();
-										key1 = keyword.split(",")[0];
-										key2 = keyword.split(",")[1];
-									%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#"
-									class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key2%></a><br>
+									keyword = ((Item)newList.get(i)).getKeywordName();				
+									key1 = keyword.split(",")[0];
+									key2 = keyword.split(",")[1];
+								%>
+								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
 								<%}%>
 								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
-					<%
-						}
-					%>
+					<%}%>
 				</div>
 			</div>
 		</form>
-
-
+		
+		
+		
+		
 
 		<!--ALL-->
 		<form>
@@ -169,22 +171,21 @@
 				<%for (int i = 0; i < 1; i++) {%>
 				<div class="row item-row">
 					<%for (int j = 0; j < allList.size(); j++) {%>
-					<input type="hidden" value="<%=((Item) allList.get(i)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
 								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">
-									&#8361;<%=(((Item) allList.get(i)).getItemPrice()) - (((Item) allList.get(i)).getItemDiscount())%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(j)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
 								<%if (!((Item) allList.get(i)).getItemKeywordNo().equals("K3")) {%>
 								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item) allList.get(i)).getKeywordName()%></a><br>
-								<%} else {%>
+									style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
+								<%}else {%>
 								<%
-									keyword = ((Item) allList.get(i)).getKeywordName();
+									keyword = ((Item) allList.get(j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
@@ -194,150 +195,83 @@
 							</div>
 						</div>
 					</div>
-					<%
-						}
-					%>
+					<%}%>
 				</div>
-				<%
-					}
-				%>
-				<%
-					} else {
-				%>
-				<%
-					for (int i = 0; i < 2; i++) {
-				%>
+				<%}%>
+				<%}else {%>
+				<%for(int i = 0; i < 2; i++) {%>
 				<div class="row item-row">
-					<%
-						if (i == 0) {
-					%>
-					<%
-						for (int j = 0; j < 4; j++) {
-					%>
-					<input type="hidden"
-						value="<%=((Item) allList.get(i)).getItemNo()%>">
+					<%if (i == 0) {%>
+					<%for (int j = 0; j < 4; j++) {%>
+					<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img
-									src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>"
-									class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">
-									&#8361;<%=(((Item) allList.get(i)).getItemPrice()) - (((Item) allList.get(i)).getItemDiscount())%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(j)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
+								<%if (!((Item) allList.get(j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
+								<%}else {%>
 								<%
-									if (!((Item) allList.get(i)).getItemKeywordNo().equals("K3")) {
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item) allList.get(i)).getKeywordName()%></a><br>
-								<%
-									} else {
-								%>
-								<%
-									keyword = ((Item) allList.get(i)).getKeywordName();
-								key1 = keyword.split(",")[0];
-								key2 = keyword.split(",")[1];
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#"
-									class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key2%></a><br>
-								<%
-									}
-								%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-									DETAIL</a>
-							</div>
-						</div>
-					</div>
-					<%
-						}
-					%>
-					<%
-						} else {
-					%>
-					<%
-						for (int j = 4; j < allList.size(); j++) {
-					%>
-					<input type="hidden"
-						value="<%=((Item) allList.get(i)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<div class="card-image-zoom">
-								<img
-									src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>"
-									class="card-img-top" alt="...">
-							</div>
-							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">
-									&#8361;<%=(((Item) allList.get(i)).getItemPrice()) - (((Item) allList.get(i)).getItemDiscount())%></p>
-								<%
-									if (!((Item) allList.get(i)).getItemKeywordNo().equals("K3")) {
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item) allList.get(i)).getKeywordName()%></a><br>
-								<%
-									} else {
-								%>
-								<%
-									keyword = ((Item) allList.get(i)).getKeywordName();
+									keyword = ((Item) allList.get(j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#"
-									class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=key2%></a><br>
-								<%
-									}
-								%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW
-									DETAIL</a>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
+								<%}%>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
-					<%
-						}
-					%>
-					<%
-						}
-					%>
+					<%}%>
+					<%}else {%>
+					<%for(int j = 4; j < allList.size(); j++) {%>
+					<input type="hidden" value="<%=((Item) allList.get(j)).getItemNo()%>">
+					<div class="col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
+							<div class="card-image-zoom">
+								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+							</div>
+							<div class="card-body item-card-body">
+								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(i)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
+								<%if (!((Item) allList.get(j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
+								<%}else {%>
+								<%
+									keyword = ((Item) allList.get(j)).getKeywordName();
+									key1 = keyword.split(",")[0];
+									key2 = keyword.split(",")[1];
+								%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
+								<%}%>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
+							</div>
+						</div>
+					</div>
+					<%}%>
+					<%}%>
 				</div>
-				<%
-					}
-				%>
-				<%
-					}
-				%>
+				<%}%>
+				<%}%>
 				<nav class="item-pagination mx-auto" id="item-pagination">
 					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link"
-							href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage = 1%>">맨
-								처음</a></li>
-						<li class="page-item"><a class="page-link"
-							href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage - 1%>">이전</a></li>
-						<%
-							for (int p = startPage; p <= endPage; p++) {
-						%>
-						<%
-							if (p == currentPage) {
-						%>
-						<li class="page-item"><a class="page-link"><%=p%></a></li>
-						<%
-							} else {
-						%>
-						<li class="page-item"><a class="page-link"
-							href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=p%>"><%=p%></a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage = 1%>">맨 처음</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage - 1%>">이전</a></li>
+						<%for(int p = startPage; p <= endPage; p++) {%>
+							<%if (p == currentPage) {%>
+							<li class="page-item"><a class="page-link"><%=p%></a></li>
+							<%}else {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=p%>"><%=p%></a></li>
+							<%}%>
 						<%}%>
-						<%}%>
-						<li class="page-item"><a class="page-link"
-							href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage+1%>">다음</a></li>
-						<li class="page-item"><a class="page-link"
-							href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=ultimatePage%>">맨
-								끝</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage+1%>">다음</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=ultimatePage%>">맨 끝</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -350,7 +284,6 @@
 			var itemNo = $(this).children("input").val();
 			
 			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
-			
 		})
 	})	
 	</script>

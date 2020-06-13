@@ -1,14 +1,17 @@
 package item.model.service;
 
-import item.model.dao.ItemDao;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
-
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Map;
+
+import item.model.dao.ItemDao;
+import item.model.vo.Item;
+import item.model.vo.ItemImage;
 
 public class ItemService {
 
@@ -202,6 +205,15 @@ public class ItemService {
 		
 		return itemDetail;
 
+	}
+
+	public ArrayList<Item> searchResult(ArrayList searchList) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Item> resultList = new ItemDao().searchResult(conn, searchList);
+		
+		return resultList;
 	}
 
 	
