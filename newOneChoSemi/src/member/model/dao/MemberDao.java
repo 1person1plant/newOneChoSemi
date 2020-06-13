@@ -1,13 +1,13 @@
 package member.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import member.model.vo.Member;
-
-import static common.JDBCTemplate.close;
 
 public class MemberDao {
 	/**
@@ -322,12 +322,38 @@ public class MemberDao {
 		 * @return
 		 */
 		public Member searchIdMember(Connection conn, Member member) {
-			return null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Member searchId_A = null;
+			System.out.println("dao" + searchId_A);
+
+			String query = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberPhone1());
+				pstmt.setString(2, member.getMemberPhone2());
+				pstmt.setString(3, member.getMemberPhone3());
+				pstmt.setString(4, member.getMemberEmail1());
+				pstmt.setString(5, member.getMemberEmail2());
+				
+				rs = pstmt.executeQuery();
+				
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return searchId_A;
 		}
 		
 		/**
 		 * 비밀번호 찾기
-		 * @param member 입력된 아이디 +이메일 
+		 * @param member 입력된 아이디 +이메일  
 		 * @return
 		 */
 		public Member searchPwdMember(Connection conn, Member member) {

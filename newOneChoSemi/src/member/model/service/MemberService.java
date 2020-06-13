@@ -138,11 +138,21 @@ public class MemberService {
 	
 	/**
 	 * 아이디 찾기
-	 * @param member 입력된 휴대폰 번호+이메일
+	 * @param memberAddress2 
+	 * @param memberAddress1 
+	 * @param memberPhone3 
+	 * @param memberPhone2 
+	 * @param searchId_A 입력된 휴대폰 번호+이메일
 	 * @return
 	 */
 	public Member searchIdMember(Member member) {
-		return null;
+		Connection conn = getConnection();
+		
+		Member searchId_A = new MemberDao().searchIdMember(conn, member);
+		System.out.println("서비스 " + searchId_A);
+		
+		close(conn);
+		return searchId_A;
 	}
 	
 	/**
