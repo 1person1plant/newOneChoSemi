@@ -40,11 +40,11 @@ public class ItemMainServlet extends HttpServlet {
 		// BEST, NEW 시작
 		ArrayList<Item> bestList = itService.bestList();
 		ArrayList<Item> newList = itService.newList();
-		
-		view = request.getRequestDispatcher("views/item/itemMain.jsp");
-		
+				
 		request.setAttribute("bestList", bestList);
 		request.setAttribute("newList", newList);
+		
+		view = request.getRequestDispatcher("views/item/itemMain.jsp");
 		// BEST, NEW 끝
 				
 		// ALL PAGINATION START
@@ -81,7 +81,6 @@ public class ItemMainServlet extends HttpServlet {
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("allList", allList);
 		// ALL PAGINATION END
-		
 		
 		view.forward(request, response);
 	}

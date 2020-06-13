@@ -600,8 +600,7 @@
 			function joinSubmit() {
 				var chkAll = $(".allChk");
 				var chk = $(".chkbox");
-				
-				console.log("뭐야");
+	
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
@@ -616,7 +615,9 @@
 					alert('핸드폰 번호를 입력해주세요');
 				} else if( $("#email1").val() == null || $("#email1").val() == "" ){
 					alert('이메일을 입력해주세요');
-				} else if( chk[0].checked != true || chk[1].checked != true) {
+				} else if( chk[0].checked != true ){
+					alert('약관에 동의를 해주세요');
+				} else if( chk[1].checked != true ){
 					alert('약관에 동의를 해주세요');
 				} else{
   					$('#joinForm').submit();

@@ -107,7 +107,7 @@
   
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.or'">
                   <span data-feather="file-text"></span>
                  	 주문내역 조회
                 </a>
@@ -211,15 +211,26 @@
 
                 <div class="mb-3" style="margin-top: 40px;">
                     <label for="itemName">상품명</label>
+                    <div class="input-group">
                     <input type="text" class="form-control is-invalid" id="itemName" name="itemName" placeholder="상품명을 입력하세요." required style="display: inline;">
+                    <div class="input-group-append">
+                    	<button class="btn btn-outline-secondary" onclick="itemNameCheck()" type="button" style="background-color: #1f598c;color: white;">중복확인</button>
+                    </div>
                     <div class="invalid-feedback">
                       	한글로 3자 이상 입력하세요.
                     </div>
+                    </div>
+                   
                   </div>
 
                 <script>
+                
+               
+                
                   $(function(){
                     $("#itemName").keyup(function(){
+                    
+                     window.flag=false;
 
 
                       var regExp1=/^[가-힣]{3,}$/;
@@ -236,6 +247,52 @@
                     })
 
                   })
+                </script>
+                <script>
+                
+                 var flag=true;
+                 
+                 function itemNameCheck(){
+                	 
+                	 
+                	 
+                	 var itemName=$("#createItem input[name='itemName']");
+                	 
+                	 if(itemName.val().length<3){
+                		 alert("상품명이 너무 짧은거 아닌가요?ㅠㅠ")
+                		 
+                		 
+                	 }else{
+                		 
+                		 console.log("ajax 구동!")
+                		 
+                		 
+                		 $.ajax({
+         					url:"<%=request.getContextPath()%>/nameCheck.it",
+         					type:"POST",
+         					data:{itemName:itemName.val()},
+         					success:function(data){
+         						
+         						if(data=="permit"){
+         							alert("사용 가능한 이름이에요~^^*");
+         							window.flag=true;
+         							
+         						}else{
+         							alert("중복되는 이름이에요ㅠㅠ다시 작명해봐요~");
+         							window.flag=false;
+         						}
+         					},
+         					 error:function(request,status,error){
+             	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+             	            }
+         				});
+                		 
+                		 
+                	 }
+                	 
+                 }
+                
+                
                 </script>
 
 
@@ -353,7 +410,7 @@
 
                     $(function(){
 
-                      $("#maxbuy").change(function(){
+                      $("#maxbuy").keyup(function(){
 
                         var regExp4=/^[0-9]{1,}$/;
   
@@ -391,7 +448,7 @@
 
                     $(function(){
 
-                      $("#stock").change(function(){
+                      $("#stock").keyup(function(){
 
                         var regExp4=/^[0-9]{1,}$/;
   
@@ -791,12 +848,19 @@
     			return false;
     		}
     		
+    		if(!window.flag){
+    			
+    			alert("이름 중복 확인을 해주세요.");
+    			return false;
+    		}
+    		
     	}
     
     </script>
     
      <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>
