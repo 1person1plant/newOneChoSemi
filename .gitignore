@@ -1,11 +1,5 @@
 /.metadata/
 /Servers/
-<<<<<<< HEAD
 /dev/
 /.classpath
 *.class
-=======
-/dev/
-*.class
-/.classpath
->>>>>>> refs/remotes/origin/dev_ARA

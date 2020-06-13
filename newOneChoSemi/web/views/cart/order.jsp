@@ -529,11 +529,11 @@
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone2" name="recipient_phone2" min="1" pattern="/^\d{3,4}$/" required>  
+	                                    <input type="number" id="recipient_phone2" name="recipient_phone2" min="0" max="9999" pattern="/^\d{3,4}$/" required>  
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone3" name="recipient_phone3" min="1" pattern="/^\d{4}$/" required>
+	                                    <input type="number" id="recipient_phone3" name="recipient_phone3" min="0" max="9999" pattern="/^\d{4}$/" required>
 	                                </td>
 	                            </tr>
 	                        </table>
@@ -896,6 +896,7 @@
 	        <button type="button" class="orderEnd_cancel btn btn-info" onclick="orderEnd_cancel()">취소하기</button>
 	        <button type="button" id="order_confirm" class="btn btn-outline-info">결제하기</button>
 	    </div>
+	    
 	    <script>
 	        function orderEnd_cancel() {
 	            var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
@@ -957,18 +958,20 @@
 	    var orderpayment_total = 0;
 	
 	    var calculate_comp = true;
-	    $(function(){
-	    	// 페이지 로딩 시 계산 가격 출력 
-            var orderpayment_delivery = Number(delivery);
-            var orderpayment_userPoint = Number(user_point);
-            $("#orderpayment_price").text(orderpayment_price);
-            $("#orderpayment_delivery").text(orderpayment_delivery);
-            $("#orderpayment_discount").text(orderpayment_discount);
-            $("#orderpayment_point").text(orderpayment_point);
-            $("#orderpayment_userPoint").text(orderpayment_userPoint);
-            Calculate();
-        }
-
+	 	
+	    $(function() {
+		    var orderpayment_delivery = Number(delivery);
+			var orderpayment_userPoint = Number(user_point);
+			$("#orderpayment_price").text(orderpayment_price);
+			$("#orderpayment_delivery").text(orderpayment_delivery);
+			$("#orderpayment_discount").text(orderpayment_discount);
+			$("#orderpayment_point").text(orderpayment_point);
+			$("#orderpayment_userPoint").text(orderpayment_userPoint);
+			Calculate();
+		});
+    </script>
+    
+    <script>
 		// 주문고객과 동일 스크립트
         $(".order_confirm_switch").change(function(){
             var result = $(".order_confirm_switch").prop("checked");
