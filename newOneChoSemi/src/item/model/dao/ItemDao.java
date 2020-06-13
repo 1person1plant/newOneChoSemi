@@ -879,7 +879,76 @@ public class ItemDao {
 		
 	
 	}
-
 	
+	// CATEGORY별로 ITEM의 개수 세기
+	public int categoryCount(Connection conn, String category) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int listCount = 0;
+		
+		String query = "SELECT COUNT(*) FROM ITEM_SEARCHLIST WHERE ITEM_CATEGORY = '"+ category +"'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				listCount = rset.getInt(1);
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+	// CATEGORY별로 ITEM 모두 가져오기
+	public ArrayList<Item> categoryList(Connection conn, String category) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Item> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM ITEM_SEARCHLIST WHERE ITEM_CATEGORY = '"+ category +"'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Item it = new Item(rset.getString("item_no"),
+								   rset.getString("item_name"),
+								   rset.getString("keyword_no"),
+								   rset.getString("keyword_name"),
+								   rset.getInt("item_price"),
+								   rset.getInt("item_discount"),
+								   rset.getInt("item_stock"),
+								   rset.getDate("item_cdate"),
+								   rset.getInt("item_scount"),
+								   rset.getInt("item_max"),
+								   rset.getString("image_path"),
+								   rset.getString("image_name"));
+				
+				list.add(it);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+	
+		return list;
+	}
 
 }
