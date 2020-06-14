@@ -988,6 +988,7 @@
 			<input type="hidden" class="comp_imgPath" name="comp_imgPath" value="<%=cartList.get(i).getImagePath() %>">
 			<input type="hidden" class="comp_iCount" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
 			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
+			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemDiscount() %>">
 		</div>
         <%} %>
 		<!-- 수령자 정보 -->
