@@ -907,7 +907,7 @@
                                     - orderpayment_discount
                                     - orderpayment_point;
                 $("#orderpayment_total").text(orderpayment_total);
-                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100));
+                $("#orderpayment_userPointAdd").text("+" + Math.ceil(orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100)));
                 calculate_comp = false;
             }
         }
@@ -978,30 +978,36 @@
 	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
 	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
 	<div>
-		<input type="hidden" name="userNo" value="<%=userNo %>">
+		<input type="hidden" class="comp_userNo" name="comp_userNo" value="<%=userNo %>">
 		<!-- 상품정보 -->
 		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 		<div class="orderComp_item<%=i%>">
-			<input type="hidden" name="comp_iNo" value="<%=cartList.get(i).getItemNo() %>">
-			<input type="hidden" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
+			<input type="hidden" class="comp_iNo" name="comp_iNo" value="<%=cartList.get(i).getItemNo() %>">
+			<input type="hidden" class="comp_iName" name="comp_iName" value="<%=cartList.get(i).getItemName() %>">
+			<input type="hidden" class="comp_imgName" name="comp_imgName" value="<%=cartList.get(i).getImageName() %>">
+			<input type="hidden" class="comp_imgPath" name="comp_imgPath" value="<%=cartList.get(i).getImagePath() %>">
+			<input type="hidden" class="comp_iCount" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
+			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
 		</div>
         <%} %>
 		<!-- 수령자 정보 -->
-		<input type="hidden" name="comp_rName" value="">
-		<input type="hidden" name="comp_rPhone1" value="">
-		<input type="hidden" name="comp_rPhone2" value="">
-		<input type="hidden" name="comp_rPhone3" value="">
-		<input type="hidden" name="comp_rPostcode" value="">
-		<input type="hidden" name="comp_rAddress1" value="">
-		<input type="hidden" name="comp_rAddress2" value="">
-		<input type="hidden" name="comp_rMemo" value="">
+		<input type="hidden" class="comp_rName" name="comp_rName" value="">
+		<input type="hidden" class="comp_rPhone1" name="comp_rPhone1" value="">
+		<input type="hidden" class="comp_rPhone2" name="comp_rPhone2" value="">
+		<input type="hidden" class="comp_rPhone3" name="comp_rPhone3" value="">
+		<input type="hidden" class="comp_rPostcode" name="comp_rPostcode" value="">
+		<input type="hidden" class="comp_rAddress1" name="comp_rAddress1" value="">
+		<input type="hidden" class="comp_rAddress2" name="comp_rAddress2" value="">
+		<input type="hidden" class="comp_rMemo" name="comp_rMemo" value="">
 		<!-- 결제 정보 -->
-		<input type="hidden" name="comp_pPrice" value="">
-		<input type="hidden" name="comp_pDelivery" value="">
-		<input type="hidden" name="comp_pDiscount" value="">
-		<input type="hidden" name="comp_pPoint" value="">
-		<input type="hidden" name="comp_pAddPoint" value="">
-		<input type="hidden" name="comp_pTotal" value="">
+		<input type="hidden" class="comp_paymentPrice" name="comp_paymentPrice" value="">
+		<input type="hidden" class="comp_paymentDelivery" name="comp_paymentDelivery" value="">
+		<input type="hidden" class="comp_paymentDiscount" name="comp_paymentDiscount" value="">
+		<input type="hidden" class="comp_paymentPoint" name="comp_paymentPoint" value="">
+		<input type="hidden" class="comp_paymentUserPoint" name="comp_paymentUserPoint" value="">
+		<input type="hidden" class="comp_paymentAddPoint" name="comp_paymentAddPoint" value="">
+		<input type="hidden" class="comp_paymentTotal" name="comp_paymentTotal" value="">
+		<input type="hidden" class="comp_paymentOption" name="comp_paymentOption" value="">
 	</div>
 	</form>
 	<script>
@@ -1038,27 +1044,47 @@
 		        alert("약관에 동의해 주세요.");
 				$("#orderterms").focus();
 		    } else {
-				console.log("구매자 userNo : " + $("[name=userNo]").val());
-				console.log("구매자 comp_iNo : " + $("[name=comp_iNo]").val());
-				console.log("구매자 comp_iCount : " + $("[name=comp_iCount]").val());
+				console.log("구매자 comp_userNo : " + $("#comp_userNo").val());
+				console.log("구매자 comp_iNo : " + $("#comp_iNo").val());
+				console.log("구매자 comp_iCount : " + $("#comp_iCount").val());
+				console.log("구매자 comp_iPrice : " + $("#comp_iPrice").val());
 
-				console.log("구매자 recipient_name : " + $("#recipient_name").val());
-				console.log("구매자 recipient_phone1 : " + $("#recipient_phone1").val());
-				console.log("구매자 recipient_phone2 : " + $("#recipient_phone2").val());
-				console.log("구매자 recipient_phone3 : " + $("#recipient_phone3").val());
-				console.log("구매자 recipient_postcode : " + $("#recipient_postcode").val());
-				console.log("구매자 recipient_address : " + $("#recipient_address").val());
-				console.log("구매자 recipient_detailAddress : " + $("#recipient_detailAddress").val());
-				console.log("구매자 recipient_request : " + $("#recipient_request").val());
+				$(".comp_rName").val($("#recipient_name").val());
+				console.log("구매자 comp_rName : " + $(".comp_rName").val());
+				$(".comp_rPhone1").val($("#recipient_phone1").val());
+				console.log("구매자 comp_rPhone1 : " + $(".comp_rPhone1").val());
+				$(".comp_rPhone2").val($("#recipient_phone1").val());
+				console.log("구매자 comp_rPhone2 : " + $(".comp_rPhone2").val());
+				$(".comp_rPhone3").val($("#recipient_phone1").val());
+				console.log("구매자 comp_rPhone3 : " + $(".comp_rPhone3").val());
+				$(".comp_rPostcode").val($("#recipient_postcode").val());
+				console.log("구매자 comp_rPostcode : " + $(".comp_rPostcode").val());
+				$(".comp_rAddress1").val($("#recipient_address").val());
+				console.log("구매자 comp_rAddress1 : " + $(".comp_rAddress1").val());
+				$(".comp_rAddress2").val($("#recipient_detailAddress").val());
+				console.log("구매자 comp_rAddress2 : " + $(".comp_rAddress2").val());
+				$(".comp_rMemo").val($("#recipient_request").val());
+				console.log("구매자 comp_rMemo : " + $(".comp_rMemo").val());
 				
-				console.log("구매자 recipient_address : " + $("#recipient_address").val());
-				console.log("구매자 recipient_address : " + $("#recipient_address").val());
+				$(".comp_paymentPrice").val($("#orderpayment_price").text());
+				console.log("구매자 comp_paymentPrice : " + $(".comp_paymentPrice").val());
+				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
+				console.log("구매자 comp_paymentDelivery : " + $(".comp_paymentDelivery").val());
+				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
+				console.log("구매자 comp_paymentDiscount : " + $(".comp_paymentDiscount").val());
+				$(".comp_paymentPoint").val($("#orderpayment_point").val());
+				console.log("구매자 comp_paymentPoint : " + $(".comp_paymentPoint").val());
+				$(".comp_paymentUserPoint").val($("#orderpayment_userPoint").text());
+				console.log("구매자 comp_paymentUserPoint : " + $(".comp_paymentUserPoint").val());
+				$(".comp_paymentAddPoint").val($("#orderpayment_userPointAdd").text());
+				console.log("구매자 comp_paymentAddPoint : " + $(".comp_paymentAddPoint").val());
+				$(".comp_paymentTotal").val($("#orderpayment_total").text());
+				console.log("구매자 comp_paymentTotal : " + $(".comp_paymentTotal").val());
+
+				$(".comp_paymentOption").val($(".payoption").val());
+				console.log("구매자 comp_paymentOption : " + $(".payoption").val());
+
 				
-				
-				
-				
-				
-		
 		    	//$("#orderCompForm").submit();
 		    }
 		});

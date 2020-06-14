@@ -43,8 +43,8 @@ public class OrderServlet extends HttpServlet {
 		String[] cartItCoArr = request.getParameterValues("cartItCo");
 
 		// cart.jps cart 폼태그 값 확인용
-		System.out.println(Arrays.toString(cartNoArr));
-		System.out.println(Arrays.toString(cartItCoArr));
+//		System.out.println(Arrays.toString(cartNoArr));
+//		System.out.println(Arrays.toString(cartItCoArr));
 	
 		// 카트 정보
 		ArrayList<Cart> cartOrderList = new ArrayList<>();
@@ -57,8 +57,8 @@ public class OrderServlet extends HttpServlet {
 		// 구매할 카트 정보 업데이트하고 구매할 카트만 가져오기
 		ArrayList<Cart> cartList = new CartService().cartOrderList(userNo, cartOrderList);
 		
-		System.out.println("OrderServlet 주문페이지 출력 전 cartList : " + cartList);
-		System.out.println("OrderServlet 주문페이지 출력 전 cartList.size() : " + cartList.size());
+//		System.out.println("OrderServlet 주문페이지 출력 전 cartList : " + cartList);
+//		System.out.println("OrderServlet 주문페이지 출력 전 cartList.size() : " + cartList.size());
 
 		// 랭크 정보
 		Rank rankDetail = new RankService().rankDetail(userNo);
