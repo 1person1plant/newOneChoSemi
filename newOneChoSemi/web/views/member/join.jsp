@@ -615,9 +615,7 @@
 					alert('핸드폰 번호를 입력해주세요');
 				} else if( $("#email1").val() == null || $("#email1").val() == "" ){
 					alert('이메일을 입력해주세요');
-				} else if( chk[0].checked != true ){
-					alert('약관에 동의를 해주세요');
-				} else if( chk[1].checked != true ){
+				} else if( chk[0].checked == false || chk[1].checked == false ){
 					alert('약관에 동의를 해주세요');
 				} else{
   					$('#joinForm').submit();
@@ -654,6 +652,7 @@
 						success:function(data){
 							if(data=="permit"){
 								alert("아이디를 사용 하실 수 있습니다.");
+								
 							}else{
 								alert("아이디가 중복됩니다. 다시 입력해주세요");
 								userId.focus();

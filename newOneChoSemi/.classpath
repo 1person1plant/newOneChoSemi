@@ -13,6 +13,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/newOneChoSemi-ara/newOneChoSemi/dev/apache-tomcat-8.5.55/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

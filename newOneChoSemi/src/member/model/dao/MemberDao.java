@@ -306,9 +306,9 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			Member searchId_A = null;
-			System.out.println("dao" + searchId_A);
 
-			String query = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
+			String query = "SELECT MEMBER_ID FROM MEMBER "
+					+ "WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -318,10 +318,21 @@ public class MemberDao {
 				pstmt.setString(4, member.getMemberEmail1());
 				pstmt.setString(5, member.getMemberEmail2());
 				
+				System.out.println(member.getMemberPhone1());
+				System.out.println(member.getMemberPhone2());
+				System.out.println(member.getMemberPhone3());
+				System.out.println(member.getMemberEmail1());
+				System.out.println(member.getMemberEmail2());
+				
+				
 				rs = pstmt.executeQuery();
 				
-
-				
+				if(rs.next()) {
+					searchId_A = new Member(
+										   rs.getString("MEMBER_ID")
+										   );
+				}
+//				System.out.println("MemberDao : " + searchId_A);		
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {

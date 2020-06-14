@@ -130,13 +130,12 @@ public class MemberService {
 	 * @param memberPhone3 
 	 * @param memberPhone2 
 	 * @param searchId_A 입력된 휴대폰 번호+이메일
-	 * @return
+	 * @return 
 	 */
 	public Member searchIdMember(Member member) {
 		Connection conn = getConnection();
 		
 		Member searchId_A = new MemberDao().searchIdMember(conn, member);
-		System.out.println("서비스 " + searchId_A);
 		
 		close(conn);
 		return searchId_A;

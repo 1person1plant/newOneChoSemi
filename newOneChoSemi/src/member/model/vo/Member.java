@@ -23,26 +23,24 @@ public class Member implements Serializable{
 	private String memberAddress1;	// 주소
 	private String memberAddress2;	// 상세주소
 	private Date memberJoinDate;	// 회원가입날짜
-	private String memberStatus;	// 탈퇴:Y, 기본:N, 회원상태
+	private String memberStatus;	// 탈퇴:Y, 기본:N, 카카오:K 회원상태
 	private String memberExit;		// 탈퇴사유
 	private int memberPoint;		// 포인트
 	private String memberRank;		// 등급번호 (R1~R5)
+	
 	public Member() {
 	}
-	
-	public Member(String memberId, String memberPwd) {
-		this.memberId = memberId;
-		this.memberPwd = memberPwd;
-	}
-	
-	
-	
+
 	public Member(String memberId) {
 		this.memberId = memberId;
 	}
 
-	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1,
-			String memberEmail2) {
+	public Member(String memberId, String memberPwd) {
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+	}
+
+	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1, String memberEmail2) {
 		this.memberPhone1 = memberPhone1;
 		this.memberPhone2 = memberPhone2;
 		this.memberPhone3 = memberPhone3;
