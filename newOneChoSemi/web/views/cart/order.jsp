@@ -9,7 +9,8 @@
 	for(int i = 0 ; i < cartList.size() ; i++){
 		totalPrice += cartList.get(i).getItemPrice();
 		totalDiscount += cartList.get(i).getItemDiscount();
-	System.out.println("totalDiscount" + i + " : " + totalDiscount);
+		System.out.println("Price(" + i + ") : " + cartList.get(i).getItemPrice());
+		System.out.println("Discount(" + i + ") : " + cartList.get(i).getItemDiscount());
 	}
 	System.out.println("totalPrice : " + totalPrice);
 	System.out.println("totalDiscount : " + totalDiscount);
@@ -518,7 +519,7 @@
 	                            <tr>
 	                                <td>
 	                                    <select name="recipient_phone1" id="recipient_phone1" required>
-	                                        <option value='010' selected>010</option>
+	                                        <option value='010'>010</option>
 	                                        <option value='011'>011</option>
 	                                        <option value='016'>016</option>
 	                                        <option value='017'>017</option>
@@ -528,11 +529,11 @@
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone2" name="recipient_phone2" min="1" pattern="/^\d{3,4}$/" required>  
+	                                    <input type="number" id="recipient_phone2" name="recipient_phone2" min="0" max="9999" pattern="/^\d{3,4}$/" required>  
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone3" name="recipient_phone3" min="1" pattern="/^\d{4}$/" required>
+	                                    <input type="number" id="recipient_phone3" name="recipient_phone3" min="0" max="9999" pattern="/^\d{4}$/" required>
 	                                </td>
 	                            </tr>
 	                        </table>
@@ -781,26 +782,16 @@
 	                orderpayment_total = orderpayment_price
 	                                    + delivery
 	                                    - orderpayment_discount
-	                                    - orderpayment_point
+	                                    - orderpayment_point;
 	                $("#orderpayment_total").text(orderpayment_total);
 	                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100));
 	                calculate_comp = false;
 	            }
 	        }
-	        // 더미값 계산 (차후 없어질꺼임)
-	        $(function(){
-	            var orderpayment_delivery = Number(delivery);
-	            var orderpayment_userPoint = Number(user_point);
-	            $("#orderpayment_price").text(orderpayment_price);
-	            $("#orderpayment_delivery").text(orderpayment_delivery);
-	            $("#orderpayment_discount").text(orderpayment_discount);
-	            $("#orderpayment_point").text(orderpayment_point);
-	            $("#orderpayment_userPoint").text(orderpayment_userPoint);
-	            Calculate();                                       
-	
-	            // 포인트 입력시 계산되는 결과 값
-	            $("#orderpayment_point").on("change", function(){
-	                calculate_comp = true; 
+            $(function(){
+            	// 포인트 입력시 계산되는 결과 값
+            	$("#orderpayment_point").on("change", function(){
+                	calculate_comp = true; 
 	                this.value = this.value.replace(/\D/g, '');
 	                if (this.value > userAvailablePoints){
 	                    this.value = userAvailablePoints;
@@ -905,6 +896,7 @@
 	        <button type="button" class="orderEnd_cancel btn btn-info" onclick="orderEnd_cancel()">취소하기</button>
 	        <button type="button" id="order_confirm" class="btn btn-outline-info">결제하기</button>
 	    </div>
+	    
 	    <script>
 	        function orderEnd_cancel() {
 	            var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
@@ -931,8 +923,6 @@
 	    </script>
 	</div>
 	
-		
-	<!-- data sample -->
 	<script>
 	    // 구매자 정보
 	    var buyer_name = $(".buyer_name").text();	// 이름
@@ -968,7 +958,20 @@
 	    var orderpayment_total = 0;
 	
 	    var calculate_comp = true;
-
+	 	
+	    $(function() {
+		    var orderpayment_delivery = Number(delivery);
+			var orderpayment_userPoint = Number(user_point);
+			$("#orderpayment_price").text(orderpayment_price);
+			$("#orderpayment_delivery").text(orderpayment_delivery);
+			$("#orderpayment_discount").text(orderpayment_discount);
+			$("#orderpayment_point").text(orderpayment_point);
+			$("#orderpayment_userPoint").text(orderpayment_userPoint);
+			Calculate();
+		});
+    </script>
+    
+    <script>
 		// 주문고객과 동일 스크립트
         $(".order_confirm_switch").change(function(){
             var result = $(".order_confirm_switch").prop("checked");

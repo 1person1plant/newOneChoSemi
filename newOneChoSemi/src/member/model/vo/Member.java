@@ -30,10 +30,25 @@ public class Member implements Serializable{
 	
 	public Member() {
 	}
+<<<<<<< HEAD
 
+	public Member(String memberId) {
+=======
 	public Member(String memberId) {
 		this.memberId = memberId;
 	}
+	public Member(String memberId, String memberPwd) {
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+	}
+	public Member(String memberId, String memberName, String memberExit) {
+		super();
+>>>>>>> refs/remotes/origin/master
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberExit = memberExit;
+	}
+<<<<<<< HEAD
 
 	public Member(String memberId, String memberPwd) {
 		this.memberId = memberId;
@@ -41,13 +56,16 @@ public class Member implements Serializable{
 	}
 
 	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1, String memberEmail2) {
+=======
+	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1,
+			String memberEmail2) {
+>>>>>>> refs/remotes/origin/master
 		this.memberPhone1 = memberPhone1;
 		this.memberPhone2 = memberPhone2;
 		this.memberPhone3 = memberPhone3;
 		this.memberEmail1 = memberEmail1;
 		this.memberEmail2 = memberEmail2;
 	}
-
 	public Member(String memberId, String memberPwd, String memberName, String memberPhone1, String memberPhone2,
 			String memberPhone3, String memberEmail1, String memberEmail2, String memberPostcode, String memberAddress1,
 			String memberAddress2) {

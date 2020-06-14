@@ -22,6 +22,10 @@ public class Cart implements Serializable{
 	private String imageName;	// 이미지 이름
 	public Cart() {
 	}
+	public Cart(String cartListNo) {
+		super();
+		this.cartListNo = cartListNo;
+	}
 	public Cart(String cartListNo, int cartListCount) {
 		super();
 		this.cartListNo = cartListNo;

@@ -6,8 +6,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" initial-scale="1">
+	<title>Cho-당신을 위한 반려식물</title>
+	<!--타이틀 아이콘-->
+	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
+	<!-- 아이콘 -->
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
+	<!-- 제이쿼리 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+	<style>
+		/* font start */
+		@font-face {
+			font-family: 'basicFont';
+			src:
+				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff')
+				format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+		
+		* {
+			font-family: "basicFont";
+		}
+		/* font end */
+	</style>
 <style>
 .container {
 	padding-top: 2%;
@@ -168,36 +198,9 @@ label {
 
 	<div class="container">
 		<div class="row">
-		<div class="col-md-3">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<!-- 패널 타이틀1 -->
-				<h3 class="panel-title">
-					<span>마이 페이지</span>
-				</h3>
+			<div class="col-md-3">
+				<%@include file="myPageCategory.jsp"%>
 			</div>
-			<!-- 사이드바 메뉴목록1 -->
-			<ul class="list-group">
-				<a href="grade.jsp">
-					<li class="list-group-item">회원 등급</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-					<li class="list-group-item">개인 정보 수정</li>
-				</a>
-				<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-				<a href="orderHistory.jsp">
-					<li class="list-group-item">주문 내역 조회</li>
-				</a>
-				<a href="wishList.jsp">
-					<li class="list-group-item">위시리스트</li>
-				</a>
-				<a href="withdrawal.jsp">
-					<li class="list-group-item">회원 탈퇴</li>
-				</a>
-			</ul>
-		</div>
-	</div>
-			<%@include file="myPageCategory.jsp"%>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
@@ -229,8 +232,8 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" colspan='3' class="mt-2">
-										<button id='myBtn' data-toggle='modal' data-target='#intro'
-											type='button' class='button1'>탈퇴하기</button> &nbsp;&nbsp; <a
+										<input id='myBtn' data-toggle='modal' data-target='#intro'
+											type='button' class='button1' value="탈퇴하기">&nbsp;&nbsp;<a
 										href='grade.html'><button type='button' class='button1'>취소</button></a>
 									</td>
 								</tr>
@@ -250,47 +253,74 @@ label {
 							aria-hidden="='true'">&times;</button>
 					</div>
 					<div class='modal-body'>
-						<form>
+						<form action="<%=request.getContextPath()%>/reason.me" method="post" id="reasonForm">
 							<ul>
 								<li class='wdchk'>탈퇴사유(중복 체크 가능)
 									<ul>
-										<li class='wdchk'><input type='checkbox' id='chk1' name="no1"><label
+										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberId()%>" name="memberId"></li>
+										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberName()%>" name="memberName"></li>
+										<li class='wdchk'><input type='checkbox' id='chk1' name="reason" value="chk1"><label
 											for='chk1'>&nbsp;상품 다양성/품질 불만</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk2' name="no2"><label
+										<li class='wdchk'><input type='checkbox' id='chk2' name="reason" value="chk2"><label
 											for='chk2'>&nbsp;상품 정보 부족</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk3' name="no3"><label
+										<li class='wdchk'><input type='checkbox' id='chk3' name="reason" value="chk3"><label
 											for='chk3'>&nbsp;이용빈도 낮음</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk4' name="no4"><label
+										<li class='wdchk'><input type='checkbox' id='chk4' name="reason" value="chk4"><label
 											for='chk4'>&nbsp;개인정보 유출 우려</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk5' name="no5"><label
+										<li class='wdchk'><input type='checkbox' id='chk5' name="reason" value="chk5"><label
 											for='chk5'>&nbsp;시스템 오류 빈번</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk6' name="no6"><label
+										<li class='wdchk'><input type='checkbox' id='chk6' name="reason" value="chk6"><label
 											for='chk6'>&nbsp;아이디 변경</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk7' name="no7"><label
+										<li class='wdchk'><input type='checkbox' id='chk7' name="reason" value="chk7"><label
 											for='chk7'>&nbsp;초식 동물 입양</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk8' name="no8"><label
+										<li class='wdchk'><input type='checkbox' id='chk8' name="reason" value="chk8"><label
 											for='chk8'>&nbsp;배송지연</label></li>
 									</ul>
 								</li>
 							</ul>
+							<div class='modal-footer'>
+								<input type='button' class='btn btn-default' data-dismiss='modal'
+									value="탈퇴하기" onclick="altFunction(realt);">
+								<div id='area2' class='area'></div>
+		
+								<a href='grade.html'><button type='button'
+										class='btn btn-primary'>취소</button></a>
+							</div>
 						</form>
 					</div>
-					<div class='modal-footer'>
-						<input type='button' class='btn btn-default' data-dismiss='modal'
-							value="탈퇴하기" onclick="altFunction(realt);">
-						<div id='area2' class='area'></div>
-
-						<a href='grade.html'><button type='button'
-								class='btn btn-primary'>취소</button></a>
-					</div>
 				</div>
-
+				</div>
+				</div>
 			</div>
 			<script>
-				var delText = document.getElementById("password2");
 				$(function(){
 					$("#myBtn").click(function(){
-						if("<%=loginUser.getMemberPwd()%>");
+						var inputPwd1 = document.getElementById("password1").value;
+						var inputPwd2 = document.getElementById("password2").value;
+						<%String chkPwd = loginUser.getMemberPwd();%>
+						var Pwd = "<%=chkPwd%>";
+						
+						if(((inputPwd1=="")||(inputPwd1==null))||((inputPwd2=="")||(inputPwd2==null))){
+							alert("비밀번호를 입력해 주세요.");
+						}else if((inputPwd1 != Pwd)||(inputPwd2 !=Pwd)){
+							alert("비밀번호가 일치하지 않습니다.");
+						}else if((inputPwd2 == Pwd)&&(inputPwd1==inputPwd2)){
+							var modal = document.getElementById("myModal");
+							var btn = document.getElementById("myBtn");
+							var span = document.getElementsByClassName("close")[0];
+
+							btn.onclick = function() {
+								modal.style.display = "block";
+							}
+							span.onclick = function() {
+								modal.style.display = "none";
+							}
+							window.onclick = function(event) {
+								if (event.target == modal) {
+									modal.style.display = "none";
+								}
+							}
+						}
 					})
 				})
 				
@@ -308,8 +338,10 @@ label {
 					if (result == true) {
 						alert("ㅂㅂ");
 						$("#withdrawalform").submit();
+						$("#reasonForm").submit();
 					} else {
 						alert('남아 주셔서 감사합니다.');
+						location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
 					}
 				}
 				function realt(i) {

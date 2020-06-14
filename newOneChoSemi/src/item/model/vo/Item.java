@@ -21,7 +21,7 @@ public class Item implements Serializable {
 	private String itemDisplay;//전시상태 여부
 	private String itemInfo;//세부 정보
 	private Date CDate;//생성일
-	private Date UDate;//수정일
+	private Date UDate;//수정일.
 	private int itemSCount;//누적 구매량
 	private int itemMax;//최대 구매 가능 수량
 	private String itemSale;//삭제 여부 
@@ -32,17 +32,25 @@ public class Item implements Serializable {
 	private String itemImageName;
 	//
 	
+	// 김경남: DETAIL에서 쓴다
+	private String itemMainImg; 
+	private String itemMainImgPath;
+	private String itemSubImg;
+	private String itemSubImgPath;
+	//
+	
 	public Item() {
 		super();
 	}
 	
 	
 	// 김경남 LIST들 담아주는 생성자
-	public Item(String itemNo, String itemName, String keywordName, int itemPrice, int itemDiscount, int itemStock, Date cDate,
+	public Item(String itemNo, String itemName, String itemKeywordNo, String keywordName, int itemPrice, int itemDiscount, int itemStock, Date cDate,
 			int itemSCount, int itemMax, String itemImagePath, String itemImageName) {
 		super();
 		this.itemNo = itemNo;
 		this.itemName = itemName;
+		this.itemKeywordNo = itemKeywordNo;
 		this.keywordName = keywordName;
 		this.itemPrice = itemPrice;
 		this.itemDiscount = itemDiscount;
@@ -53,8 +61,26 @@ public class Item implements Serializable {
 		this.itemImagePath = itemImagePath;
 		this.itemImageName = itemImageName;
 	}
-
-
+	
+	// 김경남 DETAIL을 담아주는 생성자
+	public Item(String itemNo, String itemName, String itemKeywordNo, String keywordName, int itemPrice, int itemDiscount, int itemRate,
+			int itemStock, String itemInfo, int itemMax, String itemMainImg, String itemMainImgPath, String itemSubImg, String itemSubImgPath) {
+		super();
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemKeywordNo = itemKeywordNo;
+		this.itemPrice = itemPrice;
+		this.itemDiscount = itemDiscount;
+		this.itemRate = itemRate;
+		this.itemStock = itemStock;
+		this.itemInfo = itemInfo;
+		this.itemMax = itemMax;
+		this.keywordName = keywordName;
+		this.itemMainImg = itemMainImg;
+		this.itemMainImgPath = itemMainImgPath;
+		this.itemSubImg = itemSubImg;
+		this.itemSubImgPath = itemSubImgPath;
+	}
 
 	public Item(String itemName, String itemCategory, String itemKeywordNo, int itemPrice, int itemDiscount,
 			int itemStock, String itemDisplay, String itemInfo, int itemMax) {
@@ -69,10 +95,6 @@ public class Item implements Serializable {
 		this.itemInfo = itemInfo;
 		this.itemMax = itemMax;
 	}
-	
-	
-	
-
 
 	public Item(String itemName, String itemCategory, String itemKeywordNo, int itemPrice, int itemDiscount,
 			String itemDisplay, String itemInfo) {
@@ -85,7 +107,6 @@ public class Item implements Serializable {
 		this.itemDisplay = itemDisplay;
 		this.itemInfo = itemInfo;
 	}
-
 
 	public Item(String itemName, String itemCategory, String itemKeywordNo, int itemPrice, int itemDiscount,
 			String itemDisplay, String itemInfo, int itemMax) {
@@ -100,9 +121,6 @@ public class Item implements Serializable {
 		this.itemMax = itemMax;
 	}
 	
-	
-
-
 	public Item(String itemNo, String itemName, String itemCategory, String itemKeywordNo, int itemPrice,
 			int itemDiscount, String itemDisplay, String itemInfo) {
 		super();
@@ -115,7 +133,6 @@ public class Item implements Serializable {
 		this.itemDisplay = itemDisplay;
 		this.itemInfo = itemInfo;
 	}
-
 
 	public Item(String itemNo, String itemName, String itemCategory, String itemKeywordNo, int itemPrice,
 			int itemDiscount, int itemRate, int itemStock, String itemDisplay, String itemInfo, Date cDate, Date uDate,
@@ -137,9 +154,6 @@ public class Item implements Serializable {
 		this.itemSale = itemSale;
 	}
 	
-	
-
-
 	public Item(String itemNo, String itemName, String itemCategory, String itemKeywordNo, int itemPrice,
 			int itemDiscount, int itemRate, int itemStock, String itemDisplay, String itemInfo, Date cDate, Date uDate,
 			int itemSCount, int itemMax, String itemSale) {
@@ -305,7 +319,55 @@ public class Item implements Serializable {
 		this.itemImageName = itemImageName;
 	}
 
-	
+
+	public String getItemMainImg() {
+		return itemMainImg;
+	}
 
 
+	public void setItemMainImg(String itemMainImg) {
+		this.itemMainImg = itemMainImg;
+	}
+
+
+	public String getItemMainImgPath() {
+		return itemMainImgPath;
+	}
+
+
+	public void setItemMainImgPath(String itemMainImgPath) {
+		this.itemMainImgPath = itemMainImgPath;
+	}
+
+
+	public String getItemSubImg() {
+		return itemSubImg;
+	}
+
+
+	public void setItemSubImg(String itemSubImg) {
+		this.itemSubImg = itemSubImg;
+	}
+
+
+	public String getItemSubImgPath() {
+		return itemSubImgPath;
+	}
+
+
+	public void setItemSubImgPath(String itemSubImgPath) {
+		this.itemSubImgPath = itemSubImgPath;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemNo=" + itemNo + ", itemName=" + itemName + ", itemCategory=" + itemCategory
+				+ ", itemKeywordNo=" + itemKeywordNo + ", itemPrice=" + itemPrice + ", itemDiscount=" + itemDiscount
+				+ ", itemRate=" + itemRate + ", itemStock=" + itemStock + ", itemDisplay=" + itemDisplay + ", itemInfo="
+				+ itemInfo + ", CDate=" + CDate + ", UDate=" + UDate + ", itemSCount=" + itemSCount + ", itemMax="
+				+ itemMax + ", itemSale=" + itemSale + ", keywordName=" + keywordName + ", itemImagePath="
+				+ itemImagePath + ", itemImageName=" + itemImageName + ", itemMainImg=" + itemMainImg
+				+ ", itemMainImgPath=" + itemMainImgPath + ", itemSubImg=" + itemSubImg + ", itemSubImgPath="
+				+ itemSubImgPath + "]";
+	}
 }

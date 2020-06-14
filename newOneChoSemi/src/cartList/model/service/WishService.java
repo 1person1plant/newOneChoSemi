@@ -37,4 +37,28 @@ public class WishService {
 		return result;
 	}
 
+	public int deleteWish(String wishNo) {
+		Connection conn = getConnection();
+
+		int result = new WishDao().deleteWish(conn, wishNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<WishList> myWishList(String memberNo) {
+		Connection conn = getConnection();
+
+		ArrayList<WishList> mwl = new WishDao().myWishList(conn, memberNo);
+		
+		close(conn);
+		return mwl;
+	}
+
 }

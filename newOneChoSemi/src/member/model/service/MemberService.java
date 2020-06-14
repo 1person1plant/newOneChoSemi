@@ -9,7 +9,6 @@ import java.sql.Connection;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
-import member.model.vo.Rank;
 
 public class MemberService {
 	/**
@@ -43,7 +42,7 @@ public class MemberService {
 	public Member idenMember(Member member) {
 		Connection conn = getConnection();
 		Member idenUser = new MemberDao().idenMember(conn, member);
-		
+		System.out.println("service"+idenUser);
 		close(conn);
 		return idenUser;
 	}
@@ -76,6 +75,20 @@ public class MemberService {
 	 */
 	public Member kakaoLoginMember(Member member) {
 		return null;
+	}
+
+	public int reasonMember(Member memberReason) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().reasonMember(conn, memberReason);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			close(conn);
+		}
+		close(conn);
+		return result;
 	}
 	
 	/**

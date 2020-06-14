@@ -1,10 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="order.model.vo.*,java.util.ArrayList"%>
+	<%-- <%Page pg = (Page)request.getAttribute("pg");
+	  ArrayList list = (ArrayList)request.getAttribute("list");
+	  
+	  int listCount = pg.getListCount();
+	  int currentPage = pg.getCurrentPage();
+	  int maxPage = pg.getMaxPage();
+	  int startPage = pg.getStartPage();
+	  int endPage = pg.getEndPage();
+	%>  --%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" initial-scale="1">
+	<title>Cho-당신을 위한 반려식물</title>
+	<!--타이틀 아이콘-->
+	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
+	<!-- 아이콘 -->
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
+	<!-- 제이쿼리 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+	<style>
+		/* font start */
+		@font-face {
+			font-family: 'basicFont';
+			src:
+				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff')
+				format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+		
+		* {
+			font-family: "basicFont";
+		}
+		/* font end */
+	</style>
 	<style>
 		.container{
 			padding-top:2%;
@@ -59,36 +98,9 @@
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
 		<div class="row">
-		<div class="col-md-3">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<!-- 패널 타이틀1 -->
-				<h3 class="panel-title">
-					<span>마이 페이지</span>
-				</h3>
+			<div class="col-md-3">
+				<%@include file="myPageCategory.jsp" %>
 			</div>
-			<!-- 사이드바 메뉴목록1 -->
-			<ul class="list-group">
-				<a href="grade.jsp">
-					<li class="list-group-item">회원 등급</li>
-				</a>
-				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-					<li class="list-group-item">개인 정보 수정</li>
-				</a>
-				<%-- <a href="<%=request.getContextPath();%>/list.bo"> --%>
-				<a href="orderHistory.jsp">
-					<li class="list-group-item">주문 내역 조회</li>
-				</a>
-				<a href="wishList.jsp">
-					<li class="list-group-item">위시리스트</li>
-				</a>
-				<a href="withdrawal.jsp">
-					<li class="list-group-item">회원 탈퇴</li>
-				</a>
-			</ul>
-		</div>
-	</div>
-			<%@include file="myPageCategory.jsp" %>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
@@ -108,10 +120,21 @@
 										<td>기타</td>
 									</tr>
 								</thead>
+								<%-- <%if(list.isEmpty()){%>
+								<tr class='ollist' style='border-bottom: 2px solid black'>
+									<td class='ordertd' colspan="7">주문 내역이 없습니다.</td>								
+								</tr>
+								<%}else{ %>
+									<%for(int i=0;i<list.size();i++){ %>
+										<tr>
+											<input type="hidden" value="<%=((Order)list.get(i).getOrderId()) %>">
+										</tr>
+									<%} %>
+								<%} %> --%>
 								<tr class='ollist' style='border-bottom: 2px solid black'>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'><img src='flo.jpg' width='150px'
-										heigh='150px'></td>
+										height='150px'></td>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'>???</td>
@@ -125,7 +148,7 @@
 								<tr class='ollist' style='border-bottom: 2px solid black'>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'><img src='flo.jpg' width='150px'
-										heigh='150px'></td>
+										height='150px'></td>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'>???</td>
 									<td class='ordertd'>???</td>
@@ -137,14 +160,34 @@
 										<button id='myBtn' data-toggle='modal' data-target='#intro'
 											type='button' class='button1'>상세보기</button></td>
 								</tr>
-
 							</table>
 						</form>
 					</div>
+					<%-- <div class="paginArea" align="center">
+			<!-- 맨 처음으로(<<) -->
+			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=1'"><<</button>
+			
+			<!-- 이전 페이지로(<) -->
+			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=currentPage-1%>'"><</button>
+			
+			<!-- 10개의 페이지 목록 --> 
+			<%for(int p=startPage ;p<=endPage ;p++){ %>
+				<% if(p == currentPage){ %>
+					<button disabled><%=p %></button>
+				<%}else{ %>
+					<button  onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=p%>'"><%=p %></button>
+				<%} %>
+			<%} %>
+			<!-- 다음 페이지로(>) -->
+			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=currentPage+1%>'">></button>
+			
+			<!-- 맨 끝으로(>>) -->
+			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=maxPage%>'">>></button>
+			
+		</div> --%>
 				</fieldset>
 			</div>
-			<div class="table">
-				
+			</div>
 			</div>
 			<script>
             	$(function(){
