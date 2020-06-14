@@ -988,7 +988,7 @@
 			<input type="hidden" class="comp_imgPath" name="comp_imgPath" value="<%=cartList.get(i).getImagePath() %>">
 			<input type="hidden" class="comp_iCount" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
 			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
-			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemDiscount() %>">
+			<input type="hidden" class="comp_iDiscount" name="comp_iDiscount" value="<%=cartList.get(i).getItemDiscount() %>">
 		</div>
         <%} %>
 		<!-- 수령자 정보 -->
@@ -1045,47 +1045,52 @@
 		        alert("약관에 동의해 주세요.");
 				$("#orderterms").focus();
 		    } else {
+		    	// 전송 값 저장
+				$(".comp_rName").val($("#recipient_name").val());
+				$(".comp_rPhone1").val($("#recipient_phone1").val());
+				$(".comp_rPhone2").val($("#recipient_phone1").val());
+				$(".comp_rPhone3").val($("#recipient_phone1").val());
+				$(".comp_rPostcode").val($("#recipient_postcode").val());
+				$(".comp_rAddress1").val($("#recipient_address").val());
+				$(".comp_rAddress2").val($("#recipient_detailAddress").val());
+				$(".comp_rMemo").val($("#recipient_request").val());
+				
+				$(".comp_paymentPrice").val($("#orderpayment_price").text());
+				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
+				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
+				$(".comp_paymentPoint").val($("#orderpayment_point").val());
+				$(".comp_paymentUserPoint").val($("#orderpayment_userPoint").text());
+				$(".comp_paymentAddPoint").val($("#orderpayment_userPointAdd").text());
+				$(".comp_paymentTotal").val($("#orderpayment_total").text());
+
+				$(".comp_paymentOption").val($(".payoption").val());
+				
+				// 값 확인
 				console.log("구매자 comp_userNo : " + $("#comp_userNo").val());
 				console.log("구매자 comp_iNo : " + $("#comp_iNo").val());
 				console.log("구매자 comp_iCount : " + $("#comp_iCount").val());
 				console.log("구매자 comp_iPrice : " + $("#comp_iPrice").val());
 
-				$(".comp_rName").val($("#recipient_name").val());
 				console.log("구매자 comp_rName : " + $(".comp_rName").val());
-				$(".comp_rPhone1").val($("#recipient_phone1").val());
 				console.log("구매자 comp_rPhone1 : " + $(".comp_rPhone1").val());
-				$(".comp_rPhone2").val($("#recipient_phone1").val());
 				console.log("구매자 comp_rPhone2 : " + $(".comp_rPhone2").val());
-				$(".comp_rPhone3").val($("#recipient_phone1").val());
 				console.log("구매자 comp_rPhone3 : " + $(".comp_rPhone3").val());
-				$(".comp_rPostcode").val($("#recipient_postcode").val());
 				console.log("구매자 comp_rPostcode : " + $(".comp_rPostcode").val());
-				$(".comp_rAddress1").val($("#recipient_address").val());
 				console.log("구매자 comp_rAddress1 : " + $(".comp_rAddress1").val());
-				$(".comp_rAddress2").val($("#recipient_detailAddress").val());
 				console.log("구매자 comp_rAddress2 : " + $(".comp_rAddress2").val());
-				$(".comp_rMemo").val($("#recipient_request").val());
 				console.log("구매자 comp_rMemo : " + $(".comp_rMemo").val());
-				
-				$(".comp_paymentPrice").val($("#orderpayment_price").text());
+
 				console.log("구매자 comp_paymentPrice : " + $(".comp_paymentPrice").val());
-				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
 				console.log("구매자 comp_paymentDelivery : " + $(".comp_paymentDelivery").val());
-				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
 				console.log("구매자 comp_paymentDiscount : " + $(".comp_paymentDiscount").val());
-				$(".comp_paymentPoint").val($("#orderpayment_point").val());
 				console.log("구매자 comp_paymentPoint : " + $(".comp_paymentPoint").val());
-				$(".comp_paymentUserPoint").val($("#orderpayment_userPoint").text());
 				console.log("구매자 comp_paymentUserPoint : " + $(".comp_paymentUserPoint").val());
-				$(".comp_paymentAddPoint").val($("#orderpayment_userPointAdd").text());
 				console.log("구매자 comp_paymentAddPoint : " + $(".comp_paymentAddPoint").val());
-				$(".comp_paymentTotal").val($("#orderpayment_total").text());
 				console.log("구매자 comp_paymentTotal : " + $(".comp_paymentTotal").val());
 
-				$(".comp_paymentOption").val($(".payoption").val());
 				console.log("구매자 comp_paymentOption : " + $(".payoption").val());
-
 				
+
 		    	//$("#orderCompForm").submit();
 		    }
 		});
