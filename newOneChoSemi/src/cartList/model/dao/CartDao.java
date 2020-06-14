@@ -124,7 +124,6 @@ public class CartDao {
 			}
 			
 			rSet = pstmt.executeQuery();
-			System.out.println("rSet : "+ rSet);
 			
 			while(rSet.next()) {
 				Cart cr = new Cart(rSet.getString("MEMBER_NO")
