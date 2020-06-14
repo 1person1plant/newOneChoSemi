@@ -11,15 +11,15 @@ public class Member implements Serializable{
 	private static final long serialVersionUID = 3566224316029271677L;
 	private String memberNo;		// 회원번호
 	private String memberAdmin;		// 관리자:Y, 일반회원:N
-	private String memberId;			// 아이디, 유니크
+	private String memberId;		// 아이디, 유니크
 	private String memberPwd;		// 비밀번호
 	private String memberName;		// 이름
-	private String memberPhone1;		// 연락처1
-	private String memberPhone2;		// 연락처2
-	private String memberPhone3;		// 연락처3
+	private String memberPhone1;	// 연락처1
+	private String memberPhone2;	// 연락처2
+	private String memberPhone3;	// 연락처3
 	private String memberEmail1;	// 이메일1
 	private String memberEmail2;	// 이메일2
-	private String memberPostcode;		// 우편번호
+	private String memberPostcode;	// 우편번호
 	private String memberAddress1;	// 주소
 	private String memberAddress2;	// 상세주소
 	private Date memberJoinDate;	// 회원가입날짜
@@ -29,9 +29,26 @@ public class Member implements Serializable{
 	private String memberRank;		// 등급번호 (R1~R5)
 	public Member() {
 	}
+	public Member(String memberId) {
+		this.memberId = memberId;
+	}
 	public Member(String memberId, String memberPwd) {
 		this.memberId = memberId;
 		this.memberPwd = memberPwd;
+	}
+	public Member(String memberId, String memberName, String memberExit) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberExit = memberExit;
+	}
+	public Member(String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1,
+			String memberEmail2) {
+		this.memberPhone1 = memberPhone1;
+		this.memberPhone2 = memberPhone2;
+		this.memberPhone3 = memberPhone3;
+		this.memberEmail1 = memberEmail1;
+		this.memberEmail2 = memberEmail2;
 	}
 	public Member(String memberId, String memberPwd, String memberName, String memberPhone1, String memberPhone2,
 			String memberPhone3, String memberEmail1, String memberEmail2, String memberPostcode, String memberAddress1,
@@ -68,12 +85,6 @@ public class Member implements Serializable{
 		this.memberStatus = memberStatus;
 		this.memberPoint = memberPoint;
 		this.memberRank = memberRank;
-	}
-	public Member(String memberId, String memberName, String memberExit) {
-		super();
-		this.memberId = memberId;
-		this.memberName = memberName;
-		this.memberExit = memberExit;
 	}
 	public Member(String memberNo, String memberAdmin, String memberId, String memberPwd, String memberName,
 			String memberPhone1, String memberPhone2, String memberPhone3, String memberEmail1, String memberEmail2,
