@@ -211,6 +211,7 @@ label {
 									<br>
 									<th colspan="3" scope="col"
 										style='border-bottom: 2px solid black'>
+										<input type="text" style="display:none;" name="memberNo" value="<%=loginUser.getMemberNo() %>">
 										<h1><label name="withdrawalMemberName"><%=loginUser.getMemberName() %>님 회원탈퇴</label></h1>
 									</th>
 								</tr>
@@ -234,7 +235,7 @@ label {
 									<td scope="row" colspan='3' class="mt-2">
 										<input id='myBtn' data-toggle='modal' data-target='#intro'
 											type='button' class='button1' value="탈퇴하기">&nbsp;&nbsp;
-											<button type='button' class='button1'>취소</button>
+											<button type='button' class='button1' id="pageCancel">취소</button>
 									</td>
 								</tr>
 							</tbody>
@@ -321,6 +322,9 @@ label {
 								}
 							}
 						}
+					})
+					$("#pageCancel").click(function(){
+						location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 					})
 				})
 				

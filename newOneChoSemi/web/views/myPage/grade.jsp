@@ -36,7 +36,8 @@
 		branch = "images/rank/branch3.png";
 		fruit = "images/rank/fruit4.png";
 		tree = "images/rank/tree5.png";
-		if(price.isEmpty()||price==null){
+		System.out.print("sk rkruruduur"+price);
+		if(price.equals(null)){
 			price = "0";
 		}
 				

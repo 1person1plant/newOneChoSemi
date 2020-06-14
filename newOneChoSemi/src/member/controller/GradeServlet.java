@@ -31,7 +31,9 @@ public class GradeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberNo = request.getParameter("memberNo");
+		System.out.println("화면에서 No" + memberNo);
 		Grade grade = new MemberService().memberGrade(memberNo);
+		System.out.println("service>servlet" + memberNo);
 		if(grade!=null) {
 			request.setAttribute("grade", grade);
 			request.getRequestDispatcher("views/myPage/grade.jsp").forward(request, response);

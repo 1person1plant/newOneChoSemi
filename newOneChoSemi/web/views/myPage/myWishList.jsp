@@ -133,16 +133,17 @@
 							<%}else{%>
 							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 							<tr style='border-bottom: 2px solid black'>
-								<td colspan='1' class="mt-2"><%=mwl.get(i).getWishListNo()%></td>
+							
+								<td colspan='1' class="mt-2" id="wishNoTd"><%=mwl.get(i).getWishListNo()%><input style="display: none;" type="text" value="<%=mwl.get(i).getWishListNo()%>" id="wishNo" name="wishNo"></td>
 								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=mwl.get(i).getImageName()%>' width='150px' height='150px'></a></td>
 								<td scope="row" colspan='2' class="mt-2"><%=mwl.get(i).getItemName()%></td>
-								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' maxlength='150' disabled><%=mwl.get(i).getWishListMemo() %></textarea><br>
+								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishListMemo() %></textarea><br>
 									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishListMemo().length()%></span>/100</p>
 								</td>
 								<td id='orderbutton' colspan="2">
-									<input type='button' class='button1' id='changeM' value="메모수정"><br>
-									<a href='main.jsp' id='delete1'><button type='button' class='button1'>상품구매</button></a><br>
-									<a href='main.jsp' id='delete2'><button type='button' class='button1'>상품삭제</button></a>
+									<input type='button' class='button1' id='<%=mwl.get(i).getWishListNo()%>btn' value="메모수정"><br>
+									<button type='button' class='button1'>상품구매</button><br>
+									<button type='button' class='button1'>상품삭제</button>
 								</td>
 							</tr>
 							<%} %>
@@ -167,16 +168,19 @@
 		            alert('입력 가능한 글자수를 초과하였습니다.');
 		        }
 		    });
-		    
-		    $('#changeM').click(function(){
+		});
+	</script>
+	<script>
+		$(function(){
+			$('#changeM').click(function(){
 		        if($('.textA').prop('disabled')==true){
 		            $('.textA').attr('disabled',false);
 		        }else if($('.textA').prop('disabled')==false){
 		            $('.textA').attr('disabled',true);
+		            location.href="<%=request.getContextPath()%>/wishmemo.up";
 		        }
 		    });
-		    
-		});
+		})
 	</script>
 	<script>
 		$(function(){

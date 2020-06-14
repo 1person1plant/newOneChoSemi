@@ -44,6 +44,11 @@ public class MyWishList {
 		return "MyWishList [wishlistNo=" + wishlistNo + ", itemNo=" + itemNo + ", memberNo=" + memberNo
 				+ ", wishlistMemo=" + wishlistMemo + "]";
 	}
+	public MyWishList(String wishlistNo, String wishlistMemo) {
+		super();
+		this.wishlistNo = wishlistNo;
+		this.wishlistMemo = wishlistMemo;
+	}
 	
 	
 		

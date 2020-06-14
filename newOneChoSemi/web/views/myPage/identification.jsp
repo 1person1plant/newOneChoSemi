@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,6 +135,7 @@ td {
 				<fieldset>
 					<form id="identification" action="<%=request.getContextPath()%>/identy.me" method="post">
 						<input style="display:none;" type="text" value="<%=loginUser.getMemberId()%>" id="memberId" name="memberId">
+						<input style="display:none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
 						<table class="table">
 							<thead>
 								<tr>
@@ -171,7 +173,7 @@ td {
 				var Pwd = "<%=chkPwd%>";
 				
 				if((inputPwd1==Pwd)){
-					location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				}else if((inputPwd1=="")||(inputPwd1==null)){
 					alert("비밀번호를 입력해 주세요.");
 				}else if(inputPwd1 != Pwd){

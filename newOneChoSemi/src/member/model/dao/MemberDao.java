@@ -355,6 +355,7 @@ public class MemberDao {
 									rset.getString("MEMBER_RANK"),
 									rset.getInt("MEMBER_POINT"),
 									rset.getInt("TOTAL_PRICE"));
+					System.out.println("grade dao"+grade);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
