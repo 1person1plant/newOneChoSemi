@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import order.model.dao.OrderDao;
 import order.model.vo.Order;
+import order.model.vo.OrderHis;
 
 public class OrderService {
 
@@ -20,18 +21,19 @@ public class OrderService {
 	 * close(conn); return result; }
 	 */
 
-	public int getListCount() {
-		Connection conn = getConnection();
-		int listCount = new OrderDao().getListCount(conn);
-		close(conn);
-		return listCount;
-	}
 
 	public ArrayList<Order> historyList(int currentPage, int limit) {
 		Connection conn = getConnection();
 		ArrayList list = new OrderDao().historyList(conn, currentPage, limit);
 		close(conn);
 		return list;
+	}
+
+	public ArrayList<OrderHis> historyOrder(String memberNo) {
+		Connection conn = getConnection();
+		ArrayList<OrderHis> oh = new OrderDao().historyOrder(conn,memberNo);
+//		System.out.println("OrderHis service"+oh);
+		return oh;
 	}
 
 }

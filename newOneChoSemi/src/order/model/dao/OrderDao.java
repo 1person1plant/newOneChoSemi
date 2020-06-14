@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import order.model.vo.Order;
+import order.model.vo.OrderHis;
 
 import static common.JDBCTemplate.close;
 
@@ -34,27 +35,7 @@ public class OrderDao {
 	 * return result; }
 	 */
 
-	public int getListCount(Connection conn) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		int result = 0;
-		
-		String query = "SELECT COUNT(*) FROM ORDERLIST";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			if(rset.next()) {
-				result = rset.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-			close(rset);
-		}
-		return result;
-	}
+
 
 	public ArrayList historyList(Connection conn, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
@@ -100,6 +81,40 @@ public class OrderDao {
 			close(rset);
 		}
 		return list;
+	}
+
+	public ArrayList<OrderHis> historyOrder(Connection conn, String memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<OrderHis> oh = new ArrayList<>();
+		
+		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				OrderHis ohlist = new OrderHis(rset.getString("ORDER_NO"),
+											rset.getString("IMAGE_NAME"),
+											rset.getString("ITEM_NO"),
+											rset.getString("ITEM_NAME"),
+											rset.getInt("ORDER_COUNT"),
+											rset.getString("DELIVERY_STATUS"),
+											rset.getString("MEMBER_NO"));
+				
+				System.out.println("OrderHis dao"+oh);
+				oh.add(ohlist);
+				System.out.println("oh.size() : " +oh.size());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return oh;
 	}
 
 }

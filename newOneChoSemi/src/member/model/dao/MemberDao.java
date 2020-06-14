@@ -3,10 +3,12 @@ package member.model.dao;
 import static common.JDBCTemplate.close;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import member.model.vo.Grade;
 import member.model.vo.Member;
 
 public class MemberDao {
@@ -131,7 +133,9 @@ public class MemberDao {
 						   rset.getString("MEMBER_POSTCODE"),
 						   rset.getString("MEMBER_ADDRESS1"),
 						   rset.getString("MEMBER_ADDRESS2"),
+						   rset.getDate("MEMBER_JOINDATE"),
 						   rset.getString("MEMBER_STATUS"),
+						   rset.getString("MEMBER_EXIT"),
 						   rset.getInt("MEMBER_POINT"),
 						   rset.getString("MEMBER_RANK")
 						   );
@@ -358,6 +362,35 @@ public class MemberDao {
 		 */
 		public Member searchPwdMember(Connection conn, Member member) {
 			return null;
+		}
+
+		public Grade memberGrade(Connection conn, String memberNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Grade grade = null;
+			
+			String query = "SELECT * FROM GRADECHK WHERE MEMBER_NO=?";
+			
+			try {
+				pstmt=conn.prepareStatement(query);
+				pstmt.setString(1, memberNo);
+				
+				rset=pstmt.executeQuery();
+				if(rset.next()) {
+					grade = new Grade(rset.getString("MEMBER_NO"),
+									rset.getString("MEMBER_RANK"),
+									rset.getInt("MEMBER_POINT"),
+									rset.getInt("TOTAL_PRICE"));
+					System.out.println("grade dao"+grade);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return grade;
 		}
 	
 		
