@@ -1,7 +1,7 @@
-package item.controller;
+package item.controller.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
-import item.model.vo.Item;
 
 /**
- * Servlet implementation class ItemSearchServlet
+ * Servlet implementation class nameCheckServlet
  */
-@WebServlet("/itemSearch.it")
-public class ItemSearchServlet extends HttpServlet {
+@WebServlet("/nameCheck.it")
+public class nameCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemSearchServlet() {
+    public nameCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,34 +30,22 @@ public class ItemSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
 		
-		int priceMin = Integer.valueOf(request.getParameter("searchPriceMin"));
-		int priceMax = Integer.valueOf(request.getParameter("searchPriceMax"));
-		String what = request.getParameter("searchWhat");
 		
-
-		ArrayList searchList = new ArrayList();
+		String itemName=request.getParameter("itemName");
+		int result=new ItemService().nameCheck(itemName);
+		System.out.println(itemName);
 		
-		searchList.add(priceMin);
-		searchList.add(priceMax);
-		searchList.add(what);
-				
-		ItemService itService = new ItemService();
+		PrintWriter out=response.getWriter();
 		
-		ArrayList<Item> resultList = new ArrayList<>();
-		
-		resultList = itService.searchResult(searchList);
-		
-		if(resultList != null) {
-			request.setAttribute("searchResult", resultList);			
-			request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
+		if(result==0) {
+			out.print("permit");
 		}else {
-			System.out.println("널 이야~");
+			out.print("fail");
 		}
 		
-
+		out.flush();
+		out.close();
 	}
 
 	/**

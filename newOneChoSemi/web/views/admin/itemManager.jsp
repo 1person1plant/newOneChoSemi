@@ -133,7 +133,7 @@
     
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.or'">
                     <span data-feather="file-text"></span>
                     	주문내역 조회
                   </a>
@@ -254,7 +254,7 @@
                         <tr>
                             
                             <td colspan="5" style="text-align: right; height: 5rem;">
-                                <button type="submit" class="btn btn-dark" style="width: 7rem;margin-right: 2rem;">조회</button>
+                                <button type="submit" style="background-color: #1f598c;color: white;width: 7rem;" class="btn btn-dark" style="width: 7rem;margin-right: 2rem;">조회</button>
                                 <button type="reset" class="btn btn-outline-dark" style="width: 7rem;margin-right: 2rem;">초기화</button>
                                 
                             </td>
@@ -659,7 +659,7 @@
      			console.log("수정 버튼 클릭 안 플래그"+flag);
      		}
      		
-     	})
+     	});
        
          
          $("#productlist tbody").on('click','tr',function(){
