@@ -38,7 +38,7 @@ public class ItemCategoryServlet extends HttpServlet {
 		ItemService itService = new ItemService();
 		RequestDispatcher view = null;
 		
-		// 흙에 사는 친구들 몇 명인지 세고, 전부 보내주기 START
+		// 카테고리별 친구들 몇 명인지 세고, 전부 보내주기 START
 		int categoryCount = itService.categoryCount(category);
 		ArrayList<Item> categoryList = itService.categoryList(category);
 		
@@ -48,7 +48,7 @@ public class ItemCategoryServlet extends HttpServlet {
 		
 		view = request.getRequestDispatcher("views/item/itemCategory.jsp");
 		view.forward(request, response);
-		// 흙에 사는 친구들 몇 명인지 세고, 전부 보내주기 END
+		// 카테고리별 친구들 몇 명인지 세고, 전부 보내주기 END		
 		
 	}
 
