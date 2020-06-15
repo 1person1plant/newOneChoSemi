@@ -10,6 +10,7 @@ import java.sql.Connection;
 import member.model.dao.MemberDao;
 import member.model.vo.Grade;
 import member.model.vo.Member;
+import member.model.vo.MyWishList;
 
 public class MemberService {
 	/**
@@ -161,5 +162,8 @@ public class MemberService {
 		close(conn);
 		return grade;
 	}
+
+	
+	
 	
 }

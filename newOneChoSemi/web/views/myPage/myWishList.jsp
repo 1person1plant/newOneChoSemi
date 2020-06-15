@@ -96,6 +96,29 @@
 		p {
 			margin-bottom: 0px !important;
 		}
+		#wishAddBtn {
+			padding: 8px 18px;
+			margin: 5px;
+			border-radius: 8px;
+			color: black;
+			border: 1px solid #115D8C;
+			background-color: white;
+			width: auto;
+			height: auto;
+			text-align:right !important;
+		}
+		
+		#wishAddBtn :hover {
+			border-radius: 8px !important;
+			background: #6AAED9 !important;
+			color: white !important;
+			transition: 0.2s !important;
+		}
+		
+		#wishAddBtn :active {
+			border-radius: 8px !important;
+			background: #012340 !important;
+		}
 	</style>
 </head>
 <body>
@@ -129,14 +152,18 @@
 							</tr>
 							<%if(mwl.isEmpty()||mwl.size()==0){ %>
 							<tr style='border-bottom: 2px solid black'>
-								<td class='mt-2' colspan="9" style="font-size:1rem">위시리스트가 존재하지 않습니다.</td>
+								<td style="padding:15px" class='mt-2' colspan="9" style="font-size:1rem">위시리스트가 존재하지 않습니다.<br>
+								</td>
+							</tr>
+							<tr>
+							<td colspan="9"><input type='button' id='wishAddBtn' value="위시리스트 추가하러 가기"></td>
 							</tr>
 							<%}else{%>
 							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 							<tr style='border-bottom: 2px solid black'>
 							
 								<td colspan='1' class="mt-2" id="wishNoTd"><%=mwl.get(i).getWishlistNo()%><input style="display: none;" type="text" value="<%=mwl.get(i).getWishlistNo()%>" id="wishNo" name="wishNo"></td>
-								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='<%=request.getContextPath()%>/items_uploadFiles/' width='150px' height='150px'></a></td>
+								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><%-- <img src='<%=request.getContextPath()%>/items_uploadFiles/' width='150px' height='150px'> --%></a></td>
 								<td scope="row" colspan='2' class="mt-2">???</td>
 								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishlistMemo()%></textarea><br>
 									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
@@ -144,7 +171,7 @@
 								<td id='orderbutton' colspan="2">
 									<input type='button' class='button1' id='changeM' value="메모수정"><br>
 									<button type='button' class='button1'>상품구매</button><br>
-									<button type='button' class='button1'>상품삭제</button>
+									<input type='button' class='button1' id="delBtn" value="위시삭제">
 								</td>
 							</tr>
 							<%} %>
@@ -171,6 +198,37 @@
 		    });
 		});
 	</script>
+
+	<script>
+		$(function(){
+			$("#delBtn").click(function(){
+				var delChk = confirm("위시리스트에서 삭제하시겠습니까?");
+				var wishNo = $(this).parents("tr").children("td:first").text();
+				var memberNo = "<%=loginUser.getMemberNo()%>";
+				var wishMemo = $(this).parents("tr").children().children("textarea").text();
+				
+				/* console.log(wishNo + "memberNo : " + memberNo); */
+				
+				if(delChk){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/delete.wi",
+					type:"post",
+					data:{wishNo:wishNo, memberNo:memberNo, wishMemo:wishMemo},
+					success:function(data){// data(받는 데이터)
+						location.reload();
+						if(data == "fail"){
+							alert("실패");
+						}
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+			})
+		})	
+	</script>
+	
 	<script>
 		$(function(){
 			$('#changeM').click(function(){
@@ -182,7 +240,20 @@
 		            var wishMemo = $(this).parents("tr").children().children("textarea").text();
 		            
 		            /* console.log(wishMemo); */
-		            location.href="<%=request.getContextPath()%>/wishmemo.up";
+		            $.ajax({
+					url:"<%=request.getContextPath()%>/wishmemo.up",
+					type:"post",
+					data:{wishNo:wishNo, wishMemo:wishMemo},
+					success:function(data){// data(받는 데이터)
+						location.reload();
+						if(data == "fail"){
+							alert("실패");
+						}
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
 		        }
 		    });
 		})
@@ -194,6 +265,12 @@
 			}).mouseout(function(){
 				$(this).css({"padding":"8px 18px","border-radius":"8px","color":"black","border":"1px solid #11538C","background-color":"white", "width":"105px", "height":"42px"});
 			});
+			$("#wishAddBtn").mouseenter(function(){
+				$(this).css({"background":"#6AAED9","color":"white","transition":"0.2s","border-radius":"8px"});
+			}).mouseout(function(){
+				$(this).css({"padding":"8px 18px","border-radius":"8px","color":"black","border":"1px solid #11538C","background-color":"white", "width":"auto", "height":"auto"});
+			});
+			
 		});
 	</script>
 

@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import cartList.model.vo.WishList;
-
 import static common.JDBCTemplate.*;
 import member.model.vo.MyWishList;
 
@@ -16,27 +14,21 @@ public class MyWishListDao {
 
 	public int memoUpdate(Connection conn, MyWishList myWishList) {
 		PreparedStatement pstmt = null;
-		int result = 0;
-		
+		int result = 0; 
 		String query = "UPDATE WISHLIST SET WISHLIST_MEMO=? WHERE WISHLIST_NO=?";
-		
-		try {
+		try { 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, myWishList.getWishlistMemo());
 			pstmt.setString(2, myWishList.getWishlistNo());
-			
 			result = pstmt.executeUpdate();
-			
 			System.out.println("MyWishListDao memoUpdate : " + result);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+		 	}catch (SQLException e) {
+		 		e.printStackTrace(); 
+		 	}finally {
+		 		close(pstmt);
+		 	}
+		 return result;
+		 }
 
 	public ArrayList<MyWishList> myWishList(Connection conn, String memberNo) {
 		PreparedStatement pstmt = null;
@@ -60,7 +52,7 @@ public class MyWishListDao {
 			
 				mwl.add(wish);
 			}
-			System.out.println("dao = " + mwl);
+			/* System.out.println("dao = " + mwl); */
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -70,5 +62,27 @@ public class MyWishListDao {
 		
 		return mwl;
 	}
+
+	public int deleteWish(Connection conn, MyWishList myWishList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM WISHLIST WHERE WISHLIST_NO = ? AND MEMBER_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, myWishList.getWishlistNo());
+			pstmt.setString(2, myWishList.getMemberNo());
+			result = pstmt.executeUpdate();
+			/* System.out.println("dao result : " +result); */
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	
 
 }

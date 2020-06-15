@@ -134,7 +134,7 @@
 								</thead>
 								<%if(oh.isEmpty()||oh.size()==0){ %>
 									<tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd' colspan="7" style="font-size:1rem">주문 내역이 존재하지 않습니다.</td>
+									<td style="padding:15px"class='ordertd' colspan="7" style="font-size:1rem">주문 내역이 존재하지 않습니다.</td>
 								</tr>
 								<%}else{%>
 									<%for(int i=0;i<oh.size();i++){%>

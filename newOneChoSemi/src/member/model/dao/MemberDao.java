@@ -366,6 +366,8 @@ public class MemberDao {
 			
 			return grade;
 		}
+
+		
 	
 		
 }

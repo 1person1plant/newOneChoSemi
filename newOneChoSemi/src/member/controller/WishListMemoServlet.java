@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,16 +33,19 @@ public class WishListMemoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String wishNo = request.getParameter("wishNo");
 		String wishMemo = request.getParameter("wishMemo");
-		System.out.println("wishNo"+wishNo + "----wishMemo"+wishMemo);
+		System.out.println("wishNo : "+wishNo + "/// wishMemo : "+wishMemo);
 		int result = new MyWishListService().memoUpdate(new MyWishList(wishNo,wishMemo));
-		System.out.println("servlet" + result);
-		if(result>0) {
-			request.setAttribute("msg", "성공");
-			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request, response);
-		}else {
-			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+
+		PrintWriter out = response.getWriter();
+		
+		if(result > 0) {
+			out.print("permit");
+		} else {
+			out.print("fail");
 		}
+		
+		out.flush();
+		out.close();
 		
 		
 	}

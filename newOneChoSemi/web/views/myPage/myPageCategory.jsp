@@ -38,7 +38,6 @@
 ul .list-group-item :hover {
 	color: white;
 }
-
 /* 좌측 메뉴 리스트 끝 */
 </style>
 </head>

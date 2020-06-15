@@ -195,7 +195,7 @@ td {
 							<thead>
 								<tr>
 									<br>
-									<th colspan="3" scope="col" style='border-bottom: 2px solid black'><h1>본인 확인</h1></th>
+									<th colspan="3" scope="col" style='border-bottom: 2px solid black'><h1>본인 인증</h1></th>
 								</tr>
 							</thead>
 							<tbody>

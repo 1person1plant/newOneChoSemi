@@ -49,7 +49,11 @@ public class MyWishList {
 		this.wishlistNo = wishlistNo;
 		this.wishlistMemo = wishlistMemo;
 	}
-	
-	
+	public MyWishList(String wishlistNo, String memberNo, String wishlistMemo) {
+		super();
+		this.wishlistNo = wishlistNo;
+		this.memberNo = memberNo;
+		this.wishlistMemo = wishlistMemo;
+	}
 		
 }

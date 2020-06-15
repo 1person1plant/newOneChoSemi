@@ -234,7 +234,7 @@ label {
 								<tr>
 									<td scope="row" colspan='3' class="mt-2">
 										<input id='myBtn' data-toggle='modal' data-target='#intro'
-											type='button' class='button1' value="탈퇴하기">&nbsp;&nbsp;
+											type='button' class='button1' value="탈퇴하기" >&nbsp;&nbsp;
 											<button type='button' class='button1' id="pageCancel">취소</button>
 									</td>
 								</tr>
