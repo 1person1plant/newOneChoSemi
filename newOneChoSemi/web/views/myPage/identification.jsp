@@ -185,7 +185,15 @@ td {
 			})
 		});
 	</script>
-		
+	<script>
+		$(function(){
+			$(".sideCategory").click(function(){
+				alert("본인 인증이 필요합니다.");
+				
+				location.href="<%=request.getContextPath()%>/identy.me";
+			});
+		})
+	</script>
 	<script>
 		$(function(){
 			$(".button1").mouseenter(function(){

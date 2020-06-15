@@ -54,23 +54,27 @@ ul .list-group-item :hover {
 					</div>
 					<!-- 사이드바 메뉴목록1 -->
 					<ul class="list-group">
-						<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>">
-							<li class="list-group-item">회원 등급</li>
+						<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>" class="sideCategory" id="gradeA">
+							<li class="list-group-item" class="gradeL">회원 등급</li>
 						</a>
-						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
+						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>" class="sideCategory" id="infA">
 							<li class="list-group-item">개인 정보 수정</li>
 						</a>
-						<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>">
+						<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="orderA">
 							<li class="list-group-item">주문 내역 조회</li>
 						</a>
-						<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">
+						<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="wishA">
 							<li class="list-group-item">위시리스트</li>
 						</a>
-						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
+						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp" class="sideCategory" id="withA">
 							<li class="list-group-item">회원 탈퇴</li>
 						</a>
 					</ul>
 				</div>
+				
+				<script>
+				
+				</script>
 		
 
 </body>

@@ -354,7 +354,7 @@ label {
 						// iframe을 넣은 element를 안보이게 한다.
 						// (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
 						element_wrap.style.display = 'none';
-	
+						apiId.style.display = "none";
 						// 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
 						// document.body.scrollTop = currentScroll;
 					},
@@ -470,12 +470,18 @@ label {
 			});
 		});
 	</script>
+
 	<script>
 				function saveBtn() {
+					var passReg = /(?=.*\d)(?=.*[a-z]).{6,12}/;
 					if ($("#password1").val() == "") {
 						alert("비밀번호를 입력해 주세요.");
-					} else if ($("#password2").val() == "") {
+					}else if($("password1").val() != passReg){
+						alert("숫자와 문자 포함 형태의 6~12자리 이내로 입력해주세요");	
+					}else if ($("#password2").val() == "") {
 						alert("비밀번호 확인을 입력해 주세요.");
+					}else if($("password2").val() != passReg){
+						alert("숫자와 문자 포함 형태의 6~12자리 이내로 입력해주세요");	
 					} else if ($("#phone2").val() == "") {
 						alert("핸드폰 번호를 입력해 주세요.");
 					} else if ($("#phone3").val() == "") {
@@ -488,7 +494,8 @@ label {
 						alert("주소를 입력해 주세요.");
 					} else if ($("#sample3_detailAddress").val() == "") {
 						alert("상세 주소를 입력해 주세요.");
-					} else {
+					}
+					else {
 						$("#updateForm").submit();
 					}
 				} 

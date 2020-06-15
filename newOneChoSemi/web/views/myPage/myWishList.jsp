@@ -141,7 +141,7 @@
 									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishListMemo().length()%></span>/100</p>
 								</td>
 								<td id='orderbutton' colspan="2">
-									<input type='button' class='button1' id='<%=mwl.get(i).getWishListNo()%>btn' value="메모수정"><br>
+									<input type='button' class='button1' id='changeM' value="메모수정"><br>
 									<button type='button' class='button1'>상품구매</button><br>
 									<button type='button' class='button1'>상품삭제</button>
 								</td>
@@ -177,6 +177,10 @@
 		            $('.textA').attr('disabled',false);
 		        }else if($('.textA').prop('disabled')==false){
 		            $('.textA').attr('disabled',true);
+		            var wishNo = $(this).parents("tr").children("td:first").text();
+		            var wishMemo = $(this).parents("tr").children().children("textarea").text();
+		            
+		            /* console.log(wishMemo); */
 		            location.href="<%=request.getContextPath()%>/wishmemo.up";
 		        }
 		    });

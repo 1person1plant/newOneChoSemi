@@ -380,6 +380,7 @@
         	<%if(result){%>
     			$("#loginBtn").click();
 			<%} else {%>
+			/* 	$(".sideCategory").on() */
         		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 	   		<%} %>
 		}
