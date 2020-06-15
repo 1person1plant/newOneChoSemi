@@ -30,10 +30,6 @@ public class Order implements Serializable {
 	private int orderDCost;				// 배송비
 	private String orderAddPoint;		// 추가 포인트
 	private String orderPaymentOption;	// 지불 방법
-	private String orderPayOptionData1;	// 지불 정보 1
-	private String orderPayOptionData2;	// 지불 정보 2
-	private String orderPayOptionData3;	// 지불 정보 3
-	private String orderPayOptionData4;	// 지불 정보 4
 	private String orderReview;			// 기본: N 작성 후 : Y
 	private String orderCancelrequest;	// 기본: N 취소 : Y
 	private String orderCancelyn;		// 기본: N , 승인 : Y (주문 삭제 효과)
@@ -57,7 +53,7 @@ public class Order implements Serializable {
 	// 주문 고객 정보
 	public Order(String memberNo, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
 			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
-			int orderDCost, String orderAddPoint) {
+			int orderDCost, String orderAddPoint, String orderPaymentOption) {
 		super();
 		this.memberNo = memberNo;
 		this.orderUsePoint = orderUsePoint;
@@ -71,23 +67,38 @@ public class Order implements Serializable {
 		this.orderRequest = orderRequest;
 		this.orderDCost = orderDCost;
 		this.orderAddPoint = orderAddPoint;
-	}
-	// 주문 결제 방법 정보
-	public Order(String orderPaymentOption, String orderPayOptionData1, String orderPayOptionData2,
-			String orderPayOptionData3, String orderPayOptionData4) {
-		super();
 		this.orderPaymentOption = orderPaymentOption;
-		this.orderPayOptionData1 = orderPayOptionData1;
-		this.orderPayOptionData2 = orderPayOptionData2;
-		this.orderPayOptionData3 = orderPayOptionData3;
-		this.orderPayOptionData4 = orderPayOptionData4;
+	}
+	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, int orderCount, int orderUsePoint,
+			String orderName, String orderPhone1, String orderPhone2, String orderPhone3, String orderPostcode,
+			String orderAddress1, String orderAddress2, String orderRequest, int orderDCost, String orderCancelrequest,
+			String orderCancelyn, String deliveryCode, String paymentCode) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.memberNo = memberNo;
+		this.orderDate = orderDate;
+		this.orderCount = orderCount;
+		this.orderUsePoint = orderUsePoint;
+		this.orderName = orderName;
+		this.orderPhone1 = orderPhone1;
+		this.orderPhone2 = orderPhone2;
+		this.orderPhone3 = orderPhone3;
+		this.orderPostcode = orderPostcode;
+		this.orderAddress1 = orderAddress1;
+		this.orderAddress2 = orderAddress2;
+		this.orderRequest = orderRequest;
+		this.orderDCost = orderDCost;
+		this.orderCancelrequest = orderCancelrequest;
+		this.orderCancelyn = orderCancelyn;
+		this.deliveryCode = deliveryCode;
+		this.paymentCode = paymentCode;
 	}
 	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, String orderItemName,
 			String orderItemImgName, String orderItemImgPath, String orderItemPrice, String orderItemDiscount,
 			int orderCount, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
 			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
-			int orderDCost, String orderAddPoint, String orderPaymentOption, String orderPayOptionData1,
-			String orderPayOptionData2, String orderPayOptionData3, String orderPayOptionData4, String orderReview,
+			int orderDCost, String orderAddPoint, String orderPaymentOption, String orderReview,
 			String orderCancelrequest, String orderCancelyn, String deliveryCode, String paymentCode) {
 		super();
 		this.orderNo = orderNo;
@@ -112,10 +123,6 @@ public class Order implements Serializable {
 		this.orderDCost = orderDCost;
 		this.orderAddPoint = orderAddPoint;
 		this.orderPaymentOption = orderPaymentOption;
-		this.orderPayOptionData1 = orderPayOptionData1;
-		this.orderPayOptionData2 = orderPayOptionData2;
-		this.orderPayOptionData3 = orderPayOptionData3;
-		this.orderPayOptionData4 = orderPayOptionData4;
 		this.orderReview = orderReview;
 		this.orderCancelrequest = orderCancelrequest;
 		this.orderCancelyn = orderCancelyn;
@@ -254,30 +261,6 @@ public class Order implements Serializable {
 	public void setOrderPaymentOption(String orderPaymentOption) {
 		this.orderPaymentOption = orderPaymentOption;
 	}
-	public String getOrderPayOptionData1() {
-		return orderPayOptionData1;
-	}
-	public void setOrderPayOptionData1(String orderPayOptionData1) {
-		this.orderPayOptionData1 = orderPayOptionData1;
-	}
-	public String getOrderPayOptionData2() {
-		return orderPayOptionData2;
-	}
-	public void setOrderPayOptionData2(String orderPayOptionData2) {
-		this.orderPayOptionData2 = orderPayOptionData2;
-	}
-	public String getOrderPayOptionData3() {
-		return orderPayOptionData3;
-	}
-	public void setOrderPayOptionData3(String orderPayOptionData3) {
-		this.orderPayOptionData3 = orderPayOptionData3;
-	}
-	public String getOrderPayOptionData4() {
-		return orderPayOptionData4;
-	}
-	public void setOrderPayOptionData4(String orderPayOptionData4) {
-		this.orderPayOptionData4 = orderPayOptionData4;
-	}
 	public String getOrderReview() {
 		return orderReview;
 	}
@@ -318,9 +301,7 @@ public class Order implements Serializable {
 				+ orderPhone2 + ", orderPhone3=" + orderPhone3 + ", orderPostcode=" + orderPostcode + ", orderAddress1="
 				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderRequest=" + orderRequest
 				+ ", orderDCost=" + orderDCost + ", orderAddPoint=" + orderAddPoint + ", orderPaymentOption="
-				+ orderPaymentOption + ", orderPayOptionData1=" + orderPayOptionData1 + ", orderPayOptionData2="
-				+ orderPayOptionData2 + ", orderPayOptionData3=" + orderPayOptionData3 + ", orderPayOptionData4="
-				+ orderPayOptionData4 + ", orderReview=" + orderReview + ", orderCancelrequest=" + orderCancelrequest
+				+ orderPaymentOption +  ", orderReview=" + orderReview + ", orderCancelrequest=" + orderCancelrequest
 				+ ", orderCancelyn=" + orderCancelyn + ", deliveryCode=" + deliveryCode + ", paymentCode=" + paymentCode
 				+ "]";
 	}
