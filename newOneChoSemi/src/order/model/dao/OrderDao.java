@@ -186,6 +186,7 @@ public class OrderDao {
 				pstmt.setString(20, orderBuyer.get(i).getOrderPaymentOption());
 				
 				result = pstmt.executeUpdate();
+				
 				if(result > 0 && chk == true) {
 					chk = true;
 				} else {

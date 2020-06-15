@@ -61,6 +61,10 @@ public class OrderCompleteServlet extends HttpServlet {
 		String orderAddress1 = request.getParameter("comp_rAddress1");
 		String orderAddress2 = request.getParameter("comp_rAddress2");
 		String orderRequest = request.getParameter("comp_rMemo");
+		if(orderRequest == null || orderRequest == "") {
+			orderRequest = "KHAABB";
+		}
+		
 		int orderDCost = 0;
 		if(request.getParameter("comp_paymentDelivery") != null || request.getParameter("comp_paymentDelivery") != "") {
 			orderDCost = Integer.valueOf(request.getParameter("comp_paymentDelivery"));
