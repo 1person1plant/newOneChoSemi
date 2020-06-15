@@ -1091,7 +1091,7 @@
 				console.log("구매자 comp_paymentOption : " + $(".payoption").val());
 				
 
-		    	//$("#orderCompForm").submit();
+		    	$("#orderCompForm").submit();
 		    }
 		});
 	</script>

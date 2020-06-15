@@ -15,6 +15,7 @@ public class OrderService {
 	public ArrayList<Order> historyList(int currentPage, int limit) {
 		Connection conn = getConnection();
 		ArrayList list = new OrderDao().historyList(conn, currentPage, limit);
+		
 		close(conn);
 		return list;
 	}
@@ -23,16 +24,18 @@ public class OrderService {
 		Connection conn = getConnection();
 		ArrayList<OrderHis> oh = new OrderDao().historyOrder(conn,memberNo);
 //		System.out.println("OrderHis service"+oh);
+		
+		close(conn);
 		return oh;
 	}
 
-	public ArrayList<Order> insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
 		Connection conn = getConnection();
 		
 		boolean result = new OrderDao().insertOrderList(conn, orderItem, orderBuyer);
-				
-				
-		return null;
+
+		close(conn);
+		return result;
 	}
 
 }
