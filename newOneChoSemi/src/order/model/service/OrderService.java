@@ -33,7 +33,7 @@ public class OrderService {
 		return oh;
 	}
 
-	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 		Connection conn = getConnection();
 		int result2 = -1;
 		int result3 = -1;
@@ -44,7 +44,7 @@ public class OrderService {
 		if(result) {
 			result2 = new CartService().orderCompDeleteCartList(orderItem, orderBuyer);
 			if(result2 > 0) {
-				result3 = new MemberService().orderCompMemberPoint(orderBuyer);
+				result3 = new MemberService().orderCompMemberPoint(orderBuyer, orderpaymentTotal);
 				if(result3 > 0) {
 					chk = true;
 					commit(conn);
@@ -57,6 +57,9 @@ public class OrderService {
 		} else {
 			rollback(conn);
 		}
+
+		// 멤버 등급 조정 
+		new MemberService().memberRankUpdate();
 		
 		close(conn);
 		return chk;

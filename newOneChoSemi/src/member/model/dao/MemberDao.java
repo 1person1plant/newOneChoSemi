@@ -395,11 +395,13 @@ public class MemberDao {
 			return grade;
 		}
 
-		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer) {
+		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			String query = "UPDATE MEMBER SET MEMBER_Point = (SELECT MEMBER_Point FROM MEMBER WHERE MEMBER_no = ?) + ? - ? WHERE MEMBER_no = ?";
+			String query = "UPDATE MEMBER SET MEMBER_POINT = (SELECT MEMBER_POINT FROM MEMBER WHERE MEMBER_NO = ?) + ? - ?," + 
+							"MEMBER_TOTALPURCHASEAMOUNT = (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?) + ? " + 
+							"WHERE MEMBER_NO = ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -407,16 +409,50 @@ public class MemberDao {
 				pstmt.setInt(2, orderBuyer.get(0).getOrderAddPoint());
 				pstmt.setInt(3, orderBuyer.get(0).getOrderUsePoint());
 				pstmt.setString(4, orderBuyer.get(0).getMemberNo());
+				pstmt.setInt(5, orderpaymentTotal);
+				pstmt.setString(6, orderBuyer.get(0).getMemberNo());
 				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}finally {
+			} finally {
 				close(pstmt);
 			}
 			
 //			System.out.println("탈퇴dao"+result);
 			return result;
+		}
+
+		public void memberRankUpdate(Connection conn) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			String query = "";
+
+			String query0 = "UPDATE MEMBER SET member_rank = 'R5' " + 
+							"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R5')" + 
+							"                                     and (select rank_pointmax from rank where rank_no = 'R5')";
+			String query1 = "UPDATE MEMBER SET member_rank = 'R4' " + 
+							"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R4')" + 
+							"                                     and (select rank_pointmax from rank where rank_no = 'R4')";
+			String query2 = "UPDATE MEMBER SET member_rank = 'R3' " + 
+							"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R3')" + 
+							"                                     and (select rank_pointmax from rank where rank_no = 'R3')";
+			String query3 = "UPDATE MEMBER SET member_rank = 'R2' " + 
+							"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R2')" + 
+							"                                     and (select rank_pointmax from rank where rank_no = 'R2')";
+			String query4 = "UPDATE MEMBER SET member_rank = 'R1' " + 
+							"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R1')" + 
+							"                                     and (select rank_pointmax from rank where rank_no = 'R1')";
+
+			try {
+				pstmt = conn.prepareStatement(query0);
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
 		}
 	
 		

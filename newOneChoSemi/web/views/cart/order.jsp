@@ -781,7 +781,7 @@
 	    var orderpayment_discount = totalDiscount;
 	    // 구매자 보유 포인트
 	    var user_point = Number(<%=loginUser.getMemberPoint()%>);
-	    <%System.out.println("유저 보유 포인트 " + loginUser.getMemberPoint());%>
+	    <%System.out.println("유저 보유 포인트 : " + loginUser.getMemberPoint());%>
 	    // 유저 포인트 사용 최대치
 	    var user_pointSpendCap = Number(<%=rankDetail.getRankPonintCap()%>);
 	    // 사용 가능 포인트 최대치 계산

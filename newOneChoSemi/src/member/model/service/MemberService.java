@@ -174,12 +174,19 @@ public class MemberService {
 		return grade;
 	}
 
-	public int orderCompMemberPoint(ArrayList<Order> orderBuyer) {
+	public int orderCompMemberPoint(ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 		Connection conn = getConnection();
-		int result = new MemberDao().orderCompMemberPoint(conn, orderBuyer);
+		int result = new MemberDao().orderCompMemberPoint(conn, orderBuyer, orderpaymentTotal);
 		
 		close(conn);
 		return result;
+	}
+
+	public void memberRankUpdate() {
+		Connection conn = getConnection();
+		new MemberDao().memberRankUpdate(conn);
+		
+		close(conn);
 	}
 	
 }
