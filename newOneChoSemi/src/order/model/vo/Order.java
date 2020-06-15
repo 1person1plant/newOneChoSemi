@@ -10,25 +10,64 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = -8042025341247276539L;
 	private String orderNo;				// 주문 번호 pk
 	private String itemNo;				// 상품 번호 pk
-	private String memberNo;			// 회원 번호
+	private String memberNo;			// 회원 번호 
 	private Date orderDate; 			// 주문 일시
+	private String orderItemName; 		// 구매 시 상품 이름
+	private String orderItemImgName; 	// 구매 시 상품 사진 이름
+	private String orderItemImgPath; 	// 구매 시 상품 사진 경로
+	private int orderItemPrice; 		// 구매 시 상품 가격
+	private int orderItemDiscount;		// 구매 시 상품 할인 값
 	private int	orderCount; 			// 주문 수량
 	private int	orderUsePoint; 			// 사용 포인트
 	private String orderName; 			// 수령자 이름
 	private String orderPhone1;			// 수령자 전화번호 앞 자리
 	private String orderPhone2;			// 수령자 전화번호 중간 자리
 	private String orderPhone3;			// 수령자 전화번호 뒷 자리
-	private String orderPostcode;			// 수령자 우편번호
+	private String orderPostcode;		// 수령자 우편번호
 	private String orderAddress1;		// 수령자 주소
 	private String orderAddress2;		// 수령자 상세 주소
 	private String orderRequest;		// 수령자 요청사항
 	private int orderDCost;				// 배송비
+	private int orderAddPoint;		// 추가 포인트
+	private String orderPaymentOption;	// 지불 방법
+	private String orderReview;			// 기본: N 작성 후 : Y
 	private String orderCancelrequest;	// 기본: N 취소 : Y
 	private String orderCancelyn;		// 기본: N , 승인 : Y (주문 삭제 효과)
 	private String deliveryCode;		// D1 : 배송전, D2 : 배송중, D3 : 배송완료
 	private String paymentCode;			// P1 : 입금 전, P2 : 입금 후	
 	public Order() {
 		super();
+	}
+	// 주문 상품 정보 DB젼달 용 
+	public Order(String itemNo, String orderItemName, String orderItemImgName, String orderItemImgPath,
+			int orderItemPrice, int orderItemDiscount, int orderCount) {
+		super();
+		this.itemNo = itemNo;
+		this.orderItemName = orderItemName;
+		this.orderItemImgName = orderItemImgName;
+		this.orderItemImgPath = orderItemImgPath;
+		this.orderItemPrice = orderItemPrice;
+		this.orderItemDiscount = orderItemDiscount;
+		this.orderCount = orderCount;
+	}
+	// 주문 고객 정보
+	public Order(String memberNo, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
+			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
+			int orderDCost, int orderAddPoint, String orderPaymentOption) {
+		super();
+		this.memberNo = memberNo;
+		this.orderUsePoint = orderUsePoint;
+		this.orderName = orderName;
+		this.orderPhone1 = orderPhone1;
+		this.orderPhone2 = orderPhone2;
+		this.orderPhone3 = orderPhone3;
+		this.orderPostcode = orderPostcode;
+		this.orderAddress1 = orderAddress1;
+		this.orderAddress2 = orderAddress2;
+		this.orderRequest = orderRequest;
+		this.orderDCost = orderDCost;
+		this.orderAddPoint = orderAddPoint;
+		this.orderPaymentOption = orderPaymentOption;
 	}
 	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, int orderCount, int orderUsePoint,
 			String orderName, String orderPhone1, String orderPhone2, String orderPhone3, String orderPostcode,
@@ -50,6 +89,41 @@ public class Order implements Serializable {
 		this.orderAddress2 = orderAddress2;
 		this.orderRequest = orderRequest;
 		this.orderDCost = orderDCost;
+		this.orderCancelrequest = orderCancelrequest;
+		this.orderCancelyn = orderCancelyn;
+		this.deliveryCode = deliveryCode;
+		this.paymentCode = paymentCode;
+	}
+	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, String orderItemName,
+			String orderItemImgName, String orderItemImgPath, int orderItemPrice, int orderItemDiscount,
+			int orderCount, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
+			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
+			int orderDCost, int orderAddPoint, String orderPaymentOption, String orderReview,
+			String orderCancelrequest, String orderCancelyn, String deliveryCode, String paymentCode) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.memberNo = memberNo;
+		this.orderDate = orderDate;
+		this.orderItemName = orderItemName;
+		this.orderItemImgName = orderItemImgName;
+		this.orderItemImgPath = orderItemImgPath;
+		this.orderItemPrice = orderItemPrice;
+		this.orderItemDiscount = orderItemDiscount;
+		this.orderCount = orderCount;
+		this.orderUsePoint = orderUsePoint;
+		this.orderName = orderName;
+		this.orderPhone1 = orderPhone1;
+		this.orderPhone2 = orderPhone2;
+		this.orderPhone3 = orderPhone3;
+		this.orderPostcode = orderPostcode;
+		this.orderAddress1 = orderAddress1;
+		this.orderAddress2 = orderAddress2;
+		this.orderRequest = orderRequest;
+		this.orderDCost = orderDCost;
+		this.orderAddPoint = orderAddPoint;
+		this.orderPaymentOption = orderPaymentOption;
+		this.orderReview = orderReview;
 		this.orderCancelrequest = orderCancelrequest;
 		this.orderCancelyn = orderCancelyn;
 		this.deliveryCode = deliveryCode;
@@ -78,6 +152,36 @@ public class Order implements Serializable {
 	}
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+	}
+	public String getOrderItemName() {
+		return orderItemName;
+	}
+	public void setOrderItemName(String orderItemName) {
+		this.orderItemName = orderItemName;
+	}
+	public String getOrderItemImgName() {
+		return orderItemImgName;
+	}
+	public void setOrderItemImgName(String orderItemImgName) {
+		this.orderItemImgName = orderItemImgName;
+	}
+	public String getOrderItemImgPath() {
+		return orderItemImgPath;
+	}
+	public void setOrderItemImgPath(String orderItemImgPath) {
+		this.orderItemImgPath = orderItemImgPath;
+	}
+	public int getOrderItemPrice() {
+		return orderItemPrice;
+	}
+	public void setOrderItemPrice(int orderItemPrice) {
+		this.orderItemPrice = orderItemPrice;
+	}
+	public int getOrderItemDiscount() {
+		return orderItemDiscount;
+	}
+	public void setOrderItemDiscount(int orderItemDiscount) {
+		this.orderItemDiscount = orderItemDiscount;
 	}
 	public int getOrderCount() {
 		return orderCount;
@@ -145,6 +249,24 @@ public class Order implements Serializable {
 	public void setOrderDCost(int orderDCost) {
 		this.orderDCost = orderDCost;
 	}
+	public int getOrderAddPoint() {
+		return orderAddPoint;
+	}
+	public void setOrderAddPoint(int orderAddPoint) {
+		this.orderAddPoint = orderAddPoint;
+	}
+	public String getOrderPaymentOption() {
+		return orderPaymentOption;
+	}
+	public void setOrderPaymentOption(String orderPaymentOption) {
+		this.orderPaymentOption = orderPaymentOption;
+	}
+	public String getOrderReview() {
+		return orderReview;
+	}
+	public void setOrderReview(String orderReview) {
+		this.orderReview = orderReview;
+	}
 	public String getOrderCancelrequest() {
 		return orderCancelrequest;
 	}
@@ -169,18 +291,18 @@ public class Order implements Serializable {
 	public void setPaymentCode(String paymentCode) {
 		this.paymentCode = paymentCode;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", itemNo=" + itemNo + ", memberNo=" + memberNo + ", orderDate="
-				+ orderDate + ", orderCount=" + orderCount + ", orderUsePoint=" + orderUsePoint + ", orderName="
-				+ orderName + ", orderPhone1=" + orderPhone1 + ", orderPhone2=" + orderPhone2 + ", orderPhone3="
-				+ orderPhone3 + ", orderPostcode=" + orderPostcode + ", orderAddress1=" + orderAddress1
-				+ ", orderAddress2=" + orderAddress2 + ", orderRequest=" + orderRequest + ", orderDCost=" + orderDCost
-				+ ", orderCancelrequest=" + orderCancelrequest + ", orderCancelyn=" + orderCancelyn + ", deliveryCode="
-				+ deliveryCode + ", paymentCode=" + paymentCode + "]";
+				+ orderDate + ", orderItemName=" + orderItemName + ", orderItemImgName=" + orderItemImgName
+				+ ", orderItemImgPath=" + orderItemImgPath + ", orderItemPrice=" + orderItemPrice
+				+ ", orderItemDiscount=" + orderItemDiscount + ", orderCount=" + orderCount + ", orderUsePoint="
+				+ orderUsePoint + ", orderName=" + orderName + ", orderPhone1=" + orderPhone1 + ", orderPhone2="
+				+ orderPhone2 + ", orderPhone3=" + orderPhone3 + ", orderPostcode=" + orderPostcode + ", orderAddress1="
+				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderRequest=" + orderRequest
+				+ ", orderDCost=" + orderDCost + ", orderAddPoint=" + orderAddPoint + ", orderPaymentOption="
+				+ orderPaymentOption +  ", orderReview=" + orderReview + ", orderCancelrequest=" + orderCancelrequest
+				+ ", orderCancelyn=" + orderCancelyn + ", deliveryCode=" + deliveryCode + ", paymentCode=" + paymentCode
+				+ "]";
 	}
-	
 }

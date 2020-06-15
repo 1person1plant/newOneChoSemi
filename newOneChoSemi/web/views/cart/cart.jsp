@@ -697,7 +697,7 @@
 	            if(result){
 	            	
             	// ajax 부분
-            	var wishNum = $(this).parents(".card").find(".wishNumber").text();
+            	var wishDeleteNum = $(this).parents(".card").find(".wishNumber").text();
 				console.log($(this).parents(".card").find(".wishNumber").text());
 				//console.log($(this).parents(".card").children().children("table").children().children(":nth-child(3)").children(":first").children(":last").text());
 				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
@@ -705,7 +705,7 @@
 					$.ajax({
 					url:"<%=request.getContextPath()%>/deleteWish.wi",
 					type:"post",
-					data:{wishNo:wishNo},
+					data:{wishDeleteNum:wishDeleteNum},
 					success:function(data){
 						if(data == "fail"){
 							alert("삭제에 실패 했습니다.");
