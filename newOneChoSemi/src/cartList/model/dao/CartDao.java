@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import cartList.model.vo.Cart;
+import order.model.vo.Order;
 
 import static common.JDBCTemplate.close;
 
@@ -320,6 +321,53 @@ public class CartDao {
 		}
 		
 		return result;
+	}
+
+	public boolean orderCompDeleteCartList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		boolean chk = true;
+	      
+		String query = "DELETE FROM CARTLIST WHERE MEMBER_NO = ?";
+
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			if(i == 0) {
+				query += " AND (ITEM_NO = ?";
+			} else {
+				query += " OR ITEM_NO = ?";
+			}
+		}
+		query += ")";
+		System.out.println(query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderBuyer.get(0).getMemberNo());
+			System.out.println(orderBuyer.get(0).getMemberNo());
+			
+			int j = 2;
+			for(int i = 0 ; i < orderItem.size() ; i++) {
+				pstmt.setString(j, orderItem.get(i).getItemNo());
+				System.out.println(orderItem.get(i).getItemNo());
+				j++;
+			}
+				
+			result = pstmt.executeUpdate();
+			
+			System.out.println("카트 삭제 성공? " + result);
+			
+			if(result > 0) {
+				chk = true;
+			} else {
+				chk = false;
+			}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		System.out.println("주문 완료 후 카트리스트 삭제 : " + chk);
+		return chk;
 	}
 
 }

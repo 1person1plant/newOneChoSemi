@@ -6,10 +6,12 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Grade;
 import member.model.vo.Member;
+import order.model.vo.Order;
 
 public class MemberService {
 	/**
@@ -170,6 +172,14 @@ public class MemberService {
 		Grade grade = new MemberDao().memberGrade(conn,memberNo);
 		close(conn);
 		return grade;
+	}
+
+	public boolean orderCompMemberPoint(ArrayList<Order> orderBuyer) {
+		Connection conn = getConnection();
+		boolean result = new MemberDao().orderCompMemberPoint(orderBuyer);
+		
+		close(conn);
+		return result;
 	}
 	
 }

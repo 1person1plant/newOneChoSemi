@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cartList.model.dao.CartDao;
 import cartList.model.vo.Cart;
+import order.model.vo.Order;
 
 import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
@@ -96,6 +97,21 @@ public class CartService {
 		Connection conn = getConnection();
 
 		boolean result = new CartDao().cartContainChk(conn, userNo, itemId);
+		
+		close(conn);
+		return result;
+	}
+
+	public boolean orderCompDeleteCartList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		Connection conn = getConnection();
+		
+		boolean result = new CartDao().orderCompDeleteCartList(conn, orderItem, orderBuyer);
+		
+		if(result) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		return result;

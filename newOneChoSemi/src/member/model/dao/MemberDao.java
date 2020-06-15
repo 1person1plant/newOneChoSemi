@@ -7,9 +7,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import member.model.vo.Grade;
 import member.model.vo.Member;
+import order.model.vo.Order;
 
 public class MemberDao {
 	/**
@@ -391,6 +393,14 @@ public class MemberDao {
 			}
 			
 			return grade;
+		}
+
+		public boolean orderCompMemberPoint(ArrayList<Order> orderBuyer) {
+			PreparedStatement pstmt = null;
+			
+			
+			
+			return false;
 		}
 	
 		

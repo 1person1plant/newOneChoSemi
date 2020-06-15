@@ -95,33 +95,11 @@ public class OrderDao {
 	}
 
 	public boolean insertOrderList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
-		PreparedStatement pstmt = null;
-		int result = 0;
+		String query = "";
+		int result = -1;
 		boolean chk = true;
 		
-		for(int i = 0 ; i < orderItem.size() ; i++) {
-			System.out.println(orderItem.get(i).getItemNo());
-			System.out.println(orderBuyer.get(i).getMemberNo());
-			System.out.println(orderItem.get(i).getOrderItemName());
-			System.out.println(orderItem.get(i).getOrderItemImgName());
-			System.out.println(orderItem.get(i).getOrderItemImgPath());
-			System.out.println(orderItem.get(i).getOrderItemPrice());
-			System.out.println(orderItem.get(i).getOrderItemDiscount());
-			System.out.println(orderItem.get(i).getOrderCount());
-			System.out.println(orderItem.get(i).getOrderUsePoint());
-			System.out.println(orderBuyer.get(i).getOrderName());
-			System.out.println(orderBuyer.get(i).getOrderPhone1());
-			System.out.println(orderBuyer.get(i).getOrderPhone2());
-			System.out.println(orderBuyer.get(i).getOrderPhone3());
-			System.out.println(orderBuyer.get(i).getOrderPostcode());
-			System.out.println(orderBuyer.get(i).getOrderAddress1());
-			System.out.println(orderBuyer.get(i).getOrderAddress2());
-			System.out.println(orderBuyer.get(i).getOrderRequest());
-			System.out.println(orderBuyer.get(i).getOrderDCost());
-			System.out.println(orderBuyer.get(i).getOrderAddPoint());
-			System.out.println(orderBuyer.get(i).getOrderPaymentOption());
-		}
-		
+		//System.out.println("주문 완료 쿼리 시작한다 : " + orderItem.size());
 
 		// 첫상품 쿼리
 		String query1 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
@@ -143,23 +121,49 @@ public class OrderDao {
 					+ ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
 					+ ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
 					+ ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
-					+ "VALUES('O'||LPAD(ORDERLIST_SEQ.QURRVAL,5,'0'),?,?,SYSDATE" 
+					+ "VALUES('O'||LPAD(ORDERLIST_SEQ.CURRVAL,5,'0'),?,?,SYSDATE" 
 					+ ",?,?,?"
 					+ ",?,?,?,?,?"
 					+ ",?,?,?,?,?"
 					+ ",?,?,?,?,?" 
 					+ ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 			
-		try {
-			for(int i = 0 ; i < orderItem.size() ; i++) {
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			PreparedStatement pstmt = null;
+			try {
 				if(i == 0) {
-					pstmt = conn.prepareStatement(query1);
+					query = query1;
 				} else {
-					pstmt = conn.prepareStatement(query2);
+					query = query2;
 				}
+				pstmt = conn.prepareStatement(query);
+				
+				/*
+				 * System.out.println("주문 중 쿼리 : " + query);
+				 * System.out.println(orderItem.get(i).getItemNo());
+				 * System.out.println(orderBuyer.get(0).getMemberNo());
+				 * System.out.println(orderItem.get(i).getOrderItemName());
+				 * System.out.println(orderItem.get(i).getOrderItemImgName());
+				 * System.out.println(orderItem.get(i).getOrderItemImgPath());
+				 * System.out.println(orderItem.get(i).getOrderItemPrice());
+				 * System.out.println(orderItem.get(i).getOrderItemDiscount());
+				 * System.out.println(orderItem.get(i).getOrderCount());
+				 * System.out.println(orderItem.get(i).getOrderUsePoint());
+				 * System.out.println(orderBuyer.get(0).getOrderName());
+				 * System.out.println(orderBuyer.get(0).getOrderPhone1());
+				 * System.out.println(orderBuyer.get(0).getOrderPhone2());
+				 * System.out.println(orderBuyer.get(0).getOrderPhone3());
+				 * System.out.println(orderBuyer.get(0).getOrderPostcode());
+				 * System.out.println(orderBuyer.get(0).getOrderAddress1());
+				 * System.out.println(orderBuyer.get(0).getOrderAddress2());
+				 * System.out.println(orderBuyer.get(0).getOrderRequest());
+				 * System.out.println(orderBuyer.get(0).getOrderDCost());
+				 * System.out.println(orderBuyer.get(0).getOrderAddPoint());
+				 * System.out.println(orderBuyer.get(0).getOrderPaymentOption());
+				 */
 				
 				pstmt.setString(1, orderItem.get(i).getItemNo());
-				pstmt.setString(2, orderBuyer.get(i).getMemberNo());
+				pstmt.setString(2, orderBuyer.get(0).getMemberNo());
 				pstmt.setString(3, orderItem.get(i).getOrderItemName());
 				pstmt.setString(4, orderItem.get(i).getOrderItemImgName());
 				pstmt.setString(5, orderItem.get(i).getOrderItemImgPath());
@@ -167,23 +171,23 @@ public class OrderDao {
 				pstmt.setInt(7, orderItem.get(i).getOrderItemDiscount());
 				pstmt.setInt(8, orderItem.get(i).getOrderCount());
 				pstmt.setInt(9, orderItem.get(i).getOrderUsePoint());
-				pstmt.setString(10, orderBuyer.get(i).getOrderName());
-				pstmt.setString(11, orderBuyer.get(i).getOrderPhone1());
-				pstmt.setString(12, orderBuyer.get(i).getOrderPhone2());
-				pstmt.setString(13, orderBuyer.get(i).getOrderPhone3());
-				pstmt.setString(14, orderBuyer.get(i).getOrderPostcode());
-				pstmt.setString(15, orderBuyer.get(i).getOrderAddress1());
-				pstmt.setString(16, orderBuyer.get(i).getOrderAddress2());
-				pstmt.setString(17, orderBuyer.get(i).getOrderRequest());
+				pstmt.setString(10, orderBuyer.get(0).getOrderName());
+				pstmt.setString(11, orderBuyer.get(0).getOrderPhone1());
+				pstmt.setString(12, orderBuyer.get(0).getOrderPhone2());
+				pstmt.setString(13, orderBuyer.get(0).getOrderPhone3());
+				pstmt.setString(14, orderBuyer.get(0).getOrderPostcode());
+				pstmt.setString(15, orderBuyer.get(0).getOrderAddress1());
+				pstmt.setString(16, orderBuyer.get(0).getOrderAddress2());
+				pstmt.setString(17, orderBuyer.get(0).getOrderRequest());
 				
 				if(i == 0) {
-					pstmt.setInt(18, orderBuyer.get(i).getOrderDCost());
-					pstmt.setInt(19, orderBuyer.get(i).getOrderAddPoint());
+					pstmt.setInt(18, orderBuyer.get(0).getOrderDCost());
+					pstmt.setInt(19, orderBuyer.get(0).getOrderAddPoint());
 				} else {
 					pstmt.setInt(18, 0);
 					pstmt.setInt(19, 0);
 				}
-				pstmt.setString(20, orderBuyer.get(i).getOrderPaymentOption());
+				pstmt.setString(20, orderBuyer.get(0).getOrderPaymentOption());
 				
 				result = pstmt.executeUpdate();
 				
@@ -192,14 +196,14 @@ public class OrderDao {
 				} else {
 					chk = false;
 				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
 		}
-
+		// System.out.println("주문 완료 끝 : " + chk);
 		return chk;
 	}
 

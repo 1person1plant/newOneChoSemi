@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"  import="order.model.vo.Order, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="order.model.vo.Order, java.util.ArrayList"%>
 <%
 	ArrayList<Order> orderItem = (ArrayList<Order>)request.getAttribute("orderItem");
 	ArrayList<Order> orderBuyer = (ArrayList<Order>)request.getAttribute("orderBuyer");
+	int totalPrice = 0;
+	int totalDiscount = 0;
+	//System.out.println(cartList.size());
+	for(int i = 0 ; i < orderItem.size() ; i++){
+		totalPrice += orderItem.get(i).getOrderItemPrice() * orderItem.get(i).getOrderCount();
+		totalDiscount += orderItem.get(i).getOrderItemDiscount();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -264,36 +271,24 @@
                 <h2>상품 정보</h2>
                 <table>
                     <tbody>
+						<%for(int i = 0 ; i < orderItem.size() ; i++) {%>
                         <tr>
                             <td rowspan="3" class="orderimg">
-                                <img class="orderItem_img" src="..." alt="상품1">
+                                <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=orderItem.get(i).getOrderItemImgName() %>" alt="상품 <%=orderItem.get(i).getOrderItemImgName() %>">
                             </td>
-                            <td colspan="2" class="orderItem_title"> </td>
+                            <td colspan="2" class="orderItem_title"><%=orderItem.get(i).getOrderItemName() %></td>
                         </tr>
                         <tr>
                             <td>수량</td>
-                            <td class="orderItem_count"></td>
+                            <td class="orderItem_count"><%=orderItem.get(i).getOrderCount() %></td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="orderItem_price"></td>
+                            <td colspan="2" class="orderItem_price"><%=orderItem.get(i).getOrderItemPrice() %></td>
                         </tr>
+                        <%} %>
                     </tbody>
                 </table>
-                <!-- 상품정보 추가 (다중 상품에 대한 대책이 필요함)-->
-                <script>
-                    $(function(){
-                        // db에 받아서 출력만 하는 페이지
-                        var orderItem_img = "<%=request.getContextPath() %>/images/고무나무.jpg";
-                        var orderItem_title = "멜라닌고무나무 라탄바구니 세트";
-                        var orderItem_count = "1";
-                        var orderItem_price = "32000";
 
-                        $(".orderItem_img").attr("src", orderItem_img);
-                        $(".orderItem_title").text(orderItem_title);
-                        $(".orderItem_count").text(orderItem_count);
-                        $(".orderItem_price").text(orderItem_price);
-                    });
-                </script>
             </div>
 
             <div class="orderinfo-buyer">
@@ -303,46 +298,29 @@
                         <col width="20%">
                         <col width="80%">
                     </colgroup>
-                    <tbody>
+                    <%-- <tbody>
                         <tr>
                             <td>이름</td>
-                            <td class="buyer_name"></td>
+                            <td class="buyer_name"><%=loginUser.getMemberName() %></td>
                         </tr>
                         <tr>
                             <td>연락처</td>
-                            <td class="buyer_phone"></td>
+                            <td class="buyer_phone"><%=loginUser.getMemberPhone1() %> - <%=loginUser.getMemberPhone2() %> - <%=loginUser.getMemberPhone3() %> </td>
                         </tr>
                         <tr>
                             <td>우편번호</td>
-                            <td class="buyer_zCode"></td>
+                            <td class="buyer_zCode"><%=loginUser.getMemberPostcode() %> </td>
                         </tr>
                         <tr>
                             <td>주소</td>
-                            <td class="buyer_address"></td>
+                            <td class="buyer_address"><%=loginUser.getMemberAddress1()%> </td>
                         </tr>
                         <tr>
                             <td>상세주소</td>
-                            <td class="buyer_detailAddress"></td>
+                            <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %> </td>
                         </tr>
-                    </tbody>
+                    </tbody> --%>
                 </table>
-                <!-- 구매자 정보 추가 -->
-                <script>
-                    $(function(){
-                        // db에 받아서 출력만 하는 페이지
-                        var buyer_name = "홍길동";
-                        var buyer_phone = "010-1234-5678";
-                        var buyer_zCode = "12345";
-                        var buyer_address = "서울시 강남구 태혜란로";
-                        var buyer_detailAddress = "123-1 201호";
-
-                        $(".buyer_name").text(buyer_name);
-                        $(".buyer_phone").text(buyer_phone);
-                        $(".buyer_zCode").text(buyer_zCode);
-                        $(".buyer_address").text(buyer_address);
-                        $(".buyer_detailAddress").text(buyer_detailAddress);
-                    });
-                </script>
             </div>
             
             <div class="orderinfo-recipient">
@@ -355,49 +333,30 @@
                     <tbody>
                         <tr>
                             <td>이름</td>
-                            <td class="recipient_name"></td>
+                            <td class="recipient_name"><%=orderBuyer.get(0).getOrderName() %> </td>
                         </tr>
                         <tr>
                             <td>연락처</td>
-                            <td class="recipient_phone"></td>
+                            <td class="recipient_phone"><%=orderBuyer.get(0).getOrderPhone1() %> - <%=orderBuyer.get(0).getOrderPhone2() %> - <%=orderBuyer.get(0).getOrderPhone3() %> </td>
                         </tr>
                         <tr>
                             <td>우편번호</td>
-                            <td class="recipient_postcode"></td>
+                            <td class="recipient_postcode"><%=orderBuyer.get(0).getOrderPostcode() %></td>
                         </tr>
                         <tr>
                             <td>주소</td>
-                            <td class="recipient_address"></td>
+                            <td class="recipient_address"><%=orderBuyer.get(0).getOrderAddress1() %></td>
                         </tr>
                         <tr>
                             <td>상세주소</td>
-                            <td class="recipient_detailAddress"></td>
+                            <td class="recipient_detailAddress"><%=orderBuyer.get(0).getOrderAddress2() %></td>
                         </tr>
                         <tr>
                             <td>요청사항</td>
-                            <td class="recipient_request"></td>
+                            <td class="recipient_request"><%=orderBuyer.get(0).getOrderRequest() %></td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- 구매자 정보 추가 -->
-                <script>
-                    $(function(){
-                        // db에 받아서 출력만 하는 페이지
-                        var recipient_name = "홍길남";
-                        var recipient_phone = "010-4321-8765";
-                        var recipient_postcode = "54321";
-                        var recipient_address = "서울시 송파구 태혜란로";
-                        var recipient_detailAddress = "123-1 201호";
-                        var recipient_request = "수고가 많으세요~";
-
-                        $(".recipient_name").text(recipient_name);
-                        $(".recipient_phone").text(recipient_phone);
-                        $(".recipient_postcode").text(recipient_postcode);
-                        $(".recipient_address").text(recipient_address);
-                        $(".recipient_detailAddress").text(recipient_detailAddress);
-                        $(".recipient_request").text(recipient_request);
-                    });
-                </script>
             </div>
 
             <div class="orderpayment">
@@ -405,46 +364,28 @@
                 <table>
                     <tr>
                         <td>상품가</td>
-                        <td id="orderpayment_price"></td>
+                        <td id="orderpayment_price"><%=totalPrice %></td>
                     </tr>
                     <tr>
                         <td>배송비</td>
-                        <td id="orderpayment_delivery"></td>
+                        <td id="orderpayment_delivery"><%=orderBuyer.get(0).getOrderDCost() %></td>
                     </tr>
                     <tr>
                         <td>할인</td>
-                        <td id="orderpayment_discount"></td>
+                        <td id="orderpayment_discount"><%=totalDiscount %></td>
                     </tr>
                     <tr>
                         <td>포인트 사용</td>
-                        <td id="orderpayment_point"></td>
+                        <td id="orderpayment_point"><%=orderBuyer.get(0).getOrderUsePoint() %></td>
                     </tr>
                     <tr>
                         <th>최종 결제금액</th>
-                        <th id="orderpayment_total"></th>
+                        <th id="orderpayment_total"><%=totalPrice - totalDiscount + orderBuyer.get(0).getOrderDCost() - orderBuyer.get(0).getOrderUsePoint()%></th>
                     </tr>
                 </table>
-
-                <!-- 결제 금액 스크립트 -->
-                <script>
-                    $(function(){
-                        // db에 받아서 출력만 하는 페이지
-                        var orderpayment_price = "32000";
-                        var orderpayment_delivery = "2500";
-                        var orderpayment_discount = "3000";
-                        var orderpayment_point = "2500";
-                        var orderpayment_total = "29000";
-
-                        $("#orderpayment_price").text(orderpayment_price);
-                        $("#orderpayment_delivery").text(orderpayment_delivery);
-                        $("#orderpayment_discount").text(orderpayment_discount);
-                        $("#orderpayment_point").text(orderpayment_point);
-                        $("#orderpayment_total").text(orderpayment_total);
-                    });
-                </script><!-- 결제 금액 스크립트 끝 -->
             </div>
             <div class="orderend">
-                <a href="main.html" class="btn btn-outline-info">확인</a>
+                <a href="index.jsp" class="btn btn-outline-info">확인</a>
             </div>
         </div>
       

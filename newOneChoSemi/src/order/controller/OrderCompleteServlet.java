@@ -2,7 +2,6 @@ package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -101,7 +100,7 @@ public class OrderCompleteServlet extends HttpServlet {
 		//System.out.println("orderItem : " + orderItem);
 		
 		ArrayList<Order> orderBuyer = new ArrayList<>(); 
-		orderBuyer.add(new Order(memberNo, Integer.valueOf(orderUsePoint), orderName, orderPhone1, orderPhone2, orderPhone3, orderPostcode, orderAddress1, orderAddress2, orderRequest, orderDCost, orderAddPoint, orderPaymentOption));
+		orderBuyer.add(new Order(memberNo, orderUsePoint, orderName, orderPhone1, orderPhone2, orderPhone3, orderPostcode, orderAddress1, orderAddress2, orderRequest, orderDCost, orderAddPoint, orderPaymentOption));
 
 		//System.out.println("orderBuyer : " + orderBuyer);
 		

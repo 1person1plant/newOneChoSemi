@@ -8,7 +8,7 @@
 	int totalDiscount = 0;
 	//System.out.println(cartList.size());
 	for(int i = 0 ; i < cartList.size() ; i++){
-		totalPrice += cartList.get(i).getItemPrice();
+		totalPrice += cartList.get(i).getItemPrice() * cartList.get(i).getCartListCount();
 		totalDiscount += cartList.get(i).getItemDiscount();
 	}
 	//System.out.println(cartList);
