@@ -225,7 +225,7 @@
 					success: function(data){
 						
 						if(data != null){
-							alert("성공" + data.memberId);
+							alert("회원님의 아이디는 [" + data.memberId + "] 입니다.");
 						}else{
 							alert("내용과 일치하는 회원정보가 없습니다");
 						}
