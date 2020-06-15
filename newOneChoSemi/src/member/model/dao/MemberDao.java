@@ -67,7 +67,6 @@ public class MemberDao {
 									   rs.getString("MEMBER_RANK")
 									   );
 			}
-//			System.out.println("MemberDao : " + loginUser);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,7 +105,7 @@ public class MemberDao {
 		
 		return result;
 	}
-
+	
 	public Member idenMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -137,6 +136,7 @@ public class MemberDao {
 						   rset.getString("MEMBER_STATUS"),
 						   rset.getString("MEMBER_EXIT"),
 						   rset.getInt("MEMBER_POINT"),
+						   rset.getInt("MEMBER_TOTALPURCHASEAMOUNT"),
 						   rset.getString("MEMBER_RANK")
 						   );
 			}
@@ -181,6 +181,7 @@ public class MemberDao {
 						   rset.getString("MEMBER_STATUS"),
 						   rset.getString("MEMBER_EXIT"),
 						   rset.getInt("MEMBER_POINT"),
+						   rset.getInt("MEMBER_TOTALPURCHASEAMOUNT"),
 						   rset.getString("MEMBER_RANK")
 						   );
 			}
@@ -251,7 +252,7 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			String query = "INSERT INTO MEMBER VALUES('M' || lpad(MNO_SEQ.NEXTVAL,5,0),'N', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'N', null, 1000, 'R1')";
+			String query = "INSERT INTO MEMBER VALUES('M' || lpad(MNO_SEQ.NEXTVAL,5,0),'N', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 'N', null, 1000, 0, 'R1')";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
