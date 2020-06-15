@@ -14,29 +14,6 @@ import static common.JDBCTemplate.close;
 
 public class OrderDao {
 
-	/* 광산코드
-	 * public int orderComp(Connection conn, ArrayList<Order> orderComp) {
-	 * PreparedStatement pstmt = null; int result = 0;
-	 * 
-	 * String query = "";
-	 * 
-	 * try { for(int i = 0 ; i < orderComp.size() ; i++) { Order or =
-	 * orderComp.get(i);
-	 * 
-	 * pstmt = conn.prepareStatement(query); pstmt.setString(1, or.getItemNo());
-	 * pstmt.setString(2, or.getItemName()); pstmt.setInt(3, or.getItemPrice()); //
-	 * TODO 더 추가해야함
-	 * 
-	 * 
-	 * result += pstmt.executeUpdate(); }
-	 * 
-	 * } catch (SQLException e) { e.printStackTrace(); } finally { close(pstmt); }
-	 * 
-	 * return result; }
-	 */
-
-
-
 	public ArrayList historyList(Connection conn, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -115,6 +92,76 @@ public class OrderDao {
 		}
 		
 		return oh;
+	}
+
+	public boolean insertOrderList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		boolean chk = true;
+
+		// 첫상품 쿼리
+		String query1 = "INSERT INTO ODERDERLIST "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE"
+					  + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+					  + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		// 두번째 이후 쿼리
+		String query2 = "INSERT INTO ODERDERLIST "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.QURRVAL,5,'0'),?,?,SYSDATE"
+				      + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null,null,?"
+				      + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			
+			try {
+				if(i == 0) {
+					pstmt = conn.prepareStatement(query1);
+				} else {
+					pstmt = conn.prepareStatement(query2);
+				}
+				
+				pstmt.setString(1, orderItem.get(i).getItemNo());
+				pstmt.setString(2, orderBuyer.get(i).getMemberNo());
+				pstmt.setString(3, orderItem.get(i).getOrderItemName());
+				pstmt.setString(4, orderItem.get(i).getOrderItemImgName());
+				pstmt.setString(5, orderItem.get(i).getOrderItemImgPath());
+				pstmt.setInt(6, orderItem.get(i).getOrderItemPrice());
+				pstmt.setInt(7, orderItem.get(i).getOrderItemDiscount());
+				pstmt.setInt(8, orderItem.get(i).getOrderCount());
+				pstmt.setInt(9, orderItem.get(i).getOrderUsePoint());
+				pstmt.setString(10, orderBuyer.get(i).getOrderName());
+				pstmt.setString(11, orderBuyer.get(i).getOrderPhone1());
+				pstmt.setString(12, orderBuyer.get(i).getOrderPhone2());
+				pstmt.setString(13, orderBuyer.get(i).getOrderPhone3());
+				pstmt.setString(14, orderBuyer.get(i).getOrderPostcode());
+				pstmt.setString(15, orderBuyer.get(i).getOrderAddress1());
+				pstmt.setString(16, orderBuyer.get(i).getOrderAddress2());
+				pstmt.setString(17, orderBuyer.get(i).getOrderRequest());
+				
+				if(i == 0) {
+					pstmt.setInt(18, orderBuyer.get(i).getOrderDCost());
+					pstmt.setInt(19, orderBuyer.get(i).getOrderAddPoint());
+				} else {
+					pstmt.setInt(18, 0);
+					pstmt.setInt(19, 0);
+
+				}
+				
+				
+				result = pstmt.executeUpdate();
+				if(result > 0 && chk == true) {
+					chk = true;
+				} else {
+					chk = false;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		
+		return chk;
 	}
 
 }

@@ -42,7 +42,7 @@ public class OrderServlet extends HttpServlet {
 		// 카트 상품 수량
 		String[] cartItCoArr = request.getParameterValues("cartItCo");
 
-		// cart.jps cart 폼태그 값 확인용
+		// cart.jsp cart 폼태그 값 확인용
 //		System.out.println(Arrays.toString(cartNoArr));
 //		System.out.println(Arrays.toString(cartItCoArr));
 	

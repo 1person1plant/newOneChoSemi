@@ -2,6 +2,7 @@ package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,35 +31,64 @@ public class OrderCompleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userNo = request.getParameter("comp_userNo");
+		String[] itemNo = request.getParameterValues("comp_iNo");
+		String[] orderItemName = request.getParameterValues("comp_iName");
+		String[] orderItemImgName = request.getParameterValues("comp_imgName");
+		String[] orderItemImgPath = request.getParameterValues("comp_imgPath");
+		String[] orderItemPrice = request.getParameterValues("comp_iPrice");
+		String[] orderItemDiscount = request.getParameterValues("comp_iDiscount");
+		String[] orderCount = request.getParameterValues("comp_iCount");
+		
+		// order.jsp 상품 정보
+		System.out.println(Arrays.toString(itemNo));
+		System.out.println(Arrays.toString(orderItemName));
+		System.out.println(Arrays.toString(orderItemImgName));
+		System.out.println(Arrays.toString(orderItemImgPath));
+		System.out.println(Arrays.toString(orderItemPrice));
+		System.out.println(Arrays.toString(orderItemDiscount));
+		System.out.println(Arrays.toString(orderCount));
+		
+		String memberNo = request.getParameter("comp_userNo");
+		String orderUsePoint = request.getParameter("comp_paymentPoint");
+		String orderName = request.getParameter("comp_rName");
+		String orderPhone1 = request.getParameter("comp_rPhone1");
+		String orderPhone2 = request.getParameter("comp_rPhone2");
+		String orderPhone3 = request.getParameter("comp_rPhone3");
+		String orderPostcode = request.getParameter("comp_rPostcode");
+		String orderAddress1 = request.getParameter("comp_rAddress1");
+		String orderAddress2 = request.getParameter("comp_rAddress2");
+		String orderRequest = request.getParameter("comp_rMemo");
+		String orderDCost = request.getParameter("comp_paymentDelivery");
+		String orderAddPoint = request.getParameter("comp_paymentAddPoint");
+		String orderPaymentOption = request.getParameter("comp_paymentOption");
 
-		String[] comp_iNo = request.getParameterValues("comp_iNo");
-		String[] comp_iName = request.getParameterValues("comp_iName");
-		String[] comp_imgName = request.getParameterValues("comp_imgName");
-		String[] comp_imgPath = request.getParameterValues("comp_imgPath");
-		String[] comp_iCount = request.getParameterValues("comp_iCount");
-		String[] comp_iPrice = request.getParameterValues("comp_iPrice");
-		String[] comp_iDiscount = request.getParameterValues("comp_iDiscount");
+		// 구매자 정보
+		System.out.println("memberNo : " + memberNo);
+		System.out.println("orderUsePoint : " + orderUsePoint);
+		System.out.println("orderName : " + orderName);
+		System.out.println("orderPhone1 : " + orderPhone1);
+		System.out.println("orderPhone2 : " + orderPhone2);
+		System.out.println("orderPhone3 : " + orderPhone3);
+		System.out.println("orderPostcode : " + orderPostcode);
+		System.out.println("orderAddress1 : " + orderAddress1);
+		System.out.println("orderAddress2 : " + orderAddress2);
+		System.out.println("orderRequest : " + orderRequest);
+		System.out.println("orderDCost : " + orderDCost);
+		System.out.println("orderAddPoint : " + orderAddPoint);
+		System.out.println("orderPaymentOption : " + orderPaymentOption);
 		
-		String comp_rName = request.getParameter("comp_rName");
-		String comp_rPhone1 = request.getParameter("comp_rPhone1");
-		String comp_rPhone2 = request.getParameter("comp_rPhone2");
-		String comp_rPhone3 = request.getParameter("comp_rPhone3");
-		String comp_rPostcode = request.getParameter("comp_rPostcode");
-		String comp_rAddress1 = request.getParameter("comp_rAddress1");
-		String comp_rAddress2 = request.getParameter("comp_rAddress2");
-		String comp_rMemo = request.getParameter("comp_rMemo");
+		ArrayList<Order> orderItem = new ArrayList<>();
+		for(int i = 0 ; i < itemNo.length ; i++) {
+			orderItem.add(new Order(itemNo[i], orderItemName[i], orderItemImgName[i], orderItemImgPath[i], Integer.valueOf(orderItemPrice[i]), Integer.valueOf(orderItemDiscount[i]), Integer.valueOf(orderCount[i])));
+		}
+		System.out.println("orderTemp : " + orderItem);
 		
-		String comp_paymentPrice = request.getParameter("comp_paymentPrice");
-		String comp_paymentDelivery = request.getParameter("comp_paymentDelivery");
-		String comp_paymentDiscount = request.getParameter("comp_paymentDiscount");
-		String comp_paymentPoint = request.getParameter("comp_paymentPoint");
-		String comp_paymentUserPoint = request.getParameter("comp_paymentUserPoint");
-		String comp_paymentAddPoint = request.getParameter("comp_paymentAddPoint");
-		String comp_paymentTotal = request.getParameter("comp_paymentTotal");
-		String comp_paymentOption = request.getParameter("comp_paymentOption");
+		ArrayList<Order> orderBuyer = new ArrayList<>(); 
+		orderBuyer.add(new Order(memberNo, Integer.valueOf(orderUsePoint), orderName, orderPhone1, orderPhone2, orderPhone3, orderPostcode, orderAddress1, orderAddress2, orderRequest, Integer.valueOf(orderDCost), Integer.valueOf(orderAddPoint), orderPaymentOption));
+
+		System.out.println("orderBuyer : " + orderBuyer);
 		
-		
+		ArrayList<Order> orderComplete = new OrderService().insertOrderList(orderItem, orderBuyer);
 		
 		
 		

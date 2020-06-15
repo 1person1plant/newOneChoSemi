@@ -15,8 +15,8 @@ public class Order implements Serializable {
 	private String orderItemName; 		// 구매 시 상품 이름
 	private String orderItemImgName; 	// 구매 시 상품 사진 이름
 	private String orderItemImgPath; 	// 구매 시 상품 사진 경로
-	private String orderItemPrice; 		// 구매 시 상품 가격
-	private String orderItemDiscount; 	// 구매 시 상품 할인 값
+	private int orderItemPrice; 		// 구매 시 상품 가격
+	private int orderItemDiscount;		// 구매 시 상품 할인 값
 	private int	orderCount; 			// 주문 수량
 	private int	orderUsePoint; 			// 사용 포인트
 	private String orderName; 			// 수령자 이름
@@ -28,7 +28,7 @@ public class Order implements Serializable {
 	private String orderAddress2;		// 수령자 상세 주소
 	private String orderRequest;		// 수령자 요청사항
 	private int orderDCost;				// 배송비
-	private String orderAddPoint;		// 추가 포인트
+	private int orderAddPoint;		// 추가 포인트
 	private String orderPaymentOption;	// 지불 방법
 	private String orderReview;			// 기본: N 작성 후 : Y
 	private String orderCancelrequest;	// 기본: N 취소 : Y
@@ -40,7 +40,7 @@ public class Order implements Serializable {
 	}
 	// 주문 상품 정보 DB젼달 용 
 	public Order(String itemNo, String orderItemName, String orderItemImgName, String orderItemImgPath,
-			String orderItemPrice, String orderItemDiscount, int orderCount) {
+			int orderItemPrice, int orderItemDiscount, int orderCount) {
 		super();
 		this.itemNo = itemNo;
 		this.orderItemName = orderItemName;
@@ -53,7 +53,7 @@ public class Order implements Serializable {
 	// 주문 고객 정보
 	public Order(String memberNo, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
 			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
-			int orderDCost, String orderAddPoint, String orderPaymentOption) {
+			int orderDCost, int orderAddPoint, String orderPaymentOption) {
 		super();
 		this.memberNo = memberNo;
 		this.orderUsePoint = orderUsePoint;
@@ -95,10 +95,10 @@ public class Order implements Serializable {
 		this.paymentCode = paymentCode;
 	}
 	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, String orderItemName,
-			String orderItemImgName, String orderItemImgPath, String orderItemPrice, String orderItemDiscount,
+			String orderItemImgName, String orderItemImgPath, int orderItemPrice, int orderItemDiscount,
 			int orderCount, int orderUsePoint, String orderName, String orderPhone1, String orderPhone2,
 			String orderPhone3, String orderPostcode, String orderAddress1, String orderAddress2, String orderRequest,
-			int orderDCost, String orderAddPoint, String orderPaymentOption, String orderReview,
+			int orderDCost, int orderAddPoint, String orderPaymentOption, String orderReview,
 			String orderCancelrequest, String orderCancelyn, String deliveryCode, String paymentCode) {
 		super();
 		this.orderNo = orderNo;
@@ -171,16 +171,16 @@ public class Order implements Serializable {
 	public void setOrderItemImgPath(String orderItemImgPath) {
 		this.orderItemImgPath = orderItemImgPath;
 	}
-	public String getOrderItemPrice() {
+	public int getOrderItemPrice() {
 		return orderItemPrice;
 	}
-	public void setOrderItemPrice(String orderItemPrice) {
+	public void setOrderItemPrice(int orderItemPrice) {
 		this.orderItemPrice = orderItemPrice;
 	}
-	public String getOrderItemDiscount() {
+	public int getOrderItemDiscount() {
 		return orderItemDiscount;
 	}
-	public void setOrderItemDiscount(String orderItemDiscount) {
+	public void setOrderItemDiscount(int orderItemDiscount) {
 		this.orderItemDiscount = orderItemDiscount;
 	}
 	public int getOrderCount() {
@@ -249,10 +249,10 @@ public class Order implements Serializable {
 	public void setOrderDCost(int orderDCost) {
 		this.orderDCost = orderDCost;
 	}
-	public String getOrderAddPoint() {
+	public int getOrderAddPoint() {
 		return orderAddPoint;
 	}
-	public void setOrderAddPoint(String orderAddPoint) {
+	public void setOrderAddPoint(int orderAddPoint) {
 		this.orderAddPoint = orderAddPoint;
 	}
 	public String getOrderPaymentOption() {

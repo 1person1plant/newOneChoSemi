@@ -12,16 +12,6 @@ import order.model.vo.OrderHis;
 
 public class OrderService {
 
-	/*광산코드
-	 * public int orderComp(ArrayList<Order> orderComp) { Connection conn = null;
-	 * conn = getConnection();
-	 * 
-	 * int result = new OrderDao().orderComp(conn, orderComp);
-	 * 
-	 * close(conn); return result; }
-	 */
-
-
 	public ArrayList<Order> historyList(int currentPage, int limit) {
 		Connection conn = getConnection();
 		ArrayList list = new OrderDao().historyList(conn, currentPage, limit);
@@ -34,6 +24,15 @@ public class OrderService {
 		ArrayList<OrderHis> oh = new OrderDao().historyOrder(conn,memberNo);
 //		System.out.println("OrderHis service"+oh);
 		return oh;
+	}
+
+	public ArrayList<Order> insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		Connection conn = getConnection();
+		
+		boolean result = new OrderDao().insertOrderList(conn, orderItem, orderBuyer);
+				
+				
+		return null;
 	}
 
 }
