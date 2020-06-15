@@ -35,17 +35,17 @@ public class OrderService {
 
 	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
 		Connection conn = getConnection();
-		boolean result2 = true;
-		boolean result3 = true;
+		int result2 = -1;
+		int result3 = -1;
 		boolean chk = false;
 		
 		boolean result = new OrderDao().insertOrderList(conn, orderItem, orderBuyer);
 		
 		if(result) {
 			result2 = new CartService().orderCompDeleteCartList(orderItem, orderBuyer);
-			if(result2) {
+			if(result2 > 0) {
 				result3 = new MemberService().orderCompMemberPoint(orderBuyer);
-				if(result3) {
+				if(result3 > 0) {
 					chk = true;
 					commit(conn);
 				} else {

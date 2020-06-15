@@ -102,12 +102,12 @@ public class CartService {
 		return result;
 	}
 
-	public boolean orderCompDeleteCartList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+	public int orderCompDeleteCartList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
 		Connection conn = getConnection();
 		
-		boolean result = new CartDao().orderCompDeleteCartList(conn, orderItem, orderBuyer);
+		int result = new CartDao().orderCompDeleteCartList(conn, orderItem, orderBuyer);
 		
-		if(result) {
+		if(result > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);

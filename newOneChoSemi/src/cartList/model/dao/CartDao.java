@@ -323,10 +323,9 @@ public class CartDao {
 		return result;
 	}
 
-	public boolean orderCompDeleteCartList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+	public int orderCompDeleteCartList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		boolean chk = true;
 	      
 		String query = "DELETE FROM CARTLIST WHERE MEMBER_NO = ?";
 
@@ -354,20 +353,15 @@ public class CartDao {
 			result = pstmt.executeUpdate();
 			
 			System.out.println("카트 삭제 성공? " + result);
-			
-			if(result > 0) {
-				chk = true;
-			} else {
-				chk = false;
-			}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(pstmt);
 			}
-		System.out.println("주문 완료 후 카트리스트 삭제 : " + chk);
-		return chk;
+		System.out.println("주문 완료 후 카트리스트 삭제 : " + result);
+		
+		return result;
 	}
 
 }

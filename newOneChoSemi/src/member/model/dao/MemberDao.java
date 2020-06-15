@@ -395,12 +395,28 @@ public class MemberDao {
 			return grade;
 		}
 
-		public boolean orderCompMemberPoint(ArrayList<Order> orderBuyer) {
+		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer) {
 			PreparedStatement pstmt = null;
+			int result = 0;
 			
+			String query = "UPDATE MEMBER SET MEMBER_Point = (SELECT MEMBER_Point FROM MEMBER WHERE MEMBER_no = ?) + ? - ? WHERE MEMBER_no = ?";
 			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, orderBuyer.get(0).getMemberNo());
+				pstmt.setInt(2, orderBuyer.get(0).getOrderAddPoint());
+				pstmt.setInt(2, orderBuyer.get(0).getOrderUsePoint());
+				pstmt.setString(3, orderBuyer.get(0).getMemberNo());
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
 			
-			return false;
+//			System.out.println("탈퇴dao"+result);
+			return result;
 		}
 	
 		

@@ -174,9 +174,9 @@ public class MemberService {
 		return grade;
 	}
 
-	public boolean orderCompMemberPoint(ArrayList<Order> orderBuyer) {
+	public int orderCompMemberPoint(ArrayList<Order> orderBuyer) {
 		Connection conn = getConnection();
-		boolean result = new MemberDao().orderCompMemberPoint(orderBuyer);
+		int result = new MemberDao().orderCompMemberPoint(conn, orderBuyer);
 		
 		close(conn);
 		return result;
