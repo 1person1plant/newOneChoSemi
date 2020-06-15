@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"  import="order.model.vo.Order, java.util.ArrayList"%>
+<%
+	ArrayList<Order> orderItem = (ArrayList<Order>)request.getAttribute("orderItem");
+	ArrayList<Order> orderBuyer = (ArrayList<Order>)request.getAttribute("orderBuyer");
+%>
 <!DOCTYPE html>
 <html>
 <head>
