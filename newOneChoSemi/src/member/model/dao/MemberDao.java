@@ -405,8 +405,8 @@ public class MemberDao {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, orderBuyer.get(0).getMemberNo());
 				pstmt.setInt(2, orderBuyer.get(0).getOrderAddPoint());
-				pstmt.setInt(2, orderBuyer.get(0).getOrderUsePoint());
-				pstmt.setString(3, orderBuyer.get(0).getMemberNo());
+				pstmt.setInt(3, orderBuyer.get(0).getOrderUsePoint());
+				pstmt.setString(4, orderBuyer.get(0).getMemberNo());
 				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {

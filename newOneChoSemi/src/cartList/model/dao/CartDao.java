@@ -337,7 +337,8 @@ public class CartDao {
 			}
 		}
 		query += ")";
-		System.out.println(query);
+		
+		//System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, orderBuyer.get(0).getMemberNo());
@@ -352,14 +353,14 @@ public class CartDao {
 				
 			result = pstmt.executeUpdate();
 			
-			System.out.println("카트 삭제 성공? " + result);
+			//System.out.println("카트 삭제 성공? " + result);
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(pstmt);
 			}
-		System.out.println("주문 완료 후 카트리스트 삭제 : " + result);
+		//System.out.println("주문 완료 후 카트리스트 삭제 : " + result);
 		
 		return result;
 	}

@@ -781,6 +781,7 @@
 	    var orderpayment_discount = totalDiscount;
 	    // 구매자 보유 포인트
 	    var user_point = Number(<%=loginUser.getMemberPoint()%>);
+	    <%System.out.println("유저 보유 포인트 " + loginUser.getMemberPoint());%>
 	    // 유저 포인트 사용 최대치
 	    var user_pointSpendCap = Number(<%=rankDetail.getRankPonintCap()%>);
 	    // 사용 가능 포인트 최대치 계산
@@ -1024,7 +1025,6 @@
 		}
 		
 		$("#order_confirm").click(function(){
-			// TODO 최종 결제 완료 페이지 이동 
 			var rName = $("#recipient_phone2").val();
 			
 			if($("#recipient_name").val() == "" || $("#recipient_name").val() == null || $("#recipient_name").val() == "undefined") {
@@ -1063,9 +1063,6 @@
 				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
 				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
 				$(".comp_paymentPoint").val("0");
-				
-				/* console.log("사용 포인트 " + $("#orderpayment_point").val() != "");
-				console.log("사용 포인트 " + $("#orderpayment_point").val() != null); */
 				
 				if($("#orderpayment_point").val() != "" || $("#orderpayment_point").val() != null){
 					$(".comp_paymentPoint").val(0 + Number($("#orderpayment_point").val()));
