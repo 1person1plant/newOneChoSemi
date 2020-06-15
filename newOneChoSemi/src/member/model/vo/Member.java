@@ -35,14 +35,13 @@ public class Member implements Serializable{
 	public Member(String memberId) {
 		this.memberId = memberId;
 	}
-	
+
 	public Member(String memberId, String memberPwd) {
 		this.memberId = memberId;
 		this.memberPwd = memberPwd;
 	}
-	
+
 	public Member(String memberId, String memberName, String memberExit) {
-		super();
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberExit = memberExit;

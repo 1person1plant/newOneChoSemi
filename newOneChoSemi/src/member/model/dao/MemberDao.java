@@ -240,7 +240,63 @@ public class MemberDao {
 		 * @return
 		 */
 		public Member kakaoLoginMember(Connection conn, Member member) {
-			return null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Member kakaoUser = null;
+
+			String query = "SELECT MEMBER_NO" + 
+								", MEMBER_ADMIN" +
+								", MEMBER_ID" + 
+								", MEMBER_PWD" + 
+								", MEMBER_NAME" + 
+								", MEMBER_PHONE1" + 
+								", MEMBER_PHONE2" + 
+								", MEMBER_PHONE3" + 
+								", MEMBER_EMAIL1" + 
+								", MEMBER_EMAIL2" + 
+								", MEMBER_POSTCODE" + 
+								", MEMBER_ADDRESS1" + 
+								", MEMBER_ADDRESS2" + 
+								", MEMBER_STATUS" + 
+								", MEMBER_POINT" + 
+								", MEMBER_RANK" + 
+							" FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_NAME=? AND MEMBER_STATUS = 'K'";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberId());
+				pstmt.setString(2, member.getMemberName());
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					kakaoUser = new Member(rs.getString("MEMBER_NO"),
+										   rs.getString("MEMBER_ADMIN"),
+										   rs.getString("MEMBER_ID"),
+										   rs.getString("MEMBER_PWD"),
+										   rs.getString("MEMBER_NAME"),
+										   rs.getString("MEMBER_PHONE1"),
+										   rs.getString("MEMBER_PHONE2"),
+										   rs.getString("MEMBER_PHONE3"),
+										   rs.getString("MEMBER_EMAIL1"),
+										   rs.getString("MEMBER_EMAIL2"),
+										   rs.getString("MEMBER_POSTCODE"),
+										   rs.getString("MEMBER_ADDRESS1"),
+										   rs.getString("MEMBER_ADDRESS2"),
+										   rs.getString("MEMBER_STATUS"),
+										   rs.getInt("MEMBER_POINT"),
+										   rs.getString("MEMBER_RANK")
+										   );
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return kakaoUser;
 		}
 		
 		/**
@@ -284,7 +340,24 @@ public class MemberDao {
 		 * @return
 		 */
 		public int kakaoinsertMember(Connection conn, Member member) {
-			return 0;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "INSERT INTO MEMBER VALUES('M' || lpad(MNO_SEQ.NEXTVAL,5,0), 'N', ?, null, ?, null, null, null, null, null, null, null, null, SYSDATE, 'K', null, 1000, 0, 'R1')";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberId());
+				pstmt.setString(2, member.getMemberName());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
 		}
 		
 		/**
@@ -342,21 +415,11 @@ public class MemberDao {
 				pstmt.setString(4, member.getMemberEmail1());
 				pstmt.setString(5, member.getMemberEmail2());
 				
-				System.out.println(member.getMemberPhone1());
-				System.out.println(member.getMemberPhone2());
-				System.out.println(member.getMemberPhone3());
-				System.out.println(member.getMemberEmail1());
-				System.out.println(member.getMemberEmail2());
-				
-				
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					searchId_A = new Member(
-										   rs.getString("MEMBER_ID")
-										   );
-				}
-//				System.out.println("MemberDao : " + searchId_A);		
+					searchId_A = new Member( rs.getString("MEMBER_ID"));
+				}	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -375,7 +438,9 @@ public class MemberDao {
 		public Member searchPwdMember(Connection conn, Member member) {
 			return null;
 		}
-
+		
+//		------------------------------------------------ 아라
+		
 		public Grade memberGrade(Connection conn, String memberNo) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;

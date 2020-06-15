@@ -68,16 +68,6 @@ public class MemberService {
 		return result;
 	}
 
-	// ------------------------------------ 아라
-	/**
-	 * 카카오 로그인 기능
-	 * @param member
-	 * @return
-	 */
-	public Member kakaoLoginMember(Member member) {
-		return null;
-	}
-
 	public int reasonMember(Member memberReason) {
 		Connection conn = getConnection();
 		
@@ -92,6 +82,21 @@ public class MemberService {
 		return result;
 	}
 	
+	// ------------------------------------ 아라
+	/**
+	 * 카카오 로그인 기능
+	 * @param member
+	 * @return
+	 */
+	public Member kakaoLoginMember(Member member) {
+		Connection conn = getConnection();
+		
+		Member kakaoUser = new MemberDao().kakaoLoginMember(conn, member);
+		
+		close(conn);
+		return kakaoUser;
+	}
+
 	/**
 	 * 회원가입
 	 * @param member 회원가입을 한 회원 정보
@@ -114,11 +119,24 @@ public class MemberService {
 	
 	/**
 	 * 카카오 회원가입 
+	 * @param memberName 
+	 * @param userId 
 	 * @param member
 	 * @return
 	 */
 	public int kakaoinsertMember(Member member) {
-		return 0;
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().kakaoinsertMember(conn,member);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 	/**
@@ -164,6 +182,8 @@ public class MemberService {
 		return null;
 	}
 
+//	------------------------------------------------ 아라
+	
 	public Grade memberGrade(String memberNo) {
 		Connection conn = getConnection();
 		Grade grade = new MemberDao().memberGrade(conn,memberNo);

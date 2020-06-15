@@ -59,7 +59,7 @@ public class SearchIdServlet extends HttpServlet {
 			
 			searchId_A.setMemberId(jarm);
 		}
-		
+		// 화면단으로 값 보내기
 		String result = new Gson().toJson(searchId_A);
 		response.getWriter().write(result);
 	}
