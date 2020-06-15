@@ -423,6 +423,7 @@ public class MemberDao {
 			return result;
 		}
 
+		// TODO 해야하는데...
 		public void memberRankUpdate(Connection conn) {
 			PreparedStatement pstmt = null;
 			int result = 0;
