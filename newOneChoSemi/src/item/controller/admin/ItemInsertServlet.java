@@ -102,8 +102,7 @@ public class ItemInsertServlet extends HttpServlet {
 		if(result1>0&&result2>0&&result3>0) {
 			System.out.println("상품 조회 페이지로 이동!");
 			response.sendRedirect("list.it");
-		}else {
-			
+		}else {			
 			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
 			request.setAttribute("msg", "상품 등록 실패");
 			views.forward(request, response);

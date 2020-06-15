@@ -82,7 +82,7 @@ dd {margin:0;}
 /* review modal start */
 #modal-header {padding:0.5rem;}
 .modal-close {padding:0;}
-.modal-body {padding-top:0;}
+.modal-body {padding-top:0; padding-bottom:0;}
 #title-modal-container {padding:0.8rem; background-color:#5b89a6; color:white;}
 .iteminfo-modal-img {width:12rem; height:8rem;}
 .iteminfo-modal-image {width:100%; height:100%;}
@@ -95,8 +95,6 @@ dd {margin:0;}
 /* review modal end */
 
 /* photo review start */
-.photoDrop {padding:0; border-color:gray; height:10rem;}
-.upload-drop-zone {text-align:center;}
 /* photo review end */
 
 /* star rating start */
@@ -313,11 +311,8 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row myReview-writing" id="myReview-writing">
 				<div id="myReview-writing-wrap">
 					<p class="h2" style="color: #2d2d2d; font-weight: bold;">REVIEW</p>
-					<p style="font-size: 1rem; color: black;">
-						식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!
-					</p>
-					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기"
-						id="goReview-btn" data-toggle="modal" href="#reviewModal">
+					<p style="font-size: 1rem; color: black;">식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!	</p>
+					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기" id="goReview-btn" data-toggle="modal" href="#reviewModal">
 				</div>
 			</div>
 			<div class="row myReview-content">
@@ -375,6 +370,7 @@ td:nth-of-type(2) {width:45rem;}
 
 
 		<!--리뷰쓰기 모달-->
+		<form action="<%=request.getContextPath()%>/create.rv" method="post" id="createReview" encType="multipart/form-data">
 		<div class="modal fade" id="reviewModal">
 			<div
 				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -390,15 +386,14 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="row iteminfo-modal">
 							<div class="col col-4 iteminfo-modal-img">
-								<img class="iteminfo-modal-image"
-									src="<%=request.getContextPath()%>/images/고무나무.jpg">
+								<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
 							</div>
 							<div class="col col-8 iteminfo-modal-text">
-								<div class="row iteminfo-modal-title">
-									<p class="h6 my-auto" style="color: gray;">[스파티필럼]</p>
+								<div class="row iteminfo-modal-title" style="margin-bottom:0.3rem;">
+									<p class="h6 my-auto" style="color: gray; font-size:1rem;">[<%=item.getItemName()%>]</p>
 								</div>
-								<div class="row iteminfo-modal-content">
-									<p>공기정화에 탁월한 산소뿜뿜 반려식물</p>
+								<div class="row iteminfo-modal-content" style="padding-right:1rem;">
+									<p style="font-size:0.8rem;"><%=item.getItemInfo()%></p>
 								</div>
 							</div>
 						</div>
@@ -413,7 +408,7 @@ td:nth-of-type(2) {width:45rem;}
 								<span class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
 								<span class="fa fa-star-o" data-rating="4" style="font-size: 3rem"></span>
 								<span class="fa fa-star-o" data-rating="5" style="font-size: 3rem"></span>
-								<input type="hidden" name="starScore" class="rating-value" value="3">
+								<input type="hidden" name="score" id="starScore" class="rating-value" value="3">
 							</div>
 						</div>
 						<hr>
@@ -423,7 +418,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="container textarea-modal-container">
 								<div class="row textarea-row">
-									<textarea class="form-control review-textarea" id="review-textarea" rows="5" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
+									<textarea class="form-control review-textarea" name="content" rows="5" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
 								</div>
 								<div class="row float-right textarea-count-row">
 									<span id="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
@@ -432,58 +427,27 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<hr>
 						<div class="row attachPhoto-modal">
+							<button type="button" class="btn-secondary btn-block" id="attachPhoto-btn" style="height:2.5rem; font-weight:lighter; border:none;"><i class="fa fa-camera"></i>&nbsp;사진 첨부하기</button>
+							<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border:none;">
+								<img id="photo-preview" style="width:100%; height:100%;">	
+							</div>
+							<input type="file" id="review-btn" name="reviewPhoto" style="display:none;" onchange="loadImg(this)">					
 						</div>
 					</div>
 					<div class="modal-footer justify-content-center">
-						<button type="button" class="btn btn-light">취소하기</button>
-						<button type="button" class="btn btn-secondary">등록하기</button>
+						<button type="reset" class="btn btn-light">취소하기</button>
+						<button type="submit" id="review-register" class="btn btn-secondary">등록하기</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
+		
 
-
-
-
-
-		<!--별 평점 주기(script)-->
-		<script>
-            var starRating=$(".starRating .fa");
-
-            var SetRatingStar = function () {
-                return starRating.each(function () {
-                    if (parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-                        return $(this).removeClass('fa-star-o').addClass('fa-star');
-                    } else {
-                        return $(this).removeClass('fa-star').addClass('fa-star-o');
-                    }
-                });
-            };
-            
-            starRating.on('click', function () {
-            	starRating.siblings('input.rating-value').val($(this).data('rating'));
-            	
-            	return SetRatingStar();
-            });
-            
-            SetRatingStar();
-        </script>
-
-
-
-
-
+		
 		<!--리뷰 글자 수 세기(script)-->
-		<script>
-            $(function(){
-                $("#review-textarea").keydown(function(){
-                    var inputLength=$(this).val().length;
-                    $("#counter").text(inputLength);
-                })
-            })
-            
-            $(function(){
-            	
+		<script>          
+            $(function(){            	
             	$("#review-textarea").keyup(function(){
             		var inputLength=$(this).val().length;
             		
@@ -498,12 +462,72 @@ td:nth-of-type(2) {width:45rem;}
             		}
             	})
             })
+            
+            $(function(){
+                $("#review-textarea").keydown(function(){
+                    var inputLength=$(this).val().length;
+                    $("#counter").text(inputLength);
+                })
+            })
+            
+        </script>
+        
+        
+        
+        <!--별 평점 주기(script)-->
+		<script>
+            var starRating=$(".starRating .fa");
+
+            var SetRatingStar = function(){
+                return starRating.each(function(){
+                    if (parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                        return $(this).removeClass('fa-star-o').addClass('fa-star');
+                    } else {
+                        return $(this).removeClass('fa-star').addClass('fa-star-o');
+                    }
+                });
+            };
+            
+            starRating.on('click', function(){
+            	starRating.siblings('input.rating-value').val($(this).data('rating'));
+            	
+            	return SetRatingStar();
+            });
+            
+            SetRatingStar();
         </script>
 
 
 
-
-
+		<!--버튼을 누르면 숨겨진 input이 눌리게-->
+		<script>
+			$(function(){
+				$("#attachPhoto-btn").click(function(){
+					$("#review-btn").click();
+				})
+			})
+		</script>
+		
+		
+		
+		<!--사진 미리보기-->
+		<script>
+			function loadImg(value) {
+				if(value.files && value.files[0]) {
+					var reader = new FileReader();
+					
+					reader.onload = function(e) {
+						$("#photo-preview").attr("src", e.target.result)
+					}
+				}
+				reader.readAsDataURL(value.files[0]);
+			}
+		</script>
+		
+		
+		
+		
+		
 		<!--다른 사람 리뷰-->
 		<div class="container review-container">
 			<div class="row review-title">
@@ -513,7 +537,7 @@ td:nth-of-type(2) {width:45rem;}
 				<table class="table table-hover review-table">
 					<tbody>
 						<tr>
-							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
+							<td><img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
 									<i class="fa fa-star"></i> 
