@@ -98,9 +98,33 @@ public class OrderDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		boolean chk = true;
+		
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			System.out.println(orderItem.get(i).getItemNo());
+			System.out.println(orderBuyer.get(i).getMemberNo());
+			System.out.println(orderItem.get(i).getOrderItemName());
+			System.out.println(orderItem.get(i).getOrderItemImgName());
+			System.out.println(orderItem.get(i).getOrderItemImgPath());
+			System.out.println(orderItem.get(i).getOrderItemPrice());
+			System.out.println(orderItem.get(i).getOrderItemDiscount());
+			System.out.println(orderItem.get(i).getOrderCount());
+			System.out.println(orderItem.get(i).getOrderUsePoint());
+			System.out.println(orderBuyer.get(i).getOrderName());
+			System.out.println(orderBuyer.get(i).getOrderPhone1());
+			System.out.println(orderBuyer.get(i).getOrderPhone2());
+			System.out.println(orderBuyer.get(i).getOrderPhone3());
+			System.out.println(orderBuyer.get(i).getOrderPostcode());
+			System.out.println(orderBuyer.get(i).getOrderAddress1());
+			System.out.println(orderBuyer.get(i).getOrderAddress2());
+			System.out.println(orderBuyer.get(i).getOrderRequest());
+			System.out.println(orderBuyer.get(i).getOrderDCost());
+			System.out.println(orderBuyer.get(i).getOrderAddPoint());
+			System.out.println(orderBuyer.get(i).getOrderPaymentOption());
+		}
+		
 
 		// 첫상품 쿼리
-		String query1 = "INSERT INTO ONECHO.ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
+		String query1 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
 					+ ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
 					+ ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
 					+ ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
@@ -113,7 +137,7 @@ public class OrderDao {
 					+ ",?,?,?,?,?" 
 					+ ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		// 두번째 이후 쿼리
-		String query2 = "INSERT INTO ONECHO.ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
+		String query2 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
 					+ ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
 					+ ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
 					+ ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"

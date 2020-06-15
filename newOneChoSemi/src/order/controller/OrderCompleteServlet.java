@@ -90,7 +90,7 @@ public class OrderCompleteServlet extends HttpServlet {
 		for(int i = 0 ; i < itemNo.length ; i++) {
 			orderItem.add(new Order(itemNo[i], orderItemName[i], orderItemImgName[i], orderItemImgPath[i], Integer.valueOf(orderItemPrice[i]), Integer.valueOf(orderItemDiscount[i]), Integer.valueOf(orderCount[i])));
 		}
-		System.out.println("orderTemp : " + orderItem);
+		System.out.println("orderItem : " + orderItem);
 		
 		ArrayList<Order> orderBuyer = new ArrayList<>(); 
 		orderBuyer.add(new Order(memberNo, Integer.valueOf(orderUsePoint), orderName, orderPhone1, orderPhone2, orderPhone3, orderPostcode, orderAddress1, orderAddress2, orderRequest, orderDCost, orderAddPoint, orderPaymentOption));

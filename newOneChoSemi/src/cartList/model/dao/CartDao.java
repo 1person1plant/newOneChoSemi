@@ -18,7 +18,7 @@ public class CartDao {
 	      
 		ArrayList<Cart> cartList = new ArrayList<>();
 	      
-		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_PATH, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
 	      
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -35,6 +35,7 @@ public class CartDao {
 								, rSet.getInt("ITEM_DISCOUNT")
 		                        , rSet.getInt("ITEM_MAX")
 		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_PATH")
 		                        , rSet.getString("IMAGE_NAME")
 	                         	);
 				
@@ -100,7 +101,7 @@ public class CartDao {
 		
 		ArrayList<Cart> cartList = new ArrayList<>();
 
-		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? ";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_PATH, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? ";
 		// cartOrderList.size() 만큼 query문 만들기
 		for(int i = 0 ; i < cartOrderList.size() ; i++) {
 			if(i == 0) {
@@ -134,12 +135,13 @@ public class CartDao {
 								, rSet.getInt("ITEM_DISCOUNT")
 		                        , rSet.getInt("ITEM_MAX")
 		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_PATH")
 		                        , rSet.getString("IMAGE_NAME")
 		                     	);
 								
 				cartList.add(cr);
 			}
-			System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
+			//System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -222,7 +224,7 @@ public class CartDao {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("CartDao 카트 수량 업데이트 : " + result);
+		//System.out.println("CartDao 카트 수량 업데이트 : " + result);
 
 		return result;
 	}
@@ -256,7 +258,7 @@ public class CartDao {
 				
 				cartList.add(c);
 			}
-			System.out.println("CartDao wishtoCartList : " + cartList);
+			//System.out.println("CartDao wishtoCartList : " + cartList);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -300,7 +302,7 @@ public class CartDao {
 				
 				cartList.add(c);
 			}
-			System.out.println("cartContainChk : " + cartList);
+			//System.out.println("cartContainChk : " + cartList);
 
 			if(cartList.isEmpty()) {
 				// false는 추가 가능하다
