@@ -107,12 +107,11 @@ public class OrderDao {
 		// 두번째 이후 쿼리
 		String query2 = "INSERT INTO ODERDERLIST "
 					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.QURRVAL,5,'0'),?,?,SYSDATE"
-				      + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null,null,?"
+				      + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
 				      + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
-
-		for(int i = 0 ; i < orderItem.size() ; i++) {
 			
-			try {
+		try {
+			for(int i = 0 ; i < orderItem.size() ; i++) {
 				if(i == 0) {
 					pstmt = conn.prepareStatement(query1);
 				} else {
@@ -143,9 +142,8 @@ public class OrderDao {
 				} else {
 					pstmt.setInt(18, 0);
 					pstmt.setInt(19, 0);
-
 				}
-				
+				pstmt.setString(20, orderBuyer.get(i).getOrderPaymentOption());
 				
 				result = pstmt.executeUpdate();
 				if(result > 0 && chk == true) {
@@ -153,12 +151,12 @@ public class OrderDao {
 				} else {
 					chk = false;
 				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close(pstmt);
 			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
 		
 		return chk;
