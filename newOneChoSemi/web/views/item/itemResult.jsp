@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="item.model.vo.*, java.util.ArrayList"%>
 <%
+	int resultCount = (int)request.getAttribute("resultCount");
 	ArrayList<Item> resultList = (ArrayList)request.getAttribute("searchResult");
+	
+	int colCount = 4;
+	int rowCount = (int)((double)resultCount/colCount + 0.9);
+	int remain = resultCount % colCount;
+
+	if(resultCount > 5 && remain == 0) {
+		remain = 4;
+	}
 	
 	String keyword = "";
 	String key1 = "";
@@ -71,58 +80,26 @@
 							<li><a href="#" style="color: grey">제품명</a></li>
 						</ul>
 					</div>
-				</div>
-				<%if (resultList.size() <= 4) {%>
-				<%for (int i = 0; i < 1; i++) {%>
+				</div>				
+				<%for(int i = 0; i < rowCount; i++) {%>
 				<div class="row item-row">
-					<%for (int j = 0; j < resultList.size(); j++) {%>
+					<%if (i != rowCount-1) {%>
+					<%for (int j = 0; j < colCount; j++) {%>
+					<input type="hidden" value="<%=((Item)resultList.get(4*i+j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)resultList.get(j)).getItemNo()%>">
+							<input type="hidden" value="<%=((Item)resultList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(j)).getItemImagePath()%>/<%=((Item) resultList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(4*i+j)).getItemImagePath()%>/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) resultList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) resultList.get(j)).getItemPrice()) - (((Item) resultList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) resultList.get(i)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item) resultList.get(j)).getKeywordName()%></a><br>
+								<p class="card-title item-card-title"><%=((Item) resultList.get(4*i+j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) resultList.get(4*i+j)).getItemPrice()) - (((Item) resultList.get(4*i+j)).getItemDiscount())%></p>
+								<%if (!((Item) resultList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) resultList.get(4*i+j)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-									keyword = ((Item) resultList.get(j)).getKeywordName();
-									key1 = keyword.split(",")[0];
-									key2 = keyword.split(",")[1];
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
-								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
-							</div>
-						</div>
-					</div>
-					<%}%>
-				</div>
-				<%}%>
-				<%}else {%>
-				<%for(int i = 0; i < 2; i++) {%>
-				<div class="row item-row">
-					<%if (i == 0) {%>
-					<%for (int j = 0; j < 4; j++) {%>
-					<input type="hidden" value="<%=((Item)resultList.get(j)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)resultList.get(j)).getItemNo()%>">
-							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(j)).getItemImagePath()%>/<%=((Item) resultList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
-							</div>
-							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) resultList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) resultList.get(j)).getItemPrice()) - (((Item) resultList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) resultList.get(j)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) resultList.get(j)).getKeywordName()%></a><br>
-								<%}else {%>
-								<%
-									keyword = ((Item) resultList.get(j)).getKeywordName();
+									keyword = ((Item) resultList.get(4*i+j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
@@ -134,22 +111,22 @@
 					</div>
 					<%}%>
 					<%}else {%>
-					<%for(int j = 4; j < resultList.size(); j++) {%>
-					<input type="hidden" value="<%=((Item) resultList.get(j)).getItemNo()%>">
+					<%for(int j = 0; j < remain; j++) {%>
+					<input type="hidden" value="<%=((Item) resultList.get(4*i+j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)resultList.get(j)).getItemNo()%>">
+							<input type="hidden" value="<%=((Item)resultList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(j)).getItemImagePath()%>/<%=((Item) resultList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(4*i+j)).getItemImagePath()%>/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) resultList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) resultList.get(i)).getItemPrice()) - (((Item) resultList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) resultList.get(j)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=((Item) resultList.get(j)).getKeywordName()%></a><br>
+								<p class="card-title item-card-title"><%=((Item) resultList.get(4*i+j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) resultList.get(i)).getItemPrice()) - (((Item) resultList.get(4*i+j)).getItemDiscount())%></p>
+								<%if (!((Item) resultList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=((Item) resultList.get(4*i+j)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-									keyword = ((Item) resultList.get(j)).getKeywordName();
+									keyword = ((Item) resultList.get(4*i+j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
@@ -162,7 +139,6 @@
 					<%}%>
 					<%}%>
 				</div>
-				<%}%>
 				<%}%>
 			</div>
 		</form>

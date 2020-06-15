@@ -42,6 +42,8 @@
 
 
 
+
+
 	<!--SEARCH 유효성 검사-->
 	<script>
 			$(function() {
@@ -55,13 +57,14 @@
 	
 	
 	
+	
+	
 	<!--SEARCH 검색 내용이 담길 FORM -->
 	<form action="<%=request.getContextPath()%>/itemSearch.it" method="post" id="searchForm" name="searchForm">
 		<input type="hidden" id="searchPriceMin" name="searchPriceMin">
 		<input type="hidden" id="searchPriceMax" name="searchPriceMax">
 		<input type="hidden" id="searchWhat" name="searchWhat">
 	</form>
-	
 	
 	
 	

@@ -9,11 +9,7 @@
 	for(int i = 0 ; i < cartList.size() ; i++){
 		totalPrice += cartList.get(i).getItemPrice();
 		totalDiscount += cartList.get(i).getItemDiscount();
-		System.out.println("Price(" + i + ") : " + cartList.get(i).getItemPrice());
-		System.out.println("Discount(" + i + ") : " + cartList.get(i).getItemDiscount());
 	}
-	System.out.println("totalPrice : " + totalPrice);
-	System.out.println("totalDiscount : " + totalDiscount);
 %>
 <!DOCTYPE html>
 <html>
@@ -147,6 +143,12 @@
     .orderinfo-Recipient {
         position: relative;
     }
+	.orderinfo-buyer .buyer_postcodeTag,
+	.orderinfo-buyer .buyer_detailAddressTag,
+	.orderinfo-Recipient .recipient_nameTag,
+	.orderpaymentoption{
+        white-space: nowrap;
+    }
     .orderinfo-Recipient tbody td:first-child i:first-child {
         color: red;
         padding: 5px;
@@ -179,32 +181,29 @@
         text-align: center;
     }   
     
-    .orderinfo-Recipient input#recipient_phone2::-webkit-inner-spin-button,
-    .orderinfo-Recipient input#recipient_phone2::-webkit-outer-spin-button,
-    .orderinfo-Recipient input#recipient_phone3::-webkit-inner-spin-button,
-    .orderinfo-Recipient input#recipient_phone3::-webkit-outer-spin-button  {
+    .orderinfo-Recipient #recipient_phone2::-webkit-inner-spin-button,
+    .orderinfo-Recipient #recipient_phone2::-webkit-outer-spin-button,
+    .orderinfo-Recipient #recipient_phone3::-webkit-inner-spin-button,
+    .orderinfo-Recipient #recipient_phone3::-webkit-outer-spin-button  {
         -webkit-appearance: none;
     }
-    .orderinfo-Recipient tfoot td{
+    .orderinfo-Recipient tfoot tr td{
         color: gray;
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding-bottom: 20px;
+        transform: translateY(-10px);
     }
     .orderinfo-Recipient .addr {
         position: relative;
     }
-
-    .orderinfo-Recipient .addrsearch {
-        background: url("<%=request.getContextPath() %>/images/bootstrapicons/bi-search.svg") no-repeat center;
-        border: none;
-        width: 35px;
-        height: 35px;
+	.orderinfo-Recipient .addrsearch {
+		width: auto;
+		height: 43px;
         cursor: pointer;
-        position: absolute;
-        top: 5px;
+		position: absolute;
         right: 0;
-    }
-    .orderinfo-Recipient > label {
+	}
+    .orderinfo-Recipient > .switchLabel {
         right: 0;
         position: absolute;
         top: 64px;
@@ -216,6 +215,7 @@
         display: inline-block;
         width: 60px;
         height: 34px;
+        transform: translateY(2px);
     }
 
     .orderinfo-Recipient .switch input { 
@@ -465,7 +465,7 @@
 	                    </td>
 	                </tr>
 	                <tr>
-	                    <td>우편번호</td>
+	                    <td class="buyer_postcodeTag">우편번호</td>
 	                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
 	                </tr>
 	                <tr>
@@ -473,7 +473,7 @@
 	                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
 	                </tr>
 	                <tr>
-	                    <td>상세주소</td>
+	                    <td class="buyer_detailAddressTag">상세주소</td>
 	                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
 	                </tr>
 	            </tbody>
@@ -483,12 +483,9 @@
 	    <!-- 배송지 정보 -->
 	    <div class="orderinfo-Recipient" id="orderinfo-Recipient">
 	        <h2>배송지 정보</h2>
-	        <label for="order_confirm_switch">주문고객과 동일
-	            <label class="switch">
-	                <input type="checkbox" class="order_confirm_switch" id="order_confirm_switch">
-	                <span class="slider round"></span>
-	            </label>
-	        </label>
+	        <label for="order_confirm_switch" class="switchLabel">주문고객과 동일 &nbsp;<span class="switch">
+	        	<input type="checkbox" class="order_confirm_switch" id="order_confirm_switch">
+                <span class="slider round"></span></span></label>
 	        <table>
 	            <colgroup>
 	                <col width="15%">
@@ -496,17 +493,11 @@
 	            </colgroup>
 	            <tbody>
 	                <tr>
-	                    <td>
-	                        <i class="recipient_name_facheck fas fa-check"></i>
-	                        <i class="recipient_name_faseedling fas fa-seedling"></i>수령인
-	                    </td>
-	                    <td><input type="text" id="recipient_name" name="recipient_name" placeholder="이름" required></td>
+	                    <td class="recipient_nameTag"><i class="recipient_name_facheck fas fa-check"></i><i class="recipient_name_faseedling fas fa-seedling"></i> &nbsp;받을 사람</td>
+	                    <td><input type="text" id="recipient_name" placeholder="이름" value="" required></td>
 	                </tr>
 	                <tr>
-	                    <td>
-	                        <i class="recipient_phone_facheck fas fa-check"></i>
-	                        <i class="recipient_phone_faseedling fas fa-seedling"></i>연락처
-	                    </td>
+	                    <td><i class="recipient_phone_facheck fas fa-check"></i><i class="recipient_phone_faseedling fas fa-seedling"></i> &nbsp;연락처</td>
 	                    <td>
 	                        <table>
 	                            <colgroup>
@@ -518,7 +509,7 @@
 	                            </colgroup>
 	                            <tr>
 	                                <td>
-	                                    <select name="recipient_phone1" id="recipient_phone1" required>
+	                                    <select id="recipient_phone1" required>
 	                                        <option value='010'>010</option>
 	                                        <option value='011'>011</option>
 	                                        <option value='016'>016</option>
@@ -529,24 +520,21 @@
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone2" name="recipient_phone2" min="0" max="9999" pattern="/^\d{3,4}$/" required>  
+	                                    <input type="number" id="recipient_phone2" min="0" max="9999" maxlength="4" required>  
 	                                </td>
 	                                <td>-</td>
 	                                <td>
-	                                    <input type="number" id="recipient_phone3" name="recipient_phone3" min="0" max="9999" pattern="/^\d{4}$/" required>
+	                                    <input type="number" id="recipient_phone3" min="0" max="9999" maxlength="4" required>
 	                                </td>
 	                            </tr>
 	                        </table>
 	                    </td>
 	                </tr>
 	                <tr class="addrsearch-tr">
-	                    <td>
-	                        <i class="recipient_address_facheck fas fa-check"></i>
-	                        <i class="recipient_address_faseedling fas fa-seedling"></i>주소
-	                    </td>
+	                    <td><i class="recipient_address_facheck fas fa-check"></i><i class="recipient_address_faseedling fas fa-seedling"></i> &nbsp;주소</td>
 	                    <td class="addr">
-	                        <input type="text" placeholder="주소 찾기" onclick="recipient_execDaumPostcode()" id="recipient_postcode" name="recipient_postcode" required>
-	                        <!-- <button type="button" id="addrsearch" onclick="recipient_execDaumPostcode()" class="addrsearch"></button> -->
+	                        <input type="text" placeholder="주소 찾기" id="recipient_postcode" required>
+	                        <button type="button" id="addrsearch" onclick="recipient_execDaumPostcode()" class="addrsearch btn btn-outline-info">주소찾기</button>
 	                        <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
 	                            <img src="<%=request.getContextPath() %>/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 	                        </div>
@@ -554,96 +542,25 @@
 	                </tr>
 	                <tr>
 	                    <td></td>
-	                    <td><input type="text" id="recipient_address" name="recipient_address" placeholder="주소" readonly></td>
+	                    <td><input type="text" id="recipient_address" placeholder="주소" required></td>
 	                </tr>
 	                <tr>
 	                    <td></td>
-	                    <td><input type="text" id="recipient_detailAddress" name="recipient_detailAddress" placeholder="상세 주소" required></td>
+	                    <td><input type="text" id="recipient_detailAddress" placeholder="상세 주소" required></td>
 	                </tr>
 	                <tr>
 	                    <td></td>
-	                    <td><textarea id="recipient_request" name="recipient_request" cols="30" rows="3" maxlength="150" placeholder="배송 시 요청사항"></textarea></td>
+	                    <td><textarea id="recipient_request" cols="30" rows="3" maxlength="150" placeholder="배송 시 요청사항"></textarea></td>
 	                </tr>
 	                <tfoot>
-	                    <td></td>
-	                    <td>( <span id="recipient_request_count">0</span> / 150 ) 자 이내로 입력 해주세요.</td>
+	                	<tr>
+		                    <td></td>
+		                    <td>&nbsp; ( <span id="recipient_request_count">0</span> / 150 ) 자 이내로 입력 해주세요.</td>
+	                	</tr>
 	                </tfoot>
 	            </tbody>
 	        </table> <!-- 배송지 정보 끝 -->
-	        
-	        <!-- 배송지정보 필수 입력 스크립트 -->
-	        <script>
-	            // .orderinfo-Recipient tbody td:first-child i:first-child
-	            $("#recipient_name").change(function(){
-	                recipient_name_check();
-	            });
-	            $("#recipient_phone1, #recipient_phone2, #recipient_phone3").change(function(){
-	                recipient_phone_check();
-	            });
-	            $("#recipient_detailAddress").change(function(){
-	            	recipient_address_check();
-	            });
-	            // 이름 입력
-	            function recipient_name_check(){
-	                if($("#recipient_name").val() != ""){
-	                	// 수령자 이름 있음
-	                    $(".recipient_name_facheck").css("display","none");
-	                    $(".recipient_name_faseedling").css("display","inline");
-	                } else {
-	                	// 수령자 이름 없음
-	                    $(".recipient_name_facheck").css("display","inline");
-	                    $(".recipient_name_faseedling").css("display","none");
-	                }
-	            }
-	            // 전화번호 입력
-	            function recipient_phone_check(){
-	                if($("#recipient_phone2").val() != "" && $("#recipient_phone3").val() != ""){
-	                	// 전화번호 값 전부 있음
-	                    $(".recipient_phone_facheck").css("display","none");
-	                    $(".recipient_phone_faseedling").css("display","inline");
-	                } else {
-	                	// 전화번호 값 빈 값 있음
-	                    $(".recipient_phone_facheck").css("display","inline");
-	                    $(".recipient_phone_faseedling").css("display","none");
-	                }
-	            }
-	            // 주소 입력
-	            function recipient_address_check(){
-	                if($("#recipient_postcode").val() != "" && $("#recipient_address").val() != "" && $("#recipient_detailAddress").val() != ""){
-	                	// 주소 입력 값 전부 있음
-	                    $(".recipient_address_facheck").css("display","none");
-	                    $(".recipient_address_faseedling").css("display","inline");
-	                } else {
-	                	// 주소 입력 빈값 있음
-	                    $(".recipient_address_facheck").css("display","inline");
-	                    $(".recipient_address_faseedling").css("display","none");
-	                }
-	            }
-	        </script><!-- 배송지정보 필수 입력 스크립트 끝 -->
-	
-	        <!-- 요청사항 스크립트 -->
-	        <script>
-	            $("#recipient_request").keyup(function(){
-	                var inputLength = $(this).val().length;
-	                $("#recipient_request_count").text(inputLength);
-	                var remain = 149 - inputLength;
-	                if(remain>=0){
-	                    $("#recipient_request_count").css("color","black");
-	                }else{
-	                    $("#recipient_request_count").css("color","red");
-	                }
-	            }).keydown(function(){
-	                var inputLength = $(this).val().length;
-	                $("#recipient_request_count").text(inputLength);
-	                var remain = 149 - inputLength;
-	                if(remain>=0){
-	                    $("#recipient_request_count").css("color","black");
-	                }else{
-	                    $("#recipient_request_count").css("color","red");
-	                }
-	            });
-	        </script> <!-- 요청사항 스크립트  끝 -->
-	
+
 	        <!-- 다음 주소 스크립트 -->
 	        <script>
 	            // 우편번호 찾기 찾기 화면을 넣을 element
@@ -704,6 +621,7 @@
 	                        // 산간지역 배송비 계산
 	                        calculate_comp = true;
 	                        Calculate();
+	                        recipient_address_check();
 	    
 	                        // iframe을 넣은 element를 안보이게 한다.
 	                        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -727,9 +645,8 @@
 	            }
 	        </script><!-- 다음 주소 스크립트 끝 -->
 	    </div>
-	
-	    <!-- 결제 금액 -->
-	    <div class="orderpayment">
+
+	    <div class="orderpayment">	<!-- 결제 금액 -->
 	        <h2>결제 금액</h2>
 	        <table>
 	            <tbody>
@@ -764,79 +681,26 @@
 	            </tbody>
 	        </table>
 	    </div> <!-- 결제 금액 끝 -->
-	
-	    <!-- 결제 금액 스크립트 -->
-	    <script>
-	        // 제주산간 지역 배송비 계산
-	        function checkdelivery(){
-	            // 셈플로 제주특별자치도만 추가 배송비를 낸다
-	            if($("#recipient_address").val().indexOf("제주특별자치도")==0){
-	                delivery = Number("4000");
-	                $("#orderpayment_delivery").text(delivery);
-	            }
-	        }
-	        // 최종 결제 금액 계산
-	        function Calculate(){
-	            if(calculate_comp){
-	                checkdelivery();
-	                orderpayment_total = orderpayment_price
-	                                    + delivery
-	                                    - orderpayment_discount
-	                                    - orderpayment_point;
-	                $("#orderpayment_total").text(orderpayment_total);
-	                $("#orderpayment_userPointAdd").text("+" + orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100));
-	                calculate_comp = false;
-	            }
-	        }
-            $(function(){
-            	// 포인트 입력시 계산되는 결과 값
-            	$("#orderpayment_point").on("change", function(){
-                	calculate_comp = true; 
-	                this.value = this.value.replace(/\D/g, '');
-	                if (this.value > userAvailablePoints){
-	                    this.value = userAvailablePoints;
-	                    orderpayment_point = this.value;
-	                    Calculate();
-	                } else{
-	                    orderpayment_point = this.value;
-	                    Calculate();
-	                }
-	            }).on("keyup", function(){
-	                calculate_comp = true; 
-	                this.value = this.value.replace(/\D/g, '');
-	                if (this.value > userAvailablePoints){
-	                    this.value = userAvailablePoints;
-	                    orderpayment_point = this.value;
-	                    Calculate();
-	                } else{
-	                    orderpayment_point = this.value;
-	                    Calculate();
-	                }
-	            });
-	        });
-	
-	    </script> <!-- 결제 금액 스크립트 끝 -->
-	
-	    <!-- 결제 방법 -->
-	    <div class="orderpaymentoption">
+
+	    <div class="orderpaymentoption">	<!-- 결제 방법 -->
 	        <h2>결제방법</h2>
 	        <table>
 	            <tbody>
 	                <tr>
 	                    <td>
-	                        <input type="radio" name="payoption" id="tooltip1" checked>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip1" value="payoption1" checked>
 	                        <label for="tooltip1" data-toggle="tooltip1" title="준비 중 입니다!">계좌 이체</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" name="payoption" id="tooltip2" disabled>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip2" value="payoption2" disabled>
 	                        <label for="tooltip2" data-toggle="tooltip2" title=" 카드 결제는 준비 중 입니다!">카드 결제</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" name="payoption" id="tooltip3" disabled>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip3" value="payoption3" disabled>
 	                        <label for="tooltip3" data-toggle="tooltip3" title="휴대폰 결제는 준비 중 입니다!">휴대폰 결제</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" name="payoption" id="tooltip4" disabled>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip4" value="payoption4"  disabled>
 	                        <label for="tooltip4" data-toggle="tooltip4" title="kakaopay는 준비 중 입니다!">kakao<b>pay</b></label>
 	                    </td>
 	                </tr>
@@ -854,10 +718,8 @@
 	            </tfoot>
 	        </table>
 	    </div> <!-- 결제 방법 끝 -->
-	
-	
-	    <!-- 결제 약관 -->
-	    <div class="orderterms">
+	    
+	    <div class="orderterms">	<!-- 결제 약관 -->
 	        <table>
 	            <tbody>
 	                <tr>
@@ -868,8 +730,7 @@
 	                        </label>
 	                    </td>
 	                    <td>
-	                        <label for="inP-cBox1">
-	                            상품 주문 및 배송정보 수집에 동의 합니다.
+	                        <label for="inP-cBox1">상품 주문 및 배송정보 수집에 동의 합니다.
 	                        </label>
 	                    </td>
 	                    <td>[필수]</td>
@@ -882,8 +743,7 @@
 	                        </label>
 	                    </td>
 	                    <td>
-	                        <label for="inP-cBox2">
-	                            주문 상품의 명시내용과 사용조건을 확인하였으며, 취급환불 규정에 동의 합니다.
+	                        <label for="inP-cBox2">주문 상품의 명시내용과 사용조건을 확인하였으며, 취급환불 규정에 동의 합니다.
 	                        </label>
 	                    </td>
 	                    <td>[필수]</td>
@@ -897,30 +757,6 @@
 	        <button type="button" id="order_confirm" class="btn btn-outline-info">결제하기</button>
 	    </div>
 	    
-	    <script>
-	        function orderEnd_cancel() {
-	            var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
-	            if(result){
-	                location.replace("index.jsp");
-	            }
-	        }
-	        
-	        $("#order_confirm").click(function(){
-                if($("#recipient_name").val() != "") {
-	            	alert("수령자 이름을 입력해 주세요.");
-                } else if($("#recipient_phone2").val() != "" && $("#recipient_phone3").val() != "") {
-	            	alert("전화 번호를 입력해 주세요.");
-	            } else if($("#recipient_postcode").val() != "" && $("#recipient_address").val() != "" && $("#recipient_detailAddress").val() != ""){
-	            	alert("주소를 입력해 주세요.");
-	            } else if(document.getElementById("inP-cBox1").checked != true && document.getElementById("inP-cBox2").checked != true) {
-	                alert("약관에 동의해 주세요.");
-	            } else {
-
-
-	            	$("#orderCompForm").submit();
-	            }
-	        });
-	    </script>
 	</div>
 	
 	<script>
@@ -950,7 +786,8 @@
 	    } else {
 	        userAvailablePoints = user_point;
 	    }
-	    // 배송비 관련
+	    // 배송비 관련 
+	    // TODO 지역별 배송 계산  
 	    var orderpayment_point = 0;	// 초기 사용 포인트 값
 	    var additional = false;	// 추가 배송비 지역 어부
 	    var delivery = Number("2500");	// 기본 배송비
@@ -960,6 +797,7 @@
 	    var calculate_comp = true;
 	 	
 	    $(function() {
+	    	// 첫 로딩 시 계산
 		    var orderpayment_delivery = Number(delivery);
 			var orderpayment_userPoint = Number(user_point);
 			$("#orderpayment_price").text(orderpayment_price);
@@ -970,7 +808,136 @@
 			Calculate();
 		});
     </script>
-    
+    	        
+	<!-- 배송지정보 필수 입력 스크립트 -->
+	<script>
+	    // 배송지 관련 정보 변경 감지
+	    $("#recipient_name").change(function(){
+	        recipient_name_check();
+	    });
+	    $("#recipient_phone1, #recipient_phone2, #recipient_phone3").change(function(){
+	        recipient_phone_check();
+	    });
+	    $("#recipient_postcode").change(function(){
+	    	recipient_address_check();
+	    });
+	    $("#recipient_address").change(function(){
+	    	recipient_address_check();
+	    });
+	    $("#recipient_detailAddress").change(function(){
+	    	recipient_address_check();
+	    });
+	    // 이름 입력
+	    function recipient_name_check(){
+	        if($("#recipient_name").val() != ""){
+	        	// 수령자 이름 있음
+	            $(".recipient_name_facheck").css("display","none");
+	            $(".recipient_name_faseedling").css("display","inline");
+	        } else {
+	        	// 수령자 이름 없음
+	            $(".recipient_name_facheck").css("display","inline");
+	            $(".recipient_name_faseedling").css("display","none");
+	        }
+	    }
+	    // 전화번호 입력
+	    function recipient_phone_check(){
+	        if($("#recipient_phone2").val() != "" && $("#recipient_phone3").val() != ""){
+	        	// 전화번호 값 전부 있음
+	            $(".recipient_phone_facheck").css("display","none");
+	            $(".recipient_phone_faseedling").css("display","inline");
+	        } else {
+	        	// 전화번호 값 빈 값 있음
+	            $(".recipient_phone_facheck").css("display","inline");
+	            $(".recipient_phone_faseedling").css("display","none");
+	        }
+	    }
+	    // 주소 입력
+	    function recipient_address_check(){
+	        if($("#recipient_postcode").val() != "" && $("#recipient_address").val() != "" && $("#recipient_detailAddress").val() != ""){
+	        	// 주소 입력 값 전부 있음
+	            $(".recipient_address_facheck").css("display","none");
+	            $(".recipient_address_faseedling").css("display","inline");
+	        } else {
+	        	// 주소 입력 빈값 있음
+	            $(".recipient_address_facheck").css("display","inline");
+	            $(".recipient_address_faseedling").css("display","none");
+	        }
+	    }
+	</script><!-- 배송지정보 필수 입력 스크립트 끝 -->
+	
+	<!-- 요청사항 스크립트 -->
+	<script>
+	    $("#recipient_request").keyup(function(){
+	        var inputLength = $(this).val().length;
+	        $("#recipient_request_count").text(inputLength);
+	        var remain = 149 - inputLength;
+	        if(remain>=0){
+	            $("#recipient_request_count").css("color","black");
+	        }else{
+	            $("#recipient_request_count").css("color","red");
+	        }
+	    }).keydown(function(){
+	        var inputLength = $(this).val().length;
+	        $("#recipient_request_count").text(inputLength);
+	        var remain = 149 - inputLength;
+	        if(remain>=0){
+	            $("#recipient_request_count").css("color","black");
+	        }else{
+	            $("#recipient_request_count").css("color","red");
+	        }
+	    });
+	</script> <!-- 요청사항 스크립트  끝 -->
+	
+    <script>	<!-- 결제 금액 스크립트 -->
+        // TODO 제주산간 지역 배송비 계산
+        function checkdelivery(){
+            // 셈플로 제주특별자치도만 추가 배송비를 낸다
+            if($("#recipient_address").val().indexOf("제주특별자치도")==0){
+                delivery = Number("4000");
+                $("#orderpayment_delivery").text(delivery);
+            }
+        }
+        
+        // 최종 결제 금액 계산
+        function Calculate(){
+            if(calculate_comp){
+                checkdelivery();
+                orderpayment_total = orderpayment_price
+                                    + delivery
+                                    - orderpayment_discount
+                                    - orderpayment_point;
+                $("#orderpayment_total").text(orderpayment_total);
+                $("#orderpayment_userPointAdd").text("+" + Math.ceil(orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100)));
+                calculate_comp = false;
+            }
+        }
+
+		// 포인트 입력시 계산되는 결과 값
+		$("#orderpayment_point").on("change", function(){
+			calculate_comp = true; 
+			this.value = this.value.replace(/\D/g, '');
+			if (this.value > userAvailablePoints){
+			    this.value = userAvailablePoints;
+			    orderpayment_point = this.value;
+			    Calculate();
+			} else{
+			    orderpayment_point = this.value;
+			    Calculate();
+			}
+		}).on("keyup", function(){
+			calculate_comp = true; 
+			this.value = this.value.replace(/\D/g, '');
+			if (this.value > userAvailablePoints){
+			    this.value = userAvailablePoints;
+			    orderpayment_point = this.value;
+			    Calculate();
+			} else{
+			    orderpayment_point = this.value;
+			    Calculate();
+			}
+		});
+
+    </script> <!-- 결제 금액 스크립트 끝 -->
     <script>
 		// 주문고객과 동일 스크립트
         $(".order_confirm_switch").change(function(){
@@ -1011,36 +978,123 @@
 	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
 	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
 	<div>
-		<input type="hidden" id="userNo" value="<%=userNo %>">
+		<input type="hidden" class="comp_userNo" name="comp_userNo" value="<%=userNo %>">
 		<!-- 상품정보 -->
 		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 		<div class="orderComp_item<%=i%>">
-			<input type="hidden" name="comp_iNo" value="<%=cartList.get(i).getItemNo() %>">
-			<input type="hidden" name="comp_iName" value="<%=cartList.get(i).getItemName() %>">
-			<input type="hidden" name="comp_imgName" value="<%=cartList.get(i).getImageName() %>">
-			<input type="hidden" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
-			<input type="hidden" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
+			<input type="hidden" class="comp_iNo" name="comp_iNo" value="<%=cartList.get(i).getItemNo() %>">
+			<input type="hidden" class="comp_iName" name="comp_iName" value="<%=cartList.get(i).getItemName() %>">
+			<input type="hidden" class="comp_imgName" name="comp_imgName" value="<%=cartList.get(i).getImageName() %>">
+			<input type="hidden" class="comp_imgPath" name="comp_imgPath" value="<%=cartList.get(i).getImagePath() %>">
+			<input type="hidden" class="comp_iCount" name="comp_iCount" value="<%=cartList.get(i).getCartListCount() %>">
+			<input type="hidden" class="comp_iPrice" name="comp_iPrice" value="<%=cartList.get(i).getItemPrice() %>">
+			<input type="hidden" class="comp_iDiscount" name="comp_iDiscount" value="<%=cartList.get(i).getItemDiscount() %>">
 		</div>
         <%} %>
 		<!-- 수령자 정보 -->
-		<input type="hidden" name="comp_rName" value="">
-		<input type="hidden" name="comp_rPhone1" value="">
-		<input type="hidden" name="comp_rPhone2" value="">
-		<input type="hidden" name="comp_rPhone3" value="">
-		<input type="hidden" name="comp_rPostcode" value="">
-		<input type="hidden" name="comp_rAddress1" value="">
-		<input type="hidden" name="comp_rAddress2" value="">
-		<input type="hidden" name="comp_rMemo" value="">
+		<input type="hidden" class="comp_rName" name="comp_rName" value="">
+		<input type="hidden" class="comp_rPhone1" name="comp_rPhone1" value="">
+		<input type="hidden" class="comp_rPhone2" name="comp_rPhone2" value="">
+		<input type="hidden" class="comp_rPhone3" name="comp_rPhone3" value="">
+		<input type="hidden" class="comp_rPostcode" name="comp_rPostcode" value="">
+		<input type="hidden" class="comp_rAddress1" name="comp_rAddress1" value="">
+		<input type="hidden" class="comp_rAddress2" name="comp_rAddress2" value="">
+		<input type="hidden" class="comp_rMemo" name="comp_rMemo" value="">
 		<!-- 결제 정보 -->
-		<input type="hidden" name="comp_pPrice" value="">
-		<input type="hidden" name="comp_pDelivery" value="">
-		<input type="hidden" name="comp_pDiscount" value="">
-		<input type="hidden" name="comp_pPoint" value="">
-		<input type="hidden" name="comp_pAddPoint" value="">
-		<input type="hidden" name="comp_pTotal" value="">
+		<input type="hidden" class="comp_paymentPrice" name="comp_paymentPrice" value="">
+		<input type="hidden" class="comp_paymentDelivery" name="comp_paymentDelivery" value="">
+		<input type="hidden" class="comp_paymentDiscount" name="comp_paymentDiscount" value="">
+		<input type="hidden" class="comp_paymentPoint" name="comp_paymentPoint" value="">
+		<input type="hidden" class="comp_paymentUserPoint" name="comp_paymentUserPoint" value="">
+		<input type="hidden" class="comp_paymentAddPoint" name="comp_paymentAddPoint" value="">
+		<input type="hidden" class="comp_paymentTotal" name="comp_paymentTotal" value="">
+		<input type="hidden" class="comp_paymentOption" name="comp_paymentOption" value="">
 	</div>
 	</form>
+	<script>
+		function orderEnd_cancel() {
+		    var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
+		    if(result){
+		        location.replace("index.jsp");
+		    }
+		}
+		
+		$("#order_confirm").click(function(){
+			// TODO 최종 결제 완료 페이지 이동 
+			var rName = $("#recipient_phone2").val();
+			
+			if($("#recipient_name").val() == "" || $("#recipient_name").val() == null || $("#recipient_name").val() == "undefined") {
+				alert("수령자 이름을 입력해 주세요.");
+				$("#recipient_name").focus();
+			} else if($("#recipient_phone2").val() == "" || $("#recipient_phone2").val() == null || $("#recipient_phone2").val() == "undefined") {
+		    	alert("전화 번호를 입력해 주세요.");
+				$("#recipient_phone2").focus();
+			} else if($("#recipient_phone3").val() == "" || $("#recipient_phone3").val() == null || $("#recipient_phone3").val() == "undefined") {
+		    	alert("전화 번호를 입력해 주세요.");
+				$("#recipient_phone3").focus();
+		    } else if($("#recipient_postcode").val() == "" || $("#recipient_postcode").val() == null || $("#recipient_postcode").val() == "undefined") {
+		    	alert("우편번호를 입력해 주세요.");
+				$("#recipient_postcode").focus();
+			} else if($("#recipient_address").val() == "" || $("#recipient_address").val() == null || $("#recipient_address").val() == "undefined") {
+		    	alert("주소를 입력해 주세요.");
+				$("#recipient_address").focus();
+			} else if($("#recipient_detailAddress").val() == "" || $("#recipient_detailAddress").val() == null || $("#recipient_detailAddress").val() == "undefined") {
+		    	alert("상세 주소를 입력해 주세요.");
+				$("#recipient_detailAddress").focus();
+		    } else if(document.getElementById("inP-cBox1").checked != true && document.getElementById("inP-cBox2").checked != true) {
+		        alert("약관에 동의해 주세요.");
+				$("#orderterms").focus();
+		    } else {
+		    	// 전송 값 저장
+				$(".comp_rName").val($("#recipient_name").val());
+				$(".comp_rPhone1").val($("#recipient_phone1").val());
+				$(".comp_rPhone2").val($("#recipient_phone1").val());
+				$(".comp_rPhone3").val($("#recipient_phone1").val());
+				$(".comp_rPostcode").val($("#recipient_postcode").val());
+				$(".comp_rAddress1").val($("#recipient_address").val());
+				$(".comp_rAddress2").val($("#recipient_detailAddress").val());
+				$(".comp_rMemo").val($("#recipient_request").val());
+				
+				$(".comp_paymentPrice").val($("#orderpayment_price").text());
+				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
+				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
+				$(".comp_paymentPoint").val($("#orderpayment_point").val());
+				$(".comp_paymentUserPoint").val($("#orderpayment_userPoint").text());
+				$(".comp_paymentAddPoint").val($("#orderpayment_userPointAdd").text());
+				$(".comp_paymentTotal").val($("#orderpayment_total").text());
 
+				$(".comp_paymentOption").val($(".payoption").val());
+				
+				// 값 확인
+				console.log("구매자 comp_userNo : " + $("#comp_userNo").val());
+				console.log("구매자 comp_iNo : " + $("#comp_iNo").val());
+				console.log("구매자 comp_iCount : " + $("#comp_iCount").val());
+				console.log("구매자 comp_iPrice : " + $("#comp_iPrice").val());
+
+				console.log("구매자 comp_rName : " + $(".comp_rName").val());
+				console.log("구매자 comp_rPhone1 : " + $(".comp_rPhone1").val());
+				console.log("구매자 comp_rPhone2 : " + $(".comp_rPhone2").val());
+				console.log("구매자 comp_rPhone3 : " + $(".comp_rPhone3").val());
+				console.log("구매자 comp_rPostcode : " + $(".comp_rPostcode").val());
+				console.log("구매자 comp_rAddress1 : " + $(".comp_rAddress1").val());
+				console.log("구매자 comp_rAddress2 : " + $(".comp_rAddress2").val());
+				console.log("구매자 comp_rMemo : " + $(".comp_rMemo").val());
+
+				console.log("구매자 comp_paymentPrice : " + $(".comp_paymentPrice").val());
+				console.log("구매자 comp_paymentDelivery : " + $(".comp_paymentDelivery").val());
+				console.log("구매자 comp_paymentDiscount : " + $(".comp_paymentDiscount").val());
+				console.log("구매자 comp_paymentPoint : " + $(".comp_paymentPoint").val());
+				console.log("구매자 comp_paymentUserPoint : " + $(".comp_paymentUserPoint").val());
+				console.log("구매자 comp_paymentAddPoint : " + $(".comp_paymentAddPoint").val());
+				console.log("구매자 comp_paymentTotal : " + $(".comp_paymentTotal").val());
+
+				console.log("구매자 comp_paymentOption : " + $(".payoption").val());
+				
+
+		    	//$("#orderCompForm").submit();
+		    }
+		});
+	</script>
 
 <%@ include file="../common/footer.jsp" %>
 </body>

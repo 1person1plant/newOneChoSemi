@@ -9,6 +9,9 @@
 	  int startPage = pg.getStartPage();
 	  int endPage = pg.getEndPage();
 	%>  --%>
+	<%
+	ArrayList<OrderHis> oh = (ArrayList<OrderHis>)request.getAttribute("oh");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,16 +57,23 @@
             margin: 5px;
             margin-bottom: 50px;
             background: white;
-            padding-left: 50px;
-            padding-right: 50px;
+            padding-left: 0;
+            padding-right: 0;
             text-align: center;
         }     
-		 
+
+		td{
+			padding:6px;
+		}
+		td.ordertd{
+			padding:6px;
+		}
         /* 주문 내역 테이블 크기 */
         .ordertd{
           vertical-align:middle;
           width:14%;
         }
+        
         .table td, table th{
         	vertical-align:middle !important;
         }
@@ -76,7 +86,7 @@
 			color:black;
 			border: 1px solid #115D8C;
 			background-color:white;
-			width:105px;
+			width:100px;
 			height:42px;
 		}
 		.button1 :hover{
@@ -97,11 +107,11 @@
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp" %>
-			</div>
-			<!-- 9단길이의 첫번째 열 -->
+      <div class="row">
+         <div class="col-md-3">
+            <%@include file="myPageCategory.jsp"%>
+         </div>
+         <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
 					<div class="table" id='jointable'>
@@ -110,7 +120,9 @@
 						<form>
 							<table>
 								<thead>
+								
 									<tr class='ollist' style='border-bottom: 2px solid black'>
+									<input type="text" style="display:none;" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
 										<td>주문번호</td>
 										<td>상품이미지</td>
 										<td>상품번호</td>
@@ -120,46 +132,43 @@
 										<td>기타</td>
 									</tr>
 								</thead>
-								<%-- <%if(list.isEmpty()){%>
-								<tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd' colspan="7">주문 내역이 없습니다.</td>								
+								<%if(oh.isEmpty()||oh.size()==0){ %>
+									<tr class='ollist' style='border-bottom: 2px solid black'>
+									<td class='ordertd' colspan="7" style="font-size:1rem">주문 내역이 존재하지 않습니다.</td>
 								</tr>
-								<%}else{ %>
-									<%for(int i=0;i<list.size();i++){ %>
-										<tr>
-											<input type="hidden" value="<%=((Order)list.get(i).getOrderId()) %>">
+								<%}else{%>
+									<%for(int i=0;i<oh.size();i++){%>
+										<tr class='ollist' style='border-bottom: 2px solid black'>
+											<td class='ordertd'><%=(oh.get(i)).getOrderNo()%></td>
+											<td class='ordertd'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=(oh.get(i)).getImageName()%>' width='150px'
+										height='150px'></td>
+											<td class='ordertd'><%=(oh.get(i)).getItemNo()%></td>
+											<td class='ordertd'><%=(oh.get(i)).getItemName()%></td>
+											<td class='ordertd' id="orderT"><%=(oh.get(i)).getOrderCount()%></td>
+											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
+											<td id='orderbutton'><a href='main.jsp' id='delete'><button
+														type='button' class='button1'>취소신청</button></a><br> <a
+												href='main.jsp' id='delete'><button type='button'
+														class='button1'>리뷰쓰기</button></a><br> <a href='main.jsp'
+												id='delete'><button type='button' class='button1'>상세보기</button></a></td>
 										</tr>
 									<%} %>
-								<%} %> --%>
-								<tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd'>???</td>
+								<%} %>
+								<%-- <tr class='ollist' style='border-bottom: 2px solid black'>
+									<td class='ordertd'><%=orderNo %></td>
 									<td class='ordertd'><img src='flo.jpg' width='150px'
 										height='150px'></td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>배송중</td>
+									<td class='ordertd'><%=itemNo %></td>
+									<td class='ordertd'><%=itemName %></td>
+									<td class='ordertd'><%=orderCount %></td>
+									<td class='ordertd'><%=deliveryCode %></td>
 									<td id='orderbutton'><a href='main.jsp' id='delete'><button
 												type='button' class='button1'>취소신청</button></a><br> <a
 										href='main.jsp' id='delete'><button type='button'
 												class='button1'>리뷰쓰기</button></a><br> <a href='main.jsp'
 										id='delete'><button type='button' class='button1'>상세보기</button></a></td>
-								</tr>
-								<tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'><img src='flo.jpg' width='150px'
-										height='150px'></td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>???</td>
-									<td class='ordertd'>배송중</td>
-									<td id='orderbutton'><a href='main.jsp' id='delete'><button
-												type='button' class='button1'>취소신청</button></a><br> <a
-										href='main.jsp' id='delete'><button type='button'
-												class='button1'>리뷰쓰기</button></a><br>
-										<button id='myBtn' data-toggle='modal' data-target='#intro'
-											type='button' class='button1'>상세보기</button></td>
-								</tr>
+								</tr> --%>
+								
 							</table>
 						</form>
 					</div>
@@ -195,7 +204,7 @@
             			$(this).css({"background":"#6AAED9","color":"white","transition":"0.2s","border-radius":"8px"});
             		}).mouseout(function(){
             			$(this).css({"padding":"8px 18px","border-radius":"8px","color":"black","border":"1px solid #11538C","background-color":"white",
-            			"width":"105px", "height":"42px"});
+            			"width":"100px", "height":"42px"});
             		});
             	});
             </script>

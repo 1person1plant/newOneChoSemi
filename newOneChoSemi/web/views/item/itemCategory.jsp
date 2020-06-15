@@ -7,9 +7,11 @@
 	
 	int colCount = 4;
 	int rowCount = (int)((double)categoryCount/colCount + 0.9);
-	int lastCount = categoryList.size() % colCount + 1;
+	int remain = categoryCount % colCount;
 	
-	System.out.println("categoryCount: " + categoryCount + "rowCount: " + rowCount + "colCount: " + colCount + "lastCount: " + lastCount);
+	if(categoryCount > 5 && remain == 0) {
+		remain = 4;
+	}
 	
 	String keyword = "";
 	String key1 = "";
@@ -71,7 +73,7 @@
 			<div class="container item-container">
 				<div class="row title-row">
 					<div class="col-sm title-col">
-						<h1 class="display-6"><%=category%></h1>
+						<h1 class="display-6">RESULT</h1>
 					</div>
 					<div class="col-sm title-col-order">
 						<ul class="float-right item-order" id="all-item-order">
@@ -80,64 +82,64 @@
 							<li><a href="#" style="color: grey">제품명</a></li>
 						</ul>
 					</div>
-				</div>
-				<%for (int i = 0; i < rowCount; i++) {%>
+				</div>				
+				<%for(int i = 0; i < rowCount; i++) {%>
 				<div class="row item-row">
-					<%if(i != (rowCount-1)) {%>
-					<%for(int j = 0; j < colCount; j++) {%>
+					<%if (i != rowCount-1) {%>
+					<%for (int j = 0; j < colCount; j++) {%>
+					<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=categoryList.get((4*i)+j).getItemNo()%>">
+							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=categoryList.get((4*i)+j).getItemImagePath()%>/<%=categoryList.get((4*i)+j).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImagePath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=categoryList.get((4*i)+j).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(categoryList.get(j).getItemPrice()) - (categoryList.get((4*i)+j).getItemDiscount())%></p>
-								<%if(!(categoryList.get(j).getItemKeywordNo().equals("K3"))) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=categoryList.get((4*i)+j).getKeywordName()%></a><br>
+								<p class="card-title item-card-title"><%=((Item) categoryList.get(4*i+j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) categoryList.get(4*i+j)).getItemPrice()) - (((Item) categoryList.get(4*i+j)).getItemDiscount())%></p>
+								<%if (!((Item) categoryList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) categoryList.get(4*i+j)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-									keyword = categoryList.get((4*i)+j).getKeywordName();
+									keyword = ((Item) categoryList.get(4*i+j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
-								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
-							</div>
-						</div>
-					</div>
-					<%}%>					
-					<%}else {%>
-					<%for(int j = 0; j < lastCount; j++) {%>
-					<div class="col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=categoryList.get((4*i)+j).getItemNo()%>">
-							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=categoryList.get((4*i)+j).getItemImagePath()%>/<%=categoryList.get((4*i)+j).getItemImageName()%>" class="card-img-top" alt="...">
-							</div>
-							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=categoryList.get((4*i)+j).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(categoryList.get((4*i)+j).getItemPrice()) - (categoryList.get((4*i)+j).getItemDiscount())%></p>
-								<%if(!(categoryList.get((4*i)+j).getItemKeywordNo().equals("K3"))) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=categoryList.get((4*i)+j).getKeywordName()%></a><br>
-								<%}else {%>
-								<%
-									keyword = categoryList.get((4*i)+j).getKeywordName();
-									key1 = keyword.split(",")[0];
-									key2 = keyword.split(",")[1];
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
 								<%}%>
 								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
 							</div>
 						</div>
 					</div>
 					<%}%>
-				<%}%>
+					<%}else {%>
+					<%for(int j = 0; j < remain; j++) {%>
+					<input type="hidden" value="<%=((Item) categoryList.get(4*i+j)).getItemNo()%>">
+					<div class="col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
+							<div class="card-image-zoom">
+								<img src="<%=request.getContextPath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImagePath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
+							</div>
+							<div class="card-body item-card-body">
+								<p class="card-title item-card-title"><%=((Item) categoryList.get(4*i+j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) categoryList.get(i)).getItemPrice()) - (((Item) categoryList.get(4*i+j)).getItemDiscount())%></p>
+								<%if (!((Item) categoryList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=((Item) categoryList.get(4*i+j)).getKeywordName()%></a><br>
+								<%}else {%>
+								<%
+									keyword = ((Item) categoryList.get(4*i+j)).getKeywordName();
+									key1 = keyword.split(",")[0];
+									key2 = keyword.split(",")[1];
+								%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
+								<%}%>
+								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
+							</div>
+						</div>
+					</div>
+					<%}%>
+					<%}%>
 				</div>
 				<%}%>
 			</div>

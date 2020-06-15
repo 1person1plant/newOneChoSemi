@@ -30,7 +30,7 @@ public class DeleteWishServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String wishNo = request.getParameter("wishNo");
+		String wishNo = request.getParameter("wishDeleteNum");
 			
 		int result = new WishService().deleteWish(wishNo);
 		

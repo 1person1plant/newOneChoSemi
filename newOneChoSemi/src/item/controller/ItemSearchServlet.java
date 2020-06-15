@@ -34,11 +34,11 @@ public class ItemSearchServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
+		// 입력받은 검색어를 ArrayList에 담고 Dao에 보내기
 		int priceMin = Integer.valueOf(request.getParameter("searchPriceMin"));
 		int priceMax = Integer.valueOf(request.getParameter("searchPriceMax"));
 		String what = request.getParameter("searchWhat");
 		
-
 		ArrayList searchList = new ArrayList();
 		
 		searchList.add(priceMin);
@@ -50,9 +50,11 @@ public class ItemSearchServlet extends HttpServlet {
 		ArrayList<Item> resultList = new ArrayList<>();
 		
 		resultList = itService.searchResult(searchList);
+		int resultCount = resultList.size();
 		
 		if(resultList != null) {
-			request.setAttribute("searchResult", resultList);			
+			request.setAttribute("searchResult", resultList);	
+			request.setAttribute("resultCount", resultCount);
 			request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
 		}else {
 			System.out.println("널 이야~");
