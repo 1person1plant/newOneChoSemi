@@ -6,15 +6,10 @@ import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-public class MyWishListService {
 
-	public ArrayList<MyWishList> memberWish(String memberNo) {
-		Connection conn = getConnection();
-		ArrayList<MyWishList> mwl = new MyWishListDao().memberWish(conn,memberNo);
-		/* System.out.println("service"+mwl); */
-		close(conn);
-		return mwl;
-	}
+import cartList.model.dao.WishDao;
+import cartList.model.vo.WishList;
+public class MyWishListService {
 
 	public int memoUpdate(MyWishList myWishList) {
 		Connection conn = getConnection();
@@ -27,6 +22,14 @@ public class MyWishListService {
 		}
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<MyWishList> myWishList(String memberNo) {
+		Connection conn = getConnection();
+		ArrayList<MyWishList> mwl = new MyWishListDao().myWishList(conn, memberNo);
+		System.out.println("service = " + mwl);
+		close(conn);
+		return mwl;
 	}
 
 }

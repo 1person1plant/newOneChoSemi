@@ -6,42 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cartList.model.vo.WishList;
+
 import static common.JDBCTemplate.*;
 import member.model.vo.MyWishList;
 
 public class MyWishListDao {
 
-	public ArrayList<MyWishList> memberWish(Connection conn, String memberNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<MyWishList> mwl = new ArrayList<>();
-		
-		String query = "SELECT * FROM WISHLIST WHERE MEMBER_NO=?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memberNo);
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				MyWishList mwlTemp = new MyWishList(rset.getString("WISHLIST_NO"),
-									rset.getString("ITEM_NO"),
-									rset.getString("MEMBER_NO"),
-									rset.getString("WISHLIST_MEMO"));
-				mwl.add(mwlTemp);
-						
-			}
-			
-			System.out.println("MyWishListDao memberWish 조회 : " + mwl);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-			close(rset);
-		}
-		
-		return mwl;
-	}
 
 	public int memoUpdate(Connection conn, MyWishList myWishList) {
 		PreparedStatement pstmt = null;
@@ -65,6 +36,39 @@ public class MyWishListDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<MyWishList> myWishList(Connection conn, String memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+	      
+		ArrayList<MyWishList> mwl = new ArrayList<>();
+	      
+		String query = "SELECT * FROM WISHLIST WHERE MEMBER_NO = ?";
+	      
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				MyWishList wish = new MyWishList(rset.getString("WISHLIST_NO")
+				                         , rset.getString("ITEM_NO")
+				                         , rset.getString("MEMBER_NO")
+				                         , rset.getString("WISHLIST_MEMO"));
+			
+				mwl.add(wish);
+			}
+			System.out.println("dao = " + mwl);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return mwl;
 	}
 
 }

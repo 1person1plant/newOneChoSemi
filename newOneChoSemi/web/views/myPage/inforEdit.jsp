@@ -474,13 +474,16 @@ label {
 	<script>
 				function saveBtn() {
 					var passReg = /(?=.*\d)(?=.*[a-z]).{6,12}/;
-					if ($("#password1").val() == "") {
+					var pwd1 = document.getElementById("password1");
+					var pwd2 = document.getElementById("password2");
+					
+					if (pwd1.value == "") {
 						alert("비밀번호를 입력해 주세요.");
-					}else if($("password1").val() != passReg){
+					}else if(!passReg.test(pwd1.value)){
 						alert("숫자와 문자 포함 형태의 6~12자리 이내로 입력해주세요");	
-					}else if ($("#password2").val() == "") {
+					}else if (pwd2.value == "") {
 						alert("비밀번호 확인을 입력해 주세요.");
-					}else if($("password2").val() != passReg){
+					}else if(!passReg.test(pwd2.value)){
 						alert("숫자와 문자 포함 형태의 6~12자리 이내로 입력해주세요");	
 					} else if ($("#phone2").val() == "") {
 						alert("핸드폰 번호를 입력해 주세요.");
@@ -508,7 +511,7 @@ label {
 			} else if ($(".inputBtn").val() != "") {
 				var result = confirm("취소하시겠습니까?");
 				if (result == true) {
-					location.href = "<%=request.getContextPath()%>/views/myPage/grade.jsp";
+					location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				} else {
 					
 				}

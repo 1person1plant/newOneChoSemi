@@ -73,7 +73,9 @@ ul .list-group-item :hover {
 				</div>
 				
 				<script>
-				
+					function myPageBtn(){
+						location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>"
+					}
 				</script>
 		
 

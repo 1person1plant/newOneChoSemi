@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="cartList.model.vo.WishList, java.util.ArrayList"%>
+	pageEncoding="UTF-8" import="member.model.vo.MyWishList, java.util.ArrayList"%>
 <%
-	ArrayList<WishList> mwl = (ArrayList<WishList>)request.getAttribute("mwl"); 
+	ArrayList<MyWishList> mwl = (ArrayList<MyWishList>)request.getAttribute("mwl"); 
 %>
 <!DOCTYPE html>
 <html>
@@ -56,6 +56,7 @@
 		/* 테이블 가운데 정렬 */
 		.table td, table th {
 			vertical-align: middle !important;
+			padding:6px;
 		}
 		
 		/* 버튼 CSS */
@@ -134,11 +135,11 @@
 							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 							<tr style='border-bottom: 2px solid black'>
 							
-								<td colspan='1' class="mt-2" id="wishNoTd"><%=mwl.get(i).getWishListNo()%><input style="display: none;" type="text" value="<%=mwl.get(i).getWishListNo()%>" id="wishNo" name="wishNo"></td>
-								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=mwl.get(i).getImageName()%>' width='150px' height='150px'></a></td>
-								<td scope="row" colspan='2' class="mt-2"><%=mwl.get(i).getItemName()%></td>
-								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishListMemo() %></textarea><br>
-									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishListMemo().length()%></span>/100</p>
+								<td colspan='1' class="mt-2" id="wishNoTd"><%=mwl.get(i).getWishlistNo()%><input style="display: none;" type="text" value="<%=mwl.get(i).getWishlistNo()%>" id="wishNo" name="wishNo"></td>
+								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><img src='<%=request.getContextPath()%>/items_uploadFiles/' width='150px' height='150px'></a></td>
+								<td scope="row" colspan='2' class="mt-2">???</td>
+								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishlistMemo()%></textarea><br>
+									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
 								</td>
 								<td id='orderbutton' colspan="2">
 									<input type='button' class='button1' id='changeM' value="메모수정"><br>
