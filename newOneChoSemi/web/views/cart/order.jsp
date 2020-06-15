@@ -6,7 +6,7 @@
 	Rank rankDetail = (Rank)request.getAttribute("rankDetail");
 	int totalPrice = 0;
 	int totalDiscount = 0;
-	System.out.println(cartList.size());
+	//System.out.println(cartList.size());
 	for(int i = 0 ; i < cartList.size() ; i++){
 		totalPrice += cartList.get(i).getItemPrice();
 		totalDiscount += cartList.get(i).getItemDiscount();

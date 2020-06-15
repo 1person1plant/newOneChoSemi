@@ -40,13 +40,15 @@ public class OrderCompleteServlet extends HttpServlet {
 		String[] orderCount = request.getParameterValues("comp_iCount");
 		
 		// order.jsp 상품 정보
-		System.out.println(Arrays.toString(itemNo));
-		System.out.println(Arrays.toString(orderItemName));
-		System.out.println(Arrays.toString(orderItemImgName));
-		System.out.println(Arrays.toString(orderItemImgPath));
-		System.out.println(Arrays.toString(orderItemPrice));
-		System.out.println(Arrays.toString(orderItemDiscount));
-		System.out.println(Arrays.toString(orderCount));
+		/*
+		 * System.out.println(Arrays.toString(itemNo));
+		 * System.out.println(Arrays.toString(orderItemName));
+		 * System.out.println(Arrays.toString(orderItemImgName));
+		 * System.out.println(Arrays.toString(orderItemImgPath));
+		 * System.out.println(Arrays.toString(orderItemPrice));
+		 * System.out.println(Arrays.toString(orderItemDiscount));
+		 * System.out.println(Arrays.toString(orderCount));
+		 */
 		
 		String memberNo = request.getParameter("comp_userNo");
 		int orderUsePoint = 0;
@@ -62,7 +64,7 @@ public class OrderCompleteServlet extends HttpServlet {
 		String orderAddress2 = request.getParameter("comp_rAddress2");
 		String orderRequest = request.getParameter("comp_rMemo");
 		if(orderRequest == null || orderRequest == "") {
-			orderRequest = "KHAABB";
+			orderRequest = "감사합니다.";
 		}
 		
 		int orderDCost = 0;
@@ -76,37 +78,39 @@ public class OrderCompleteServlet extends HttpServlet {
 		String orderPaymentOption = request.getParameter("comp_paymentOption");
 
 		// 구매자 정보
-		System.out.println("memberNo : " + memberNo);
-		System.out.println("orderUsePoint : " + orderUsePoint);
-		System.out.println("orderName : " + orderName);
-		System.out.println("orderPhone1 : " + orderPhone1);
-		System.out.println("orderPhone2 : " + orderPhone2);
-		System.out.println("orderPhone3 : " + orderPhone3);
-		System.out.println("orderPostcode : " + orderPostcode);
-		System.out.println("orderAddress1 : " + orderAddress1);
-		System.out.println("orderAddress2 : " + orderAddress2);
-		System.out.println("orderRequest : " + orderRequest);
-		System.out.println("orderDCost : " + orderDCost);
-		System.out.println("orderAddPoint : " + orderAddPoint);
-		System.out.println("orderPaymentOption : " + orderPaymentOption);
+		/*
+		 * System.out.println("memberNo : " + memberNo);
+		 * System.out.println("orderUsePoint : " + orderUsePoint);
+		 * System.out.println("orderName : " + orderName);
+		 * System.out.println("orderPhone1 : " + orderPhone1);
+		 * System.out.println("orderPhone2 : " + orderPhone2);
+		 * System.out.println("orderPhone3 : " + orderPhone3);
+		 * System.out.println("orderPostcode : " + orderPostcode);
+		 * System.out.println("orderAddress1 : " + orderAddress1);
+		 * System.out.println("orderAddress2 : " + orderAddress2);
+		 * System.out.println("orderRequest : " + orderRequest);
+		 * System.out.println("orderDCost : " + orderDCost);
+		 * System.out.println("orderAddPoint : " + orderAddPoint);
+		 * System.out.println("orderPaymentOption : " + orderPaymentOption);
+		 */
 		
 		ArrayList<Order> orderItem = new ArrayList<>();
 		for(int i = 0 ; i < itemNo.length ; i++) {
 			orderItem.add(new Order(itemNo[i], orderItemName[i], orderItemImgName[i], orderItemImgPath[i], Integer.valueOf(orderItemPrice[i]), Integer.valueOf(orderItemDiscount[i]), Integer.valueOf(orderCount[i])));
 		}
-		System.out.println("orderItem : " + orderItem);
+		//System.out.println("orderItem : " + orderItem);
 		
 		ArrayList<Order> orderBuyer = new ArrayList<>(); 
 		orderBuyer.add(new Order(memberNo, Integer.valueOf(orderUsePoint), orderName, orderPhone1, orderPhone2, orderPhone3, orderPostcode, orderAddress1, orderAddress2, orderRequest, orderDCost, orderAddPoint, orderPaymentOption));
 
-		System.out.println("orderBuyer : " + orderBuyer);
+		//System.out.println("orderBuyer : " + orderBuyer);
 		
 		boolean result = new OrderService().insertOrderList(orderItem, orderBuyer);
 		
 		if(result) {
 			request.setAttribute("orderItem", orderItem);
 			request.setAttribute("orderBuyer", orderBuyer);
-			request.getRequestDispatcher("views/cart/order.jsp").forward(request, response);
+			request.getRequestDispatcher("views/cart/receipt.jsp").forward(request, response);
 		} else {
 			request.setAttribute("msg", "주문 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

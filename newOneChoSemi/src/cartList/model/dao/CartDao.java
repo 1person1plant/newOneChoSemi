@@ -208,7 +208,7 @@ public class CartDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		System.out.println("CartDao update itemId : " + itemId + " : " + userNo);
+		//System.out.println("CartDao update itemId : " + itemId + " : " + userNo);
 		
 		String query = "INSERT INTO CARTLIST VALUES('C'||LPAD(SEQ_CID.NEXTVAL,5,'0'), ?, ?, 1)";
 
