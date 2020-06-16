@@ -8,11 +8,12 @@ public class OrderHis {
 	private int orderCount;
 	private String deliveryStatus;
 	private String memberNo;
+	private String orderCancelrequest;
 	public OrderHis() {
 		super();
 	}
 	public OrderHis(String orderNo, String imageName, String itemNo, String itemName, int orderCount,
-			String deliveryStatus, String memberNo) {
+			String deliveryStatus, String memberNo, String orderCancelrequest) {
 		super();
 		this.orderNo = orderNo;
 		this.imageName = imageName;
@@ -21,6 +22,7 @@ public class OrderHis {
 		this.orderCount = orderCount;
 		this.deliveryStatus = deliveryStatus;
 		this.memberNo = memberNo;
+		this.orderCancelrequest = orderCancelrequest;
 	}
 	public String getOrderNo() {
 		return orderNo;
@@ -64,12 +66,19 @@ public class OrderHis {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
+	public String getOrderCancelrequest() {
+		return orderCancelrequest;
+	}
+	public void setOrderCancelrequest(String orderCancelrequest) {
+		this.orderCancelrequest = orderCancelrequest;
+	}
 	@Override
 	public String toString() {
 		return "OrderHis [orderNo=" + orderNo + ", imageName=" + imageName + ", itemNo=" + itemNo + ", itemName="
 				+ itemName + ", orderCount=" + orderCount + ", deliveryStatus=" + deliveryStatus + ", memberNo="
-				+ memberNo + "]";
+				+ memberNo + ", orderCancelrequest=" + orderCancelrequest + "]";
 	}
+	
 	
 
 }

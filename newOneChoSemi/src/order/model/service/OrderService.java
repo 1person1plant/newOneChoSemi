@@ -13,7 +13,7 @@ import member.model.service.MemberService;
 import order.model.dao.OrderDao;
 import order.model.vo.Order;
 import order.model.vo.OrderHis;
-
+import static common.JDBCTemplate.*;
 public class OrderService {
 
 	public ArrayList<Order> historyList(int currentPage, int limit) {
@@ -74,5 +74,17 @@ public class OrderService {
 		return chk;
 	}
 
+	public int cancelRequest(Order order) {
+		Connection conn = getConnection();
+		int result = new OrderDao().cancelRequest(conn,order);
+		System.out.println("dao>service : " + result);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }

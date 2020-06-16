@@ -77,7 +77,8 @@ public class OrderDao {
 											rset.getString("ITEM_NAME"),
 											rset.getInt("ORDER_COUNT"),
 											rset.getString("DELIVERY_STATUS"),
-											rset.getString("MEMBER_NO"));
+											rset.getString("MEMBER_NO"),
+											rset.getString("ORDER_CANCELREQUEST"));
 				
 				System.out.println("OrderHis dao"+oh);
 				oh.add(ohlist);
@@ -183,4 +184,24 @@ public class OrderDao {
 		return chk;
 	}
 
+	public int cancelRequest(Connection conn, Order order) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "UPDATE ORDERLIST SET ORDER_CANCELREQUEST='Y' WHERE DELIVERY_CODE ='D1' AND ORDER_NO=? AND MEMBER_NO=? AND ITEM_NO=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, order.getOrderNo());
+			pstmt.setString(2, order.getMemberNo());
+			pstmt.setString(3, order.getItemNo());
+			
+			result = pstmt.executeUpdate();
+			System.out.println("dao : "+result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

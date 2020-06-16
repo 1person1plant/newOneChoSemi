@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MyWishListService;
 import member.model.vo.MyWishList;
-import member.model.vo.RealWishList;
-
 
 /**
- * Servlet implementation class WishListMemoServlet
+ * Servlet implementation class WishListDeleteServlet
  */
-@WebServlet("/wishmemo.up")
-public class WishListMemoServlet extends HttpServlet {
+@WebServlet("/delete.wi")
+public class WishListDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishListMemoServlet() {
+    public WishListDeleteServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -35,8 +34,11 @@ public class WishListMemoServlet extends HttpServlet {
 		String wishNo = request.getParameter("wishNo");
 		String memberNo = request.getParameter("memberNo");
 		String wishMemo = request.getParameter("wishMemo");
-		System.out.println("wishNo : "+wishNo + "memberNo : "+memberNo + "wishMemo : " + wishMemo);
-		int result = new MyWishListService().memoUpdate(new RealWishList(wishNo,memberNo,wishMemo));
+		System.out.println("wishNo" + wishNo + "memberNo : " + memberNo );
+		
+		int result = new MyWishListService().deleteWish(new MyWishList(wishNo,memberNo,wishMemo));
+		
+		System.out.println("servlet result : " +result);
 		
 		PrintWriter out = response.getWriter();
 		
@@ -56,8 +58,8 @@ public class WishListMemoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 }
-

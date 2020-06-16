@@ -3,11 +3,13 @@ package order.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Order implements Serializable {
+public class Order implements Serializable{
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8042025341247276539L;
+	private static final long serialVersionUID = -1846534217500612309L;
 	private String orderNo;				// 주문 번호 pk
 	private String itemNo;				// 상품 번호 pk
 	private String memberNo;			// 회원 번호 
@@ -69,6 +71,14 @@ public class Order implements Serializable {
 		this.orderAddPoint = orderAddPoint;
 		this.orderPaymentOption = orderPaymentOption;
 	}
+	
+	public Order(String orderNo, String itemNo, String memberNo) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.memberNo = memberNo;
+	}
+
 	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, int orderCount, int orderUsePoint,
 			String orderName, String orderPhone1, String orderPhone2, String orderPhone3, String orderPostcode,
 			String orderAddress1, String orderAddress2, String orderRequest, int orderDCost, String orderCancelrequest,

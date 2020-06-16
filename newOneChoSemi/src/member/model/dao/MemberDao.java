@@ -461,7 +461,8 @@ public class MemberDao {
 									rset.getString("MEMBER_RANK"),
 									rset.getInt("MEMBER_POINT"),
 									rset.getInt("MEMBER_TOTALPURCHASEAMOUNT"));
-//					System.out.println("grade dao"+grade);
+					
+					System.out.println("grade dao"+grade);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -473,6 +474,7 @@ public class MemberDao {
 			return grade;
 		}
 
+		
 		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 			PreparedStatement pstmt = null;
 			int result = 0;
@@ -559,7 +561,7 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			Member loginUser = null;
-	
+
 			String query = "SELECT MEMBER_NO, MEMBER_ADMIN, MEMBER_ID, MEMBER_PWD, MEMBER_NAME, MEMBER_PHONE1, MEMBER_PHONE2, MEMBER_PHONE3, MEMBER_EMAIL1, MEMBER_EMAIL2, MEMBER_POSTCODE, MEMBER_ADDRESS1, MEMBER_ADDRESS2, MEMBER_STATUS, MEMBER_POINT, MEMBER_RANK FROM MEMBER WHERE MEMBER_NO = ?";
 			
 			try {

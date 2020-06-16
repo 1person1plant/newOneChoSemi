@@ -12,6 +12,7 @@ import member.model.dao.MemberDao;
 import member.model.vo.Grade;
 import member.model.vo.Member;
 import order.model.vo.Order;
+import member.model.vo.MyWishList;
 
 public class MemberService {
 	/**
@@ -189,7 +190,7 @@ public class MemberService {
 	public Grade memberGrade(String memberNo) {
 		Connection conn = getConnection();
 		Grade grade = new MemberDao().memberGrade(conn,memberNo);
-		
+		System.out.println("dao>service : " + grade);
 		close(conn);
 		return grade;
 	}
@@ -217,5 +218,5 @@ public class MemberService {
 		close(conn);
 		return loginUser;
 	}
-	
+
 }

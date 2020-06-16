@@ -234,7 +234,7 @@ label {
 								<tr>
 									<td scope="row" colspan='3' class="mt-2">
 										<input id='myBtn' data-toggle='modal' data-target='#intro'
-											type='button' class='button1' value="탈퇴하기">&nbsp;&nbsp;
+											type='button' class='button1' value="탈퇴하기" >&nbsp;&nbsp;
 											<button type='button' class='button1' id="pageCancel">취소</button>
 									</td>
 								</tr>
@@ -260,21 +260,21 @@ label {
 									<ul>
 										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberId()%>" name="memberId"></li>
 										<li style="display:none;"><input type="text" value="<%=loginUser.getMemberName()%>" name="memberName"></li>
-										<li class='wdchk'><input type='checkbox' id='chk1' name="reason" value="chk1"><label
+										<li class='wdchk'><input type='checkbox' id='chk1' name="reason" value="1.상품 다양성/품질 불만"><label
 											for='chk1'>&nbsp;상품 다양성/품질 불만</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk2' name="reason" value="chk2"><label
+										<li class='wdchk'><input type='checkbox' id='chk2' name="reason" value="2.상품 정보 부족"><label
 											for='chk2'>&nbsp;상품 정보 부족</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk3' name="reason" value="chk3"><label
+										<li class='wdchk'><input type='checkbox' id='chk3' name="reason" value="3.이용 빈도 낮음"><label
 											for='chk3'>&nbsp;이용빈도 낮음</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk4' name="reason" value="chk4"><label
+										<li class='wdchk'><input type='checkbox' id='chk4' name="reason" value="4.개인정보 유출 우려"><label
 											for='chk4'>&nbsp;개인정보 유출 우려</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk5' name="reason" value="chk5"><label
+										<li class='wdchk'><input type='checkbox' id='chk5' name="reason" value="5.시스템 오류 빈번"><label
 											for='chk5'>&nbsp;시스템 오류 빈번</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk6' name="reason" value="chk6"><label
+										<li class='wdchk'><input type='checkbox' id='chk6' name="reason" value="6.아이디 변경"><label
 											for='chk6'>&nbsp;아이디 변경</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk7' name="reason" value="chk7"><label
+										<li class='wdchk'><input type='checkbox' id='chk7' name="reason" value="7.초식 동물 입양"><label
 											for='chk7'>&nbsp;초식 동물 입양</label></li>
-										<li class='wdchk'><input type='checkbox' id='chk8' name="reason" value="chk8"><label
+										<li class='wdchk'><input type='checkbox' id='chk8' name="reason" value="8.배송 지연"><label
 											for='chk8'>&nbsp;배송지연</label></li>
 									</ul>
 								</li>
@@ -345,7 +345,7 @@ label {
 						$("#reasonForm").submit();
 					} else {
 						alert('남아 주셔서 감사합니다.');
-						location.href="<%=request.getContextPath()%>/grade.jsp";
+						location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 					}
 				}
 				function realt(i) {
