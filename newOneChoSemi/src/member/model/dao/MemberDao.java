@@ -403,7 +403,7 @@ public class MemberDao {
 			System.out.println("맴버 적립 포인트 :  " + orderBuyer.get(0).getOrderAddPoint());
 			System.out.println("맴버 지출 :  " + orderpaymentTotal);
 			
-			String query = "UPDATE MEMBER SET MEMBER_POINT = (SELECT MEMBER_POINT FROM MEMBER WHERE MEMBER_NO = ?) + ? - ?," + 
+			String query = "UPDATE MEMBER SET MEMBER_POINT = (SELECT MEMBER_POINT FROM MEMBER WHERE MEMBER_NO = ?) + ? - ? ," + 
 											 "MEMBER_TOTALPURCHASEAMOUNT = (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?) + ? " + 
 						   "WHERE MEMBER_NO = ?";
 			
