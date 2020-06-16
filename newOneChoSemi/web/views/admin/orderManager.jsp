@@ -61,7 +61,7 @@
 
      /*datatable css*/
      div.dataTables_wrapper {
-        width: 80rem;
+        width: 70rem;
         margin: 0 auto;
       
     }
@@ -148,7 +148,7 @@
     
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.me'">
                     <span data-feather="file-text"></span>
                    	 고객계정 관리
                   </a>
@@ -164,7 +164,7 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
@@ -267,7 +267,7 @@
                    
                    <%if(!orders.isEmpty()){ %>
                         
-                        <table id="orderlist" class="display" style="width:100%;text-align: center;">
+                        <table id="orderlist" class="display" style="text-align: center;">
                             <thead>
                                 <tr>
                                 	<th></th>
@@ -350,7 +350,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        <button type="button" id="modifyBtn" style="background-color: #1f598c;color: white;" class="btn btn-secondary btn-lg btn-block">주문 수정하기</button>
+                        <button type="button" id="modifyBtn" style="width:100%;background-color: #1f598c;color: white;" class="btn btn-secondary btn-lg btn-block">주문 수정하기</button>
 						</form>
                        <%}else{ %> 
                        		<div class="container">
@@ -409,7 +409,7 @@
 
 <!--datatable 관련 script-->
  
-  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.js"></script>

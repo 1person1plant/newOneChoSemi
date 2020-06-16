@@ -27,7 +27,15 @@ public class AdminOrderService {
 		Connection conn=getConnection();
 		int result=new AdminOrderDao().updateOrder(conn,orders);
 		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
+		
 		return result;
 	}
 
@@ -35,6 +43,13 @@ public class AdminOrderService {
 		
 		Connection conn=getConnection();
 		int result=new AdminOrderDao().deleteOrder(conn,orderNum,itemNum);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		return result;
@@ -48,5 +63,7 @@ public class AdminOrderService {
 		close(conn);
 		return orders;
 	}
+
+	
 
 }

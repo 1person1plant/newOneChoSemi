@@ -30,6 +30,8 @@ public class OrderAdminDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		String orderNum=request.getParameter("orderNum");
 		String itemNum=request.getParameter("itemNum");
 		

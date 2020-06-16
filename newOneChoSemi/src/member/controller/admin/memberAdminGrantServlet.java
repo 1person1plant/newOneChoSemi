@@ -1,30 +1,27 @@
-package item.controller.admin;
+package member.controller.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
+import member.model.service.admin.AdminMemberService;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class memberAdminGrantServlet
  */
-@WebServlet("/list.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/adminGrant.me")
+public class memberAdminGrantServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public memberAdminGrantServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,26 +29,29 @@ public class ItemListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		request.setCharacterEncoding("UTF-8");
 		
+		String admin=request.getParameter("adminChange");
+		String memNo=request.getParameter("memberNo");
+		System.out.println(admin);
+		System.out.println(memNo);
 		
+		AdminMemberService ms=new AdminMemberService();
+		int result=ms.grantAdmin(admin,memNo);
 		
-		if(!items.isEmpty()&&!images.isEmpty()) {
+		if(result>0) {
 			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
+			response.sendRedirect("adminList.me");
+			
 			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
+			request.setAttribute("msg", "회원 업데이트 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		
+			
 		}
+		
 		
 	}
 
@@ -59,6 +59,7 @@ public class ItemListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -32,6 +32,8 @@ public class OrderAdminUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		String[] ids=request.getParameterValues("id");
 		String[] payment=request.getParameterValues("payment");
 		String[] delivery=request.getParameterValues("delivery");

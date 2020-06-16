@@ -139,6 +139,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().updateItem(conn, item);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -150,6 +157,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().updateItemImage(conn, item);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -161,6 +175,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().deleteItem(conn, itemNum);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -180,6 +201,13 @@ public class ItemService {
 		
 		Connection conn=getConnection();
 		int result=new ItemDao().updateStock(conn,items);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		return result;

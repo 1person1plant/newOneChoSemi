@@ -1,4 +1,4 @@
-package order.controller.admin;
+package member.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.service.admin.AdminMemberService;
+import member.model.vo.admin.AdminMember;
 import order.model.service.admin.AdminOrderService;
 import order.model.vo.admin.AdminOrder;
 
 /**
- * Servlet implementation class OrderAdminListServlet
+ * Servlet implementation class memberAdminListServlet
  */
-@WebServlet("/adminList.or")
-public class OrderAdminListServlet extends HttpServlet {
+@WebServlet("/adminList.me")
+public class memberAdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderAdminListServlet() {
+    public memberAdminListServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,22 +36,27 @@ public class OrderAdminListServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		AdminOrderService os=new AdminOrderService();
+		AdminMemberService ms=new AdminMemberService();
 		
-		//주문 리스트 가져오기
+		//멤버 리스트를 가져오자
+		ArrayList<AdminMember> members=ms.selectAllMember();
+		
+		//주문리스트를 가져오자
+		AdminOrderService os=new AdminOrderService();
 		ArrayList<AdminOrder> orders=os.selectAllOrders();
 		
-		if(!orders.isEmpty()) {
+		if(!members.isEmpty()&&!orders.isEmpty()) {
 			
+			request.setAttribute("members", members);
 			request.setAttribute("orders", orders);
-			request.getRequestDispatcher("views/admin/orderManager.jsp").forward(request, response);
-			
+			request.getRequestDispatcher("views/admin/memberManager.jsp").forward(request, response);
 		}else {
 			
-			request.setAttribute("msg", "주문 조회 실패");
+			request.setAttribute("msg", "회원 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			
+		
 		}
+		
 		
 	}
 
@@ -56,6 +64,7 @@ public class OrderAdminListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
