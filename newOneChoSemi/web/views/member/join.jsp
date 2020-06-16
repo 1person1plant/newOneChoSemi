@@ -370,21 +370,19 @@
 			</div>
 						</div>
 						<!-- 아코디언 메뉴-->
-						
 						<br><br>
-						<div class="test col-12" align="center">
-							<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;" onclick="joinSubmit();">회 원 가 입</button>&nbsp; 
-							<input type="reset" value="회 원 가 입 취소" class="btn btn-default col-3" onclick="goMain();" style="background: #F2F1DF; color: black;">
-						</div>
 					</div>
-				
+					
 					<!-- 오른쪽 공백 -->
 					<div class="test col-2"></div>
 				
-				</div>	
-				
+				</div>		
 			</div>
 		</form>
+		<div class="test col-12" align="center">
+			<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;" onclick="joinSubmit();">회 원 가 입</button>&nbsp; 
+			<input type="reset" value="회 원 가 입 취소" class="btn btn-default col-3" onclick="goMain();" style="background: #F2F1DF; color: black;">
+		</div>
 		
 		<!-- ------------------------- 스 크 립 트 구문  -->
 
@@ -463,7 +461,7 @@
 
 		<!-- 체크박스 클릭 이벤트 리스너 -->
 		<script>
-			function oneCheck(a){
+		/*	function oneCheck(a){
 	    		var allChkBox = $("[name=allChk]");
 	    		var chkBoxName = $(a).attr("name");
 	 
@@ -493,7 +491,7 @@
 	           	 		oneCheck(this);
 	        		});
 	    		});
-			});
+			}); */
 
 
 			// 동의함 체크박스 
@@ -598,10 +596,9 @@
 		<script>
 			// 회원가입 폼에 빈칸이 있을 시 submit 안되게 하고 알림창으로 알려주기
 			function joinSubmit() {
-				var chkAll = $(".allChk");
-				var chk = $(".chkbox");
-				
-				console.log("뭐야");
+			//	var chkAll = $(".allChk");
+			//	var chk = $(".chkbox");
+	
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
@@ -616,8 +613,8 @@
 					alert('핸드폰 번호를 입력해주세요');
 				} else if( $("#email1").val() == null || $("#email1").val() == "" ){
 					alert('이메일을 입력해주세요');
-				} else if( chk[0].checked != true || chk[1].checked != true) {
-					alert('약관에 동의를 해주세요');
+				} else if( checkbox1.checked != true || checkbox2.checked != true ){
+				alert('약관에 동의를 해주세요');
 				} else{
   					$('#joinForm').submit();
 				}
@@ -653,6 +650,7 @@
 						success:function(data){
 							if(data=="permit"){
 								alert("아이디를 사용 하실 수 있습니다.");
+								
 							}else{
 								alert("아이디가 중복됩니다. 다시 입력해주세요");
 								userId.focus();

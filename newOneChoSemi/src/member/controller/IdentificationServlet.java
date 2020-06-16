@@ -24,7 +24,6 @@ public class IdentificationServlet extends HttpServlet {
      */
     public IdentificationServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -41,7 +40,7 @@ public class IdentificationServlet extends HttpServlet {
 			request.getRequestDispatcher("views/myPage/grade.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			request.getRequestDispatcher("views/myPage/identification.jsp").forward(request, response);
 		}
 	}
 
@@ -49,7 +48,6 @@ public class IdentificationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

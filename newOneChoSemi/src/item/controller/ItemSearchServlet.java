@@ -24,7 +24,6 @@ public class ItemSearchServlet extends HttpServlet {
      */
     public ItemSearchServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -34,8 +33,9 @@ public class ItemSearchServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
-		String priceMin = request.getParameter("searchPriceMin");
-		String priceMax = request.getParameter("searchPriceMax");
+		// 입력받은 검색어를 ArrayList에 담고 Dao에 보내기
+		int priceMin = Integer.valueOf(request.getParameter("searchPriceMin"));
+		int priceMax = Integer.valueOf(request.getParameter("searchPriceMax"));
 		String what = request.getParameter("searchWhat");
 		
 		ArrayList searchList = new ArrayList();
@@ -43,15 +43,22 @@ public class ItemSearchServlet extends HttpServlet {
 		searchList.add(priceMin);
 		searchList.add(priceMax);
 		searchList.add(what);
-		
+				
 		ItemService itService = new ItemService();
+		
 		ArrayList<Item> resultList = new ArrayList<>();
 		
 		resultList = itService.searchResult(searchList);
+		int resultCount = resultList.size();
 		
-		request.setAttribute("searchResult", resultList);
+		if(resultList != null) {
+			request.setAttribute("searchResult", resultList);	
+			request.setAttribute("resultCount", resultCount);
+			request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
+		}else {
+			System.out.println("널 이야~");
+		}
 		
-		request.getRequestDispatcher("views/item/itemResult.jsp").forward(request, response);
 
 	}
 
@@ -59,7 +66,6 @@ public class ItemSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

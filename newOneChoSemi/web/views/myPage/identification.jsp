@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -127,12 +128,14 @@ td {
 		<div class="row">
 			<div class="col-md-3">
 				<%@include file="myPageCategory.jsp"%>
+				
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
 					<form id="identification" action="<%=request.getContextPath()%>/identy.me" method="post">
 						<input style="display:none;" type="text" value="<%=loginUser.getMemberId()%>" id="memberId" name="memberId">
+						<input style="display:none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
 						<table class="table">
 							<thead>
 								<tr>
@@ -151,7 +154,7 @@ td {
 										name='password1'></td>
 								</tr>
 								<tr>
-									<td scope="row" colspan='3' class="mt-2"><input type='submit' id='idenBtn' class='button1' name="idenBtn" value="확인">&nbsp;&nbsp; 
+									<td scope="row" colspan='3' class="mt-2"><input type='button' id='idenBtn' class='button1' name="idenBtn" value="확인">&nbsp;&nbsp; 
 										<button type='button' id="cancelBtn" class='button1'>취소</button>
 									</td>
 								</tr>
@@ -170,7 +173,7 @@ td {
 				var Pwd = "<%=chkPwd%>";
 				
 				if((inputPwd1==Pwd)){
-					location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
+					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				}else if((inputPwd1=="")||(inputPwd1==null)){
 					alert("비밀번호를 입력해 주세요.");
 				}else if(inputPwd1 != Pwd){

@@ -6,9 +6,12 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
+import member.model.vo.Grade;
 import member.model.vo.Member;
+import order.model.vo.Order;
 
 public class MemberService {
 	/**
@@ -67,16 +70,6 @@ public class MemberService {
 		return result;
 	}
 
-	// ------------------------------------ 아라
-	/**
-	 * 카카오 로그인 기능
-	 * @param member
-	 * @return
-	 */
-	public Member kakaoLoginMember(Member member) {
-		return null;
-	}
-
 	public int reasonMember(Member memberReason) {
 		Connection conn = getConnection();
 		
@@ -91,6 +84,21 @@ public class MemberService {
 		return result;
 	}
 	
+	// ------------------------------------ 아라
+	/**
+	 * 카카오 로그인 기능
+	 * @param member
+	 * @return
+	 */
+	public Member kakaoLoginMember(Member member) {
+		Connection conn = getConnection();
+		
+		Member loginUser = new MemberDao().kakaoLoginMember(conn, member);
+		
+		close(conn);
+		return loginUser;
+	}
+
 	/**
 	 * 회원가입
 	 * @param member 회원가입을 한 회원 정보
@@ -113,11 +121,24 @@ public class MemberService {
 	
 	/**
 	 * 카카오 회원가입 
+	 * @param memberName 
+	 * @param userId 
 	 * @param member
 	 * @return
 	 */
 	public int kakaoinsertMember(Member member) {
-		return 0;
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().kakaoinsertMember(conn,member);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 	/**
@@ -138,11 +159,20 @@ public class MemberService {
 	
 	/**
 	 * 아이디 찾기
-	 * @param member 입력된 휴대폰 번호+이메일
-	 * @return
+	 * @param memberAddress2 
+	 * @param memberAddress1 
+	 * @param memberPhone3 
+	 * @param memberPhone2 
+	 * @param searchId_A 입력된 휴대폰 번호+이메일
+	 * @return 
 	 */
 	public Member searchIdMember(Member member) {
-		return null;
+		Connection conn = getConnection();
+		
+		Member searchId_A = new MemberDao().searchIdMember(conn, member);
+		
+		close(conn);
+		return searchId_A;
 	}
 	
 	/**
@@ -152,6 +182,40 @@ public class MemberService {
 	 */
 	public Member searchPwdMember(Member member) {
 		return null;
+	}
+
+//	------------------------------------------------ 아라
+	
+	public Grade memberGrade(String memberNo) {
+		Connection conn = getConnection();
+		Grade grade = new MemberDao().memberGrade(conn,memberNo);
+		
+		close(conn);
+		return grade;
+	}
+
+	public int orderCompMemberPoint(ArrayList<Order> orderBuyer, int orderpaymentTotal) {
+		Connection conn = getConnection();
+		int result = new MemberDao().orderCompMemberPoint(conn, orderBuyer, orderpaymentTotal);
+		
+		close(conn);
+		return result;
+	}
+
+	public void memberRankUpdate(ArrayList<Order> orderBuyer) {
+		Connection conn = getConnection();
+		new MemberDao().memberRankUpdate(conn, orderBuyer);
+		
+		close(conn);
+	}
+
+	public Member loginSessionUpdateMember(String memberNo) {
+		Connection conn = getConnection();
+		
+		Member loginUser = new MemberDao().loginSessionUpdateMember(conn, memberNo);
+		
+		close(conn);
+		return loginUser;
 	}
 	
 }

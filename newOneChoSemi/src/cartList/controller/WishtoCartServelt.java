@@ -37,19 +37,21 @@ public class WishtoCartServelt extends HttpServlet {
 		String wishNum = request.getParameter("wishNum");
 		String itemId = request.getParameter("itemId");
 		String userNo = request.getParameter("userNo");
-		System.out.println("WishtoCartServelt : " + wishNum + " : " + itemId  + " : " + userNo);
+		
+//		System.out.println("WishtoCartServelt : " + wishNum + " : " + itemId  + " : " + userNo);
+		
 		ArrayList<Cart> cartList = new ArrayList<>();
 		PrintWriter out = response.getWriter();
 		
 		boolean result = new CartService().cartContainChk(userNo,itemId);
 
-		System.out.println("WishtoCartServelt : " + result);
+//		System.out.println("WishtoCartServelt : " + result);
 		
 		if(!result) {
 			cartList = new CartService().wishtoCartList(wishNum,itemId,userNo);
 	
-			System.out.println("cartList is empty? : " + cartList.isEmpty());
-			System.out.println("CartListServlet cartList : " + cartList);
+//			System.out.println("cartList is empty? : " + cartList.isEmpty());
+//			System.out.println("CartListServlet cartList : " + cartList);
 			
 			if(cartList.isEmpty()) {
 				out.print("fail");		

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import cartList.model.vo.Cart;
+import order.model.vo.Order;
 
 import static common.JDBCTemplate.close;
 
@@ -18,7 +19,7 @@ public class CartDao {
 	      
 		ArrayList<Cart> cartList = new ArrayList<>();
 	      
-		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_PATH, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =?";
 	      
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -35,6 +36,7 @@ public class CartDao {
 								, rSet.getInt("ITEM_DISCOUNT")
 		                        , rSet.getInt("ITEM_MAX")
 		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_PATH")
 		                        , rSet.getString("IMAGE_NAME")
 	                         	);
 				
@@ -100,7 +102,7 @@ public class CartDao {
 		
 		ArrayList<Cart> cartList = new ArrayList<>();
 
-		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? ";
+		String query = "SELECT MEMBER_NO, CARTLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, ITEM_DISCOUNT, ITEM_MAX, CARTLIST_COUNT, IMAGE_PATH, IMAGE_NAME FROM MEMBER_CARTLIST WHERE MEMBER_NO =? ";
 		// cartOrderList.size() 만큼 query문 만들기
 		for(int i = 0 ; i < cartOrderList.size() ; i++) {
 			if(i == 0) {
@@ -118,13 +120,12 @@ public class CartDao {
 			// cartOrderList.size() 만큼 DB에 요청
 			int j = 2;
 			for(int i = 0 ; i < cartOrderList.size() ; i++) {
-				System.out.println("cartOrderList.get(" + j + ").getCartListNo() : " + cartOrderList.get(i).getCartListNo() + " j : " + j);
+				//System.out.println("cartOrderList.get(" + j + ").getCartListNo() : " + cartOrderList.get(i).getCartListNo() + " j : " + j);
 				pstmt.setString(j, cartOrderList.get(i).getCartListNo());
 				j++;
 			}
 			
 			rSet = pstmt.executeQuery();
-			System.out.println("rSet : "+ rSet);
 			
 			while(rSet.next()) {
 				Cart cr = new Cart(rSet.getString("MEMBER_NO")
@@ -135,12 +136,13 @@ public class CartDao {
 								, rSet.getInt("ITEM_DISCOUNT")
 		                        , rSet.getInt("ITEM_MAX")
 		                        , rSet.getInt("CARTLIST_COUNT")
+		                        , rSet.getString("IMAGE_PATH")
 		                        , rSet.getString("IMAGE_NAME")
 		                     	);
 								
 				cartList.add(cr);
 			}
-			System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
+			//System.out.println("CartDao 주문페이지 출력 리스트 : " + cartList);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -207,7 +209,7 @@ public class CartDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		System.out.println("CartDao update itemId : " + itemId + " : " + userNo);
+		//System.out.println("CartDao update itemId : " + itemId + " : " + userNo);
 		
 		String query = "INSERT INTO CARTLIST VALUES('C'||LPAD(SEQ_CID.NEXTVAL,5,'0'), ?, ?, 1)";
 
@@ -223,7 +225,7 @@ public class CartDao {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("CartDao 카트 수량 업데이트 : " + result);
+		//System.out.println("CartDao 카트 수량 업데이트 : " + result);
 
 		return result;
 	}
@@ -257,7 +259,7 @@ public class CartDao {
 				
 				cartList.add(c);
 			}
-			System.out.println("CartDao wishtoCartList : " + cartList);
+			//System.out.println("CartDao wishtoCartList : " + cartList);
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -301,7 +303,7 @@ public class CartDao {
 				
 				cartList.add(c);
 			}
-			System.out.println("cartContainChk : " + cartList);
+			//System.out.println("cartContainChk : " + cartList);
 
 			if(cartList.isEmpty()) {
 				// false는 추가 가능하다
@@ -317,6 +319,48 @@ public class CartDao {
 			close(pstmt);
 			close(rSet);
 		}
+		
+		return result;
+	}
+
+	public int orderCompDeleteCartList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+	      
+		String query = "DELETE FROM CARTLIST WHERE MEMBER_NO = ?";
+
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			if(i == 0) {
+				query += " AND (ITEM_NO = ?";
+			} else {
+				query += " OR ITEM_NO = ?";
+			}
+		}
+		query += ")";
+		
+		//System.out.println(query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderBuyer.get(0).getMemberNo());
+			//System.out.println(orderBuyer.get(0).getMemberNo());
+			
+			int j = 2;
+			for(int i = 0 ; i < orderItem.size() ; i++) {
+				pstmt.setString(j, orderItem.get(i).getItemNo());
+				//System.out.println(orderItem.get(i).getItemNo());
+				j++;
+			}
+				
+			result = pstmt.executeUpdate();
+			
+			//System.out.println("카트 삭제 성공? " + result);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		//System.out.println("주문 완료 후 카트리스트 삭제 : " + result);
 		
 		return result;
 	}

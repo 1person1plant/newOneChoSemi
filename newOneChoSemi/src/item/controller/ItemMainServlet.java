@@ -26,7 +26,6 @@ public class ItemMainServlet extends HttpServlet {
      */
     public ItemMainServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -40,11 +39,11 @@ public class ItemMainServlet extends HttpServlet {
 		// BEST, NEW 시작
 		ArrayList<Item> bestList = itService.bestList();
 		ArrayList<Item> newList = itService.newList();
-		
-		view = request.getRequestDispatcher("views/item/itemMain.jsp");
-		
+				
 		request.setAttribute("bestList", bestList);
 		request.setAttribute("newList", newList);
+		
+		view = request.getRequestDispatcher("views/item/itemMain.jsp");
 		// BEST, NEW 끝
 				
 		// ALL PAGINATION START
@@ -82,7 +81,6 @@ public class ItemMainServlet extends HttpServlet {
 		request.setAttribute("allList", allList);
 		// ALL PAGINATION END
 		
-		
 		view.forward(request, response);
 	}
 
@@ -90,7 +88,6 @@ public class ItemMainServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

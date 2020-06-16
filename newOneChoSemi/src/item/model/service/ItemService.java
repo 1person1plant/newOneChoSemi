@@ -253,11 +253,33 @@ public class ItemService {
 		
 		ArrayList<Item> resultList = new ItemDao().searchResult(conn, searchList);
 		
+		close(conn);
+		
 		return resultList;
 
 	}
-
 	
+	public int categoryCount(String category) {
+
+		Connection conn = getConnection();
+		
+		int categoryCount = new ItemDao().categoryCount(conn, category);
+		
+		close(conn);
+		
+		return categoryCount;
+	}
+
+	public ArrayList<Item> categoryList(String category) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Item> categoryList = new ItemDao().categoryList(conn, category);
+		
+		close(conn);
+		
+		return categoryList;
+	}
 
 
 }
