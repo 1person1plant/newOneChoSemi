@@ -91,10 +91,10 @@ public class MemberService {
 	public Member kakaoLoginMember(Member member) {
 		Connection conn = getConnection();
 		
-		Member kakaoUser = new MemberDao().kakaoLoginMember(conn, member);
+		Member loginUser = new MemberDao().kakaoLoginMember(conn, member);
 		
 		close(conn);
-		return kakaoUser;
+		return loginUser;
 	}
 
 	/**

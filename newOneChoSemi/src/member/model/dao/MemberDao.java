@@ -242,7 +242,7 @@ public class MemberDao {
 		public Member kakaoLoginMember(Connection conn, Member member) {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			Member kakaoUser = null;
+			Member loginUser = null;
 
 			String query = "SELECT MEMBER_NO" + 
 								", MEMBER_ADMIN" +
@@ -270,7 +270,7 @@ public class MemberDao {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					kakaoUser = new Member(rs.getString("MEMBER_NO"),
+					loginUser = new Member(rs.getString("MEMBER_NO"),
 										   rs.getString("MEMBER_ADMIN"),
 										   rs.getString("MEMBER_ID"),
 										   rs.getString("MEMBER_PWD"),
@@ -296,7 +296,7 @@ public class MemberDao {
 				close(pstmt);
 			}
 			
-			return kakaoUser;
+			return loginUser;
 		}
 		
 		/**

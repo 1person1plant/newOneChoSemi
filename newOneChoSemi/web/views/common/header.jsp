@@ -391,15 +391,18 @@
    			<%} %>
 		}
         function myPageBtn(){
-        	<%if(result){%>
-    			$("#loginBtn").click();
-    			
-    			
-    			
-			<%} else {%>
-        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
-	   		<%} %>
-		}
+            <%if(result){%>
+              $("#loginBtn").click();
+          <%} else {%>
+             var chkKao = "<%=loginUser.getMemberStatus() %>";
+             if(chkKao == "K"){
+                location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+             } else {
+                  location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
+             }
+             
+             <%} %>
+       }
         function goCart(){
         	var userNo = $("#userNo").val();
         	<%if(result){%>

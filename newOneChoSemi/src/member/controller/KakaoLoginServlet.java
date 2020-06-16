@@ -47,38 +47,21 @@ public class KakaoLoginServlet extends HttpServlet {
 			
 			int result_joinK = new MemberService().kakaoinsertMember(member); // 자동 회원가입
 			
-			Member kakaoUser = new MemberService().kakaoLoginMember(member);
+			// 자동 로그인
+			Member loginUser = new MemberService().kakaoLoginMember(member);
 			HttpSession session = request.getSession();
-			session.setAttribute("kakaoUser", kakaoUser);
+			session.setAttribute("loginUser", loginUser);
 			response.sendRedirect("index.jsp"); 
 			
-		}else { // 존재하면 
-			
-			Member kakaoUser = new MemberService().kakaoLoginMember(member);
+		}else { // 존재하면 로그인 하기
+			Member loginUser = new MemberService().kakaoLoginMember(member);
 			
 			HttpSession session = request.getSession();
 			
-			session.setAttribute("kakaoUser", kakaoUser);
+			session.setAttribute("loginUser", loginUser);
 				
 			response.sendRedirect("index.jsp"); 
-			
-		}
-		
-		
-		
-		
-		// 1-1. 있으면 카카오 로그인
-		
-//		Member kakaoUser = new MemberService().kakaoLoginMember(member);
-		
-		// 1-2. 없으면 회원가입
-		
-//		int result_joinK = new MemberService().kakaoinsertMember(member);
-		
-		
-//		request.getSession().setAttribute("", );
-//		response.sendRedirect("main.jsp");
-		
+		}		
 	}
 
 	/**
