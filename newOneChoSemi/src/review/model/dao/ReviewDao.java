@@ -96,4 +96,31 @@ public class ReviewDao {
 		return myReviewList;
 	}
 
+	public int statusCheck(Connection conn, String itemNo, String memberNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "SELECT COUNT(*) FROM (SELECT ORDER_NO, ITEM_NO, ORDER_DATE, MEMBER_NO, DELIVERY_CODE, ORDER_REVIEW FROM ORDERLIST WHERE ITEM_NO = ? AND MEMBER_NO = ? AND ORDER_REVIEW = 'N')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(result);
+		
+		return result;
+	}
+
 }
