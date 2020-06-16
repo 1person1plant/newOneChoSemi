@@ -51,7 +51,7 @@
   
     	<!-- 아라 _ 계정찾기-->
     	
-    	<form id="searchMemberid" action="<%=request.getContextPath()%>/searchId.me" method="post">
+    
 			<div class="container-fluid" style="margin-top: 80px;">
     	
      			<!-- 공백 : 내용 : 공백 -->
@@ -192,7 +192,7 @@
 				</div>
 			</div>
     		<div class="container-fluid"></div>
-    	</form>
+    
     		
     		<!-- 아라 _ 계정찾기-->
     	
@@ -206,10 +206,36 @@
 				alert('핸드폰 번호를 입력해주세요');
 			} else if( $("#memberEmail1").val() == null || $("#memberEmail1").val() == "" ){
 				alert('이메일을 입력해주세요');
-			} else{
-    			$('#searchMemberid').submit();
+			} else{    		
+				
+				var jsonData = {
+					phone1 : $("#memberPhone1").val(),
+					phone2 : $("#memberPhone2").val(),	
+					phone3 : $("#memberPhone3").val(),	
+					email1 : $("#memberEmail1").val(),
+					email2 : $("#memberEmail2").val()
+				}
+				
+				$.ajax({
+					url: "<%=request.getContextPath()%>/searchId.me",
+					type: "POST",
+					data: jsonData,
+					dataType: 'json',
+					
+					success: function(data){
+						
+						if(data != null){
+							alert("회원님의 아이디는 [" + data.memberId + "] 입니다.");
+						}else{
+							alert("내용과 일치하는 회원정보가 없습니다");
+						}
+					},
+					error: function(request,status,error){
+						alert("예기치 못한 에러가 발생했습니다. 관리자에게 문의하여 주십시오");
+					}
+				})
 			}
-    	}
+    	} 
     </script>		
     
 

@@ -36,10 +36,6 @@
 		branch = "images/rank/branch3.png";
 		fruit = "images/rank/fruit4.png";
 		tree = "images/rank/tree5.png";
-		System.out.print("sk rkruruduur"+price);
-		if(price.equals(null)){
-			price = "0";
-		}
 				
 		switch(rank){
 		case "R1" : rank = "1단계";
@@ -68,7 +64,6 @@
 		
 		}
 	}
-	
 	%>
 <!DOCTYPE html>
 <html>
@@ -179,7 +174,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp" %>
+				<%if(loginUser.getMemberStatus() == "K"){ %>
+					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
+				<%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
