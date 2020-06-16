@@ -106,7 +106,7 @@
 					return true;				
 			}
 			
-			// 카카오 로그인 스크립트
+			// 카카오 로그인 스크립트 => 자동 회원가입 기능 (ajax)
 			function kakaoLogin() {
 				Kakao.Auth.loginForm({
 					success : function(response) {
@@ -116,16 +116,10 @@
 							url : '/v2/user/me',
 							success : function(response) {
 								console.log(response);
-									debugger;
-								
+								// debugger;
 								$('#kakaoId').val(response.id);
 								$('#kakaoNm').val(response.properties.nickname);
 								$('#kakaoForm').submit();
-								// 자동 회원가입 기능 (ajax)
-								//1. response.id(카카오 사용자 고유  id)가 테이블에 존재할 경우  로그인 시키기
-
-								//2. response.id가 테이블에 존재하지 않을 경우 자동으로  insert한 후에 로그인 시키기
-
 							},
 							fail : function(error) {
 								console.log(error);
