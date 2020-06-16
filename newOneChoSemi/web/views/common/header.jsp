@@ -4,13 +4,17 @@
 	boolean result = false;
 	String adminChk = "";
 	String userNo = "";
+	String userRank = "";
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
-		/* System.out.println("로그인 유저 정보 : " + loginUser); */
+		//System.out.println("loginUser : " + loginUser);
+		//System.out.println("loginUser : " + loginUser.getMemberPoint());
+		/* System.out.println("유저 데이트 확인 용 : " + loginUser); */
 		if(loginUser == null){
 			result = true;
 		} else {
 			userNo = loginUser.getMemberNo();
+			userRank = loginUser.getMemberRank();
 			/* System.out.println("userNo " + userNo); */
 			adminChk = loginUser.getMemberAdmin();
 			result = false;
