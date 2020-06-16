@@ -1,7 +1,8 @@
-package order.controller.admin;
+package Board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import order.model.service.admin.AdminOrderService;
-import order.model.vo.Order;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import Board.model.service.QnaService;
+import Board.model.vo.Qna;
 
 /**
- * Servlet implementation class OrderAdminUpdateServlet
+ * Servlet implementation class QnaInsertServlet
  */
-@WebServlet("/orderUpdate.or")
-public class OrderAdminUpdateServlet extends HttpServlet {
+@WebServlet("/insert.qna")
+public class QnaInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderAdminUpdateServlet() {
+    public QnaInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,49 +39,36 @@ public class OrderAdminUpdateServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String[] ids=request.getParameterValues("id");
-		String[] payment=request.getParameterValues("payment");
-		String[] delivery=request.getParameterValues("delivery");
-		String[] items=request.getParameterValues("item");
 		
-		ArrayList<Order> orders=new ArrayList();
-		
-		for(int i=0;i<ids.length;i++) {
-			
-			System.out.println("ids:"+ids[i]);
-			System.out.println("payment:"+payment[i]);
-			System.out.println("delivery:"+delivery[i]);
-			System.out.println("item:"+items[i]);
-			
-			
-			Order o=new Order();
-			o.setOrderNo(ids[i]);
-			o.setItemNo(items[i]);
-			o.setPaymentCode(payment[i]);
-			o.setDeliveryCode(delivery[i]);
-			
-			orders.add(o);
-			
-			
-		}
+		String category=request.getParameter("category");
+		String title=request.getParameter("title");
+		String password=request.getParameter("password");
+		String content=request.getParameter("editordata");
+		String memberNo=request.getParameter("qnaMemberNo");
 		
 		
-		//주문 업데이트 하러 가즈아
-		int result=new AdminOrderService().updateOrder(orders);
+		Qna q=null;
+		q=new Qna();
+		q.setQnaCategory(category);
+		q.setQnaTitle(title);
+		q.setQnaPassword(password);
+		q.setQnaContent(content);
+		q.setMemberId(memberNo);
+		
+		System.out.println(q);
+		
+		QnaService qs=new QnaService();
+		int result=qs.insertQuestion(q);
 		
 		if(result>0) {
-			
-			response.sendRedirect("adminList.or");
-			
+			System.out.println("질문 조회로 이동!");
+			response.sendRedirect("list.qna");
 		}else {
 			
 			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
-			request.setAttribute("msg", "주문 수정 실패");
+			request.setAttribute("msg", "질문 등록 실패");
 			views.forward(request, response);
-			
 		}
-		
-		
 		
 	}
 

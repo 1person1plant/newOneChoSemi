@@ -123,7 +123,7 @@
   
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.me'">
                   <span data-feather="file-text"></span>
                  	 고객계정 관리
                 </a>
@@ -145,7 +145,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
               <span data-feather="file"></span>
               Q&A
             </a>
@@ -171,7 +171,7 @@
             <h1 style="margin-top: 30px;margin-bottom: 80px; text-align: left;">상품등록</h1>
 
       
-            <form class="needs-validated" id="createItem" method="post" encType="multipart/form-data" action="<%=request.getContextPath()%>/insert.it" onsubmit="return validate();">
+            <form class="needs-validated" id="createItem" method="post" encType="multipart/form-data" action="<%=request.getContextPath()%>/insert.it" onsubmit="return iivalidate();">
 
                 <div class="mb-3">
                     <label for="validationServer02">카테고리&키워드</label>
@@ -488,9 +488,7 @@
 
                     })
 
-                      $('button[type=reset]').click(function(){
-                        $("#countText").children('span').first().text('0');
-                      })
+                     
                   })
 
                 </script>
@@ -828,7 +826,7 @@
     
   
       <script>
-    	function validate(){
+    	function iivalidate(){
     		var category=$("#category").val();
     		var keyword=$("#keyword").val();
     		var display=$("display").val();
@@ -854,7 +852,31 @@
     			return false;
     		}
     		
+    		if($("#mainImg").val()==""){
+    			
+    			alert("메인이미지를 등록해주세요.");
+    			return false;
+    		}
+    		
+    		if($("#subImg").val()==""){
+    			
+    			alert("상세이미지를 등록해주세요.");
+    			return false;
+    		}
+    		
+    		
     	}
+    
+    </script>
+    <script>
+    
+    	$('button[type=reset]').click(function(){
+        $("#countText").children('span').first().text('0');
+        document.getElementById("mpreview").style.display="none";
+        document.getElementById("spreview").style.display="none";
+        
+        
+      });
     
     </script>
     

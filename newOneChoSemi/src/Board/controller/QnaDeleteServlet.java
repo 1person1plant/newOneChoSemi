@@ -1,29 +1,27 @@
-package item.controller.admin;
+package Board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
+import Board.model.service.QnaService;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class QnaDeleteServlet
  */
-@WebServlet("/list.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/delete.qna")
+public class QnaDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public QnaDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,25 +31,24 @@ public class ItemListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		String qNum=request.getParameter("questionNum");
+		System.out.println(qNum);
 		
+		QnaService qs=new QnaService();
 		
+		int result=qs.deleteQuestion(qNum);
 		
-		if(!items.isEmpty()&&!images.isEmpty()) {
+		if(result>0) {
 			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
+			System.out.println("질문 조회로 이동!");
+			response.sendRedirect("list.qna");
 			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "질문 삭제 실패");
+			views.forward(request, response);
+			
 		}
 		
 	}

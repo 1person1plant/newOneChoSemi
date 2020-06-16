@@ -1,4 +1,4 @@
-package item.controller.admin;
+package Board.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
+import Board.model.service.QnaService;
+import Board.model.vo.Qna;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class QnaAdminListServlet
  */
-@WebServlet("/list.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/adminList.qna")
+public class QnaAdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public QnaAdminListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +32,24 @@ public class ItemListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		QnaService qs=new QnaService();
+		ArrayList<Qna> qnas=qs.selectAllQna();
 		
 		
 		
-		if(!items.isEmpty()&&!images.isEmpty()) {
+		if(!qnas.isEmpty()) {
 			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
+			request.setAttribute("qnas", qnas);
+			request.getRequestDispatcher("views/admin/qnaManager.jsp").forward(request, response);
 			
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
+			request.setAttribute("msg", "질문 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		
 		}
+		
+		
 		
 	}
 

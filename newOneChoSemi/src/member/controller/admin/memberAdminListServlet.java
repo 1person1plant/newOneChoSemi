@@ -1,4 +1,4 @@
-package item.controller.admin;
+package member.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
+import member.model.service.admin.AdminMemberService;
+import member.model.vo.admin.AdminMember;
+import order.model.service.admin.AdminOrderService;
+import order.model.vo.admin.AdminOrder;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class memberAdminListServlet
  */
-@WebServlet("/list.it")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/adminList.me")
+public class memberAdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ItemListServlet() {
+    public memberAdminListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +34,29 @@ public class ItemListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ItemService is=new ItemService();
-		//아이템리스트 가지러가기
-		ArrayList<Item> items=is.selectAllItems();
-		//이미지 가지러가기
-		ArrayList<ItemImage> images=is.selectItemImg();
+		request.setCharacterEncoding("UTF-8");
 		
+		AdminMemberService ms=new AdminMemberService();
 		
+		//멤버 리스트를 가져오자
+		ArrayList<AdminMember> members=ms.selectAllMember();
 		
-		if(!items.isEmpty()&&!images.isEmpty()) {
+		//주문리스트를 가져오자
+		AdminOrderService os=new AdminOrderService();
+		ArrayList<AdminOrder> orders=os.selectAllOrders();
+		
+		if(!members.isEmpty()&&!orders.isEmpty()) {
 			
-			request.setAttribute("items", items);
-			request.setAttribute("images", images);
-			request.getRequestDispatcher("views/admin/itemManager.jsp").forward(request, response);
-			
+			request.setAttribute("members", members);
+			request.setAttribute("orders", orders);
+			request.getRequestDispatcher("views/admin/memberManager.jsp").forward(request, response);
 		}else {
 			
-			request.setAttribute("msg", "상품 조회 실패");
+			request.setAttribute("msg", "회원 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		
 		}
+		
 		
 	}
 

@@ -62,7 +62,7 @@
 
      /*datatable css*/
      div.dataTables_wrapper {
-        width: 80rem;
+        width: 70rem;
         margin: 0 auto;
       
     }
@@ -149,7 +149,7 @@
     
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.me'">
                     <span data-feather="file-text"></span>
                    	 고객계정 관리
                   </a>
@@ -171,7 +171,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
                 <span data-feather="file"></span>
                 	Q&A
               </a>
@@ -373,7 +373,7 @@
                     
                             <!-- Modal body -->
                             <div class="modal-body">
-                            <form id="modalForm"  method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/update.it" onsubmit="return validate();">
+                            <form id="modalForm"  method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/update.it" onsubmit="return ivalidate();">
 
                                 
                                 <ul>
@@ -788,7 +788,7 @@
             $(".modal-body input").change(function(){
             	
             	$(this).css("background","yellow");
-            })
+            });
             
 			
             
@@ -802,7 +802,7 @@
         <!--모달에서 수정/삭제 시 서버로 값 넘기기-->
         <script>
             
-        function validate(){
+        function ivalidate(){
         	
         	if($("#exhibitStatus").val()=="상태수정"){
         		alert("전시상태를 선택하세요");
