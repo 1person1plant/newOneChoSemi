@@ -72,6 +72,10 @@
             margin: 0;
             padding-left: 0;
         }
+        #navbar-top a,
+        #navbar-bot a {
+        	cursor:pointer
+        }
     
         #navbar-top .nav-item,
         #navbar-bot .nav-item{
