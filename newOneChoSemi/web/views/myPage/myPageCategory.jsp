@@ -33,14 +33,6 @@
         * { font-family: "basicFont"; }
         /* font end */
     </style>
-
-<title>Insert title here</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width" initial-scale="1">
-    <title>Cho-당신을 위한 반려식물</title>
-    <!--타이틀 아이콘-->
-    <link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
-
 <style>
 /* 좌측 메뉴 리스트 */
 .list-group a :hover {
@@ -90,22 +82,18 @@ ul .list-group-item :hover {
 				<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>">
 					<li class="list-group-item">회원 등급</li>
 				</a>
-				<%if(loginUser.getMemberStatus() != "K") { %>
 				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
 					<li class="list-group-item">개인 정보 수정</li>
 				</a>
-				<%} %>
 				<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>">
 					<li class="list-group-item">주문 내역 조회</li>
 				</a>
 				<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">
 					<li class="list-group-item">위시리스트</li>
 				</a>
-				<%if(loginUser.getMemberStatus() != "K") { %>
 				<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
 					<li class="list-group-item">회원 탈퇴</li>
 				</a>
-				<%} %>
 			</ul>
 		</div>
 

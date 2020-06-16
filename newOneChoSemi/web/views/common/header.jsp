@@ -1,30 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="member.model.vo.Member"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
-   Member loginUser = null;
-   Member kakaoUser = null;
-   boolean result = true;
-   String adminChk = "";
-   String kakaoChk = "";
-   String userNo = "";
-   String kakaoNo = "";
+	Member loginUser = null;
+	Member kakaoUser = null;
+	boolean result = true;
+	String adminChk = "";
+	String kakaoChk = "";
+	String userNo = "";
+	String kakaoNo = "";
    
-   if(session!=null || !request.isRequestedSessionIdValid()){
-      loginUser = (Member)session.getAttribute("loginUser");
-      kakaoUser = (Member)session.getAttribute("kakaoUser");
-      
-      if(kakaoUser != null && loginUser == null){
-         kakaoChk = kakaoUser.getMemberStatus();
-         kakaoNo = kakaoUser.getMemberNo();
-         loginUser = null;
-         result = false;
-      } else if(kakaoUser == null && loginUser != null){
-         userNo = loginUser.getMemberNo();
-         adminChk = loginUser.getMemberAdmin();
-         kakaoUser = null;
-         result = false;
-      }
-   }
+	if(session!=null || !request.isRequestedSessionIdValid()){
+		loginUser = (Member)session.getAttribute("loginUser");
+		kakaoUser = (Member)session.getAttribute("kakaoUser");
+		System.out.println("Header : " + loginUser);
+		System.out.println("Header 카카오? : " + loginUser.getMemberStatus());
+		if(kakaoUser != null && loginUser == null){
+			kakaoChk = kakaoUser.getMemberStatus();
+			kakaoNo = kakaoUser.getMemberNo();
+			loginUser = null;
+			result = false;
+		} else if(kakaoUser == null && loginUser != null){
+			userNo = loginUser.getMemberNo();
+			adminChk = loginUser.getMemberAdmin();
+			kakaoUser = null;
+			result = false;
+		}
+	}
 %>
 
 <!DOCTYPE html>
@@ -402,12 +402,11 @@
     			$("#loginBtn").click();
 			<%} else {%>
 				var chkKao = "<%=loginUser.getMemberStatus() %>";
-				// console.log(chkKao);
 				if(chkKao == "K"){
-					// console.log("K");
+					alert("카카오 로그인");
 					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				} else {
-					// console.log("N");
+					alert("일반 로그인");
 	        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 				}
 				
