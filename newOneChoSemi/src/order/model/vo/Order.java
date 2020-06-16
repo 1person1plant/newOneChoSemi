@@ -3,11 +3,13 @@ package order.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Order implements Serializable {
+public class Order implements Serializable{
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8042025341247276539L;
+	private static final long serialVersionUID = -1846534217500612309L;
 	private String orderNo;				// 주문 번호 pk
 	private String itemNo;				// 상품 번호 pk
 	private String memberNo;			// 회원 번호 
@@ -28,7 +30,7 @@ public class Order implements Serializable {
 	private String orderAddress2;		// 수령자 상세 주소
 	private String orderRequest;		// 수령자 요청사항
 	private int orderDCost;				// 배송비
-	private int orderAddPoint;		// 추가 포인트
+	private int orderAddPoint;			// 추가 포인트
 	private String orderPaymentOption;	// 지불 방법
 	private String orderReview;			// 기본: N 작성 후 : Y
 	private String orderCancelrequest;	// 기본: N 취소 : Y
@@ -69,6 +71,14 @@ public class Order implements Serializable {
 		this.orderAddPoint = orderAddPoint;
 		this.orderPaymentOption = orderPaymentOption;
 	}
+	
+	public Order(String orderNo, String itemNo, String memberNo) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.memberNo = memberNo;
+	}
+
 	public Order(String orderNo, String itemNo, String memberNo, Date orderDate, int orderCount, int orderUsePoint,
 			String orderName, String orderPhone1, String orderPhone2, String orderPhone3, String orderPostcode,
 			String orderAddress1, String orderAddress2, String orderRequest, int orderDCost, String orderCancelrequest,
@@ -128,6 +138,16 @@ public class Order implements Serializable {
 		this.orderCancelyn = orderCancelyn;
 		this.deliveryCode = deliveryCode;
 		this.paymentCode = paymentCode;
+	}
+	public Order(String orderNo, String itemNo, Date orderDate, String memberNo,
+			String deliveryCode, String orderReview) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.orderDate = orderDate;
+		this.memberNo = memberNo;				
+		this.deliveryCode = deliveryCode;
+		this.orderReview = orderReview;
 	}
 	public String getOrderNo() {
 		return orderNo;

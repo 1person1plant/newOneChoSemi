@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MyWishListService;
 import member.model.vo.MyWishList;
+import member.model.vo.RealWishList;
+
 
 /**
  * Servlet implementation class WishListMemoServlet
@@ -22,7 +26,6 @@ public class WishListMemoServlet extends HttpServlet {
      */
     public WishListMemoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -30,17 +33,21 @@ public class WishListMemoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String wishNo = request.getParameter("wishNo");
+		String memberNo = request.getParameter("memberNo");
 		String wishMemo = request.getParameter("wishMemo");
-		System.out.println("wishNo"+wishNo + "----wishMemo"+wishMemo);
-		int result = new MyWishListService().memoUpdate(new MyWishList(wishNo,wishMemo));
-		System.out.println("servlet" + result);
-		if(result>0) {
-			request.setAttribute("msg", "성공");
-			request.getRequestDispatcher("views/myPage/wishList.jsp").forward(request, response);
-		}else {
-			request.setAttribute("msg", "실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		System.out.println("wishNo : "+wishNo + "memberNo : "+memberNo + "wishMemo : " + wishMemo);
+		int result = new MyWishListService().memoUpdate(new RealWishList(wishNo,memberNo,wishMemo));
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result > 0) {
+			out.print("permit");
+		} else {
+			out.print("fail");
 		}
+		
+		out.flush();
+		out.close();
 		
 		
 	}
@@ -49,7 +56,6 @@ public class WishListMemoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

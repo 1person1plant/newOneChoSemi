@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import cartList.model.service.WishService;
 import cartList.model.vo.WishList;
+import member.model.service.MyWishListService;
+import member.model.vo.MyWishList;
 
 /**
  * Servlet implementation class MyWishListServlet
@@ -33,8 +35,8 @@ public class MyWishListServlet extends HttpServlet {
 		String memberNo = request.getParameter("memberNo");
 		/* System.out.println("넘버는 받아와 지냐?" + memberNo); */
 		
-		ArrayList<WishList> mwl = new WishService().myWishList(memberNo);
-		/* System.out.println("servlet"+mwl); */
+		ArrayList<MyWishList> mwl = new MyWishListService().myWishList(memberNo);
+		/* System.out.println("service > servlet ="+mwl); */
 		
 		if(mwl != null) {
 			request.setAttribute("mwl", mwl);

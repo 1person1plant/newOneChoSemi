@@ -25,7 +25,6 @@ public class ItemListServlet extends HttpServlet {
      */
     public ItemListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -51,6 +50,7 @@ public class ItemListServlet extends HttpServlet {
 			
 			request.setAttribute("msg", "상품 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		
 		}
 		
 	}
@@ -59,7 +59,6 @@ public class ItemListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

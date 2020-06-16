@@ -38,7 +38,6 @@ public class AdminOrderDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -71,7 +70,6 @@ public class AdminOrderDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -195,7 +193,6 @@ public class AdminOrderDao {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			
@@ -207,5 +204,7 @@ public class AdminOrderDao {
 		
 		return orders;
 	}
+
+	
 
 }

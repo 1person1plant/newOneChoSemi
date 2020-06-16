@@ -1,18 +1,31 @@
 package member.model.vo;
 
 public class MyWishList {
+	private String wishlistMemo;
 	private String wishlistNo;
 	private String itemNo;
+	private String imageName;
+	private String imagePath;
+	private String itemName;
 	private String memberNo;
-	private String wishlistMemo;
 	public MyWishList() {
 		super();
 	}
-	public MyWishList(String wishlistNo, String itemNo, String memberNo, String wishlistMemo) {
+	public MyWishList(String wishlistMemo, String wishlistNo, String itemNo, String imageName, String imagePath,
+			String itemName, String memberNo) {
 		super();
+		this.wishlistMemo = wishlistMemo;
 		this.wishlistNo = wishlistNo;
 		this.itemNo = itemNo;
+		this.imageName = imageName;
+		this.imagePath = imagePath;
+		this.itemName = itemName;
 		this.memberNo = memberNo;
+	}
+	public String getWishlistMemo() {
+		return wishlistMemo;
+	}
+	public void setWishlistMemo(String wishlistMemo) {
 		this.wishlistMemo = wishlistMemo;
 	}
 	public String getWishlistNo() {
@@ -27,27 +40,41 @@ public class MyWishList {
 	public void setItemNo(String itemNo) {
 		this.itemNo = itemNo;
 	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 	public String getMemberNo() {
 		return memberNo;
 	}
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
-	public String getWishlistMemo() {
-		return wishlistMemo;
-	}
-	public void setWishlistMemo(String wishlistMemo) {
-		this.wishlistMemo = wishlistMemo;
-	}
 	@Override
 	public String toString() {
-		return "MyWishList [wishlistNo=" + wishlistNo + ", itemNo=" + itemNo + ", memberNo=" + memberNo
-				+ ", wishlistMemo=" + wishlistMemo + "]";
+		return "MyWishList [wishlistMemo=" + wishlistMemo + ", wishlistNo=" + wishlistNo + ", itemNo=" + itemNo
+				+ ", imageName=" + imageName + ", imagePath=" + imagePath + ", itemName=" + itemName + ", memberNo="
+				+ memberNo + "]";
 	}
-	public MyWishList(String wishlistNo, String wishlistMemo) {
+	public MyWishList(String wishlistMemo, String wishlistNo, String memberNo) {
 		super();
-		this.wishlistNo = wishlistNo;
 		this.wishlistMemo = wishlistMemo;
+		this.wishlistNo = wishlistNo;
+		this.memberNo = memberNo;
 	}
 	
 	

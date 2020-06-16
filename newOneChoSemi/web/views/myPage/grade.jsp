@@ -1,21 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="member.model.vo.*"%>
-	<%-- <%
-		Member userGrade = null;
-	   String chkRank = "";
-	   String userRank = "";
-	   if(session!=null || !request.isRequestedSessionIdValid()){
-	      userGrade = (Member)session.getAttribute("userGrade");
-	      chkRank = userGrade.getMemberRank();
-	      switch(chkRank){
-	      case "R1" : userRank="1단계"; break;
-	      case "R2" : userRank="2단계"; break;
-	      case "R3" : userRank="3단계"; break;
-	      case "R4" : userRank="4단계"; break;
-	      case "R5" : userRank="5단계"; break;
-	      }
-	   }
-	%> --%>
 	<%
 	Grade grade = (Grade)request.getAttribute("grade");
 	String rank = "";
@@ -29,18 +13,14 @@
 	String rankImg = "";
 	if(grade != null){
 		rank = grade.getMemberRank();
-		price = String.valueOf(grade.getTotalPrice());
+		price = String.valueOf(grade.getMemberTotalpurchasemount());
 		point = grade.getMemberPoint();
 		seed = "images/rank/seed1.png";
 		sprout = "images/rank/sprout2.png";
 		branch = "images/rank/branch3.png";
 		fruit = "images/rank/fruit4.png";
 		tree = "images/rank/tree5.png";
-		System.out.print("sk rkruruduur"+price);
-		if(price.equals(null)){
-			price = "0";
-		}
-				
+
 		switch(rank){
 		case "R1" : rank = "1단계";
 		break;
@@ -65,10 +45,8 @@
 		break;
 		case "5단계" : rankImg = tree;
 		break;
-		
 		}
 	}
-	
 	%>
 <!DOCTYPE html>
 <html>
@@ -179,7 +157,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp" %>
+				<%if(loginUser.getMemberStatus() == "K"){ %>
+					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
+				<%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>

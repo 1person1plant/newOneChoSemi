@@ -2,24 +2,41 @@ package member.model.service;
 
 import member.model.dao.MyWishListDao;
 import member.model.vo.MyWishList;
+import member.model.vo.RealWishList;
+
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+
 public class MyWishListService {
 
-	public ArrayList<MyWishList> memberWish(String memberNo) {
+	
+	 public int memoUpdate(RealWishList realWishList) { 
+		 Connection conn = getConnection();
+		 int result = new MyWishListDao().memoUpdate(conn,realWishList); 
+		 System.out.println("memoUpdate service"+ result);
+		 if(result>0) {
+			 commit(conn);
+		}else {
+			rollback(conn);
+		} 
+		close(conn);
+		return result; 
+	 }
+	 
+
+	public ArrayList<MyWishList> myWishList(String memberNo) {
 		Connection conn = getConnection();
-		ArrayList<MyWishList> mwl = new MyWishListDao().memberWish(conn,memberNo);
-		/* System.out.println("service"+mwl); */
+		ArrayList<MyWishList> mwl = new MyWishListDao().myWishList(conn, memberNo);
+		/* System.out.println("service = " + mwl); */
 		close(conn);
 		return mwl;
 	}
 
-	public int memoUpdate(MyWishList myWishList) {
+	public int deleteWish(MyWishList myWishList) {
 		Connection conn = getConnection();
-		int result = new MyWishListDao().memoUpdate(conn,myWishList);
-		System.out.println("service"+ result);
+		int result = new MyWishListDao().deleteWish(conn,myWishList);
 		if(result>0) {
 			commit(conn);
 		}else {
@@ -28,5 +45,8 @@ public class MyWishListService {
 		close(conn);
 		return result;
 	}
+
+
+
 
 }

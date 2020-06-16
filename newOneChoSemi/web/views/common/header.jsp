@@ -7,11 +7,10 @@
 	String kakaoChk = "";
 	String userNo = "";
 	String kakaoNo = "";
-	
+   
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		kakaoUser = (Member)session.getAttribute("kakaoUser");
-		
 		if(kakaoUser != null && loginUser == null){
 			kakaoChk = kakaoUser.getMemberStatus();
 			kakaoNo = kakaoUser.getMemberNo();
@@ -25,6 +24,7 @@
 		}
 	}
 %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -74,6 +74,10 @@
         #navbar-bot {
             margin: 0;
             padding-left: 0;
+        }
+        #navbar-top a,
+        #navbar-bot a {
+        	cursor:pointer
         }
     
         #navbar-top .nav-item,
@@ -391,18 +395,21 @@
    			<%} %>
 		}
         function myPageBtn(){
-            <%if(result){%>
-              $("#loginBtn").click();
-          <%} else {%>
-             var chkKao = "<%=loginUser.getMemberStatus() %>";
-             if(chkKao == "K"){
-                location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
-             } else {
-                  location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
-             }
-             
-             <%} %>
-       }
+
+        	<%if(result){%>
+    			$("#loginBtn").click();
+			<%} else {%>
+				var chkKao = "<%=loginUser.getMemberStatus() %>";
+				if(chkKao == "K"){
+					alert("카카오 로그인");
+					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+				} else {
+					alert("일반 로그인");
+	        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
+				}
+				
+	   		<%} %>
+		}
         function goCart(){
         	var userNo = $("#userNo").val();
         	<%if(result){%>

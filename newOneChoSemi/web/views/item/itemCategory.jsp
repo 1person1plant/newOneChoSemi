@@ -73,7 +73,7 @@
 			<div class="container item-container">
 				<div class="row title-row">
 					<div class="col-sm title-col">
-						<h1 class="display-6">RESULT</h1>
+						<h1 class="display-6"><%=category%></h1>
 					</div>
 					<div class="col-sm title-col-order">
 						<ul class="float-right item-order" id="all-item-order">

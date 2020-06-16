@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="item.model.vo.Item"%>
+    pageEncoding="UTF-8" import="order.model.vo.Order, item.model.vo.Item, review.model.vo.Review, java.util.ArrayList"%>
 <%
-	Item item = (Item)request.getAttribute("item");
+	Item item = (Item)request.getAttribute("itemDetail");
+	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
+	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
+	Order order = (Order)request.getAttribute("orderCheck");
+
 	String keyword = "";
 	String key1 = "";
 	String key2 = "";
+	
 	int available = 0;
 %>
 <!DOCTYPE html>
@@ -130,7 +135,9 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row iteminfo-row">
 				<div class="col iteminfo-col-left">
 					<div class="iteminfo-itemmain-img" id="iteminfo-itemmain-img">
-						<img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" id="itemmain-img">
+						<img
+							src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>"
+							id="itemmain-img">
 					</div>
 				</div>
 				<div class="col iteminfo-col-right">
@@ -138,17 +145,20 @@ td:nth-of-type(2) {width:45rem;}
 						<p class="h2 font-weight-bold my-auto iteminfo-title"><%=item.getItemName()%></p>
 					</div>
 					<div class="row iteminfo-keyword" id="iteminfo-keyword">
-					<%if(!(item.getItemKeywordNo().equals("K3"))) {%>
-						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=item.getKeywordName()%></span>
-					<%}else { %>
+						<%if(!(item.getItemKeywordNo().equals("K3"))) {%>
+						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
+							id="iteminfo-keyword-hash">#<%=item.getKeywordName()%></span>
+						<%}else { %>
 						<%
 							keyword = item.getKeywordName();
 							key1 = keyword.split(",")[0];
 							key2 = keyword.split(",")[1];
-						%>	
-						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=key1%></span>
-						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=key2%></span>
-					<%}%>
+						%>
+						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
+							id="iteminfo-keyword-hash">#<%=key1%></span> <span
+							class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
+							id="iteminfo-keyword-hash">#<%=key2%></span>
+						<%}%>
 					</div>
 					<div class="row iteminfo-explain-area" id="iteminfo-explain-area">
 						<p class="iteminfo-explain my-auto"><%=item.getItemInfo()%></p>
@@ -157,30 +167,44 @@ td:nth-of-type(2) {width:45rem;}
 						<div class="col iteminfo-starRating" id="iteminfo-starRating">
 							<i class="my-auto fa fa-star"></i> <i class="my-auto fa fa-star"></i>
 							<i class="my-auto fa fa-star"></i> <i class="my-auto fa fa-star"></i>
-							<i class="my-auto fa fa-star-o"></i> <span class="iteminfo-starRating-text my-auto" style="color: gray">5개 구매평</span>
+							<i class="my-auto fa fa-star-o"></i> <span
+								class="iteminfo-starRating-text my-auto" style="color: gray">5개
+								구매평</span>
 						</div>
 					</div>
-					<div class="row iteminfo-price" id="iteminfo-price" style="display: block;">
-						<div class="row iteminfo-beforeSale" id="iteminfo-beforeSale" style="color: gray">
-							<p class="h4 beforeSale-price" id="beforeSale-price" style="text-decoration: line-through;">&#8361;<%=item.getItemPrice()%></p>
+					<div class="row iteminfo-price" id="iteminfo-price"
+						style="display: block;">
+						<div class="row iteminfo-beforeSale" id="iteminfo-beforeSale"
+							style="color: gray">
+							<p class="h4 beforeSale-price" id="beforeSale-price"
+								style="text-decoration: line-through;">
+								&#8361;<%=item.getItemPrice()%></p>
 						</div>
 						<div class="row iteminfo-afterSale" id="iteminfo-afterSale">
-							<div class="col-10 iteminfo-afterSale-price" id="iteminfo-afterSale-price" style="color: #1f598c;">
-								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
+							<div class="col-10 iteminfo-afterSale-price"
+								id="iteminfo-afterSale-price" style="color: #1f598c;">
+								<p class="h3 afterSale-price" style="font-weight: bold">
+									&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
-								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons" id="iteminfo-share-btn" data-toggle="popover">
-										<i class="fa fa-paperclip" style="font-size: 1.5rem; color: #5b89a6;"></i>
+								<span class="col iteminfo-share-span" id="iteminfo-share-span"
+									style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons"
+										id="iteminfo-share-btn" data-toggle="popover">
+										<i class="fa fa-paperclip"
+											style="font-size: 1.5rem; color: #5b89a6;"></i>
 									</button>
-								</span>
-								<span class="col iteminfo-cart-span" id="iteminfo-cart-span" style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons" id="iteminfo-cart-btn" data-toggle="popover">
-										<i class="fa fa-shopping-cart" style="font-size: 1.5rem; color: gray;"></i>
+								</span> <span class="col iteminfo-cart-span" id="iteminfo-cart-span"
+									style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons"
+										id="iteminfo-cart-btn" data-toggle="popover">
+										<i class="fa fa-shopping-cart"
+											style="font-size: 1.5rem; color: gray;"></i>
 									</button>
-								</span>
-								<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn" data-toggle="popover">
+								</span> <span class="col iteminfo-wish-span" id="iteminfo-wish-span"
+									style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons"
+										id="iteminfo-wish-btn" data-toggle="popover">
 										<i class="fa fa-heart" style="font-size: 1.5rem; color: pink;"></i>
 									</button>
 								</span>
@@ -191,14 +215,17 @@ td:nth-of-type(2) {width:45rem;}
 						<dl class="row iteminfo-shipinfo" id="iteminfo-shipinfo">
 							<dt class="col-2 my-auto shipinfo-left">구매혜택</dt>
 							<dd class="col-10 my-auto shipinfo-right">
-								<button type="button" style="border: none; background: white;" data-toggle="tooltip" data-placement="right" title="누적금액에 따라 등급업">
+								<button type="button" style="border: none; background: white;"
+									data-toggle="tooltip" data-placement="right"
+									title="누적금액에 따라 등급업">
 									<i class="far fa-question-circle"></i>
 								</button>
 							</dd>
 							<dt class="col-2 my-auto shipinfo-left">배송방법</dt>
 							<dd class="col-10 my-auto shipinfo-right">택배</dd>
 							<dt class="col-2 my-auto shipinfo-left">배송비</dt>
-							<dd class="col-10 my-auto shipinfo-right">3,000원 (도서산간 지역 배송비 추가)</dd>
+							<dd class="col-10 my-auto shipinfo-right">3,000원 (도서산간 지역
+								배송비 추가)</dd>
 						</dl>
 					</div>
 					<div class="row iteminfo-quantity">
@@ -213,7 +240,10 @@ td:nth-of-type(2) {width:45rem;}
 									available = item.getItemStock();
 								}
 							%>
-							<input type="number" class="form-control form-control-sm item-quantity" id="quantityNumber" name="item-quantity" value="0" min="0" max="<%=available%>" step="1">
+							<input type="number"
+								class="form-control form-control-sm item-quantity"
+								id="quantityNumber" name="item-quantity" value="0" min="0"
+								max="<%=available%>" step="1">
 						</div>
 						<div class="col col-1 my-auto item-cancel">
 							<button class="btn btn-default cancel-button">
@@ -221,14 +251,16 @@ td:nth-of-type(2) {width:45rem;}
 							</button>
 						</div>
 					</div>
-					<div class="row iteminfo-quantity-result" id="iteminfo-quantity-result" style="text-align: right">
-						<span class="quantity-result">
-							<span style="font-size: 0.9rem">총 수량: </span><span id="whole-quantity" style="font-weight: bold; color: #1f598c;"></span>
-							<span id="howmany" style="font-size: 0.9rem">개/ </span>
-						</span>
-						<span class="whole-price-result">
-							<span style="font-size: 0.9rem">총 구매금액: </span><span id="whole-price" style="font-weight: bold; color: #1f598c;"></span>
-							<span id="quantity-won" style="font-size: 0.9rem">원</span>
+					<div class="row iteminfo-quantity-result"
+						id="iteminfo-quantity-result" style="text-align: right">
+						<span class="quantity-result"> <span
+							style="font-size: 0.9rem">총 수량: </span><span id="whole-quantity"
+							style="font-weight: bold; color: #1f598c;"></span> <span
+							id="howmany" style="font-size: 0.9rem">개/ </span>
+						</span> <span class="whole-price-result"> <span
+							style="font-size: 0.9rem">총 구매금액: </span><span id="whole-price"
+							style="font-weight: bold; color: #1f598c;"></span> <span
+							id="quantity-won" style="font-size: 0.9rem">원</span>
 						</span>
 					</div>
 					<div class="row iteminfo-buy">
@@ -241,6 +273,310 @@ td:nth-of-type(2) {width:45rem;}
 
 
 
+		
+
+
+
+
+
+
+		<!--아이템 디테일사진-->
+		<div class="container detail-container">
+			<div class="row title-row">
+				<p class="h1">DETAIL</p>
+			</div>
+			<div class="row detail-row">
+				<img id="detail-image"
+					src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+		<!--내 리뷰-->
+		<div class="container myReview-container">
+			<div class="row title-row">
+				<div class="col title-col" id="title-col">
+					<p class="h1">MY REVIEW</p>
+				</div>
+			</div>
+			<div class="row myReview-writing" id="myReview-writing">
+				<div id="myReview-writing-wrap">
+					<p class="h2" style="color: #2d2d2d; font-weight: bold;">REVIEW</p>
+					<p style="font-size: 1rem; color: black;">
+						식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!
+					</p>
+					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기" id="goReview-btn">
+					<input type="hidden" id="goReview-real-btn" data-toggle="modal" href="#reviewModal">
+				</div>
+			</div>
+			<div class="row myReview-content">
+				<table class="table table-hover myReview-table">
+					<tbody>
+					<%for(int i = 0; i < myReviewList.size(); i++) {%>
+						<tr>
+							<%
+								String rank = "";
+							
+								switch(myReviewList.get(i).getMemberRank()) {
+								case "R1": rank = "seed1.png";
+										   break;
+								case "R2": rank = "sprout2.png";
+										   break;
+								case "R3": rank = "branch3.png";
+										   break;
+								case "R4": rank = "fruit4.png";
+										   break;
+								case "R5": rank = "tree5.png";
+										   break;
+								}
+							%>
+							<td>
+								<img src="<%=request.getContextPath()%>/images/rank/<%=rank%>" class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
+							 	<a href="#" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;<a href="#" style="font-size: 0.8rem; color: grey;">삭제하기</a></td>
+							<td>
+								<div class="row review-star-score">
+									<%for(int k = 0; k < 1; k++) {%>
+									<%for(int j = 0; j < 5; j++) {%>
+
+									<%if(j < myReviewList.get(i).getReviewRate()) {%>
+									<i class="fa fa-star"></i>
+									<%}else {%>
+									<i class="fa fa-star-o"></i>
+									<%}%>
+
+									<%}%>
+									<%}%>
+								</div>
+								<div class="row review-set" id="review-set">
+									<span class="review-id"><%=myReviewList.get(i).getMemberId()%>/</span><span
+										class="review-date"><%=myReviewList.get(i).getReviewUDate()%></span>
+								</div>
+								<div class="row review-cont">
+									<p class="review-cont-real"><%=myReviewList.get(i).getReviewContent()%></p>
+								</div>
+								<div class="row review-bigImage" style="margin-top: 1rem;">
+									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image"
+										style="width: 30rem; height: 30rem;">
+								</div>
+							</td>
+							<td class="fadeout-image"><img
+								src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>"
+								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
+						</tr>
+						<%}%>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+
+
+
+
+
+		
+
+
+		<!--리뷰쓰기 모달-->
+		<form action="<%=request.getContextPath()%>/create.rv" method="post"
+			id="createReview" encType="multipart/form-data">
+			<div class="modal fade" id="reviewModal">
+				<div
+					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header" id="modal-header">
+							<button type="button" class="close modal-close"
+								data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<div class="row title-modal">
+								<div class="container-fluid" id="title-modal-container">
+									<p class="h4 my-auto" style="text-align: center">리뷰쓰기</p>
+								</div>
+							</div>
+							<div class="row iteminfo-modal">
+								<div class="col col-4 iteminfo-modal-img">
+									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
+								</div>
+								<div class="col col-8 iteminfo-modal-text">
+									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
+										<p class="h6 my-auto" style="color: gray; font-size: 1rem;">[<%=item.getItemName()%>]</p>
+										<input type="hidden" name="orderInfo" value="<%=order.getOrderNo()%>,<%=order.getItemNo()%>">
+									</div>
+									<div class="row iteminfo-modal-date">
+										<p class="my-auto" style="color:#5b89a6; font-size:0.8rem;">[구매일:&nbsp;<%=order.getOrderDate()%>]</p>
+									</div>
+									<div class="row iteminfo-modal-content" style="padding-right: 1rem;">
+										<p style="font-size: 0.8rem;"><%=item.getItemInfo()%></p>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row rating-modal">
+								<div class="container-fluid rating-modal-container">
+									<p class="h5 my-auto" style="text-align: center">상품은 어떠셨나요?</p>
+								</div>
+								<div class="container-fluid starRating">
+									<span class="fa fa-star-o" data-rating="1"
+										style="font-size: 3rem"></span> <span class="fa fa-star-o"
+										data-rating="2" style="font-size: 3rem"></span> <span
+										class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
+									<span class="fa fa-star-o" data-rating="4"
+										style="font-size: 3rem"></span> <span class="fa fa-star-o"
+										data-rating="5" style="font-size: 3rem"></span> <input
+										type="hidden" name="score" id="starScore" class="rating-value"
+										value="3">
+								</div>
+							</div>
+							<hr>
+							<div class="row writing-modal">
+								<div class="container writing-modal-container">
+									<p class="h5 my-auto" style="text-align: center">어떤 점이
+										좋았나요?</p>
+								</div>
+								<div class="container textarea-modal-container">
+									<div class="row textarea-row">
+										<textarea class="form-control review-textarea" name="content"
+											rows="5" placeholder="이곳에 작성해주세요."
+											style="background-color: lightgray; resize: none;"></textarea>
+									</div>
+									<div class="row float-right textarea-count-row">
+										<span id="counter">0</span><span class="textarea-count"
+											style="margin-right: 0.5rem;">/150자</span>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row attachPhoto-modal">
+								<button type="button" class="btn-secondary btn-block"
+									id="attachPhoto-btn"
+									style="height: 2.5rem; font-weight: lighter; border: none;">
+									<i class="fa fa-camera"></i>&nbsp;사진 첨부하기
+								</button>
+								<div id="photo-result"
+									style="margin-top: 1rem; width: 10rem; height: 12rem; border: none;">
+									<img id="photo-preview" style="width: 100%; height: 100%;">
+								</div>
+								<input type="file" id="review-btn" name="reviewPhoto"
+									style="display: none;" onchange="loadImg(this)">
+							</div>
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="reset" class="btn btn-light">취소하기</button>
+							<button type="submit" id="review-register"
+								class="btn btn-secondary">등록하기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+
+
+		
+
+
+
+
+
+
+		<!--다른 사람 리뷰-->
+		<div class="container review-container">
+			<div class="row review-title">
+				<p class="h1">REVIEW</p>
+			</div>
+			<div class="row review-content">
+				<table class="table table-hover review-table">
+					<tbody>
+						<%for(int i = 0; i < otherReviewList.size(); i++) {%>
+						<tr>
+							<%
+								String rank = "";
+							
+								switch(otherReviewList.get(i).getMemberRank()) {
+								case "R1": rank = "seed1.png";
+										   break;
+								case "R2": rank = "sprout2.png";
+										   break;
+								case "R3": rank = "branch3.png";
+										   break;
+								case "R4": rank = "fruit4.png";
+										   break;
+								case "R5": rank = "tree5.png";
+										   break;
+								}
+							%>
+							<td><img
+								src="<%=request.getContextPath()%>/images/rank/<%=rank%>"
+								class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
+							<td>
+								<div class="row review-star-score">
+									<%for(int k = 0; k < 1; k++) {%>
+									<%for(int j = 0; j < 5; j++) {%>
+
+									<%if(j < otherReviewList.get(i).getReviewRate()) {%>
+									<i class="fa fa-star"></i>
+									<%}else {%>
+									<i class="fa fa-star-o"></i>
+									<%}%>
+
+									<%}%>
+									<%}%>
+								</div>
+								<div class="row review-set" id="review-set">
+									<span class="review-id"><%=otherReviewList.get(i).getMemberId()%>/</span><span
+										class="review-date"><%=otherReviewList.get(i).getReviewUDate()%></span>
+								</div>
+								<div class="row review-cont">
+									<p class="review-cont-real"><%=otherReviewList.get(i).getReviewContent()%></p>
+								</div>
+								<div class="row review-bigImage" style="margin-top: 1rem;">
+									<img
+										src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
+										id="big-review-image" style="width: 30rem; height: 30rem;">
+								</div>
+							</td>
+							<td class="fadeout-image"><img
+								src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
+								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
+						</tr>
+						<%}%>
+					</tbody>
+				</table>
+				<nav class="review-pagination mx-auto">
+					<ul class="pagination justify-content-center">
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#">4</a></li>
+						<li class="page-item"><a class="page-link" href="#">5</a></li>
+						<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		<!--수량 체크와 관련된 script-->
 		<script>
 			$(function(){
@@ -255,8 +591,6 @@ td:nth-of-type(2) {width:45rem;}
 
                     })
                 })
-                
-                
                 
 			$(function(){
 				$("#quantityNumber").change(function(e){
@@ -284,167 +618,51 @@ td:nth-of-type(2) {width:45rem;}
 
 
 
-
-
-		<!--아이템 디테일사진-->
-		<div class="container detail-container">
-			<div class="row title-row">
-				<p class="h1">DETAIL</p>
-			</div>
-			<div class="row detail-row">
-				<img id="detail-image"
-					src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
-			</div>
-		</div>
-
-
-
-
-
-		<!--내 리뷰-->
-		<div class="container myReview-container">
-			<div class="row title-row">
-				<div class="col title-col" id="title-col">
-					<p class="h1">MY REVIEW</p>
-				</div>
-			</div>
-			<div class="row myReview-writing" id="myReview-writing">
-				<div id="myReview-writing-wrap">
-					<p class="h2" style="color: #2d2d2d; font-weight: bold;">REVIEW</p>
-					<p style="font-size: 1rem; color: black;">식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!	</p>
-					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기" id="goReview-btn" data-toggle="modal" href="#reviewModal">
-				</div>
-			</div>
-			<div class="row myReview-content">
-				<table class="table table-hover myReview-table">
-					<tbody>
-						<tr>
-							<td>
-								<img src="<%=request.getContextPath()%>/images/rank/fruit4.png" class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
-							 	<a href="#" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;<a href="#" style="font-size: 0.8rem; color: grey;">삭제하기</a>
-							</td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span
-										class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도
-										꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="../images/고무나무.jpg" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="<%=request.getContextPath()%>/images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-
 		<!--리뷰 사진 확대-->
 		<script>
-			$(function(){
-				$("tr").click(function(){
-					if($(this).find("#big-review-image").css("display")=="none") {
-						$(this).find("#big-review-image").css("display","block");
-                        $(this).find("#mini-review-image").css("visibility","hidden");
-                    }else {
-                        $(this).find("#big-review-image").css("display","none");
-                        $(this).find("#mini-review-image").css("visibility","visible");
-                    }                        
-                })
-            })
-        </script>
+		$(function() {
+			$("tr").click(function() {
+				
+					if ($(this).find("#big-review-image").css("display") == "none") {
+						$(this).find("#big-review-image").css("display", "block");
+						$(this).find("#mini-review-image").css("visibility", "hidden");
+					} else {
+						$(this).find("#big-review-image").css("display", "none");
+						$(this).find("#mini-review-image").css("visibility", "visible");
+					}
+			})
+		})
+		</script>
+
+		<script>
+		$(function() {
+			$("#goReview-btn").click(function(){
+				
+				var itemNo = "<%=item.getItemNo()%>";
+
+					$.ajax({
+						url:"<%=request.getContextPath()%>/status.rv",
+						type : "POST",
+						data : {itemNo:itemNo},
+						success : function(data) {						
+							if(data == "something") {
+								$("#goReview-real-btn").click();
+							}else if(data == "nothing"){
+								alert("등록할 리뷰가 없습니다.");
+							}else {
+								alert("로그인한 회원만 리뷰를 작성할 수 있습니다.")
+							}
+						},
+						error : function(request, status, error) {
+							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+						}
+					})
+			})
+		})
+		</script>
 
 
 
-
-
-		<!--리뷰쓰기 모달-->
-		<form action="<%=request.getContextPath()%>/create.rv" method="post" id="createReview" encType="multipart/form-data">
-		<div class="modal fade" id="reviewModal">
-			<div
-				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-header" id="modal-header">
-						<button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="row title-modal">
-							<div class="container-fluid" id="title-modal-container">
-								<p class="h4 my-auto" style="text-align: center">리뷰쓰기</p>
-							</div>
-						</div>
-						<div class="row iteminfo-modal">
-							<div class="col col-4 iteminfo-modal-img">
-								<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
-							</div>
-							<div class="col col-8 iteminfo-modal-text">
-								<div class="row iteminfo-modal-title" style="margin-bottom:0.3rem;">
-									<p class="h6 my-auto" style="color: gray; font-size:1rem;">[<%=item.getItemName()%>]</p>
-								</div>
-								<div class="row iteminfo-modal-content" style="padding-right:1rem;">
-									<p style="font-size:0.8rem;"><%=item.getItemInfo()%></p>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row rating-modal">
-							<div class="container-fluid rating-modal-container">
-								<p class="h5 my-auto" style="text-align: center">상품은 어떠셨나요?</p>
-							</div>
-							<div class="container-fluid starRating">
-								<span class="fa fa-star-o" data-rating="1" style="font-size: 3rem"></span>
-								<span class="fa fa-star-o" data-rating="2" style="font-size: 3rem"></span>
-								<span class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
-								<span class="fa fa-star-o" data-rating="4" style="font-size: 3rem"></span>
-								<span class="fa fa-star-o" data-rating="5" style="font-size: 3rem"></span>
-								<input type="hidden" name="score" id="starScore" class="rating-value" value="3">
-							</div>
-						</div>
-						<hr>
-						<div class="row writing-modal">
-							<div class="container writing-modal-container">
-								<p class="h5 my-auto" style="text-align: center">어떤 점이 좋았나요?</p>
-							</div>
-							<div class="container textarea-modal-container">
-								<div class="row textarea-row">
-									<textarea class="form-control review-textarea" name="content" rows="5" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
-								</div>
-								<div class="row float-right textarea-count-row">
-									<span id="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row attachPhoto-modal">
-							<button type="button" class="btn-secondary btn-block" id="attachPhoto-btn" style="height:2.5rem; font-weight:lighter; border:none;"><i class="fa fa-camera"></i>&nbsp;사진 첨부하기</button>
-							<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border:none;">
-								<img id="photo-preview" style="width:100%; height:100%;">	
-							</div>
-							<input type="file" id="review-btn" name="reviewPhoto" style="display:none;" onchange="loadImg(this)">					
-						</div>
-					</div>
-					<div class="modal-footer justify-content-center">
-						<button type="reset" class="btn btn-light">취소하기</button>
-						<button type="submit" id="review-register" class="btn btn-secondary">등록하기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		</form>
-		
-
-		
 		<!--리뷰 글자 수 세기(script)-->
 		<script>          
             $(function(){            	
@@ -469,12 +687,11 @@ td:nth-of-type(2) {width:45rem;}
                     $("#counter").text(inputLength);
                 })
             })
-            
         </script>
-        
-        
-        
-        <!--별 평점 주기(script)-->
+
+
+
+		<!--별 평점 주기(script)-->
 		<script>
             var starRating=$(".starRating .fa");
 
@@ -507,9 +724,9 @@ td:nth-of-type(2) {width:45rem;}
 				})
 			})
 		</script>
-		
-		
-		
+
+
+
 		<!--사진 미리보기-->
 		<script>
 			function loadImg(value) {
@@ -523,148 +740,6 @@ td:nth-of-type(2) {width:45rem;}
 				reader.readAsDataURL(value.files[0]);
 			}
 		</script>
-		
-		
-		
-		
-		
-		<!--다른 사람 리뷰-->
-		<div class="container review-container">
-			<div class="row review-title">
-				<p class="h1">REVIEW</p>
-			</div>
-			<div class="row review-content">
-				<table class="table table-hover review-table">
-					<tbody>
-						<tr>
-							<td><img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-						<tr>
-							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-						<tr>
-							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-						<tr>
-							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-						<tr>
-							<td><img src="<%=request.getContextPath()%>/images/rank/seed1.png" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
-							<td>
-								<div class="row review-star-score">
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i> 
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
-								</div>
-								<div class="row review-set" id="review-set">
-									<span class="review-id">kyeo**** /</span><span class="review-date">20-05-25</span>
-								</div>
-								<div class="row review-cont">
-									<p class="review-cont-real">이걸 사고 로또에 당첨되었습니다. 너무 기쁩니다. 님들도 꼭 사세요.</p>
-								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="images/고무나무.jpg" id="big-review-image" style="width: 30rem; height: 30rem;">
-								</div>
-							</td>
-							<td class="fadeout-image"><img src="images/고무나무.jpg" id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
-						</tr>
-					</tbody>
-				</table>
-				<nav class="review-pagination mx-auto">
-					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
 	</section>
 	<%@ include file="../common/footer.jsp"%>
 	<!-- 제이쿼리 -->

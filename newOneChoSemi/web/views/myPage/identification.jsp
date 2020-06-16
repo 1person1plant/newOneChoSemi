@@ -50,7 +50,38 @@ fieldset {
 	padding-right: 50px;
 	text-align: center;
 }
+/* 좌측 메뉴 리스트 */
+.list-group a :hover {
+	background: #6AAED9;
+	color: white;
+	text-decoration: none;
+}
 
+.list-group a {
+	text-decoration: none;
+}
+
+.list-group :hover {
+	background: #6AAED9;
+	color: white;
+	transition: 0.3s;
+	text-decoration: none;
+}
+
+.list-group-item :hover {
+	color: white;
+	text-decoration: none;
+}
+
+.list-group-item a:hover {
+	color: white;
+}
+
+ul .list-group-item :hover {
+	color: white;
+}
+
+/* 좌측 메뉴 리스트 끝 */
 /* 테이블 좌측 라벨 td */
 td.mt-2 {
 	padding: 12px;
@@ -127,8 +158,32 @@ td {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp"%>
-				
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<!-- 패널 타이틀1 -->
+						<h3 class="panel-title">
+							<span>마이 페이지</span>
+						</h3>
+					</div>
+					<!-- 사이드바 메뉴목록1 -->
+					<ul class="list-group">
+						<a href="#" class="sideCategory" id="gradeA">
+							<li class="list-group-item">회원 등급</li>
+						</a>
+						<a href="#" class="sideCategory" id="infA">
+							<li class="list-group-item">개인 정보 수정</li>
+						</a>
+						<a href="#" class="sideCategory" id="orderA">
+							<li class="list-group-item">주문 내역 조회</li>
+						</a>
+						<a href="#" class="sideCategory" id="wishA">
+							<li class="list-group-item">위시리스트</li>
+						</a>
+						<a href="#" class="sideCategory" id="withA">
+							<li class="list-group-item">회원 탈퇴</li>
+						</a>
+					</ul>
+				</div>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
@@ -140,7 +195,7 @@ td {
 							<thead>
 								<tr>
 									<br>
-									<th colspan="3" scope="col" style='border-bottom: 2px solid black'><h1>본인 확인</h1></th>
+									<th colspan="3" scope="col" style='border-bottom: 2px solid black'><h1>본인 인증</h1></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -185,7 +240,14 @@ td {
 			})
 		});
 	</script>
-		
+	<script>
+		$(function(){
+			$(".sideCategory").click(function(){
+				alert("본인 인증이 필요합니다.");
+				$("#password1").focus();
+			});
+		})
+	</script>
 	<script>
 		$(function(){
 			$(".button1").mouseenter(function(){

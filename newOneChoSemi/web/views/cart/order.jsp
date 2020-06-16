@@ -6,10 +6,12 @@
 	Rank rankDetail = (Rank)request.getAttribute("rankDetail");
 	int totalPrice = 0;
 	int totalDiscount = 0;
+	//System.out.println(cartList.size());
 	for(int i = 0 ; i < cartList.size() ; i++){
-		totalPrice += cartList.get(i).getItemPrice();
+		totalPrice += cartList.get(i).getItemPrice() * cartList.get(i).getCartListCount();
 		totalDiscount += cartList.get(i).getItemDiscount();
 	}
+	//System.out.println(cartList);
 %>
 <!DOCTYPE html>
 <html>
@@ -181,6 +183,8 @@
         text-align: center;
     }   
     
+    .orderpayment_point::-webkit-inner-spin-button,
+    .orderpayment_point::-webkit-outer-spin-button,
     .orderinfo-Recipient #recipient_phone2::-webkit-inner-spin-button,
     .orderinfo-Recipient #recipient_phone2::-webkit-outer-spin-button,
     .orderinfo-Recipient #recipient_phone3::-webkit-inner-spin-button,
@@ -664,7 +668,7 @@
 	            </tr>
 	            <tr>
 	                <td>포인트 사용</td>
-	                <td><input type="text" id="orderpayment_point" class="orderpayment_point" name="orderpayment_point" placeholder="포인트 입력" ></td>
+	                <td><input type="number" id="orderpayment_point" class="orderpayment_point" name="orderpayment_point" placeholder="포인트 입력"></td>
 	            </tr>
 	            <tr>
 	                <td>보유 포인트</td>
@@ -803,7 +807,7 @@
 			$("#orderpayment_price").text(orderpayment_price);
 			$("#orderpayment_delivery").text(orderpayment_delivery);
 			$("#orderpayment_discount").text(orderpayment_discount);
-			$("#orderpayment_point").text(orderpayment_point);
+			$("#orderpayment_point").val(Number(orderpayment_point));
 			$("#orderpayment_userPoint").text(orderpayment_userPoint);
 			Calculate();
 		});
@@ -907,7 +911,7 @@
                                     - orderpayment_discount
                                     - orderpayment_point;
                 $("#orderpayment_total").text(orderpayment_total);
-                $("#orderpayment_userPointAdd").text("+" + Math.ceil(orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100)));
+                $("#orderpayment_userPointAdd").text(Math.ceil(orderpayment_total*(<%=rankDetail.getRankPonintRat() %>/100)));
                 calculate_comp = false;
             }
         }
@@ -975,10 +979,10 @@
         });
     </script><!-- 주문고객과 동일 스크립트 끝 -->
 	
-	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
 	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
 	<div>
 		<input type="hidden" class="comp_userNo" name="comp_userNo" value="<%=userNo %>">
+		<input type="hidden" class="comp_userRank" name="comp_userRank" value="<%=userRank %>">
 		<!-- 상품정보 -->
 		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 		<div class="orderComp_item<%=i%>">
@@ -1020,7 +1024,6 @@
 		}
 		
 		$("#order_confirm").click(function(){
-			// TODO 최종 결제 완료 페이지 이동 
 			var rName = $("#recipient_phone2").val();
 			
 			if($("#recipient_name").val() == "" || $("#recipient_name").val() == null || $("#recipient_name").val() == "undefined") {
@@ -1048,8 +1051,8 @@
 		    	// 전송 값 저장
 				$(".comp_rName").val($("#recipient_name").val());
 				$(".comp_rPhone1").val($("#recipient_phone1").val());
-				$(".comp_rPhone2").val($("#recipient_phone1").val());
-				$(".comp_rPhone3").val($("#recipient_phone1").val());
+				$(".comp_rPhone2").val($("#recipient_phone2").val());
+				$(".comp_rPhone3").val($("#recipient_phone3").val());
 				$(".comp_rPostcode").val($("#recipient_postcode").val());
 				$(".comp_rAddress1").val($("#recipient_address").val());
 				$(".comp_rAddress2").val($("#recipient_detailAddress").val());
@@ -1058,40 +1061,18 @@
 				$(".comp_paymentPrice").val($("#orderpayment_price").text());
 				$(".comp_paymentDelivery").val($("#orderpayment_delivery").text());
 				$(".comp_paymentDiscount").val($("#orderpayment_discount").text());
-				$(".comp_paymentPoint").val($("#orderpayment_point").val());
+				$(".comp_paymentPoint").val("0");
+				
+				if($("#orderpayment_point").val() != "" || $("#orderpayment_point").val() != null){
+					$(".comp_paymentPoint").val(0 + Number($("#orderpayment_point").val()));
+				}
 				$(".comp_paymentUserPoint").val($("#orderpayment_userPoint").text());
 				$(".comp_paymentAddPoint").val($("#orderpayment_userPointAdd").text());
 				$(".comp_paymentTotal").val($("#orderpayment_total").text());
 
 				$(".comp_paymentOption").val($(".payoption").val());
-				
-				// 값 확인
-				console.log("구매자 comp_userNo : " + $("#comp_userNo").val());
-				console.log("구매자 comp_iNo : " + $("#comp_iNo").val());
-				console.log("구매자 comp_iCount : " + $("#comp_iCount").val());
-				console.log("구매자 comp_iPrice : " + $("#comp_iPrice").val());
 
-				console.log("구매자 comp_rName : " + $(".comp_rName").val());
-				console.log("구매자 comp_rPhone1 : " + $(".comp_rPhone1").val());
-				console.log("구매자 comp_rPhone2 : " + $(".comp_rPhone2").val());
-				console.log("구매자 comp_rPhone3 : " + $(".comp_rPhone3").val());
-				console.log("구매자 comp_rPostcode : " + $(".comp_rPostcode").val());
-				console.log("구매자 comp_rAddress1 : " + $(".comp_rAddress1").val());
-				console.log("구매자 comp_rAddress2 : " + $(".comp_rAddress2").val());
-				console.log("구매자 comp_rMemo : " + $(".comp_rMemo").val());
-
-				console.log("구매자 comp_paymentPrice : " + $(".comp_paymentPrice").val());
-				console.log("구매자 comp_paymentDelivery : " + $(".comp_paymentDelivery").val());
-				console.log("구매자 comp_paymentDiscount : " + $(".comp_paymentDiscount").val());
-				console.log("구매자 comp_paymentPoint : " + $(".comp_paymentPoint").val());
-				console.log("구매자 comp_paymentUserPoint : " + $(".comp_paymentUserPoint").val());
-				console.log("구매자 comp_paymentAddPoint : " + $(".comp_paymentAddPoint").val());
-				console.log("구매자 comp_paymentTotal : " + $(".comp_paymentTotal").val());
-
-				console.log("구매자 comp_paymentOption : " + $(".payoption").val());
-				
-
-		    	//$("#orderCompForm").submit();
+		    	$("#orderCompForm").submit();
 		    }
 		});
 	</script>

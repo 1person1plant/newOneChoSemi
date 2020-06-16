@@ -192,7 +192,7 @@
                 <p class="lead">하나의 화분이 당신의 시간을 바꾸어 나갈 것을 믿는 우리, CHO</p>
                 <hr class="my-4">
                 <p>반려식물에 대해 궁금하신 것이 있으신가요?</p>
-                <a class="btn btn-outline-info btn-lg" href="<%=request.getContextPath() %>/views/aboutus/aboutUs.jsp" role="button" style="margin-top: 40px;">Learn
+                <a class="btn btn-outline-info btn-lg" href="<%=request.getContextPath() %>/list.qna" role="button" style="margin-top: 40px;">Learn
                     more</a>
             </div>
         </div>
