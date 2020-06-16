@@ -398,6 +398,10 @@ public class MemberDao {
 		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 			PreparedStatement pstmt = null;
 			int result = 0;
+			System.out.println("맴버 번호 : " + orderBuyer.get(0).getMemberNo());
+			System.out.println("맴버 사용 포인트 :  " + orderBuyer.get(0).getOrderUsePoint());
+			System.out.println("맴버 적립 포인트 :  " + orderBuyer.get(0).getOrderAddPoint());
+			System.out.println("맴버 지출 :  " + orderpaymentTotal);
 			
 			String query = "UPDATE MEMBER SET MEMBER_POINT = (SELECT MEMBER_POINT FROM MEMBER WHERE MEMBER_NO = ?) + ? - ?," + 
 							"MEMBER_TOTALPURCHASEAMOUNT = (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?) + ? " + 
@@ -411,6 +415,7 @@ public class MemberDao {
 				pstmt.setString(4, orderBuyer.get(0).getMemberNo());
 				pstmt.setInt(5, orderpaymentTotal);
 				pstmt.setString(6, orderBuyer.get(0).getMemberNo());
+				
 				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -419,47 +424,46 @@ public class MemberDao {
 				close(pstmt);
 			}
 			
-//			System.out.println("탈퇴dao"+result);
+			System.out.println("맴버 포인트 결과 : " + result);
 			return result;
 		}
-
-		public int memberRankUpdate(Connection conn, String memberRank) {
-			System.out.println("구매 고객의 랭크는? : " + memberRank);
+		
+		public int memberRankUpdate(Connection conn, ArrayList<Order> orderBuyer) {
 			int result = 0;
-			String query = "";
 			
-			switch (memberRank) {
-			case "R1":
-				query = "UPDATE MEMBER SET member_rank = 'R2' " + 
-						"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R2')" + 
-						"                                     and (select rank_pointmax from rank where rank_no = 'R2')";
-				break;
-			case "R2":
-				query = "UPDATE MEMBER SET member_rank = 'R3' " + 
-						"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R3')" + 
-						"                                     and (select rank_pointmax from rank where rank_no = 'R3')";
-				break;
-			case "R3":
-				query = "UPDATE MEMBER SET member_rank = 'R4' " + 
-						"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R4')" + 
-						"                                     and (select rank_pointmax from rank where rank_no = 'R4')";
-				break;
-			case "R4":
-				query = "UPDATE MEMBER SET member_rank = 'R5' " + 
-						"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R5')" + 
-						"                                     and (select rank_pointmax from rank where rank_no = 'R5')";
-				break;
-			default:
-				query = "UPDATE MEMBER SET member_rank = 'R1' " + 
-						"where MEMBER_TOTALPURCHASEAMOUNT between (select rank_pointmin from rank where rank_no = 'R1')" + 
-						"                                     and (select rank_pointmax from rank where rank_no = 'R1')";
-				break;
-			}
+			String query = "UPDATE MEMBER " + 
+					"SET MEMBER_RANK = " + 
+					"    CASE" + 
+					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R1') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R1')" + 
+					"        THEN 'R1'" + 
+					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R2') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R2')" + 
+					"        THEN 'R2'" + 
+					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R3') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R3')" + 
+					"        THEN 'R3'" + 
+					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R4') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')" + 
+					"        THEN 'R4'" + 
+					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R5') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')" + 
+					"        THEN 'R5'" + 
+					"    END" + 
+					"WHERE MEMBER_NO = ?";
+			
 			
 			PreparedStatement pstmt = null;
 			
 			try {
 				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, orderBuyer.get(0).getMemberNo());
+				pstmt.setString(2, orderBuyer.get(0).getMemberNo());
+				pstmt.setString(3, orderBuyer.get(0).getMemberNo());
+				pstmt.setString(4, orderBuyer.get(0).getMemberNo());
+				pstmt.setString(5, orderBuyer.get(0).getMemberNo());
+				pstmt.setString(6, orderBuyer.get(0).getMemberNo());
+				
 				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -472,6 +476,6 @@ public class MemberDao {
 		
 			return result;
 		}
-	
+
 		
 }
