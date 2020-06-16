@@ -11,8 +11,6 @@
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		kakaoUser = (Member)session.getAttribute("kakaoUser");
-		System.out.println("Header : " + loginUser);
-		System.out.println("Header 카카오? : " + loginUser.getMemberStatus());
 		if(kakaoUser != null && loginUser == null){
 			kakaoChk = kakaoUser.getMemberStatus();
 			kakaoNo = kakaoUser.getMemberNo();
