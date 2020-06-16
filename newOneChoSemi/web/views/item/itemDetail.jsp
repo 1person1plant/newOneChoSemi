@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="item.model.vo.Item, review.model.vo.Review, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="order.model.vo.Order, item.model.vo.Item, review.model.vo.Review, java.util.ArrayList"%>
 <%
 	Item item = (Item)request.getAttribute("itemDetail");
 	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
 	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
+	Order order = (Order)request.getAttribute("orderCheck");
 
 	String keyword = "";
 	String key1 = "";
@@ -403,18 +404,17 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="row iteminfo-modal">
 								<div class="col col-4 iteminfo-modal-img">
-									<img class="iteminfo-modal-image"
-										src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
+									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
 								</div>
 								<div class="col col-8 iteminfo-modal-text">
-									<div class="row iteminfo-modal-title"
-										style="margin-bottom: 0.3rem;">
-										<p class="h6 my-auto" style="color: gray; font-size: 1rem;">
-											[<%=item.getItemName()%>]
-										</p>
+									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
+										<p class="h6 my-auto" style="color: gray; font-size: 1rem;">[<%=item.getItemName()%>]</p>
+										<input type="hidden" name="orderInfo" value="<%=order.getOrderNo()%>,<%=order.getItemNo()%>">
 									</div>
-									<div class="row iteminfo-modal-content"
-										style="padding-right: 1rem;">
+									<div class="row iteminfo-modal-date">
+										<p class="my-auto" style="color:#5b89a6; font-size:0.8rem;">[구매일:&nbsp;<%=order.getOrderDate()%>]</p>
+									</div>
+									<div class="row iteminfo-modal-content" style="padding-right: 1rem;">
 										<p style="font-size: 0.8rem;"><%=item.getItemInfo()%></p>
 									</div>
 								</div>

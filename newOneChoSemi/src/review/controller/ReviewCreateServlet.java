@@ -48,8 +48,7 @@ public class ReviewCreateServlet extends HttpServlet {
 		int score = Integer.valueOf(multiRequest.getParameter("score"));
 		String content = multiRequest.getParameter("content");
 		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-		
-		System.out.println("score: " + score + "content: " + content + "memberNo " + memberNo);
+		String orderInfo = multiRequest.getParameter("orderInfo");
 		
 		ArrayList<String> saveFiles = new ArrayList<>();
 		ArrayList<String> originFiles = new ArrayList<>();
@@ -71,7 +70,6 @@ public class ReviewCreateServlet extends HttpServlet {
 		
 		
 		Review rv = new Review();
-		rv.setItemNo(itemNo);
 //		// 4. DB에 보낼 Board와 Attachment객체 생성
 //		Board b = new Board();
 //		b.setbTitle(title);

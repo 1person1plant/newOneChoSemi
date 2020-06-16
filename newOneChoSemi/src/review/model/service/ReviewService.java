@@ -5,6 +5,7 @@ import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import order.model.vo.Order;
 import review.model.dao.ReviewDao;
 import review.model.vo.Review;
 
@@ -42,6 +43,18 @@ public class ReviewService {
 		
 		return result;
 				
+	}
+
+	public Order orderCheck(String itemNo, String memberNo) {
+		
+		Connection conn = getConnection();
+		
+		Order order = new ReviewDao().orderCheck(conn, itemNo, memberNo);
+		
+		close(conn);
+		
+		return order;
+		
 	}
 
 }
