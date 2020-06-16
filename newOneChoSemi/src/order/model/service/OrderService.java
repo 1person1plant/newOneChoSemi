@@ -37,7 +37,6 @@ public class OrderService {
 		Connection conn = getConnection();
 		int result2 = -1;
 		int result3 = -1;
-		int result4 = -1;
 		boolean chk = false;
 		
 		// 주문 내역 db 저장

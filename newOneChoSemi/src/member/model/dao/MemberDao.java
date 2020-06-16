@@ -404,8 +404,10 @@ public class MemberDao {
 			System.out.println("맴버 지출 :  " + orderpaymentTotal);
 			
 			String query = "UPDATE MEMBER SET MEMBER_POINT = (SELECT MEMBER_POINT FROM MEMBER WHERE MEMBER_NO = ?) + ? - ?," + 
-							"MEMBER_TOTALPURCHASEAMOUNT = (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?) + ? " + 
-							"WHERE MEMBER_NO = ?";
+											 "MEMBER_TOTALPURCHASEAMOUNT = (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?) + ? " + 
+						   "WHERE MEMBER_NO = ?";
+			
+			System.out.println("맴버 포인트 수정 쿼리 : " + query);
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -429,6 +431,7 @@ public class MemberDao {
 		}
 		
 		public int memberRankUpdate(Connection conn, ArrayList<Order> orderBuyer) {
+			PreparedStatement pstmt = null;
 			int result = 0;
 			
 			String query = "UPDATE MEMBER " + 
@@ -452,8 +455,7 @@ public class MemberDao {
 					"    END" + 
 					"WHERE MEMBER_NO = ?";
 			
-			
-			PreparedStatement pstmt = null;
+			System.out.println("맴버 번호 " + orderBuyer.get(0).getMemberNo());
 			
 			try {
 				pstmt = conn.prepareStatement(query);
