@@ -1,4 +1,4 @@
-package member.controller;
+package order.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MyWishListService;
-import member.model.vo.MyWishList;
-import member.model.vo.RealWishList;
-
+import order.model.service.OrderService;
+import order.model.vo.Order;
 
 /**
- * Servlet implementation class WishListMemoServlet
+ * Servlet implementation class OrderCancelServlet
  */
-@WebServlet("/wishmemo.up")
-public class WishListMemoServlet extends HttpServlet {
+@WebServlet("/cancel.re")
+public class OrderCancelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WishListMemoServlet() {
+    public OrderCancelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +31,19 @@ public class WishListMemoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String wishNo = request.getParameter("wishNo");
+		String orderNo = request.getParameter("orderNo");
 		String memberNo = request.getParameter("memberNo");
-		String wishMemo = request.getParameter("wishMemo");
-		System.out.println("wishNo : "+wishNo + "memberNo : "+memberNo + "wishMemo : " + wishMemo);
-		int result = new MyWishListService().memoUpdate(new RealWishList(wishNo,memberNo,wishMemo));
-		
-		PrintWriter out = response.getWriter();
-		
-		if(result > 0) {
-			out.print("permit");
-		} else {
-			out.print("fail");
+		String itemNo = request.getParameter("itemNo");
+		int result = new OrderService().cancelRequest(new Order(orderNo,memberNo,itemNo));
+		System.out.println("service>servlet : " + result);
+		PrintWriter pw = response.getWriter();
+		if(result>0) {
+			pw.print("success");
+		}else {
+			pw.print("fail");
 		}
-		
-		out.flush();
-		out.close();
-		
-		
+		pw.flush();
+		pw.close();
 	}
 
 	/**
@@ -62,4 +55,3 @@ public class WishListMemoServlet extends HttpServlet {
 	}
 
 }
-

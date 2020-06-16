@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import order.model.dao.OrderDao;
 import order.model.vo.Order;
 import order.model.vo.OrderHis;
-
+import static common.JDBCTemplate.*;
 public class OrderService {
 
 	/*광산코드
@@ -34,6 +34,19 @@ public class OrderService {
 		ArrayList<OrderHis> oh = new OrderDao().historyOrder(conn,memberNo);
 //		System.out.println("OrderHis service"+oh);
 		return oh;
+	}
+
+	public int cancelRequest(Order order) {
+		Connection conn = getConnection();
+		int result = new OrderDao().cancelRequest(conn,order);
+		System.out.println("dao>service : " + result);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

@@ -89,6 +89,16 @@
 			width:100px;
 			height:42px;
 		}
+		.cancelRequestBtn{
+			padding:8px 18px;
+			margin:5px;
+			border-radius:8px;
+			color:black;
+			border: 1px solid #115D8C;
+			background-color:red;
+			width:100px;
+			height:42px;
+		}
 		.button1 :hover{
 			border-radius:8px !important;
 			background:#6AAED9 !important;
@@ -146,11 +156,14 @@
 											<td class='ordertd'><%=(oh.get(i)).getItemName()%></td>
 											<td class='ordertd' id="orderT"><%=(oh.get(i)).getOrderCount()%></td>
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
-											<td id='orderbutton'><a href='main.jsp' id='delete'><button
-														type='button' class='button1'>취소신청</button></a><br> <a
-												href='main.jsp' id='delete'><button type='button'
-														class='button1'>리뷰쓰기</button></a><br> <a href='main.jsp'
-												id='delete'><button type='button' class='button1'>상세보기</button></a></td>
+											<td id='orderbutton'>
+											<%if((oh.get(i).getOrderCancelrequest()).equals("N")){ %>
+											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
+											<%}else{ %>
+											<input type='button' class='cancelRequestBtn' value="취소 중" disabled="disabled">
+											<%} %>
+											<button type='button' class='button1'>리뷰쓰기</button><br>
+											<button type='button' class='button1'>상세보기</button></td>
 										</tr>
 									<%} %>
 								<%} %>
@@ -208,6 +221,51 @@
             		});
             	});
             </script>
+            <%for(int i=0;i<oh.size();i++){ %>
+            <script>
+            $(function(){
+	            	$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn").click(function(){
+	            		var deliCode = $(this).parents("tr").children("td:nth-child(6)").text();
+	                	var D1 = "배송 전";
+	                	var D2 = "배송 중";
+	                	var D3 = "배송 완료";
+	                	console.log("D1 : " + D1 +"D2 : " + D2 +"D3 : " + D3 + "deliCode : " + deliCode)
+	                	var dupeOrderNo = "<%=(oh.get(i)).getItemName()%>"
+	                	var cancelAns = confirm("상품명 : " + dupeOrderNo + "\n주문을 취소하시겠습니까?");
+	                	
+	      				if(cancelAns){
+	                	if(deliCode == D2 || deliCode == D3){
+	            			alert("배송 중이거나 배송 완료된 상품은 주문 취소가 불가능 합니다.");
+	            			
+	            		}else if(deliCode == D1){
+	            		var orderNo = $(this).parents("tr").children("td:first").text();
+	            		var memberNo = "<%=loginUser.getMemberNo()%>";
+						var itemNo = $(this).parents("tr").children("td:nth-child(3)").text()
+	            		console.log("orderNo: " + orderNo + "/memberNo : " + memberNo + "/itemNo : "+ itemNo);
+	            		$.ajax({
+	    					url:"<%=request.getContextPath()%>/cancel.re",
+	    					type:"post",
+	    					data:{orderNo:orderNo,memberNo:memberNo},
+	    					success:function(data){
+	    						if(data == "success"){
+	    							location.reload();
+									alert("주문 취소 요청이 완료 되었습니다.");
+	    						}else if(data == "fail"){
+	    							alert("실패");
+	    						}
+	    					},
+	    					error:function(request,status,error){
+	    						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    					}
+	    				});
+	            		}
+	      				}
+	            })
+            })
+            
+            </script>
+			<%} %>
+			
 			<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

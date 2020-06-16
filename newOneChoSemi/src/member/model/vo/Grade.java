@@ -4,17 +4,16 @@ public class Grade {
 	private String memberNo;
 	private String memberRank;
 	private int memberPoint;
-	private int totalPrice;
+	private int memberTotalpurchasemount;
 	public Grade() {
 		super();
 	}
-	
-	public Grade(String memberNo, String memberRank, int memberPoint, int totalPrice) {
+	public Grade(String memberNo, String memberRank, int memberPoint, int memberTotalpurchasemount) {
 		super();
 		this.memberNo = memberNo;
 		this.memberRank = memberRank;
 		this.memberPoint = memberPoint;
-		this.totalPrice = totalPrice;
+		this.memberTotalpurchasemount = memberTotalpurchasemount;
 	}
 	public String getMemberNo() {
 		return memberNo;
@@ -34,17 +33,16 @@ public class Grade {
 	public void setMemberPoint(int memberPoint) {
 		this.memberPoint = memberPoint;
 	}
-	public int getTotalPrice() {
-		return totalPrice;
+	public int getMemberTotalpurchasemount() {
+		return memberTotalpurchasemount;
 	}
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setMemberTotalpurchasemount(int memberTotalpurchasemount) {
+		this.memberTotalpurchasemount = memberTotalpurchasemount;
 	}
 	@Override
 	public String toString() {
 		return "Grade [memberNo=" + memberNo + ", memberRank=" + memberRank + ", memberPoint=" + memberPoint
-				+ ", totalPrice=" + totalPrice + "]";
+				+ ", memberTotalpurchasemount=" + memberTotalpurchasemount + "]";
 	}
-	
 	
 }

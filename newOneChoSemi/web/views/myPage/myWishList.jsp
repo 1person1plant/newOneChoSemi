@@ -135,7 +135,6 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<br>
 								<th colspan="9" scope="col" style='border-bottom: 2px solid black'>
 									<input style="display: none;" type="text" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
 									<h1>위시리스트</h1>
@@ -161,15 +160,14 @@
 							<%}else{%>
 							<%for(int i = 0 ; i < mwl.size() ; i++) {%>
 							<tr style='border-bottom: 2px solid black'>
-							
 								<td colspan='1' class="mt-2" id="wishNoTd"><%=mwl.get(i).getWishlistNo()%><input style="display: none;" type="text" value="<%=mwl.get(i).getWishlistNo()%>" id="wishNo" name="wishNo"></td>
-								<td colspan="2" class='mt-2'><a href='<%=mwl.get(i).getItemNo()%>'><%-- <img src='<%=request.getContextPath()%>/items_uploadFiles/' width='150px' height='150px'> --%></a></td>
-								<td scope="row" colspan='2' class="mt-2">???</td>
-								<td colspan="2" class='mt-2'><textarea id="memo1" class='textA' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishlistMemo()%></textarea><br>
-									<p id='countp'><span id='counter1'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
+								<td colspan="2" class='mt-2'><input type="text" style="display:none;" value="<%=mwl.get(i).getItemNo()%>" id="itemNoT" name="<%=mwl.get(i).getItemNo()%>"><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=mwl.get(i).getImageName()%>' width='150px' height='150px'></td>
+								<td scope="row" colspan='2' class="mt-2"><%=mwl.get(i).getItemName() %></td>
+								<td colspan="2" class='mt-2'><textarea id="<%=mwl.get(i).getWishlistNo()%>memo" class='<%=mwl.get(i).getWishlistNo()%>text' cols='25' rows='5' name="wishMemo" maxlength='150' disabled><%=mwl.get(i).getWishlistMemo()%></textarea><br>
+									<p id='countp'><span id='<%=mwl.get(i).getWishlistNo()%>span'><%=mwl.get(i).getWishlistMemo().length()%></span>/100</p>
 								</td>
 								<td id='orderbutton' colspan="2">
-									<input type='button' class='button1' id='changeM' value="메모수정"><br>
+									<input type='button' class='button1' id='<%=mwl.get(i).getWishlistNo()%>UpBtn' value="메모수정"><br>
 									<button type='button' class='button1'>상품구매</button><br>
 									<input type='button' class='button1' id="delBtn" value="위시삭제">
 								</td>
@@ -182,23 +180,24 @@
 			</div>
 		</div>
 	</div>
+	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
-		    $('#memo1').keyup(function(){
-		    	var minL = $("#counter1").text();
+		    $('#<%=mwl.get(i).getWishlistNo()%>memo').keyup(function(){
+		    	var minL = $("#<%=mwl.get(i).getWishlistNo()%>span").text();
 		        minL = $(this).val().length;
-		        $('#counter1').text(minL);
+		        $('#<%=mwl.get(i).getWishlistNo()%>span').text(minL);
 		        var maxL = 100-minL;
 		        if(maxL>=0){
-		            $('#counter1').parent().css('color','black');
+		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','black');
 		        }else{
-		            $('#counter1').parent().css('color','red');
+		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','red');
 		            alert('입력 가능한 글자수를 초과하였습니다.');
 		        }
 		    });
 		});
 	</script>
-
+	<%} %>
 	<script>
 		$(function(){
 			$("#delBtn").click(function(){
@@ -229,24 +228,29 @@
 		})	
 	</script>
 	
+	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
-			$('#changeM').click(function(){
-		        if($('.textA').prop('disabled')==true){
-		            $('.textA').attr('disabled',false);
-		        }else if($('.textA').prop('disabled')==false){
-		            $('.textA').attr('disabled',true);
-		            var wishNo = $(this).parents("tr").children("td:first").text();
-		            var wishMemo = $(this).parents("tr").children().children("textarea").text();
+			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
+		        if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
+		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
+		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false){
+		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
 		            
-		            /* console.log(wishMemo); */
+		            var wishNo = $(this).parents("tr").children("td:first").text();
+		            var memberNo = "<%=loginUser.getMemberNo()%>";
+		            var wishMemo = $(this).parents("tr").children().children("textarea").text();
+		            var itemNo = $(this).parents("tr").siblings("#itemNoT").text()
+		            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
 					type:"post",
-					data:{wishNo:wishNo, wishMemo:wishMemo},
-					success:function(data){// data(받는 데이터)
-						location.reload();
-						if(data == "fail"){
+					data:{wishNo:wishNo,memberNo:memberNo,wishMemo:wishMemo},
+					success:function(data){
+						if(data == "permit"){
+							alert("메모 수정이 완료되었습니다.");
+							/* location.reload(); */
+						}else if(data == "fail"){
 							alert("실패");
 						}
 					},
@@ -258,6 +262,8 @@
 		    });
 		})
 	</script>
+	<%} %>
+	
 	<script>
 		$(function(){
 			$(".button1").mouseenter(function(){

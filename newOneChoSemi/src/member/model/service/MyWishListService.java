@@ -2,6 +2,8 @@ package member.model.service;
 
 import member.model.dao.MyWishListDao;
 import member.model.vo.MyWishList;
+import member.model.vo.RealWishList;
+
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -10,9 +12,9 @@ import java.util.ArrayList;
 public class MyWishListService {
 
 	
-	 public int memoUpdate(MyWishList myWishList) { 
+	 public int memoUpdate(RealWishList realWishList) { 
 		 Connection conn = getConnection();
-		 int result = new MyWishListDao().memoUpdate(conn,myWishList); 
+		 int result = new MyWishListDao().memoUpdate(conn,realWishList); 
 		 System.out.println("memoUpdate service"+ result);
 		 if(result>0) {
 			 commit(conn);
@@ -43,5 +45,8 @@ public class MyWishListService {
 		close(conn);
 		return result;
 	}
+
+
+
 
 }

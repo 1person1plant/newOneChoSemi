@@ -159,6 +159,7 @@ public class MemberService {
 	public Grade memberGrade(String memberNo) {
 		Connection conn = getConnection();
 		Grade grade = new MemberDao().memberGrade(conn,memberNo);
+		System.out.println("dao>service : " + grade);
 		close(conn);
 		return grade;
 	}

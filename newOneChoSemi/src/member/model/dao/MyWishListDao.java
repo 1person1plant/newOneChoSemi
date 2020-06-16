@@ -8,18 +8,20 @@ import java.util.ArrayList;
 
 import static common.JDBCTemplate.*;
 import member.model.vo.MyWishList;
+import member.model.vo.RealWishList;
 
 public class MyWishListDao {
 
 
-	public int memoUpdate(Connection conn, MyWishList myWishList) {
+	public int memoUpdate(Connection conn, RealWishList realWishList) {
 		PreparedStatement pstmt = null;
 		int result = 0; 
-		String query = "UPDATE WISHLIST SET WISHLIST_MEMO=? WHERE WISHLIST_NO=?";
+		String query = "UPDATE WISHLIST SET WISHLIST_MEMO=? WHERE WISHLIST_NO=? AND MEMBER_NO=?";
 		try { 
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, myWishList.getWishlistMemo());
-			pstmt.setString(2, myWishList.getWishlistNo());
+			pstmt.setString(1, realWishList.getWishlistMemo());
+			pstmt.setString(2, realWishList.getWishlistNo());
+			pstmt.setString(3, realWishList.getMemberNo());
 			result = pstmt.executeUpdate();
 			System.out.println("MyWishListDao memoUpdate : " + result);
 		 	}catch (SQLException e) {
@@ -36,7 +38,7 @@ public class MyWishListDao {
 	      
 		ArrayList<MyWishList> mwl = new ArrayList<>();
 	      
-		String query = "SELECT * FROM WISHLIST WHERE MEMBER_NO = ?";
+		String query = "SELECT * FROM WISHCHK WHERE MEMBER_NO = ?";
 	      
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -45,10 +47,13 @@ public class MyWishListDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				MyWishList wish = new MyWishList(rset.getString("WISHLIST_NO")
-				                         , rset.getString("ITEM_NO")
-				                         , rset.getString("MEMBER_NO")
-				                         , rset.getString("WISHLIST_MEMO"));
+				MyWishList wish = new MyWishList(rset.getString("WISHLIST_MEMO")
+										 , rset.getString("WISHLIST_NO")
+										 , rset.getString("ITEM_NO")
+										 , rset.getString("IMAGE_NAME")
+				                         , rset.getString("IMAGE_PATH")
+				                         , rset.getString("ITEM_NAME")
+				                         , rset.getString("MEMBER_NO"));
 			
 				mwl.add(wish);
 			}
