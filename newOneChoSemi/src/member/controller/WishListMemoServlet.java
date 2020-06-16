@@ -22,7 +22,6 @@ public class WishListMemoServlet extends HttpServlet {
      */
     public WishListMemoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -49,7 +48,6 @@ public class WishListMemoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

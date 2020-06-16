@@ -28,7 +28,7 @@ public class Order implements Serializable {
 	private String orderAddress2;		// 수령자 상세 주소
 	private String orderRequest;		// 수령자 요청사항
 	private int orderDCost;				// 배송비
-	private int orderAddPoint;		// 추가 포인트
+	private int orderAddPoint;			// 추가 포인트
 	private String orderPaymentOption;	// 지불 방법
 	private String orderReview;			// 기본: N 작성 후 : Y
 	private String orderCancelrequest;	// 기본: N 취소 : Y

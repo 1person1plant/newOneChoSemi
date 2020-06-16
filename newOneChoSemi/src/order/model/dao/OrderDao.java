@@ -51,7 +51,6 @@ public class OrderDao {
 				list.add(o);			
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -95,31 +94,51 @@ public class OrderDao {
 	}
 
 	public boolean insertOrderList(Connection conn, ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
-		PreparedStatement pstmt = null;
-		int result = 0;
+		String query = "";
+		int result = -1;
 		boolean chk = true;
+		
+		//System.out.println("주문 완료 쿼리 시작한다 : " + orderItem.size());
 
 		// 첫상품 쿼리
-		String query1 = "INSERT INTO ODERDERLIST "
-					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE"
-					  + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+		String query1 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
+					  + ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
+					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
+					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
+					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
+					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE" 
+					  + ",?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?" 
 					  + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		// 두번째 이후 쿼리
-		String query2 = "INSERT INTO ODERDERLIST "
-					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.QURRVAL,5,'0'),?,?,SYSDATE"
-				      + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
-				      + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+		String query2 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
+					  + ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
+					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
+					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
+					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
+					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.CURRVAL,5,'0'),?,?,SYSDATE" 
+					  + ",?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?" 
+					  + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 			
-		try {
-			for(int i = 0 ; i < orderItem.size() ; i++) {
+		for(int i = 0 ; i < orderItem.size() ; i++) {
+			PreparedStatement pstmt = null;
+			try {
 				if(i == 0) {
-					pstmt = conn.prepareStatement(query1);
+					query = query1;
 				} else {
-					pstmt = conn.prepareStatement(query2);
+					query = query2;
 				}
+				pstmt = conn.prepareStatement(query);
 				
 				pstmt.setString(1, orderItem.get(i).getItemNo());
-				pstmt.setString(2, orderBuyer.get(i).getMemberNo());
+				pstmt.setString(2, orderBuyer.get(0).getMemberNo());
 				pstmt.setString(3, orderItem.get(i).getOrderItemName());
 				pstmt.setString(4, orderItem.get(i).getOrderItemImgName());
 				pstmt.setString(5, orderItem.get(i).getOrderItemImgPath());
@@ -127,38 +146,40 @@ public class OrderDao {
 				pstmt.setInt(7, orderItem.get(i).getOrderItemDiscount());
 				pstmt.setInt(8, orderItem.get(i).getOrderCount());
 				pstmt.setInt(9, orderItem.get(i).getOrderUsePoint());
-				pstmt.setString(10, orderBuyer.get(i).getOrderName());
-				pstmt.setString(11, orderBuyer.get(i).getOrderPhone1());
-				pstmt.setString(12, orderBuyer.get(i).getOrderPhone2());
-				pstmt.setString(13, orderBuyer.get(i).getOrderPhone3());
-				pstmt.setString(14, orderBuyer.get(i).getOrderPostcode());
-				pstmt.setString(15, orderBuyer.get(i).getOrderAddress1());
-				pstmt.setString(16, orderBuyer.get(i).getOrderAddress2());
-				pstmt.setString(17, orderBuyer.get(i).getOrderRequest());
+				pstmt.setString(10, orderBuyer.get(0).getOrderName());
+				pstmt.setString(11, orderBuyer.get(0).getOrderPhone1());
+				pstmt.setString(12, orderBuyer.get(0).getOrderPhone2());
+				pstmt.setString(13, orderBuyer.get(0).getOrderPhone3());
+				pstmt.setString(14, orderBuyer.get(0).getOrderPostcode());
+				pstmt.setString(15, orderBuyer.get(0).getOrderAddress1());
+				pstmt.setString(16, orderBuyer.get(0).getOrderAddress2());
+				pstmt.setString(17, orderBuyer.get(0).getOrderRequest());
 				
 				if(i == 0) {
-					pstmt.setInt(18, orderBuyer.get(i).getOrderDCost());
-					pstmt.setInt(19, orderBuyer.get(i).getOrderAddPoint());
+					pstmt.setInt(18, orderBuyer.get(0).getOrderDCost());
+					pstmt.setInt(19, orderBuyer.get(0).getOrderAddPoint());
 				} else {
 					pstmt.setInt(18, 0);
 					pstmt.setInt(19, 0);
 				}
-				pstmt.setString(20, orderBuyer.get(i).getOrderPaymentOption());
+				pstmt.setString(20, orderBuyer.get(0).getOrderPaymentOption());
 				
 				result = pstmt.executeUpdate();
+				
 				if(result > 0 && chk == true) {
 					chk = true;
 				} else {
 					chk = false;
 				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
 		}
 		
+		// System.out.println("주문 완료 끝 : " + chk);
 		return chk;
 	}
 
