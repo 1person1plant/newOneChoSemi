@@ -1,21 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
 	Member loginUser = null;
-	boolean result = false;
+	Member kakaoUser = null;
+	boolean result = true;
 	String adminChk = "";
+	String kakaoChk = "";
 	String userNo = "";
+	String kakaoNo = "";
+	
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
-		/* System.out.println("로그인 유저 정보 : " + loginUser); */
-		if(loginUser == null){
-			result = true;
-		} else {
+		kakaoUser = (Member)session.getAttribute("kakaoUser");
+		
+		if(kakaoUser != null && loginUser == null){
+			kakaoChk = kakaoUser.getMemberStatus();
+			kakaoNo = kakaoUser.getMemberNo();
+			loginUser = null;
+			result = false;
+		} else if(kakaoUser == null && loginUser != null){
 			userNo = loginUser.getMemberNo();
-			/* System.out.println("userNo " + userNo); */
 			adminChk = loginUser.getMemberAdmin();
+			kakaoUser = null;
 			result = false;
 		}
-		/* System.out.println("result " + result); */
 	}
 %>
 <!DOCTYPE html>
@@ -266,9 +273,15 @@
 		   <nav class="navbar navbar-expand navbar-light" id="navbar-top">
 		        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		            <ul class="navbar-nav ml-auto">
+		            	
 		            	<li class="nav-item" style="margin-top:8px">
+		            	<%if(kakaoChk.equals("K")){ %>
+							<a><%=kakaoUser.getMemberName() %>님의 방문을 환영합니다.</a>
+						<%}else{ %>
 							<a><%=loginUser.getMemberName() %>님의 방문을 환영합니다.</a>
+						<%} %>
 						</li>
+						
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
 		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/views/admin/itemInsertForm.jsp">
@@ -282,6 +295,7 @@
 		                <li class="nav-item">
 		                    <a class="nav-link" style="cursor: pointer" onclick="myPageBtn();">마이페이지</a>
 		                </li>
+		                
 		            </ul>
 		        </div>
 		    </nav>
@@ -379,6 +393,9 @@
         function myPageBtn(){
         	<%if(result){%>
     			$("#loginBtn").click();
+    			
+    			
+    			
 			<%} else {%>
         		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 	   		<%} %>

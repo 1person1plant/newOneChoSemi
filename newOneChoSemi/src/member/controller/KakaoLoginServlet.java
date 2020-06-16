@@ -45,7 +45,12 @@ public class KakaoLoginServlet extends HttpServlet {
 		
 		if (result == 0) { // 존재하지 않으면
 			
-			int result_joinK = new MemberService().kakaoinsertMember(member);
+			int result_joinK = new MemberService().kakaoinsertMember(member); // 자동 회원가입
+			
+			Member kakaoUser = new MemberService().kakaoLoginMember(member);
+			HttpSession session = request.getSession();
+			session.setAttribute("kakaoUser", kakaoUser);
+			response.sendRedirect("index.jsp"); 
 			
 		}else { // 존재하면 
 			
@@ -54,8 +59,8 @@ public class KakaoLoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("kakaoUser", kakaoUser);
-
-			response.sendRedirect("index.jsp");
+				
+			response.sendRedirect("index.jsp"); 
 			
 		}
 		
