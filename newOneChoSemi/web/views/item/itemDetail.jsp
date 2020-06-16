@@ -4,8 +4,6 @@
 	Item item = (Item)request.getAttribute("itemDetail");
 	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
 	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
-	String notMy = (String)request.getAttribute("notMy");
-	String notOther = (String)request.getAttribute("notOther");
 
 	String keyword = "";
 	String key1 = "";
@@ -313,8 +311,8 @@ td:nth-of-type(2) {width:45rem;}
 					<p style="font-size: 1rem; color: black;">
 						식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!
 					</p>
-					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기"
-						id="goReview-btn" data-toggle="modal" href="#reviewModal">
+					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기" id="goReview-btn">
+					<input type="hidden" id="goReview-real-btn" data-toggle="modal" href="#reviewModal">
 				</div>
 			</div>
 			<div class="row myReview-content">
@@ -563,8 +561,7 @@ td:nth-of-type(2) {width:45rem;}
 						<li class="page-item"><a class="page-link" href="#">3</a></li>
 						<li class="page-item"><a class="page-link" href="#">4</a></li>
 						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</ul>
 				</nav>
@@ -636,9 +633,36 @@ td:nth-of-type(2) {width:45rem;}
 			})
 		})
 		</script>
-		
-		
-		
+
+		<script>
+		$(function() {
+			$("#goReview-btn").click(function(){
+				
+				var itemNo = "<%=item.getItemNo()%>";
+
+					$.ajax({
+						url:"<%=request.getContextPath()%>/status.rv",
+						type : "POST",
+						data : {itemNo:itemNo},
+						success : function(data) {						
+							if(data == "something") {
+								$("#goReview-real-btn").click();
+							}else if(data == "nothing"){
+								alert("등록할 리뷰가 없습니다.");
+							}else {
+								alert("로그인한 회원만 리뷰를 작성할 수 있습니다.")
+							}
+						},
+						error : function(request, status, error) {
+							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+						}
+					})
+			})
+		})
+		</script>
+
+
+
 		<!--리뷰 글자 수 세기(script)-->
 		<script>          
             $(function(){            	

@@ -771,9 +771,7 @@ public class ItemDao {
 			close(pstmt);
 			close(rset);
 		}
-		
-		System.out.println(item);
-		
+			
 		return item;
 	}
 

@@ -15,6 +15,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sun.xml.internal.ws.api.message.Attachment;
 
 import member.model.vo.Member;
+import review.model.vo.Review;
 
 /**
  * Servlet implementation class ReviewCreateServlet
@@ -46,7 +47,7 @@ public class ReviewCreateServlet extends HttpServlet {
 		
 		int score = Integer.valueOf(multiRequest.getParameter("score"));
 		String content = multiRequest.getParameter("content");
-		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo().toString();
+		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		
 		System.out.println("score: " + score + "content: " + content + "memberNo " + memberNo);
 		
@@ -68,27 +69,16 @@ public class ReviewCreateServlet extends HttpServlet {
 		System.out.println("saveFiles: "+ saveFiles);
 		System.out.println("originFiles: "+originFiles);
 		
+		
+		Review rv = new Review();
+		rv.setItemNo(itemNo);
 //		// 4. DB에 보낼 Board와 Attachment객체 생성
 //		Board b = new Board();
 //		b.setbTitle(title);
 //		b.setbContent(content);
 //		b.setbWriter(UserNo);
 //		
-//		ArrayList<Attachment> fileList = new ArrayList<Attachment>();
-//		// 전송 순서 역순으로 파일이 list에 저장되었기 때문에 반복문을 통해 다시 역순을 수행
-//		for(int i = originFiles.size()-1 ; i >= 0 ; i--) {
-//			Attachment at = new Attachment();
-//			at.setFilePath(savePath);
-//			at.setOriginName(originFiles.get(i));
-//			at.setChangeName(saveFiles.get(i));
-//			
-//			if(i== originFiles.size()-1) {
-//				at.setFileLevel(0);
-//			}else {
-//				at.setFileLevel(1);
-//			}
-//			fileList.add(at);
-//		}
+//		
 //		
 //		int result = new BoardService().insertThumbnail(b,fileList);
 //		

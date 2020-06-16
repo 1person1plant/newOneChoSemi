@@ -1,7 +1,6 @@
 package review.model.service;
 
-import static common.JDBCTemplate.close;
-import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -31,6 +30,18 @@ public class ReviewService {
 		close(conn);
 		
 		return myReviewList;
+	}
+
+	public int statusCheck(String itemNo, String memberNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().statusCheck(conn, itemNo, memberNo);
+		
+		close(conn);
+		
+		return result;
+				
 	}
 
 }
