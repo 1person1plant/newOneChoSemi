@@ -102,30 +102,30 @@ public class OrderDao {
 
 		// 첫상품 쿼리
 		String query1 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
-					+ ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
-					+ ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
-					+ ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
-					+ ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
-					+ ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
-					+ "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE" 
-					+ ",?,?,?"
-					+ ",?,?,?,?,?"
-					+ ",?,?,?,?,?"
-					+ ",?,?,?,?,?" 
-					+ ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+					  + ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
+					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
+					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
+					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
+					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE" 
+					  + ",?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?" 
+					  + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 		// 두번째 이후 쿼리
 		String query2 = "INSERT INTO ORDERLIST (ORDER_NO, ITEM_NO, MEMBER_NO, ORDER_DATE"
-					+ ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
-					+ ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
-					+ ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
-					+ ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
-					+ ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
-					+ "VALUES('O'||LPAD(ORDERLIST_SEQ.CURRVAL,5,'0'),?,?,SYSDATE" 
-					+ ",?,?,?"
-					+ ",?,?,?,?,?"
-					+ ",?,?,?,?,?"
-					+ ",?,?,?,?,?" 
-					+ ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+					  + ", ORDER_ITEMNAME, ORDER_ITEMIMGNAME, ORDER_ITEMIMGPATH"
+					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
+					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
+					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
+					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.CURRVAL,5,'0'),?,?,SYSDATE" 
+					  + ",?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?"
+					  + ",?,?,?,?,?" 
+					  + ",DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
 			
 		for(int i = 0 ; i < orderItem.size() ; i++) {
 			PreparedStatement pstmt = null;
@@ -136,30 +136,6 @@ public class OrderDao {
 					query = query2;
 				}
 				pstmt = conn.prepareStatement(query);
-				
-				/*
-				 * System.out.println("주문 중 쿼리 : " + query);
-				 * System.out.println(orderItem.get(i).getItemNo());
-				 * System.out.println(orderBuyer.get(0).getMemberNo());
-				 * System.out.println(orderItem.get(i).getOrderItemName());
-				 * System.out.println(orderItem.get(i).getOrderItemImgName());
-				 * System.out.println(orderItem.get(i).getOrderItemImgPath());
-				 * System.out.println(orderItem.get(i).getOrderItemPrice());
-				 * System.out.println(orderItem.get(i).getOrderItemDiscount());
-				 * System.out.println(orderItem.get(i).getOrderCount());
-				 * System.out.println(orderItem.get(i).getOrderUsePoint());
-				 * System.out.println(orderBuyer.get(0).getOrderName());
-				 * System.out.println(orderBuyer.get(0).getOrderPhone1());
-				 * System.out.println(orderBuyer.get(0).getOrderPhone2());
-				 * System.out.println(orderBuyer.get(0).getOrderPhone3());
-				 * System.out.println(orderBuyer.get(0).getOrderPostcode());
-				 * System.out.println(orderBuyer.get(0).getOrderAddress1());
-				 * System.out.println(orderBuyer.get(0).getOrderAddress2());
-				 * System.out.println(orderBuyer.get(0).getOrderRequest());
-				 * System.out.println(orderBuyer.get(0).getOrderDCost());
-				 * System.out.println(orderBuyer.get(0).getOrderAddPoint());
-				 * System.out.println(orderBuyer.get(0).getOrderPaymentOption());
-				 */
 				
 				pstmt.setString(1, orderItem.get(i).getItemNo());
 				pstmt.setString(2, orderBuyer.get(0).getMemberNo());
@@ -202,6 +178,7 @@ public class OrderDao {
 				close(pstmt);
 			}
 		}
+		
 		// System.out.println("주문 완료 끝 : " + chk);
 		return chk;
 	}

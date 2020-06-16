@@ -120,7 +120,7 @@ public class CartDao {
 			// cartOrderList.size() 만큼 DB에 요청
 			int j = 2;
 			for(int i = 0 ; i < cartOrderList.size() ; i++) {
-				System.out.println("cartOrderList.get(" + j + ").getCartListNo() : " + cartOrderList.get(i).getCartListNo() + " j : " + j);
+				//System.out.println("cartOrderList.get(" + j + ").getCartListNo() : " + cartOrderList.get(i).getCartListNo() + " j : " + j);
 				pstmt.setString(j, cartOrderList.get(i).getCartListNo());
 				j++;
 			}
@@ -342,12 +342,12 @@ public class CartDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, orderBuyer.get(0).getMemberNo());
-			System.out.println(orderBuyer.get(0).getMemberNo());
+			//System.out.println(orderBuyer.get(0).getMemberNo());
 			
 			int j = 2;
 			for(int i = 0 ; i < orderItem.size() ; i++) {
 				pstmt.setString(j, orderItem.get(i).getItemNo());
-				System.out.println(orderItem.get(i).getItemNo());
+				//System.out.println(orderItem.get(i).getItemNo());
 				j++;
 			}
 				

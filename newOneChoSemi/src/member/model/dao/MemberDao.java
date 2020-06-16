@@ -434,26 +434,41 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
-			String query = "UPDATE MEMBER " + 
-					"SET MEMBER_RANK = " + 
-					"    CASE" + 
-					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
-					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R1') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R1')" + 
-					"        THEN 'R1'" + 
-					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
-					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R2') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R2')" + 
-					"        THEN 'R2'" + 
-					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
-					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R3') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R3')" + 
-					"        THEN 'R3'" + 
-					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
-					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R4') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')" + 
-					"        THEN 'R4'" + 
-					"        WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?)" + 
-					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R5') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')" + 
-					"        THEN 'R5'" + 
-					"    END" + 
+			/*
+			 * String query = "UPDATE MEMBER \\r\\n" + "SET MEMBER_RANK = \\r\\n" +
+			 * "CASE\\r\\n" +
+			 * "WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R1') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R1') THEN 'R1'\\r\\n"
+			 * +
+			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R2') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R2') THEN 'R2'\\r\\n"
+			 * +
+			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R3') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R3') THEN 'R3'\\r\\n"
+			 * +
+			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R4') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5') THEN 'R4'\\r\\n"
+			 * +
+			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R5') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5') THEN 'R5'\\r\\n"
+			 * + "END\\r\\n" + "WHERE MEMBER_NO = ?";
+			 */
+			String query = "UPDATE MEMBER \r\n" + 
+					"SET MEMBER_RANK = \r\n" + 
+					"    CASE\r\n" + 
+					"        WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?)\r\n" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R1') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R1')\r\n" + 
+					"        THEN 'R1'\r\n" + 
+					"        WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?)\r\n" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R2') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R2')\r\n" + 
+					"        THEN 'R2'\r\n" + 
+					"        WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?)\r\n" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R3') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R3')\r\n" + 
+					"        THEN 'R3'\r\n" + 
+					"        WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?)\r\n" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R4') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')\r\n" + 
+					"        THEN 'R4'\r\n" + 
+					"        WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT FROM MEMBER WHERE MEMBER_NO = ?)\r\n" + 
+					"        BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R5') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5')\r\n" + 
+					"        THEN 'R5'\r\n" + 
+					"    END\r\n" + 
 					"WHERE MEMBER_NO = ?";
+
 			
 			System.out.println("맴버 번호 " + orderBuyer.get(0).getMemberNo());
 			

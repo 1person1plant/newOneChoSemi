@@ -184,7 +184,7 @@ public class MemberService {
 
 	public void memberRankUpdate(ArrayList<Order> orderBuyer) {
 		Connection conn = getConnection();
-		int result = new MemberDao().memberRankUpdate(conn, orderBuyer);
+		new MemberDao().memberRankUpdate(conn, orderBuyer);
 		
 		close(conn);
 	}
