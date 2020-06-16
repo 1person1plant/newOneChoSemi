@@ -7,7 +7,7 @@
 	String userRank = "";
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
-		//System.out.println("loginUser : " + loginUser);
+		System.out.println("loginUser : " + loginUser);
 		//System.out.println("loginUser : " + loginUser.getMemberPoint());
 		/* System.out.println("유저 데이트 확인 용 : " + loginUser); */
 		if(loginUser == null){
@@ -388,7 +388,16 @@
         	<%if(result){%>
     			$("#loginBtn").click();
 			<%} else {%>
-        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
+				var chkKao = "<%=loginUser.getMemberStatus() %>";
+				// console.log(chkKao);
+				if(chkKao == "K"){
+					// console.log("K");
+					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+				} else {
+					// console.log("N");
+	        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
+				}
+				
 	   		<%} %>
 		}
         function goCart(){

@@ -77,35 +77,37 @@ ul .list-group-item :hover {
 </style>
 </head>
 <body>
-
 	
-			<div class="panel panel-info">
-					<div class="panel-heading">
-						<!-- 패널 타이틀1 -->
-						<h3 class="panel-title">
-							<span>마이 페이지</span>
-						</h3>
-					</div>
-					<!-- 사이드바 메뉴목록1 -->
-					<ul class="list-group">
-						<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>">
-							<li class="list-group-item">회원 등급</li>
-						</a>
-						<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
-							<li class="list-group-item">개인 정보 수정</li>
-						</a>
-						<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>">
-							<li class="list-group-item">주문 내역 조회</li>
-						</a>
-						<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">
-							<li class="list-group-item">위시리스트</li>
-						</a>
-						<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
-							<li class="list-group-item">회원 탈퇴</li>
-						</a>
-					</ul>
-				</div>
-		
+	<div class="panel panel-info">
+			<div class="panel-heading">
+				<!-- 패널 타이틀1 -->
+				<h3 class="panel-title">
+					<span>마이 페이지</span>
+				</h3>
+			</div>
+			<!-- 사이드바 메뉴목록1 -->
+			<ul class="list-group">
+				<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>">
+					<li class="list-group-item">회원 등급</li>
+				</a>
+				<%if(loginUser.getMemberStatus() != "K") { %>
+				<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>">
+					<li class="list-group-item">개인 정보 수정</li>
+				</a>
+				<%} %>
+				<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>">
+					<li class="list-group-item">주문 내역 조회</li>
+				</a>
+				<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>">
+					<li class="list-group-item">위시리스트</li>
+				</a>
+				<%if(loginUser.getMemberStatus() != "K") { %>
+				<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp">
+					<li class="list-group-item">회원 탈퇴</li>
+				</a>
+				<%} %>
+			</ul>
+		</div>
 
 </body>
 </html>
