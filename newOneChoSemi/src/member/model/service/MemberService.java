@@ -188,5 +188,14 @@ public class MemberService {
 		
 		close(conn);
 	}
+
+	public Member loginSessionUpdateMember(String memberNo) {
+		Connection conn = getConnection();
+		
+		Member loginUser = new MemberDao().loginSessionUpdateMember(conn, memberNo);
+		
+		close(conn);
+		return loginUser;
+	}
 	
 }

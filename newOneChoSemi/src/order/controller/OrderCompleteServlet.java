@@ -8,7 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import member.model.service.MemberService;
+import member.model.vo.Member;
 import order.model.service.OrderService;
 import order.model.vo.Order;
 
@@ -108,6 +111,13 @@ public class OrderCompleteServlet extends HttpServlet {
 		
 		boolean result = new OrderService().insertOrderList(orderItem, orderBuyer, orderpaymentTotal, memberRank);
 
+		HttpSession session = request.getSession();
+		
+		Member loginUser = new MemberService().loginSessionUpdateMember(memberNo);
+//		System.out.println("loginUser " + loginUser);
+		
+		session.setAttribute("loginUser", loginUser);
+		
 		if(result) {
 			request.setAttribute("orderItem", orderItem);
 			request.setAttribute("orderBuyer", orderBuyer);

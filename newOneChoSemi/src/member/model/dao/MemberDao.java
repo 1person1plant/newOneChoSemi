@@ -331,7 +331,7 @@ public class MemberDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			Member searchId_A = null;
-			System.out.println("dao" + searchId_A);
+//			System.out.println("dao" + searchId_A);
 
 			String query = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE1 = ? AND MEMBER_PHONE2 = ? AND MEMBER_PHONE3 = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
 			
@@ -383,7 +383,7 @@ public class MemberDao {
 									rset.getString("MEMBER_RANK"),
 									rset.getInt("MEMBER_POINT"),
 									rset.getInt("TOTAL_PRICE"));
-					System.out.println("grade dao"+grade);
+//					System.out.println("grade dao"+grade);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -398,15 +398,15 @@ public class MemberDao {
 		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 			PreparedStatement pstmt = null;
 			int result = 0;
-			System.out.println("memberdao orderCompMemberPoint");
-			System.out.println("맴버 번호 : " + orderBuyer.get(0).getMemberNo());
-			System.out.println("맴버 지출 :  " + orderpaymentTotal);
-			System.out.println("맴버 적립 포인트 :  " + orderBuyer.get(0).getOrderAddPoint());
-			System.out.println("맴버 사용 포인트 :  " + orderBuyer.get(0).getOrderUsePoint());
+//			System.out.println("memberdao orderCompMemberPoint");
+//			System.out.println("맴버 번호 : " + orderBuyer.get(0).getMemberNo());
+//			System.out.println("맴버 지출 :  " + orderpaymentTotal);
+//			System.out.println("맴버 적립 포인트 :  " + orderBuyer.get(0).getOrderAddPoint());
+//			System.out.println("맴버 사용 포인트 :  " + orderBuyer.get(0).getOrderUsePoint());
 			
 			String query = "UPDATE (SELECT MEMBER_POINT MP, MEMBER_TOTALPURCHASEAMOUNT MT FROM MEMBER WHERE MEMBER_NO = ?) SET MT = MT + ?, MP = MP + ? - ?";
 			
-			System.out.println("맴버 포인트 수정 쿼리 : " + query);
+//			System.out.println("맴버 포인트 수정 쿼리 : " + query);
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -423,28 +423,14 @@ public class MemberDao {
 				close(pstmt);
 			}
 			
-			System.out.println("맴버 포인트 결과 : " + result);
+//			System.out.println("맴버 포인트 결과 : " + result);
 			return result;
 		}
 		
 		public int memberRankUpdate(Connection conn, ArrayList<Order> orderBuyer) {
 			PreparedStatement pstmt = null;
 			int result = 0;
-			
-			/*
-			 * String query = "UPDATE MEMBER \\r\\n" + "SET MEMBER_RANK = \\r\\n" +
-			 * "CASE\\r\\n" +
-			 * "WHEN (SELECT MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R1') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R1') THEN 'R1'\\r\\n"
-			 * +
-			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R2') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R2') THEN 'R2'\\r\\n"
-			 * +
-			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R3') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R3') THEN 'R3'\\r\\n"
-			 * +
-			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R4') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5') THEN 'R4'\\r\\n"
-			 * +
-			 * "WHEN (select MEMBER_TOTALPURCHASEAMOUNT from member where member_no = ?) BETWEEN (SELECT RANK_POINTMIN FROM RANK WHERE RANK_NO = 'R5') AND (SELECT RANK_POINTMAX FROM RANK WHERE RANK_NO = 'R5') THEN 'R5'\\r\\n"
-			 * + "END\\r\\n" + "WHERE MEMBER_NO = ?";
-			 */
+
 			String query = "UPDATE MEMBER \r\n" + 
 					"SET MEMBER_RANK = \r\n" + 
 					"    CASE\r\n" + 
@@ -467,7 +453,7 @@ public class MemberDao {
 					"WHERE MEMBER_NO = ?";
 
 			
-			System.out.println("맴버 번호 " + orderBuyer.get(0).getMemberNo());
+//			System.out.println("맴버 번호 " + orderBuyer.get(0).getMemberNo());
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -486,9 +472,53 @@ public class MemberDao {
 				close(pstmt);
 			}
 			
-			System.out.println("등급업 했나? ");
+//			System.out.println("등급업 했나? ");
 		
 			return result;
+		}
+
+		public Member loginSessionUpdateMember(Connection conn, String memberNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			Member loginUser = null;
+	
+			String query = "SELECT MEMBER_NO, MEMBER_ADMIN, MEMBER_ID, MEMBER_PWD, MEMBER_NAME, MEMBER_PHONE1, MEMBER_PHONE2, MEMBER_PHONE3, MEMBER_EMAIL1, MEMBER_EMAIL2, MEMBER_POSTCODE, MEMBER_ADDRESS1, MEMBER_ADDRESS2, MEMBER_STATUS, MEMBER_POINT, MEMBER_RANK FROM MEMBER WHERE MEMBER_NO = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, memberNo);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					loginUser = new Member(rs.getString("MEMBER_NO"),
+										   rs.getString("MEMBER_ADMIN"),
+										   rs.getString("MEMBER_ID"),
+										   rs.getString("MEMBER_PWD"),
+										   rs.getString("MEMBER_NAME"),
+										   rs.getString("MEMBER_PHONE1"),
+										   rs.getString("MEMBER_PHONE2"),
+										   rs.getString("MEMBER_PHONE3"),
+										   rs.getString("MEMBER_EMAIL1"),
+										   rs.getString("MEMBER_EMAIL2"),
+										   rs.getString("MEMBER_POSTCODE"),
+										   rs.getString("MEMBER_ADDRESS1"),
+										   rs.getString("MEMBER_ADDRESS2"),
+										   rs.getString("MEMBER_STATUS"),
+										   rs.getInt("MEMBER_POINT"),
+										   rs.getString("MEMBER_RANK")
+										   );
+				}
+	//			System.out.println("MemberDao : " + loginUser);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			return loginUser;
 		}
 
 		
