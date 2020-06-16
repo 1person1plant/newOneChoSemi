@@ -4,7 +4,9 @@
 	Item item = (Item)request.getAttribute("itemDetail");
 	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
 	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
-	
+	String notMy = (String)request.getAttribute("notMy");
+	String notOther = (String)request.getAttribute("notOther");
+
 	String keyword = "";
 	String key1 = "";
 	String key2 = "";

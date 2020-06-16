@@ -36,16 +36,21 @@ public class ItemDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String itemNo = request.getParameter("itemNo");
-		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		ArrayList<Review> myReviewList = new ArrayList<>();
+		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
+		
+		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
+			myReviewList = new ArrayList<>();
+		}else {
+			String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+			myReviewList = new ReviewService().myReviewList(itemNo, memberNo);			
+		}
 		
 		Item itemDetail = new ItemService().selectItemDetail(itemNo);
-		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
-		ArrayList<Review> myReviewList = new ReviewService().myReviewList(itemNo, memberNo);
 		
 		request.setAttribute("itemDetail", itemDetail);
-		request.setAttribute("otherReviewList", otherReviewList);
 		request.setAttribute("myReviewList", myReviewList);
-
+		request.setAttribute("otherReviewList", otherReviewList);
 		request.getRequestDispatcher("views/item/itemDetail.jsp").forward(request, response);
 		
 	}
