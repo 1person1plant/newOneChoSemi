@@ -179,7 +179,12 @@ public class MemberService {
 	 * @return
 	 */
 	public Member searchPwdMember(Member member) {
-		return null;
+		Connection conn = getConnection();
+		
+		Member searchPwd_A = new MemberDao().searchPwdMember(conn, member);
+		
+		close(conn);
+		return searchPwd_A;
 	}
 
 //	------------------------------------------------ 아라
