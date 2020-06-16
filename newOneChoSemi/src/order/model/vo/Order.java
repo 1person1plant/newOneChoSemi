@@ -139,6 +139,16 @@ public class Order implements Serializable{
 		this.deliveryCode = deliveryCode;
 		this.paymentCode = paymentCode;
 	}
+	public Order(String orderNo, String itemNo, Date orderDate, String memberNo,
+			String deliveryCode, String orderReview) {
+		super();
+		this.orderNo = orderNo;
+		this.itemNo = itemNo;
+		this.orderDate = orderDate;
+		this.memberNo = memberNo;				
+		this.deliveryCode = deliveryCode;
+		this.orderReview = orderReview;
+	}
 	public String getOrderNo() {
 		return orderNo;
 	}

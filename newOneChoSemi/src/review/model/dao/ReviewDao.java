@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import order.model.vo.Order;
 import review.model.vo.Review;
 
 public class ReviewDao {
@@ -118,9 +119,38 @@ public class ReviewDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(result);
 		
 		return result;
+	}
+
+	public Order orderCheck(Connection conn, String itemNo, String memberNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Order order = new Order();
+		
+		String query = "SELECT O.* FROM (SELECT ORDER_NO, ITEM_NO, ORDER_DATE, MEMBER_NO, DELIVERY_CODE, ORDER_REVIEW FROM ORDERLIST WHERE ITEM_NO = ? AND MEMBER_NO = ? AND DELIVERY_CODE = 'D3' AND ORDER_REVIEW = 'N' ORDER BY ORDER_DATE ASC) O WHERE ROWNUM = 1";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				order = new Order(rset.getString("order_no")
+								 ,rset.getString("item_no")
+								 ,rset.getDate("order_date")
+								 ,rset.getString("member_no")
+								 ,rset.getString("delivery_code")
+								 ,rset.getString("order_review"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return order;
 	}
 
 }
