@@ -33,19 +33,25 @@ public class OrderService {
 		return oh;
 	}
 
-	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
+	public boolean insertOrderList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer, int orderpaymentTotal, String memberRank) {
 		Connection conn = getConnection();
 		int result2 = -1;
 		int result3 = -1;
+		int result4 = -1;
 		boolean chk = false;
 		
+		// 주문 내역 db 저장
 		boolean result = new OrderDao().insertOrderList(conn, orderItem, orderBuyer);
 		
 		if(result) {
+			// 장바구니 삭제
 			result2 = new CartService().orderCompDeleteCartList(orderItem, orderBuyer);
 			if(result2 > 0) {
+				// 사용자 포인트 누적
 				result3 = new MemberService().orderCompMemberPoint(orderBuyer, orderpaymentTotal);
 				if(result3 > 0) {
+					// 멤버 등급 조정 
+					new MemberService().memberRankUpdate(memberRank);
 					chk = true;
 					commit(conn);
 				} else {
@@ -58,8 +64,6 @@ public class OrderService {
 			rollback(conn);
 		}
 
-		// 멤버 등급 조정 
-		new MemberService().memberRankUpdate();
 		
 		close(conn);
 		return chk;

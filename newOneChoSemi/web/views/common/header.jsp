@@ -4,6 +4,7 @@
 	boolean result = false;
 	String adminChk = "";
 	String userNo = "";
+	String userRank = "";
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		/* System.out.println("로그인 유저 정보 : " + loginUser); */
@@ -11,6 +12,7 @@
 			result = true;
 		} else {
 			userNo = loginUser.getMemberNo();
+			userRank = loginUser.getMemberRank();
 			/* System.out.println("userNo " + userNo); */
 			adminChk = loginUser.getMemberAdmin();
 			result = false;

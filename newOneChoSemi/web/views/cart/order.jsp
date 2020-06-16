@@ -980,10 +980,10 @@
         });
     </script><!-- 주문고객과 동일 스크립트 끝 -->
 	
-	<!-- TODO 결제 누르면 하단 폼 체워서 orderCompleteServlet으로 -->
 	<form id="orderCompForm" action="<%=request.getContextPath() %>/orderComp.or?userNo=<%=userNo %>" method="post">
 	<div>
 		<input type="hidden" class="comp_userNo" name="comp_userNo" value="<%=userNo %>">
+		<input type="hidden" class="comp_userRank" name="comp_userRank" value="<%=userRank %>">
 		<!-- 상품정보 -->
 		<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 		<div class="orderComp_item<%=i%>">

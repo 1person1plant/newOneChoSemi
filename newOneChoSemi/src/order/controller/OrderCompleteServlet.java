@@ -50,6 +50,7 @@ public class OrderCompleteServlet extends HttpServlet {
 		 */
 		
 		String memberNo = request.getParameter("comp_userNo");
+		String memberRank = request.getParameter("comp_userRank");
 		int orderUsePoint = 0;
 		if(request.getParameter("comp_paymentPoint") != null || request.getParameter("comp_paymentPoint") != "") {
 			orderUsePoint = Integer.valueOf(request.getParameter("comp_paymentPoint"));
@@ -105,8 +106,8 @@ public class OrderCompleteServlet extends HttpServlet {
 
 		//System.out.println("orderBuyer : " + orderBuyer);
 		
-		boolean result = new OrderService().insertOrderList(orderItem, orderBuyer, orderpaymentTotal);
-		
+		boolean result = new OrderService().insertOrderList(orderItem, orderBuyer, orderpaymentTotal, memberRank);
+
 		if(result) {
 			request.setAttribute("orderItem", orderItem);
 			request.setAttribute("orderBuyer", orderBuyer);

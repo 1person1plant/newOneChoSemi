@@ -32,7 +32,6 @@ public class ItemInsertServlet extends HttpServlet {
      */
     public ItemInsertServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -119,7 +118,6 @@ public class ItemInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -51,7 +51,6 @@ public class OrderDao {
 				list.add(o);			
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);

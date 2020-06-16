@@ -182,9 +182,9 @@ public class MemberService {
 		return result;
 	}
 
-	public void memberRankUpdate() {
+	public void memberRankUpdate(String memberRank) {
 		Connection conn = getConnection();
-		new MemberDao().memberRankUpdate(conn);
+		int result = new MemberDao().memberRankUpdate(conn, memberRank);
 		
 		close(conn);
 	}
