@@ -37,6 +37,8 @@
 	
 	<!-- Daum postcode api -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <!-- 기본틀 css -->
 <style>
@@ -692,34 +694,23 @@
 	            <tbody>
 	                <tr>
 	                    <td>
-	                        <input type="radio" class="payoption" name="payoption" id="tooltip1" value="payoption1" checked>
-	                        <label for="tooltip1" data-toggle="tooltip1" title="준비 중 입니다!">계좌 이체</label>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip2" value="card" checked>
+	                        <label for="tooltip2" data-toggle="tooltip2" title="일반 결제">일반 결제</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" class="payoption" name="payoption" id="tooltip2" value="payoption2" disabled>
-	                        <label for="tooltip2" data-toggle="tooltip2" title=" 카드 결제는 준비 중 입니다!">카드 결제</label>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip1" value="vbank" disabled>
+	                        <label for="tooltip1" data-toggle="tooltip1" title="충전 포인트 결제는 준비 중 입니다!">충전 포인트 결제</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" class="payoption" name="payoption" id="tooltip3" value="payoption3" disabled>
-	                        <label for="tooltip3" data-toggle="tooltip3" title="휴대폰 결제는 준비 중 입니다!">휴대폰 결제</label>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip3" value="trans" disabled>
+	                        <label for="tooltip3" data-toggle="tooltip3" title="계좌 간편결제는 준비 중 입니다!">계좌 간편결제</label>
 	                    </td>
 	                    <td>
-	                        <input type="radio" class="payoption" name="payoption" id="tooltip4" value="payoption4"  disabled>
-	                        <label for="tooltip4" data-toggle="tooltip4" title="kakaopay는 준비 중 입니다!">kakao<b>pay</b></label>
+	                        <input type="radio" class="payoption" name="payoption" id="tooltip4" value="kakaopay"  disabled>
+	                        <label for="tooltip4" data-toggle="tooltip4" title="카드 간편 결제는 준비 중 입니다!">카드 간편 결제</label>
 	                    </td>
 	                </tr>
 	            </tbody>
-	            <tfoot>
-	                <tr>
-                    	<td colspan="4">
-                        	<p>
-	                        	은행 : 농협<br>
-								계좌번호 : 123-123456-335<br>
-								입급 기한 : 2020년 6월 22일 23:59:59
-							</p>
-	                    </td>
-	                </tr>
-	            </tfoot>
 	        </table>
 	    </div> <!-- 결제 방법 끝 -->
 	    
@@ -727,17 +718,14 @@
 	        <table>
 	            <tbody>
 	                <tr>
-	                    <td>        
-	                        <label class="orderterms_check" for="inP-cBox1">
+	                    <td>
+	                    	<label class="orderterms_check" for="inP-cBox1">
 	                            <input id="inP-cBox1" type="checkbox" required> 
 	                            <span class="icon1"></span>
 	                        </label>
 	                    </td>
-	                    <td>
-	                        <label for="inP-cBox1">상품 주문 및 배송정보 수집에 동의 합니다.
-	                        </label>
-	                    </td>
-	                    <td>[필수]</td>
+	                    <td><label for="inP-cBox1">상품 주문 및 배송정보 수집에 동의 합니다.</label></td>
+	                    <td><label class="orderterms_check" for="inP-cBox1">[필수]</label></td>
 	                </tr>
 	                <tr>
 	                    <td>
@@ -746,11 +734,8 @@
 	                            <span class="icon2"></span>
 	                        </label>
 	                    </td>
-	                    <td>
-	                        <label for="inP-cBox2">주문 상품의 명시내용과 사용조건을 확인하였으며, 취급환불 규정에 동의 합니다.
-	                        </label>
-	                    </td>
-	                    <td>[필수]</td>
+	                    <td><label for="inP-cBox2">주문 상품의 명시내용과 사용조건을 확인하였으며, 취급환불 규정에 동의 합니다.</label></td>
+	                    <td><label class="orderterms_check" for="inP-cBox2">[필수]</label></td>
 	                </tr>
 	            </tbody>
 	        </table>
@@ -1071,8 +1056,81 @@
 				$(".comp_paymentTotal").val($("#orderpayment_total").text());
 
 				$(".comp_paymentOption").val($(".payoption").val());
+				
+				
+				// 주문 api용 변수들
+				var orderMemberNo = $(".comp_userNo").val();
+		    	var orderMemberEmail = "<%=loginUser.getMemberEmail1() + loginUser.getMemberEmail2() %>";
+		    	
+		    	// 주문 api용 상품명 
+		    	var itemName = "<%=cartList.get(0).getItemName() %>";
+		    	var itemCounnt = "<%=cartList.size() %>" - 1;
+		    	if(itemCounnt > 1){
+		    		itemName += itemName + " 외 (" + itemCounnt + ")";
+		    	}
+		    	// 주문 api용 고객 정보
+		    	var orderName = $(".comp_rName").val();
+		    	var orderPhone = $(".comp_rPhone1").val() + " - " + $(".comp_rPhone2").val() + " - " + $(".comp_rPhone3").val();
+		    	var orderPostcode = $(".comp_rPostcode").val();
+		    	var orderaddress = $(".comp_rAddress1").val() + $(".comp_rAddress2").val();
+		    	
+		    	// 주문 옵션
+		    	var orderTotalPrice = $(".comp_paymentTotal").val();
+		    	var orderPayOption = $(".comp_paymentOption").val();
+		    	
+				console.log(orderPayOption);
+		    	
+				// iamport api
+				var IMP = window.IMP; // 생략가능
+				IMP.init('imp99515555');
+				// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+				// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+				IMP.request_pay({
+					pg: 'inicis', // version 1.1.0부터 지원.
+					pay_method: orderPayOption,
+					/*
+						'samsung':삼성페이,
+						'card':신용카드,
+						'trans':실시간계좌이체,
+						'vbank':가상계좌,
+						'phone':휴대폰소액결제
+					*/
+					merchant_uid: 'merchant_' + new Date().getTime() + ', memberNo=' + orderMemberNo,
+					/*
+						merchant_uid (https://docs.iamport.kr/implementation/payment) 참고
+					*/
+					name: itemName,
+					//결제창에서 보여질 이름
+					amount: orderTotalPrice,
+					//가격
+					buyer_email: orderMemberEmail,
+					buyer_name: orderName,
+					buyer_tel: orderPhone,
+					buyer_addr: orderaddress,
+					buyer_postcode: orderPostcode,
+					m_redirect_url: '/web/views/receipt.jsp'
 
-		    	$("#orderCompForm").submit();
+				}, function (rsp) {
+					console.log(rsp);
+					if (rsp.success) {
+						/* 
+							var msg = '결제가 완료되었습니다.';
+							msg += '고유ID : ' + rsp.imp_uid;
+							msg += '상점 거래ID : ' + rsp.merchant_uid;
+							msg += '결제 금액 : ' + rsp.paid_amount;
+							msg += '카드 승인번호 : ' + rsp.apply_num;
+						*/
+				    	// 결제 완료 후 결과 화면으로...
+						$("#orderCompForm").submit();
+					} else {
+						var msg = rsp.error_msg;
+						alert(msg);
+					}
+					//alert(msg);
+				});
+
+				
+
 		    }
 		});
 	</script>
