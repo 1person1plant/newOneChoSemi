@@ -181,11 +181,11 @@ public class MemberService {
 	 * @param member 입력된 아이디 +이메일 
 	 * @return
 	 */
-	public Member searchPwdMember(Member member) {
+	public String searchPwdMember(Member member) {
 		Connection conn = getConnection();
 		
-		Member searchPwd_A = new MemberDao().searchPwdMember(conn, member);
-		
+		String searchPwd_A = new MemberDao().searchPwdMember(conn, member);
+
 		close(conn);
 		return searchPwd_A;
 	}

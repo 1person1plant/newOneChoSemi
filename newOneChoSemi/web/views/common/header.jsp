@@ -11,12 +11,13 @@
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		kakaoUser = (Member)session.getAttribute("kakaoUser");
-		if(kakaoUser != null && loginUser == null){
+		
+		if(kakaoUser != null && loginUser == null){	// 카카오 user 일때는
 			kakaoChk = kakaoUser.getMemberStatus();
 			kakaoNo = kakaoUser.getMemberNo();
 			loginUser = null;
 			result = false;
-		} else if(kakaoUser == null && loginUser != null){
+		} else if(kakaoUser == null && loginUser != null){	// 로그인 user 일때는
 			userNo = loginUser.getMemberNo();
 			adminChk = loginUser.getMemberAdmin();
 			kakaoUser = null;

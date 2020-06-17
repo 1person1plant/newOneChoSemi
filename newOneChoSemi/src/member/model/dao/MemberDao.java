@@ -438,8 +438,32 @@ public class MemberDao {
 		 * @param member 입력된 아이디 +이메일  
 		 * @return
 		 */
-		public Member searchPwdMember(Connection conn, Member member) {
-			return null;
+		public String searchPwdMember(Connection conn, Member member) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String searchPwd_A = null;
+			
+			String query = "SELECT MEMBER_PWD FROM MEMBER "
+					+ "WHERE MEMBER_ID = ? AND MEMBER_EMAIL1 = ? AND MEMBER_EMAIL2 = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getMemberId());
+				pstmt.setString(2, member.getMemberEmail1());
+				pstmt.setString(3, member.getMemberEmail2());
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					searchPwd_A = rs.getString("MEMBER_PWD");
+				}	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			return searchPwd_A;
 		}
 		
 //		------------------------------------------------ 아라
@@ -473,8 +497,7 @@ public class MemberDao {
 			
 			return grade;
 		}
-
-		
+	
 		public int orderCompMemberPoint(Connection conn, ArrayList<Order> orderBuyer, int orderpaymentTotal) {
 			PreparedStatement pstmt = null;
 			int result = 0;
