@@ -430,6 +430,16 @@ label {
 		}
 	</script>
 	<script>
+		$(function(){
+			$("#sample3_detailAddress").keydown(function(key){
+				if(key.keyCode==13){
+					$("#save").click();
+					return false;
+				}
+			});
+		})
+	</script>
+	<script>
 		$(function() {
 			$(".button1").mouseenter(function() {
 				$(this).css({

@@ -243,6 +243,14 @@
 	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
+			$("#<%=mwl.get(i).getWishlistNo()%>memo").keydown(function(key){
+				if(key.keyCode==13){
+					$("#<%=mwl.get(i).getWishlistNo()%>UpBtn").click();
+					return false;
+				}
+			});
+		})
+		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
            
 				var wishNo = $(this).parents("tr").children("td:first").text();
