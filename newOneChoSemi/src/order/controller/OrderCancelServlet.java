@@ -32,10 +32,9 @@ public class OrderCancelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderNo = request.getParameter("orderNo");
-		String itemNo = request.getParameter("itemNo");
 		String memberNo = request.getParameter("memberNo");
-		System.out.println("orderNo : " + orderNo + "itemNo : " + itemNo + "memberNo : " + memberNo);
-		int result = new OrderService().cancelRequest(new Order(orderNo,itemNo,memberNo));
+		String itemNo = request.getParameter("itemNo");
+		int result = new OrderService().cancelRequest(new Order(orderNo,memberNo,itemNo));
 		System.out.println("service>servlet : " + result);
 		PrintWriter pw = response.getWriter();
 		if(result>0) {

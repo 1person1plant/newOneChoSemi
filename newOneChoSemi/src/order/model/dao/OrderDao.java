@@ -64,7 +64,7 @@ public class OrderDao {
 		ResultSet rset = null;
 		ArrayList<OrderHis> oh = new ArrayList<>();
 		
-		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=? AND ORDER_CANCELYN='N'";
+		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberNo);
@@ -78,8 +78,7 @@ public class OrderDao {
 											rset.getInt("ORDER_COUNT"),
 											rset.getString("DELIVERY_STATUS"),
 											rset.getString("MEMBER_NO"),
-											rset.getString("ORDER_CANCELREQUEST"),
-											rset.getString("ORDER_CANCELYN"));
+											rset.getString("ORDER_CANCELREQUEST"));
 				
 				System.out.println("OrderHis dao"+oh);
 				oh.add(ohlist);
@@ -188,12 +187,13 @@ public class OrderDao {
 	public int cancelRequest(Connection conn, Order order) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "UPDATE ORDERLIST SET ORDER_CANCELREQUEST='Y' WHERE DELIVERY_CODE ='D1' AND ORDER_NO=? AND ITEM_NO=? AND MEMBER_NO=?";
+		String query = "UPDATE ORDERLIST SET ORDER_CANCELREQUEST='Y' WHERE DELIVERY_CODE ='D1' AND ORDER_NO=? AND MEMBER_NO=? AND ITEM_NO=?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, order.getOrderNo());
-			pstmt.setString(2, order.getItemNo());
-			pstmt.setString(3, order.getMemberNo());
+			pstmt.setString(2, order.getMemberNo());
+			pstmt.setString(3, order.getItemNo());
+			
 			result = pstmt.executeUpdate();
 			System.out.println("dao : "+result);
 		} catch (SQLException e) {
@@ -203,37 +203,5 @@ public class OrderDao {
 		}
 		return result;
 	}
-
-	public ArrayList<OrderHis> cancelHistory(Connection conn, String memberNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<OrderHis> ohcancel = new ArrayList<>();
-		
-		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=? AND ORDER_CANCELYN='Y'";
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memberNo);
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				OrderHis ohlist = new OrderHis(rset.getString("ORDER_NO"),
-											rset.getString("IMAGE_NAME"),
-											rset.getString("ITEM_NO"),
-											rset.getString("ITEM_NAME"),
-											rset.getString("MEMBER_NO"),
-											rset.getString("ORDER_CANCELYN"));
-				System.out.println("cancelList dao"+ohcancel);
-				ohcancel.add(ohlist);
-				System.out.println("oh.size() : " +ohcancel.size());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-			close(rset);
-		}
-		
-		return ohcancel;
-	}
-
+	
 }

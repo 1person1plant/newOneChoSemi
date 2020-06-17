@@ -740,7 +740,6 @@ td:nth-of-type(2) {width:45rem;}
 				reader.readAsDataURL(value.files[0]);
 			}
 		</script>
-		
 	</section>
 	<%@ include file="../common/footer.jsp"%>
 	<!-- 제이쿼리 -->

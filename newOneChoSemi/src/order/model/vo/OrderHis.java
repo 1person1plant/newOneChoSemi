@@ -9,12 +9,11 @@ public class OrderHis {
 	private String deliveryStatus;
 	private String memberNo;
 	private String orderCancelrequest;
-	private String orderCancelYN;
 	public OrderHis() {
 		super();
 	}
 	public OrderHis(String orderNo, String imageName, String itemNo, String itemName, int orderCount,
-			String deliveryStatus, String memberNo, String orderCancelrequest, String orderCancelYN) {
+			String deliveryStatus, String memberNo, String orderCancelrequest) {
 		super();
 		this.orderNo = orderNo;
 		this.imageName = imageName;
@@ -24,7 +23,6 @@ public class OrderHis {
 		this.deliveryStatus = deliveryStatus;
 		this.memberNo = memberNo;
 		this.orderCancelrequest = orderCancelrequest;
-		this.orderCancelYN = orderCancelYN;
 	}
 	public String getOrderNo() {
 		return orderNo;
@@ -74,41 +72,12 @@ public class OrderHis {
 	public void setOrderCancelrequest(String orderCancelrequest) {
 		this.orderCancelrequest = orderCancelrequest;
 	}
-	public String getOrderCancelYN() {
-		return orderCancelYN;
-	}
-	public void setOrderCancelYN(String orderCancelYN) {
-		this.orderCancelYN = orderCancelYN;
-	}
 	@Override
 	public String toString() {
 		return "OrderHis [orderNo=" + orderNo + ", imageName=" + imageName + ", itemNo=" + itemNo + ", itemName="
 				+ itemName + ", orderCount=" + orderCount + ", deliveryStatus=" + deliveryStatus + ", memberNo="
-				+ memberNo + ", orderCancelrequest=" + orderCancelrequest + ", orderCancelYN=" + orderCancelYN + "]";
+				+ memberNo + ", orderCancelrequest=" + orderCancelrequest + "]";
 	}
-	public OrderHis(String orderNo, String imageName, String itemNo, String itemName, int orderCount,
-				String deliveryStatus, String memberNo, String orderCancelrequest) {
-			super();
-			this.orderNo = orderNo;
-			this.imageName = imageName;
-			this.itemNo = itemNo;
-			this.itemName = itemName;
-			this.orderCount = orderCount;
-			this.deliveryStatus = deliveryStatus;
-			this.memberNo = memberNo;
-			this.orderCancelrequest = orderCancelrequest;
-		}
-	public OrderHis(String orderNo, String imageName, String itemNo, String itemName, String memberNo,
-			String orderCancelYN) {
-		super();
-		this.orderNo = orderNo;
-		this.imageName = imageName;
-		this.itemNo = itemNo;
-		this.itemName = itemName;
-		this.memberNo = memberNo;
-		this.orderCancelYN = orderCancelYN;
-	}
-	
 	
 	
 

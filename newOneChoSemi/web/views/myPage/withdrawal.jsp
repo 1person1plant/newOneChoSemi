@@ -208,6 +208,7 @@ label {
 						<table class="table">
 							<thead>
 								<tr>
+									<br>
 									<th colspan="3" scope="col"
 										style='border-bottom: 2px solid black'>
 										<input type="text" style="display:none;" name="memberNo" value="<%=loginUser.getMemberNo() %>">
@@ -283,7 +284,8 @@ label {
 									value="탈퇴하기" onclick="altFunction(realt);">
 								<div id='area2' class='area'></div>
 		
-								<button type='button' class='btn btn-primary' id="modalCancel">취소</button>
+								<a href='grade.html'><button type='button'
+										class='btn btn-primary' id="modalCancel">취소</button></a>
 							</div>
 						</form>
 					</div>
@@ -292,14 +294,6 @@ label {
 				</div>
 			</div>
 			<script>
-				$(function(){
-					$("#password1, #password2").keydown(function(key){
-						if(key.keyCode==13){
-							$("#myBtn").click();
-							return false;
-						}
-					});
-				})
 				$(function(){
 					$("#myBtn").click(function(){
 						var inputPwd1 = document.getElementById("password1").value;
@@ -433,13 +427,6 @@ label {
             			"width":"105px", "height":"42px"});
             		});
             	});
-            </script>
-            <script>
-            	$(function(){
-            		$("#modalCancel").click(function(){
-            			location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
-            		})
-            	})
             </script>
 			<%@ include file="../common/footer.jsp"%>
 

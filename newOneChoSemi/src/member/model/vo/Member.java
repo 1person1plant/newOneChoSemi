@@ -31,7 +31,7 @@ public class Member implements Serializable{
 	
 	public Member() {
 	}
-	
+
 	public Member(String memberId) {
 		this.memberId = memberId;
 	}

@@ -157,10 +157,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
-					<%@include file="kakaoCategory.jsp" %>
-				<%} else {%>
+				<%if(loginUser.getMemberStatus() == "K"){ %>
 					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
 				<%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
@@ -170,6 +170,7 @@
 						<table class="table">
 							<thead>
 								<tr>
+									<br>
 									<th colspan="5" scope="col"><h1><%=loginUser.getMemberName()%>님의 등급은 <%=rank%>
 									<img style="width:50px;height:50px" src="<%=request.getContextPath()%>/<%=rankImg%>"></h1></th>
 								</tr>

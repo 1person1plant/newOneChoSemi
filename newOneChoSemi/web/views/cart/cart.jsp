@@ -78,8 +78,8 @@
         margin: 0 10px 0 10px;
     }
     .carttable input{
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 
     .carttable img {
@@ -143,7 +143,7 @@
         display: none;
     }
     .trash{
-        background: url("<%=request.getContextPath() %>/images/cart/cancelx32.png") no-repeat center;
+        background: url("<%=request.getContextPath() %>/images/cart/trash-alt-regular.svg") no-repeat center;
         border: none;
         width: 20px;
         height: 20px;
@@ -674,8 +674,6 @@
 							$cartListTbody.append($tr);
 							
 							$('input[class=cart_count]:last').spinner();
-							
-							$(".carttable")[0].scrollIntoView();
 		                } // 장바구니 데이터 (data) 가져옴
 					},
 						error:function(request,status,error){

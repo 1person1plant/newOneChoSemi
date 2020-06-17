@@ -33,11 +33,10 @@ public class WishListMemoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String wishNo = request.getParameter("wishNo");
-		String itemNo = request.getParameter("itemNo");
 		String memberNo = request.getParameter("memberNo");
 		String wishMemo = request.getParameter("wishMemo");
-		System.out.println("wishNo : "+wishNo + "memberNo : "+memberNo + "wishMemo : " + wishMemo + "itemNo : " + itemNo);
-		int result = new MyWishListService().memoUpdate(new RealWishList(wishNo,itemNo,memberNo,wishMemo));
+		System.out.println("wishNo : "+wishNo + "memberNo : "+memberNo + "wishMemo : " + wishMemo);
+		int result = new MyWishListService().memoUpdate(new RealWishList(wishNo,memberNo,wishMemo));
 		
 		PrintWriter out = response.getWriter();
 		

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Board.model.service.QnaService;
-import Board.model.vo.Notice;
 import Board.model.vo.Qna;
 
 /**
@@ -38,16 +37,10 @@ public class QnaListServlet extends HttpServlet {
 		QnaService qs=new QnaService();
 		ArrayList<Qna> qnas=qs.selectAllQna();
 		
-		//공지사항 조회하자
-				ArrayList<Notice> notices=qs.selectAllNotice();
-				
-				System.out.println(notices);
 		
 		
-		
-		if(!qnas.isEmpty()&&!notices.isEmpty()) {
+		if(!qnas.isEmpty()) {
 			
-			request.setAttribute("notices", notices);
 			request.setAttribute("qnas", qnas);
 			request.getRequestDispatcher("views/admin/qna.jsp").forward(request, response);
 			
