@@ -147,7 +147,7 @@
                       							<div class="test col-md-2 ara-label-text">아이디</div>
                       							<div class="test col-md-4">
                         							<div class="row">
-                          								<input type="text" class="form-control" placeholder="아이디를 입력하세요" aria-describedby="basic-addon1">
+                          								<input id="memberId_A" name="memberId_A" type="text" class="form-control" placeholder="아이디를 입력하세요" aria-describedby="basic-addon1">
                         							</div>
                       							</div>
                       							<div class="test col-md-6"></div>
@@ -161,14 +161,14 @@
                       							<div class="test col-md-2 ara-label-text">이메일</div>
                       							<div class="test col-md-8">
                         							<div class="row">
-                          								<input id="email1" name="email" type="email" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                          								<input id="memberEmail1_P" name="memberEmail1_P" type="text" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                           								<p class="ara-label-text">&nbsp;@&nbsp;</p>
-                          								<select id="email2" name="email" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
-                           	 								<option value="email">naver.com</option>
-                            								<option value="email">daum.net</option>
-                            								<option value="email">gmail.com</option>
-                            								<option value="email">nate.com</option>
-                            								<option value="email">hanmail.net</option>
+                          								<select id="memberEmail2_P" name="memberEmail2_P" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                           	 								<option value="@naver.com">naver.com</option>
+                      	      								<option value="@daum.net">daum.net</option>
+                     								       	<option value="@gmail.com">gmail.com</option>
+                           								 	<option value="@nate.com">nate.com</option>
+                            								<option value="@hanmail.net">hanmail.net</option>
                           								</select>
                         							</div>
                       							</div>
@@ -181,7 +181,7 @@
             				<div class="row">
               					<div class="test col-md-8"></div>
               					<div class="test col-md-4">
-                					<button type="button" class="btn btn-default" style="background: #1f598c; color:white;">비밀번호 찾기</button>
+                					<button id="searchPwd_btn" class="btn btn-default" style="background: #1f598c; color:white;" onclick="searchPwd();">비밀번호 찾기</button>
               					</div>
             				</div>
           				</div>
@@ -236,7 +236,19 @@
 				})
 			}
     	} 
-    </script>		
+    </script>	
+    
+    <script>
+    	function searchPwd() {
+			if($("#memberId_A").val() == null || $("#memberId_A").val() == "" ){
+				alert('아이디를 입력해주세요');
+			} else if( $("#memberEmail1_P").val() == null || $("#memberEmail1_P").val() == "" ){
+				alert('이메일을 입력해주세요');
+			} else{    		
+				
+			}
+		}
+    </script>	
     
 
 	<%@ include file="../common/footer.jsp"%>
