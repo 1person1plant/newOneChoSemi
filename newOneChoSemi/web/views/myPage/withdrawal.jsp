@@ -293,6 +293,14 @@ label {
 			</div>
 			<script>
 				$(function(){
+					$("#password1, #password2").keydown(function(key){
+						if(key.keyCode==13){
+							$("#myBtn").click();
+							return false;
+						}
+					});
+				})
+				$(function(){
 					$("#myBtn").click(function(){
 						var inputPwd1 = document.getElementById("password1").value;
 						var inputPwd2 = document.getElementById("password2").value;
