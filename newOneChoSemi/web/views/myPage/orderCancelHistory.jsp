@@ -189,7 +189,7 @@ td.ordertd {
 										width='150px' height='150px'></td>
 									<td class='ordertd'><%=(ohcancel.get(i)).getItemNo()%></td>
 									<td class='ordertd'><%=(ohcancel.get(i)).getItemName()%></td>
-									<td class='ordertd'><button type='button' class='button1'>재주문</button></td>
+									<td class='ordertd'><button type='button' class='button1' id="<%=(ohcancel.get(i)).getOrderNo()%>odBtn">재주문</button></td>
 								</tr>
 										<%}%>
 									<%} %>
@@ -216,8 +216,21 @@ td.ordertd {
             		});
             	});
             </script>
+			
+			<!-- 재주문 버튼 시작 -->
+			<%for(int i=0;i<ohcancel.size();i++){ %>
+			<script>
+				$(function(){
+					$("#<%=(ohcancel.get(i)).getOrderNo()%>odBtn").click(function(){
+						
+					})
+				})
+			</script>
+			<%} %>
+			<!-- 재주문 버튼 끝 -->
 
-	<script>
+			<!-- 주문 내역 돌아가기 버튼 시작 -->
+			<script>
 				$(function(){
 					$(".orderHistoryBtn").mouseenter(function(){
 						$(this).css({"background":"#6AAED9","color":"white","transition":"0.2s","border-radius":"8px"});
@@ -228,8 +241,8 @@ td.ordertd {
 						location.href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>";
 					})
 				})
-			
 			</script>
+			<!-- 주문 내역 돌아가기 버튼 끝 -->
 
 	<%@ include file="../common/footer.jsp"%>
 </body>

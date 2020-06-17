@@ -80,7 +80,7 @@ public class MyWishListDao {
 			pstmt.setString(1, myWishList.getWishlistNo());
 			pstmt.setString(2, myWishList.getMemberNo());
 			result = pstmt.executeUpdate();
-			/* System.out.println("dao result : " +result); */
+			System.out.println("dao result : " +result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
