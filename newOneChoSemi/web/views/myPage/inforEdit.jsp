@@ -171,7 +171,6 @@ label {
 						<table class="table information1">
 							<thead>
 								<tr>
-									<br>
 									<th colspan="3" scope="col">
 										<h1>개인 정보 수정</h1>
 									</th>

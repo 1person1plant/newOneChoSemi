@@ -112,6 +112,29 @@
 		#orderbutton{
           text-align:right;
         }
+        
+        .cancelListBtn{
+			padding: 8px 18px;
+			margin: 5px;
+			border-radius: 8px;
+			color: black;
+			border: 1px solid #115D8C;
+			background-color: white;
+			width: auto;
+			height: auto;
+			text-align:right !important;
+		}
+        .orderHistoryBtn{
+			padding: 8px 18px;
+			margin: 5px;
+			border-radius: 8px;
+			color: black;
+			border: 1px solid #115D8C;
+			background-color: white;
+			width: auto;
+			height: auto;
+			text-align:right !important;
+		}
 	</style>
 </head>
 <body>
@@ -128,9 +151,8 @@
          <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
-					<div class="table" id='jointable'>
+					<div class="table" id='orderTable'>
 						<h1>주문 내역</h1>
-						<br>
 						<form>
 							<table>
 								<thead>
@@ -152,7 +174,23 @@
 								</tr>
 								<%}else{%>
 									<%for(int i=0;i<oh.size();i++){%>
+									<%if((oh.get(i).getOrderCancelrequest()).equals("N")){ %>
 										<tr class='ollist' style='border-bottom: 2px solid black'>
+										<td class='ordertd'><%=(oh.get(i)).getOrderNo()%></td>
+											<td class='ordertd'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=(oh.get(i)).getImageName()%>' width='150px'
+										height='150px'></td>
+											<td class='ordertd'><%=(oh.get(i)).getItemNo()%></td>
+											<td class='ordertd'><%=(oh.get(i)).getItemName()%></td>
+											<td class='ordertd' id="orderT"><%=(oh.get(i)).getOrderCount()%></td>
+											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
+											<td id='orderbutton'>
+											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
+											<button type='button' class='button1'>리뷰쓰기</button><br>
+											<button type='button' class='button1'>상세보기</button></td>
+										</tr>
+										
+										<%}else{ %>
+											<tr class="ollist" style="border-bottom:2px solid black; background-color:#BBDDF2">
 											<td class='ordertd'><%=(oh.get(i)).getOrderNo()%></td>
 											<td class='ordertd'><img src='<%=request.getContextPath()%>/items_uploadFiles/<%=(oh.get(i)).getImageName()%>' width='150px'
 										height='150px'></td>
@@ -161,15 +199,14 @@
 											<td class='ordertd' id="orderT"><%=(oh.get(i)).getOrderCount()%></td>
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
-											<%if((oh.get(i).getOrderCancelrequest()).equals("N")){ %>
-											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
-											<%}else{ %>
 											<input type='button' class='cancelRequestBtn' value="취소 중" disabled="disabled">
-											<%} %>
-											<button type='button' class='button1'>리뷰쓰기</button><br>
 											<button type='button' class='button1'>상세보기</button></td>
 										</tr>
+										<%} %>
 									<%} %>
+										<tr>
+											<td colspan="7" class="ordertd" align="right"><input type="button" class="cancelListBtn" value="주문 취소 내역"></td>
+										</tr>
 								<%} %>
 								<%-- <tr class='ollist' style='border-bottom: 2px solid black'>
 									<td class='ordertd'><%=orderNo %></td>
@@ -187,6 +224,7 @@
 								</tr> --%>
 								
 							</table>
+							
 						</form>
 					</div>
 					<%-- <div class="paginArea" align="center">
@@ -211,6 +249,7 @@
 			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=maxPage%>'">>></button>
 			
 		</div> --%>
+		
 				</fieldset>
 			</div>
 			</div>
@@ -269,7 +308,20 @@
             
             </script>
 			<%} %>
+			<script>
+				$(function(){
+					$(".cancelListBtn, .orderHistoryBtn").mouseenter(function(){
+						$(this).css({"background":"#6AAED9","color":"white","transition":"0.2s","border-radius":"8px"});
+					}).mouseout(function(){
+						$(this).css({"padding":"8px 18px","border-radius":"8px","color":"black","border":"1px solid #11538C","background-color":"white", "width":"auto", "height":"auto"});
+					});
+					$(".cancelListBtn").click(function(){
+						location.href="<%=request.getContextPath()%>/ohcancel.oh?memberNo=<%=loginUser.getMemberNo()%>";
+					})
+				})
 			
+			</script>
 			<%@ include file="../common/footer.jsp"%>
+			
 </body>
 </html>

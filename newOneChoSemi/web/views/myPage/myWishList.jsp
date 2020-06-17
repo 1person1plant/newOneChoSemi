@@ -197,7 +197,7 @@
 		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','black');
 		        }else{
 		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','red');
-		            alert('입력 가능한 글자수를 초과하였습니다.');
+		            alert("100자 이하로 입력해 주세요.");
 		        }
 		    });
 		});
@@ -239,17 +239,23 @@
 	<script>
 		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
-		        if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
+           
+				var wishNo = $(this).parents("tr").children("td:first").text();
+	            var memberNo = "<%=loginUser.getMemberNo()%>";
+	            var wishMemo = $(this).parents("tr").children().children("textarea").val();
+	            var itemNo = $(this).parents("tr").children("td:nth-child(2)").children("input").val();
+	            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
+				var memoLength = wishMemo.length;
+	            console.log("textarea" + memoLength);
+	            if(memoLength>100){
+	            	alert("100자까지 입력 가능합니다.");
+	            }
+		       
+	            if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
 		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
-		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false){
+		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false && memoLength<=100){
 					$('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
 		            
-		            
-		            var wishNo = $(this).parents("tr").children("td:first").text();
-		            var memberNo = "<%=loginUser.getMemberNo()%>";
-		            var wishMemo = $(this).parents("tr").children().children("textarea").val();
-		            var itemNo = $(this).parents("tr").children("td:nth-child(2)").children("input").val();
-		            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
 					type:"post",

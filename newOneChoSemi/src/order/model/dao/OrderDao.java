@@ -64,7 +64,7 @@ public class OrderDao {
 		ResultSet rset = null;
 		ArrayList<OrderHis> oh = new ArrayList<>();
 		
-		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=?";
+		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=? AND ORDER_CANCELYN='N'";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberNo);
@@ -78,7 +78,8 @@ public class OrderDao {
 											rset.getInt("ORDER_COUNT"),
 											rset.getString("DELIVERY_STATUS"),
 											rset.getString("MEMBER_NO"),
-											rset.getString("ORDER_CANCELREQUEST"));
+											rset.getString("ORDER_CANCELREQUEST"),
+											rset.getString("ORDER_CANCELYN"));
 				
 				System.out.println("OrderHis dao"+oh);
 				oh.add(ohlist);
@@ -202,5 +203,37 @@ public class OrderDao {
 		}
 		return result;
 	}
-	
+
+	public ArrayList<OrderHis> cancelHistory(Connection conn, String memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<OrderHis> ohcancel = new ArrayList<>();
+		
+		String query = "SELECT * FROM ORDERHIS WHERE MEMBER_NO=? AND ORDER_CANCELYN='Y'";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				OrderHis ohlist = new OrderHis(rset.getString("ORDER_NO"),
+											rset.getString("IMAGE_NAME"),
+											rset.getString("ITEM_NO"),
+											rset.getString("ITEM_NAME"),
+											rset.getString("MEMBER_NO"),
+											rset.getString("ORDER_CANCELYN"));
+				System.out.println("cancelList dao"+ohcancel);
+				ohcancel.add(ohlist);
+				System.out.println("oh.size() : " +ohcancel.size());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return ohcancel;
+	}
+
 }
