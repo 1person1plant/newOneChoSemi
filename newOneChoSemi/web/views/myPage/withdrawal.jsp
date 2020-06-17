@@ -208,7 +208,6 @@ label {
 						<table class="table">
 							<thead>
 								<tr>
-									<br>
 									<th colspan="3" scope="col"
 										style='border-bottom: 2px solid black'>
 										<input type="text" style="display:none;" name="memberNo" value="<%=loginUser.getMemberNo() %>">
@@ -284,8 +283,7 @@ label {
 									value="탈퇴하기" onclick="altFunction(realt);">
 								<div id='area2' class='area'></div>
 		
-								<a href='grade.html'><button type='button'
-										class='btn btn-primary' id="modalCancel">취소</button></a>
+								<button type='button' class='btn btn-primary' id="modalCancel">취소</button>
 							</div>
 						</form>
 					</div>
@@ -427,6 +425,13 @@ label {
             			"width":"105px", "height":"42px"});
             		});
             	});
+            </script>
+            <script>
+            	$(function(){
+            		$("#modalCancel").click(function(){
+            			location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+            		})
+            	})
             </script>
 			<%@ include file="../common/footer.jsp"%>
 

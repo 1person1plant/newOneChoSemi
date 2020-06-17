@@ -167,7 +167,6 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<br>
 									<th colspan="5" scope="col"><h1><%=loginUser.getMemberName()%>님의 등급은 <%=rank%>
 									<img style="width:50px;height:50px" src="<%=request.getContextPath()%>/<%=rankImg%>"></h1></th>
 								</tr>

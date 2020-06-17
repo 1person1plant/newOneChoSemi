@@ -62,6 +62,9 @@ ul .list-group-item :hover {
 						<a href="<%=request.getContextPath()%>/ohlist.bo?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="orderA">
 							<li class="list-group-item">주문 내역 조회</li>
 						</a>
+						<a style="display: none;" href="<%=request.getContextPath()%>/ohcancel.oh?memberNo=<%=loginUser.getMemberNo() %>" class="sideCategory" id="orderA">
+							<li class="list-group-item">주문 취소 내역</li>
+						</a>
 						<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="wishA">
 							<li class="list-group-item">위시리스트</li>
 						</a>
