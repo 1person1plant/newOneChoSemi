@@ -452,38 +452,49 @@
 	    <!-- 구매자 정보 -->
 	    <div class="orderinfo-buyer">
 	        <h2>구매자 정보</h2>
-	        <table>
-	            <colgroup>
-	                <col width="20%">
-	                <col width="80%">
-	            </colgroup>
-	            <tbody>
-	                <tr>
-	                    <td>이름</td>
-	                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
-	                </tr>
-	                <tr>
-	                    <td>연락처</td>
-	                    <td class="buyer_phone">
-	                        <span class="buyer_phone1"><%=loginUser.getMemberPhone1() %></span>
-	                        <span class="buyer_phone2"><%=loginUser.getMemberPhone2() %></span>
-	                        <span class="buyer_phone3"><%=loginUser.getMemberPhone3() %></span>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <td class="buyer_postcodeTag">우편번호</td>
-	                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
-	                </tr>
-	                <tr>
-	                    <td>주소</td>
-	                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
-	                </tr>
-	                <tr>
-	                    <td class="buyer_detailAddressTag">상세주소</td>
-	                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
-	                </tr>
-	            </tbody>
-	        </table>
+			<%if(loginUser.getMemberStatus() == "K"){ %>
+		        <table>
+		            <tbody>
+		                <tr>
+		                    <td>이름</td>
+		                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
+		                </tr>
+		            </tbody>
+		        </table>
+			<%} else {%>
+		        <table>
+		            <colgroup>
+		                <col width="20%">
+		                <col width="80%">
+		            </colgroup>
+		            <tbody>
+		                <tr>
+		                    <td>이름</td>
+		                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
+		                </tr>
+		                <tr>
+		                    <td>연락처</td>
+		                    <td class="buyer_phone">
+		                        <span class="buyer_phone1"><%=loginUser.getMemberPhone1() %></span>
+		                        <span class="buyer_phone2"><%=loginUser.getMemberPhone2() %></span>
+		                        <span class="buyer_phone3"><%=loginUser.getMemberPhone3() %></span>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td class="buyer_postcodeTag">우편번호</td>
+		                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
+		                </tr>
+		                <tr>
+		                    <td>주소</td>
+		                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
+		                </tr>
+		                <tr>
+		                    <td class="buyer_detailAddressTag">상세주소</td>
+		                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
+		                </tr>
+		            </tbody>
+		        </table>
+			<%} %>
 	    </div>
 	
 	    <!-- 배송지 정보 -->
