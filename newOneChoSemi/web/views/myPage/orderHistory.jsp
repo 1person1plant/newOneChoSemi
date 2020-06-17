@@ -181,8 +181,8 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
-											<button type='button' class='button1'>리뷰쓰기</button><br>
-											<button type='button' class='button1'>상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>reviewBtn">리뷰쓰기</button><br>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										
 										<%}else{ %>
@@ -196,7 +196,7 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' class='cancelRequestBtn' value="취소 중" disabled="disabled">
-											<button type='button' class='button1'>상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										<%} %>
 									<%} %>
@@ -250,6 +250,32 @@
 			</div>
 			</div>
 			</div>
+			
+			<!-- 리뷰쓰기 버튼 클릭 시작 -->
+			<%for(int i=0;i<oh.size();i++){ %>
+			<script>
+				$(function(){
+					$("#<%=(oh.get(i)).getOrderNo()%>reviewBtn").click(function(){
+						
+					})
+				})
+			</script>
+			<%} %>
+			<!-- 리뷰쓰기 버튼 클릭 끝 -->
+			
+			<!-- 상세보기 버튼 클릭 시작 -->
+			<%for(int i=0;i<oh.size();i++){ %>
+			<script>
+				$(function(){
+					$("#<%=(oh.get(i)).getOrderNo()%>detailBtn").click(function(){
+						
+					})
+				})
+			</script>
+			<%} %>
+			<!-- 상세보기 버튼 클릭 끝 -->
+			
+			<!-- 버튼 클릭 옵션 시작 -->
 			<script>
             	$(function(){
             		$(".button1").mouseenter(function(){
@@ -260,9 +286,12 @@
             		});
             	});
             </script>
+			<!-- 버튼 클릭 옵션 끝 -->
+            
+            <!-- 주문 취소 버튼 시작 -->
             <%for(int i=0;i<oh.size();i++){ %>
             <script>
-            $(function(){
+            	$(function(){
 	            	$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn").click(function(){
 	            		var deliCode = $(this).parents("tr").children("td:nth-child(6)").text();
 	                	var D1 = "배송 전";
@@ -301,12 +330,14 @@
 	      				}
 	            })
             })
-            
             </script>
 			<%} %>
+            <!-- 주문 취소 버튼 끝 -->
+			
+			<!-- 주문 취소 내역 버튼 클릭 시작 -->
 			<script>
 				$(function(){
-					$(".cancelListBtn, .orderHistoryBtn").mouseenter(function(){
+					$(".cancelListBtn").mouseenter(function(){
 						$(this).css({"background":"#6AAED9","color":"white","transition":"0.2s","border-radius":"8px"});
 					}).mouseout(function(){
 						$(this).css({"padding":"8px 18px","border-radius":"8px","color":"black","border":"1px solid #11538C","background-color":"white", "width":"auto", "height":"auto"});
@@ -315,8 +346,8 @@
 						location.href="<%=request.getContextPath()%>/ohcancel.oh?memberNo=<%=loginUser.getMemberNo()%>";
 					})
 				})
-			
 			</script>
+			<!-- 주문 취소 내역 버튼 클릭 끝 -->
 			<%@ include file="../common/footer.jsp"%>
 			
 </body>
