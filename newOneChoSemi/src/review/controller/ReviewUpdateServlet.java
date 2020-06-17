@@ -36,7 +36,7 @@ public class ReviewUpdateServlet extends HttpServlet {
 		String reviewNo = request.getParameter("reviewNo");
 		
 		Review loadReview = new ReviewService().loadReview(reviewNo);
-	
+		
 		if(loadReview != null) {
 			response.setContentType("application/json;");
 			new Gson().toJson(loadReview, response.getWriter());

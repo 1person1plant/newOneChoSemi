@@ -233,6 +233,8 @@ public class ReviewDao {
 							   ,rset.getString("review_imagepath"));
 			}
 			
+			System.out.println(rv);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

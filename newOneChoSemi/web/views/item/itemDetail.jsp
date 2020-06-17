@@ -5,6 +5,8 @@
 	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
 	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
 	Order order = (Order)request.getAttribute("orderCheck");
+	Review loadReview = (Review)request.getAttribute("loadReview");
+	int wishCheck = ((Integer)request.getAttribute("wishCheck"));
 
 	String keyword = "";
 	String key1 = "";
@@ -187,26 +189,21 @@ td:nth-of-type(2) {width:45rem;}
 									&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
-								<span class="col iteminfo-share-span" id="iteminfo-share-span"
-									style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons"
-										id="iteminfo-share-btn" data-toggle="popover">
-										<i class="fa fa-paperclip"
-											style="font-size: 1.5rem; color: #5b89a6;"></i>
+								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons" id="iteminfo-share-btn" data-toggle="popover">
+										<i class="fa fa-paperclip" style="font-size: 1.5rem; color: #5b89a6;"></i>
 									</button>
-								</span> <span class="col iteminfo-cart-span" id="iteminfo-cart-span"
-									style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons"
-										id="iteminfo-cart-btn" data-toggle="popover">
-										<i class="fa fa-shopping-cart"
-											style="font-size: 1.5rem; color: gray;"></i>
+								</span>
+								<span class="col iteminfo-cart-span" id="iteminfo-cart-span" style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons" id="iteminfo-cart-btn" data-toggle="popover">
+										<i class="fa fa-shopping-cart" style="font-size: 1.5rem; color: gray;"></i>
 									</button>
-								</span> <span class="col iteminfo-wish-span" id="iteminfo-wish-span"
-									style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons"
-										id="iteminfo-wish-btn" data-toggle="popover">
-										<i class="fa fa-heart" style="font-size: 1.5rem; color: pink;"></i>
+								</span>
+								<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
+									<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
+										<i class="fa fa-heart" style="font-size: 1.5rem;"></i>
 									</button>
+									<input type="hidden" id="goWish-real-btn" data-toggle="modal" href="#goWish">
 								</span>
 							</div>
 						</div>
@@ -453,7 +450,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<hr>
 							<div class="row attachPhoto-modal">
-								<button type="button" class="btn-secondary btn-block" id="attachPhoto-btn" style="height: 2.5rem; font-weight: lighter; border: none;">
+								<button type="button" class="btn-secondary btn-block attachPhoto-btn" style="height: 2.5rem; font-weight: lighter; border: none;">
 									<i class="fa fa-camera"></i>&nbsp;사진 첨부하기
 								</button>
 								<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
@@ -505,7 +502,7 @@ td:nth-of-type(2) {width:45rem;}
 										<input type="hidden" name="orderInfo" id="updateReviewNo" value="">
 									</div>
 									<div class="row iteminfo-modal-date">
-										<p class="my-auto" style="color:#5b89a6; font-size:0.8rem;">[리뷰작성일:&nbsp;>]</p>
+										<p class="my-auto" style="color:#5b89a6; font-size:0.8rem;" id="updateReviewUDate">[리뷰작성일:&nbsp;]</p>
 									</div>
 									<div class="row iteminfo-modal-content" style="padding-right: 1rem;">
 										<p style="font-size: 0.8rem;"><%=item.getItemInfo()%></p>
@@ -533,7 +530,7 @@ td:nth-of-type(2) {width:45rem;}
 								</div>
 								<div class="container textarea-modal-container">
 									<div class="row textarea-row">
-										<textarea class="form-control review-textarea" name="content" rows="5" placeholder="<%=%>" style="background-color: lightgray; resize: none;"></textarea>
+										<textarea class="form-control review-textarea" name="content" rows="5" id="reviewUpdateContent" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
 									</div>
 									<div class="row float-right textarea-count-row">
 										<span class="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
@@ -542,7 +539,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<hr>
 							<div class="row attachPhoto-modal">
-								<button type="button" class="btn-secondary btn-block" id="attachPhoto-btn" style="height: 2.5rem; font-weight: lighter; border: none;">
+								<button type="button" class="btn-secondary btn-block attachPhoto-btn" style="height: 2.5rem; font-weight: lighter; border: none;">
 									<i class="fa fa-camera"></i>&nbsp;사진 첨부하기
 								</button>
 								<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
@@ -560,7 +557,105 @@ td:nth-of-type(2) {width:45rem;}
 			</div>
 		</form>
 		
+		<!--로그인한 멤버의 위시리스트에 해당 상품이 들어있을 경우-->
+		<script>
+			$(function(){
+				
+				if(<%=wishCheck%> == 0) {
+					$(".fa-heart").css("color","gray");
+				}else {
+					$(".fa-heart").css("color","pink");
+				}
+			
+			})
+		</script>
+		
+		
+		<script>
+			$(function(){
+				$("#iteminfo-wish-span").click(function(){
+					
+					if($(this).children("i").css("style") == "gray") {
+						$("#goWish-real-btn").click();
+					}else {
+						var deletewish = confirm("찜 목록에서 삭제하시겠습니까?");
+						
+						if(deletewish) {
+							$.ajax({
+								url:"<%=request.getContextPath()%>/delete.wi",
+								type : "POST",
+								data : {itemNo:itemNo},
+								success : function(data) {						
+									if(data == "something") {
+										$("#goReview-real-btn").click();
+									}else if(data == "nothing"){
+										alert("등록할 리뷰가 없습니다.");
+									}else {
+										alert("로그인한 회원만 리뷰를 작성할 수 있습니다.")
+									}
+								},
+								error : function(request, status, error) {
+									alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+								}
+							})
+						}
+					}
+				})
+			})
+		</script> 
 
+
+		<!--찜하기 모달-->
+		<form action="<%=request.getContextPath()%>/goWish.it" method="post">
+			<div class="modal fade reviewModal" id="goWish">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close modal-close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<div class="row title-modal">
+								<div class="container-fluid title-modal-container">
+									<p class="h4 my-auto" style="text-align: center">찜하기</p>
+								</div>
+							</div>
+							<div class="row iteminfo-modal">
+								<div class="col col-4 iteminfo-modal-img">
+									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
+								</div>
+								<div class="col col-8 iteminfo-modal-text">
+									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
+										<p class="h6 my-auto" style="color: gray; font-size: 1rem;">[<%=item.getItemName()%>]</p>
+										<input type="hidden" name="orderInfo" id="updateReviewNo" value="">
+									</div>
+									<div class="row iteminfo-modal-content" style="padding-right: 1rem;">
+										<p style="font-size: 0.8rem;"><%=item.getItemInfo()%></p>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row writing-modal">
+								<div class="container writing-modal-container">
+									<p class="h5 my-auto" style="text-align: center">간단한 메모를 남겨주세요!</p>
+								</div>
+								<div class="container textarea-modal-container">
+									<div class="row textarea-row">
+										<textarea class="form-control review-textarea" name="content" rows="5" id="goWishMemo" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
+									</div>
+									<div class="row float-right textarea-count-row">
+										<span class="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="reset" class="btn btn-light" data-dismiss="modal">취소하기</button>
+							<button type="submit" class="btn btn-secondary">찜하기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 		
 		
 		
@@ -749,12 +844,15 @@ td:nth-of-type(2) {width:45rem;}
 		
 		
 		
+		
 		<!--리뷰 수정하기 버튼 누르면-->
 		<script>
 		$(function() {
 			$("#updateReview-btn").click(function(){
 				
 				var reviewNo = $(this).siblings("input").val();
+				
+					console.log(reviewNo);
 
 					$.ajax({
 						url:"<%=request.getContextPath()%>/update.rv",
@@ -762,15 +860,25 @@ td:nth-of-type(2) {width:45rem;}
 						data : {reviewNo:reviewNo},
 						success : function(data) {						
 							
-							if(data == "permit") {
-								$("#updateReview-real-btn").click();
-							}
+							var reviewNo = data.reviewNo;
+							var reviewUDate = data.reviewUDate;
+							var reviewContent = data.reviewContent;
 							
+							console.log(reviewUDate);
+							
+							$("#updateReviewNo").val(reviewNo);
+							$("#updateReviewUDate").html("[리뷰작성일: " + reviewUDate + "]");
+							$("#reviewUpdateContent").text(reviewContent);							
+							
+							$("#updateReview-real-btn").click();
+
 						},
 						error : function(request, status, error) {
 							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
 						}
 					})
+					
+					
 			})
 		})
 		</script>
@@ -782,17 +890,8 @@ td:nth-of-type(2) {width:45rem;}
 		<script>          
             $(function(){            	
             	$(".review-textarea").keyup(function(){
-            		var inputLength=$(this).val().length;
-            		
+            		var inputLength = $(this).val().length;            		
             		$(".counter").text(inputLength);
-            		
-            		var remain=150-inputLength;
-            		
-            		if(remain>=0) {
-            			$(".counter").parent().css("color","black");
-            		}else {
-            			$(".counter").parent().css("color","red");
-            		}
             	})
             })
             
@@ -800,6 +899,14 @@ td:nth-of-type(2) {width:45rem;}
                 $(".review-textarea").keydown(function(){
                     var inputLength=$(this).val().length;
                     $(".counter").text(inputLength);
+                    
+            		var remain=150-inputLength;
+            		
+            		if(remain>=0) {
+            			$(".counter").parent().css("color","black");
+            		}else {
+            			$(".counter").parent().css("color","red");
+            		}
                 })
             })
         </script>
@@ -834,7 +941,7 @@ td:nth-of-type(2) {width:45rem;}
 		<!--사진 첨부 버튼을 누르면 숨겨진 input이 눌리게-->
 		<script>
 			$(function(){
-				$("#attachPhoto-btn").click(function(){
+				$(".attachPhoto-btn").click(function(){
 					$(".review-btn").click();
 				})
 			})
@@ -849,7 +956,7 @@ td:nth-of-type(2) {width:45rem;}
 					var reader = new FileReader();
 					
 					reader.onload = function(e) {
-						$(".photo-preview").attr("src", e.target.result)
+						$(".photo-preview").attr("src", e.target.result);
 					}
 				}
 				reader.readAsDataURL(value.files[0]);

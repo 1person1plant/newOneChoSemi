@@ -47,6 +47,17 @@ public class MyWishListService {
 		return result;
 	}
 
+	public int wishCheck(String itemNo, String memberNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MyWishListDao().wishCheck(conn, itemNo, memberNo);
+		
+		close(conn);
+		
+		return result;
+	}
+
 
 
 
