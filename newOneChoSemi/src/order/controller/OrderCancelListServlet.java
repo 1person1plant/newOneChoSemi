@@ -1,4 +1,4 @@
-package Board.controller.admin;
+package order.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Board.model.service.QnaService;
-import Board.model.vo.Notice;
-import Board.model.vo.Qna;
+import order.model.service.OrderService;
+import order.model.vo.OrderHis;
 
 /**
- * Servlet implementation class QnaAdminListServlet
+ * Servlet implementation class OrderCancelListServlet
  */
-@WebServlet("/adminList.qna")
-public class QnaAdminListServlet extends HttpServlet {
+@WebServlet("/ohcancel.oh")
+public class OrderCancelListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaAdminListServlet() {
+    public OrderCancelListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,28 +31,19 @@ public class QnaAdminListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberNo = request.getParameter("memberNo");
+		System.out.println("servlet " +memberNo);
+		ArrayList<OrderHis> ohcancel = new OrderService().cancelHistory(memberNo);
 		
-		//질문 조회하자
-		QnaService qs=new QnaService();
-		ArrayList<Qna> qnas=qs.selectAllQna();
-		
-		
-		
-		
-		if(!qnas.isEmpty()) {
-			
-			request.setAttribute("qnas", qnas);
-			request.getRequestDispatcher("views/admin/qnaManager.jsp").forward(request, response);
-			
+		System.out.println("service>servlet : "+ohcancel);
+//		System.out.println(ohcancel.size());
+		if(ohcancel != null) {
+			request.setAttribute("ohcancel", ohcancel);
+			request.getRequestDispatcher("views/myPage/orderCancelHistory.jsp").forward(request, response);
 		}else {
-			
-			request.setAttribute("msg", "질문 조회 실패");
+			request.setAttribute("msg", "실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		
 		}
-		
-		
-		
 	}
 
 	/**

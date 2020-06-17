@@ -76,6 +76,11 @@ public class MyWishList {
 		this.wishlistNo = wishlistNo;
 		this.memberNo = memberNo;
 	}
+	public MyWishList(String wishlistNo, String memberNo) {
+		super();
+		this.wishlistNo = wishlistNo;
+		this.memberNo = memberNo;
+	}
 	
 	
 		

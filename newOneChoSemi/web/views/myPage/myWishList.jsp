@@ -127,10 +127,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%if(loginUser.getMemberStatus() == "K"){ %>
-					<%@include file="myPageCategory.jsp" %>
-				<%} else {%>
+				<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
 					<%@include file="kakaoCategory.jsp" %>
+				<%} else {%>
+					<%@include file="myPageCategory.jsp" %>
 				<%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
@@ -172,7 +172,7 @@
 								</td>
 								<td id='orderbutton' colspan="2">
 									<input type='button' class='button1' id='<%=mwl.get(i).getWishlistNo()%>UpBtn' value="메모수정"><br>
-									<button type='button' class='button1'>상품구매</button><br>
+									<button type='button' class='button1' id='<%=mwl.get(i).getWishlistNo()%>BuyBtn'>상품구매</button><br>
 									<input type='button' class='button1' id="<%=mwl.get(i).getWishlistNo()%>DelBtn" value="위시삭제">
 									
 								</td>
@@ -185,6 +185,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 텍스트 박스 글자수 세기 시작 -->
 	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
@@ -197,12 +199,15 @@
 		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','black');
 		        }else{
 		            $('#<%=mwl.get(i).getWishlistNo()%>span').parent().css('color','red');
-		            alert('입력 가능한 글자수를 초과하였습니다.');
+		            alert("100자 이하로 입력해 주세요.");
 		        }
 		    });
 		});
 	</script>
 	<%} %>
+	<!-- 텍스트 박스 글자수 세기 끝 -->
+	
+	<!-- 위시 삭제 버튼 시작 -->
 	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
@@ -212,16 +217,18 @@
 				var memberNo = "<%=loginUser.getMemberNo()%>";
 				var wishMemo = $(this).parents("tr").children().children("textarea").text();
 				
-				/* console.log(wishNo + "memberNo : " + memberNo); */
+				console.log("wishNo" + wishNo + "memberNo : " + memberNo + "wishMemo : " + wishMemo);
 				
 				if(delChk){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/delete.wi",
 					type:"post",
 					data:{wishNo:wishNo, memberNo:memberNo, wishMemo:wishMemo},
-					success:function(data){// data(받는 데이터)
+					success:function(data){
+						if(data == "permit"){
+						alert("위시리스트에서 삭제되었습니다.");							
 						location.reload();
-						if(data == "fail"){
+						}else if(data == "fail"){
 							alert("실패");
 						}
 					},
@@ -234,22 +241,38 @@
 		})	
 	</script>
 	<%} %>
+	<!-- 위시 삭제 버튼 끝 -->
 	
+	<!-- 메모 수정 버튼 시작 -->
 	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
+			$("#<%=mwl.get(i).getWishlistNo()%>memo").keydown(function(key){
+				if(key.keyCode==13){
+					$("#<%=mwl.get(i).getWishlistNo()%>UpBtn").click();
+					return false;
+				}
+			});
+		})
+		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
-		        if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
+           
+				var wishNo = $(this).parents("tr").children("td:first").text();
+	            var memberNo = "<%=loginUser.getMemberNo()%>";
+	            var wishMemo = $(this).parents("tr").children().children("textarea").val();
+	            var itemNo = $(this).parents("tr").children("td:nth-child(2)").children("input").val();
+	            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
+				var memoLength = wishMemo.length;
+	            console.log("textarea" + memoLength);
+	            if(memoLength>100){
+	            	alert("100자까지 입력 가능합니다.");
+	            }
+		       
+	            if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
 		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
-		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false){
+		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false && memoLength<=100){
 					$('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
 		            
-		            
-		            var wishNo = $(this).parents("tr").children("td:first").text();
-		            var memberNo = "<%=loginUser.getMemberNo()%>";
-		            var wishMemo = $(this).parents("tr").children().children("textarea").val();
-		            var itemNo = $(this).parents("tr").children("td:nth-child(2)").children("input").val();
-		            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
 					type:"post",
@@ -271,6 +294,20 @@
 		})
 	</script>
 	<%} %>
+	<!-- 메모 수정 버튼 끝 -->
+	
+	<!-- 상품 구매 버튼 시작 -->
+	<%for(int i=0;i<mwl.size();i++){ %>
+	<script>
+		$(function(){
+			$('#<%=mwl.get(i).getWishlistNo()%>BuyBtn').click(function(){
+				
+			})
+		})
+	</script>
+	<%} %>
+	<!-- 상품 구매 버튼 끝 -->
+	
 	
 	<script>
 		$(function(){
