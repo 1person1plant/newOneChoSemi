@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="cartList.model.vo.Cart, cartList.model.vo.WishList, java.util.ArrayList"%>
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
@@ -10,17 +10,22 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" initial-scale="1">	
 	<title>Cho-당신을 위한 반려식물</title>
-	<!-- 타이틀 아이콘 -->
+	<!--타이틀 아이콘-->
 	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
-	<!-- 부트스트랩 -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<!-- popper -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	
 	<!-- 아이콘 -->
 	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
-	<!-- jQuery -->
+	
+	<!-- 제이쿼리 -->
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    
+	
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
 <style>
 	/* font start */
 	@font-face {
@@ -73,8 +78,8 @@
         margin: 0 10px 0 10px;
     }
     .carttable input{
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
     }
 
     .carttable img {
@@ -138,7 +143,7 @@
         display: none;
     }
     .trash{
-        background: url("<%=request.getContextPath() %>/images/cart/trash-alt-regular.svg") no-repeat center;
+        background: url("<%=request.getContextPath() %>/images/cart/cancelx32.png") no-repeat center;
         border: none;
         width: 20px;
         height: 20px;
@@ -599,10 +604,7 @@
 	        // 메모입력시 엔터키 완료
 	        $(".memo").keydown(function(key){
 	            if (key.keyCode == 13){
-	                $(this).attr("readonly",true);
-	                $(this).css("border","none");
-	                $(this).parents("tr").children().last().children(".save").css("display","none");
-	                $(this).parents("tr").children().last().children(".pen").css("display","inline");
+	            	 $(".save").click();
 	            }
 	        });
 	        // 즐겨찾기에서 카트로 추가
@@ -610,89 +612,83 @@
 	        	var cartAdd = $(this);
 				var wishNum = $(this).parents(".card").find(".wishNumber").text();
 	        	var itemId = $(this).parents(".card").find(".wishId").val();
+	        	var userNo = "<%=loginUser.getMemberNo() %>";
+	        	
 	        	var itemName = $(this).parents(".card").find(".wishName").text();
 	        	var itemImg = $(this).parents(".card").find(".cards_imgSize").attr("src");
 	        	var itemPrice = $(this).parents(".card").find(".wishprice").text();
 	        	//console.log("wishNum : " + wishNum + "wishName : " + wishName + " wishImg : " + wishImg + " wishPrice : " + wishPrice);
-	
-				// TODO 카트리스트와 중복 되는지 검사 추가 해야함 
-				
-					$.ajax({
-					url:"<%=request.getContextPath()%>/cartListAdd.ca",
+	        	
+				$.ajax({
+					url:"<%=request.getContextPath()%>/wishtoCart.wi",
 					type:"post",
-					data:{wishNum:wishNum,itemId:itemId},
+					data:{wishNum:wishNum, itemId:itemId, userNo:userNo},
 					success:function(data){	
-						if(data == "fail"){
-							alert("삭제에 실패 했습니다.");
-						} else {
-			                
-			                if(data == "fail"){
-			                	alert("장바구니 등록에 실패 했습니다.");
-			                } else {
-				                console.log("장바구니 상품 수 : " + $(".carttable > tbody tr td input:button").length);
-								if($(".carttable > tbody tr td input:button").length == 0){
-				                	// 상품 없으면 상품 추가 시 상품없음 테이블행 삭제
-				                	$(".cartList_tbody").children("tr").remove();
-								}
-								
-								// TODO 데이터로 받은 값 추가 해야함 해야함....
-				              	$cartListTbody = $(".cartList_tbody");
-								
-				              	var $tr = $("<tr>");
-								// 1 td
-								var $fstTd = $("<td>");
-								var $fstInput = $("<input>").addClass("cart_checkbox").attr("type","checkbox").attr("name","cartNo").val("data");
-								var $firstChd = $fstTd.append($fstInput);
-								// 2 td
-								var $scdTd = $("<td>");
-								var $scdImg = $("<img>").attr("src","<%=request.getContextPath()%>/items_uploadFiles/<%=wishList.get(0).getImageName() %>").attr("alt","상품");
-								var $secondChd = $scdTd.append($scdImg);
-								// 3 td
-							 	var $trdTd = $("<td>").addClass("cartName");
-								var $thirdChd = $trdTd;
-								// 4 td
-								var $fouTd = $("<td>");
-								var $fouInput = $("<input>").addClass("cart_count").attr("type","number").attr("name","cartItCo").attr({max:10, min:1, step:1}).attr("disabled",true).val("1");
-								var $fourthChd = $fouTd.append($fouInput);
-								// 5 td
-								var $fifTd = $("<td>");
-								var $fifSpan1 = $("<span>").addClass("cal_price").text("");
-								var $fifSpan2 = $("<span>").addClass("price").text("");
-								var $fifthChd = $fifTd.append($fifSpan1).append($fifSpan2);
-								// 6 td
-								var $sixTd = $("<td>");
-								var $sixLabel = $("<label>").attr("for", "trash99");
-								var $sixInput = $("<input>").addClass("trash").attr("type","button").attr("id","trash99");
-								var $sixLabelAdd = $sixLabel.append($sixInput);
-								var $sixthChd = $sixTd.append($sixLabelAdd);
-								
-								$tr.append($firstChd);
-								$tr.append($secondChd);
-								$tr.append($thirdChd);
-								$tr.append($fourthChd);
-								$tr.append($fifthChd);
-								$tr.append($sixthChd);
-								$cartListTbody.append($tr);
-								
-								$('input[class=cart_count]:last').spinner();
-								
-
-			                }
-						}
-						//alert("에이작스 끝");
+		                if(data == "fail"){
+		                	alert("장바구니 등록에 실패 했습니다.");
+		                } else if(data == "duplication") {
+		                	alert("장바구니 이미 등록된 상품 입니다.");
+		                } else {
+			                console.log("장바구니 상품 수 : " + $(".carttable > tbody tr td input:button").length);
+							if($(".carttable > tbody tr td input:button").length == 0){
+			                	// 상품 없으면 상품 추가 시 상품없음 테이블행 삭제
+			                	$(".cartList_tbody").children("tr").remove();
+							}
+							
+			              	$cartListTbody = $(".cartList_tbody");
+													
+			              	var $tr = $("<tr>");	
+							// 1 td 상품 번호
+							var $fstTd = $("<td>");
+							var $fstInput = $("<input>").addClass("cart_checkbox").attr("type","checkbox").attr("name","cartNo").val(data[0].cartListNo);
+							var $firstChd = $fstTd.append($fstInput);
+							// 2 td 상품 이미지
+							var $scdTd = $("<td>");
+							var $scdImg = $("<img>").addClass("cartImg").attr("src","<%=request.getContextPath()%>/items_uploadFiles/"+data[0].imageName).attr("alt",data[0].imageName);
+							var $secondChd = $scdTd.append($scdImg);
+							// 3 td 상품명
+						 	var $trdTd = $("<td>").addClass("cartName").text(data[0].itemName);
+							var $thirdChd = $trdTd;
+							// 4 td 수량
+							var $fouTd = $("<td>");
+							var $fouInput = $("<input>").addClass("cart_count").attr("type","number").attr("name","cartItCo").attr({max:10, min:1, step:1}).attr("disabled",true).val("1");
+							var $fourthChd = $fouTd.append($fouInput);
+							// 5 td 가격
+							var $fifTd = $("<td>");
+							var $fifSpan1 = $("<span>").addClass("cal_price").text(data[0].itemPrice);
+							var $fifSpan2 = $("<span>").addClass("price").text(data[0].itemPrice);
+							var $fifthChd = $fifTd.append($fifSpan1).append($fifSpan2);
+							// 6 td 휴지통
+							var $sixTd = $("<td>");
+							var $sixLabel = $("<label>").attr("for", "trash" + $(".carttable > tbody tr td input:button").length);
+							var $sixInput = $("<input>").addClass("trash").attr("type","button").attr("id","trash" + $(".carttable > tbody tr td input:button").length);
+							var $sixLabelAdd = $sixLabel.append($sixInput);
+							var $sixthChd = $sixTd.append($sixLabelAdd);
+							
+							$tr.append($firstChd);
+							$tr.append($secondChd);
+							$tr.append($thirdChd);
+							$tr.append($fourthChd);
+							$tr.append($fifthChd);
+							$tr.append($sixthChd);
+							$cartListTbody.append($tr);
+							
+							$('input[class=cart_count]:last').spinner();
+							
+							$(".carttable")[0].scrollIntoView();
+		                } // 장바구니 데이터 (data) 가져옴
 					},
-					error:function(request,status,error){
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-					
-				});
-					
-                if($(".wishcardcol").length == 0){
+						error:function(request,status,error){
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});		
+				
+				if($(".wishcardcol").length == 0){
                    	// 상품 없음 테이블 추가
                    	$wishListhead = $(".wishListhead");
    					var $div = $("<div>").addClass("emptyWish").css("font-size","1.5rem").text("즐겨 찾기가 비어 있습니다.");
-   					$wishListhead.append($div);
-                }
+						$wishListhead.append($div);
+        		}
 			});
 	        
 	        // 즐겨찾기 삭제
@@ -703,7 +699,7 @@
 	            if(result){
 	            	
             	// ajax 부분
-            	var wishNum = $(this).parents(".card").find(".wishNumber").text();
+            	var wishDeleteNum = $(this).parents(".card").find(".wishNumber").text();
 				console.log($(this).parents(".card").find(".wishNumber").text());
 				//console.log($(this).parents(".card").children().children("table").children().children(":nth-child(3)").children(":first").children(":last").text());
 				//console.log($(this).parent().parent().first().children().children().first().children().children().last().children().first().children().last().text());
@@ -711,7 +707,7 @@
 					$.ajax({
 					url:"<%=request.getContextPath()%>/deleteWish.wi",
 					type:"post",
-					data:{wishNo:wishNo},
+					data:{wishDeleteNum:wishDeleteNum},
 					success:function(data){
 						if(data == "fail"){
 							alert("삭제에 실패 했습니다.");

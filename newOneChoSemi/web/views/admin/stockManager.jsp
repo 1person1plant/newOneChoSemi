@@ -64,7 +64,7 @@
 
      /*datatable css*/
      div.dataTables_wrapper {
-        width: 80rem;
+        width: 70rem;
         margin: 0 auto;
       
     }
@@ -118,7 +118,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
                     <span data-feather="shopping-cart"></span>
                    	 재고관리
                   </a>
@@ -135,7 +135,7 @@
     
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.or'">
                     <span data-feather="file-text"></span>
                     	주문내역 조회
                   </a>
@@ -151,7 +151,7 @@
     
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.me'">
                     <span data-feather="file-text"></span>
                    	 고객계정 관리
                   </a>
@@ -173,13 +173,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
                 <span data-feather="file"></span>
                 	Q&A
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">>
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>
@@ -247,7 +247,7 @@
                         <tr>
                             
                             <td colspan="5" style="text-align: right; height: 5rem;">
-                                <button type="submit" class="btn btn-dark" style="width: 7rem;margin-right: 2rem;">조회</button>
+                                <button type="submit" style="background-color: #1f598c;color: white;width: 7rem;" class="btn btn-dark" style="width: 7rem;margin-right: 2rem;">조회</button>
                                 <button type="reset" class="btn btn-outline-dark" style="width: 7rem;margin-right: 2rem;">초기화</button>
                                 
                             </td>
@@ -263,7 +263,7 @@
                    
                   <%if(!items.isEmpty()){ %>
                     
-                        <table id="productlist" class="display" style="width:100%;text-align: center;">
+                        <table id="productlist" class="display" style="text-align: center;">
                             <thead>
                                 <tr>
                                 	<th></th>
@@ -332,22 +332,22 @@
                                 </tr>
                             </tfoot>
                         </table>
+						<button type="button" style="width:100%;background-color: #1f598c;color: white;" id="modifyBtn" class="btn btn-secondary btn-lg">재고 수정하기</button>
 						
-						<button type="button" id="modifyBtn" class="btn btn-secondary btn-lg btn-block">재고 수정하기</button>
 						</form>
 					 <%}else{ %> 
                        		<div class="container">
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
                        		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/stock.it'">새로고침</button></p>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/stock.it'" style="background-color: #1f598c;color: white;">새로고침</button></p>
                        		
                       
                        		</div>
                        		</div>
                        <%} %>
                        
-                       <form id="hiddenForm" method="post" action="<%=request.getContextPath()%>/stockUpdate.it" onsubmit="return validate();">
+                       <form id="hiddenForm" method="post" action="<%=request.getContextPath()%>/stockUpdate.it" onsubmit="return stockValidate();">
                        </form>
 						
                       
@@ -419,6 +419,8 @@
      		});
      		
      		}
+     		
+     		
      	}); 
     	 
        var table=$('#productlist').DataTable({
@@ -509,7 +511,7 @@
         
        
             
-        function validate(){
+        function stockValidate(){
         	//재고에 입력된 값이 숫자인지 확인
         	//행이 선택되었는지 확인
         	
@@ -521,7 +523,7 @@
         	var testLength=testName.length;
         	
         	if(testLength==0){
-        		alert("수정될 값이 없어요.");
+        		alert("수정할 행을 체크해주세요.");
         		return false;
         	}
         	

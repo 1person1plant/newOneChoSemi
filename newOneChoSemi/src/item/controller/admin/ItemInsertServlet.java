@@ -32,7 +32,6 @@ public class ItemInsertServlet extends HttpServlet {
      */
     public ItemInsertServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -101,9 +100,8 @@ public class ItemInsertServlet extends HttpServlet {
 		
 		if(result1>0&&result2>0&&result3>0) {
 			System.out.println("상품 조회 페이지로 이동!");
-			response.sendRedirect("/list.it");
-		}else {
-			
+			response.sendRedirect("list.it");
+		}else {			
 			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
 			request.setAttribute("msg", "상품 등록 실패");
 			views.forward(request, response);
@@ -119,7 +117,6 @@ public class ItemInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

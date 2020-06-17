@@ -65,6 +65,20 @@ public class Cart implements Serializable{
 		this.cartListCount = cartListCount;
 		this.imageName = imageName;
 	}
+	public Cart(String memberNo, String cartListNo, String itemNo, String itemName, int itemPrice, int itemDiscount,
+			int itemMax, int cartListCount, String imagePath, String imageName) {
+		super();
+		this.memberNo = memberNo;
+		this.cartListNo = cartListNo;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemDiscount = itemDiscount;
+		this.itemMax = itemMax;
+		this.cartListCount = cartListCount;
+		this.imagePath = imagePath;
+		this.imageName = imageName;
+	}
 	public Cart(String memberNo, String cartListNo, String itemNo, String itemName, int itemPrice, int itemMax,
 			int cartListCount, String itemImageNo, String imageNo, String imagePath, String imageName) {
 		this.memberNo = memberNo;

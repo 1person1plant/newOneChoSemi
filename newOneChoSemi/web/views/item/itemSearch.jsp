@@ -24,24 +24,23 @@
 		<div class="row itemsearch-row">
 			<form class="form-inline itemsearch-form">
 				<div class="form-group itemsearch-price">
-					<label class="itemsearch-label">가격대</label> <input type="text"
-						class="form-control form-control-sm" id="priceMin"
-						placeholder="10,000" pattern="/^[0-9]$/"> <span>&nbsp;~&nbsp;</span>
-					<input type="text" class="form-control form-control-sm"
-						id="priceMax" placeholder="50,000">
+					<label class="itemsearch-label">가격대</label>
+					<input type="text" class="form-control form-control-sm" id="priceMin" value="" placeholder="10,000" pattern="/^[0-9]$/">
+					<span>&nbsp;~&nbsp;</span>
+					<input type="text" class="form-control form-control-sm" id="priceMax" value ="" placeholder="50,000">
 				</div>
 				<div class="form-group itemsearch-name">
-					<label class="itemsearch-label">제품명/키워드</label> <input type="text"
-						class="form-control form-control-sm" id="itemNameKeyword"
-						placeholder="한글로 입력하세요.">
+					<label class="itemsearch-label">제품명/키워드</label>
+					<input type="text" class="form-control form-control-sm" id="itemNameKeyword" value="" placeholder="한글로 입력하세요.">
 				</div>
 				<div class="form-group itemsearch-btn">
-					<button type="button"
-						class="btn btn-secondary btn-sm btn-searchbutton">검색하기</button>
+					<button type="button" id="search-btn" class="btn btn-secondary btn-sm btn-searchbutton">검색하기</button>
 				</div>
 			</form>
 		</div>
 	</div>
+
+
 
 
 
@@ -54,6 +53,52 @@
 					this.value = this.value.replace(/\D/g, "");
 				})
 			})
+	</script>
+	
+	
+	
+	
+	
+	<!--SEARCH 검색 내용이 담길 FORM -->
+	<form action="<%=request.getContextPath()%>/itemSearch.it" method="post" id="searchForm" name="searchForm">
+		<input type="hidden" id="searchPriceMin" name="searchPriceMin">
+		<input type="hidden" id="searchPriceMax" name="searchPriceMax">
+		<input type="hidden" id="searchWhat" name="searchWhat">
+	</form>
+	
+	
+	
+	
+	
+	<!--SEARCH 검색 출발 -->
+	<script>
+		$(function(){
+			$("#search-btn").click(function(){
+				
+				var priceMin = $("#priceMin").val();
+				var priceMax = $("#priceMax").val();
+				var searchWhat = $("#itemNameKeyword").val();
+				
+				if(priceMin == "") {
+					priceMin = 0;
+				}
+				
+				if(priceMax == "") {
+					priceMax = 99999;
+				}
+				
+				if(searchWhat == "") {
+					searchWhat = "anything";
+				}
+				
+				$("#searchPriceMin").val(priceMin);
+				$("#searchPriceMax").val(priceMax);
+				$("#searchWhat").val(searchWhat);
+				
+				/* console.log(priceMin + "/" + priceMax + "/" + searchWhat); */				
+ 				$("#searchForm").submit();
+		})
+		})
 	</script>
 </body>
 </html>

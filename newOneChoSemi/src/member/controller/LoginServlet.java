@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
@@ -36,15 +39,14 @@ public class LoginServlet extends HttpServlet {
 		
 		Member member = new Member(id, pwd);
 		
-//		System.out.println("LoginServlet 아이디/비번 : " + id + " / " + pwd);
-		
 		Member loginUser = new MemberService().loginMember(member);
 		
 		if(loginUser != null) {
 			HttpSession session = request.getSession();
 			
 			String adminChk = loginUser.getMemberAdmin();
-//			System.out.println("LoginServlet 관리자 확인 : "+ adminChk);
+			
+//			System.out.println("loginUser " + loginUser);
 			
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("admin", adminChk);
@@ -52,10 +54,10 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("index.jsp");
 			
 		} else {
-			request.setAttribute("msg", "로그인 실패");
-			
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			view.forward(request, response);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('내용과 일치하는 회원정보가 없습니다'); location.href='index.jsp'; </script>"); 
+			out.flush();
 		}
 	}
 

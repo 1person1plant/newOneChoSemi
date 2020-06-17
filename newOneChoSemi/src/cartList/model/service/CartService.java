@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cartList.model.dao.CartDao;
 import cartList.model.vo.Cart;
+import order.model.vo.Order;
 
 import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
@@ -74,21 +75,46 @@ public class CartService {
 		return result;
 	}
 
-	public ArrayList<Cart> wishtoCartList(String cartNum, String itemId) {
+	public ArrayList<Cart> wishtoCartList(String cartNum, String itemId, String userNo) {
 		Connection conn = getConnection();
 
-		boolean result = new CartDao().wishtoCartUpdate(conn, cartNum);
+		int result = new CartDao().wishtoCartUpdate(conn, cartNum, itemId, userNo);
 
-		if(result) {
+		ArrayList<Cart> cartList = new ArrayList<>();
+		
+		if(result > 0) {
 			commit(conn);
-			ArrayList<Cart> cartList = new CartDao().wishtoCartList(conn, itemId);
-			// 카트 수량 다시 받아오기
+			cartList = new CartDao().wishtoCartList(conn, itemId, userNo);
 		}else {
 			rollback(conn);
 		}
 				
 		close(conn);
 		return cartList;
+	}
+
+	public boolean cartContainChk(String userNo, String itemId) {
+		Connection conn = getConnection();
+
+		boolean result = new CartDao().cartContainChk(conn, userNo, itemId);
+		
+		close(conn);
+		return result;
+	}
+
+	public int orderCompDeleteCartList(ArrayList<Order> orderItem, ArrayList<Order> orderBuyer) {
+		Connection conn = getConnection();
+		
+		int result = new CartDao().orderCompDeleteCartList(conn, orderItem, orderBuyer);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 
 

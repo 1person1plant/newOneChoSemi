@@ -13,11 +13,11 @@ import static common.JDBCTemplate.*;
 
 import item.model.vo.Item;
 import item.model.vo.ItemImage;
+import order.model.vo.admin.AdminOrder;
 
 public class ItemDao {
 	
-	
-	
+	// 김경남 BEST LIST
 	public ArrayList<Item> bestList(Connection conn) {
 
 		PreparedStatement pstmt = null;
@@ -60,6 +60,7 @@ public class ItemDao {
 		return list;
 	}
 
+	// 김경남 NEW LIST
 	public ArrayList<Item> newList(Connection conn) {
 
 		PreparedStatement pstmt = null;
@@ -102,6 +103,7 @@ public class ItemDao {
 		return list;
 	}
 
+	// 김경남 PAGINATION ITEM COUNT
 	public int itemCount(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -114,7 +116,7 @@ public class ItemDao {
 			pstmt = conn.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			
-			if(rset.next()) {
+			while(rset.next()) {
 				result = rset.getInt(1);
 			}
 			
@@ -128,6 +130,7 @@ public class ItemDao {
 		return result;
 	}
 	
+	// 김경남 ALL LIST
 	public ArrayList<Item> allList(Connection conn, int currentPage, int howManyAtOnce) {
 
 		PreparedStatement pstmt = null;
@@ -197,7 +200,6 @@ public class ItemDao {
 			result=pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -233,7 +235,6 @@ public class ItemDao {
 			
 		}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -269,7 +270,6 @@ public class ItemDao {
 			
 		}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -302,7 +302,6 @@ public class ItemDao {
 			
 			
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -336,7 +335,6 @@ public class ItemDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -369,7 +367,6 @@ public class ItemDao {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -402,7 +399,6 @@ public class ItemDao {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -440,7 +436,6 @@ public class ItemDao {
 			
 		}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -462,7 +457,6 @@ public class ItemDao {
 			result=pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -471,10 +465,10 @@ public class ItemDao {
 		
 		return result;
 	}
-
+	
 	public ArrayList<Item> searchItems(Connection conn, Map<String, String> list) {
 		
-		Statement stmt=null;
+		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		ArrayList<Item> items=new ArrayList<>();
 		
@@ -549,8 +543,8 @@ public class ItemDao {
 		System.out.println(query);
 		
 		try {
-			stmt=conn.createStatement();
-			rset=stmt.executeQuery(query);
+			pstmt=conn.prepareStatement(query);
+			rset=pstmt.executeQuery();
 			
 			while(rset.next()) {
 				
@@ -562,8 +556,10 @@ public class ItemDao {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		
@@ -589,15 +585,18 @@ public class ItemDao {
 		}
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
+		
+		
 		return result;
 	}
 
 	public ArrayList<Item> searchStock(Connection conn, Map<String, String> list) {
 		
-		Statement stmt=null;
+		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		ArrayList<Item> items=new ArrayList<>();
 		
@@ -680,8 +679,8 @@ public class ItemDao {
 		System.out.println(query);
 		
 		try {
-			stmt=conn.createStatement();
-			rset=stmt.executeQuery(query);
+			pstmt=conn.prepareStatement(query);
+			rset=pstmt.executeQuery();
 			
 			while(rset.next()) {
 				
@@ -693,8 +692,10 @@ public class ItemDao {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		
@@ -702,7 +703,38 @@ public class ItemDao {
 		return items;
 	}
 
-	// 김경남: ITEM DETAIL
+
+	public int nameCheck(Connection conn, String itemName) {
+		
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		int result=0;
+		
+		String query="SELECT COUNT(*) FROM ITEM WHERE ITEM_NAME=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, itemName);
+			
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result=rset.getInt(1);
+			}
+			
+			System.out.println(result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return result;
+	}
+
+	// 김경남 ITEM DETAIL
 	public Item selectItemDetail(Connection conn, String itemNo) {
 		
 		PreparedStatement pstmt = null;
@@ -717,7 +749,7 @@ public class ItemDao {
 			
 			rset = pstmt.executeQuery();
 			
-			if(rset.next()) {
+			while(rset.next()) {
 				item = new Item(rset.getString("item_no")
 							   ,rset.getString("item_name")
 							   ,rset.getString("keyword_no")
@@ -739,12 +771,170 @@ public class ItemDao {
 			close(pstmt);
 			close(rset);
 		}
-		
-		System.out.println(item);
-		
+			
 		return item;
 	}
+
+	// 김경남 조회 결과 LIST
+	public ArrayList<Item> searchResult(Connection conn, ArrayList searchList) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Item> resultList = new ArrayList<>();
+		
+		int priceMin = (Integer)searchList.get(0);
+		int priceMax = (Integer)searchList.get(1);
+		String what = (String)searchList.get(2);
+		String query = "";
+		
+		if(what.equals("anything")) {
+			query = "SELECT * FROM ITEM_SEARCHLIST WHERE FINAL_PRICE BETWEEN ? AND ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, priceMin);
+				pstmt.setInt(2, priceMax);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Item it = new Item(rset.getString("item_no")
+									 , rset.getString("item_name")
+									 , rset.getString("keyword_no")
+									 , rset.getString("keyword_name")
+									 , rset.getInt("item_price")
+									 , rset.getInt("item_discount")
+									 , rset.getInt("item_stock")
+									 , rset.getDate("item_cdate")
+									 , rset.getInt("item_scount")
+									 , rset.getInt("item_max")
+									 , rset.getString("image_path")
+									 , rset.getString("image_name"));
+					resultList.add(it);
+				}	
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			System.out.println(resultList);
+			return resultList;
+			
+		}else {
+			query = "SELECT * FROM ITEM_SEARCHLIST WHERE (FINAL_PRICE BETWEEN ? AND ?) AND ((ITEM_NAME LIKE '%'||?||'%') OR (KEYWORD_NAME LIKE '%'||?||'%'))";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, priceMin);
+				pstmt.setInt(2, priceMax);
+				pstmt.setString(3, what);
+				pstmt.setString(4, what);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					Item it = new Item(rset.getString("item_no")
+									 , rset.getString("item_name")
+									 , rset.getString("keyword_no")
+									 , rset.getString("keyword_name")
+									 , rset.getInt("item_price")
+									 , rset.getInt("item_discount")
+									 , rset.getInt("item_stock")
+									 , rset.getDate("item_cdate")
+									 , rset.getInt("item_scount")
+									 , rset.getInt("item_max")
+									 , rset.getString("image_path")
+									 , rset.getString("image_name"));
+					resultList.add(it);
+				}	
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			System.out.println(resultList);
+			return resultList;
+		
+		}
+		
 	
+	}
 	
+	// CATEGORY별로 ITEM의 개수 세기
+	public int categoryCount(Connection conn, String category) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int listCount = 0;
+		
+		String query = "SELECT COUNT(*) FROM ITEM_SEARCHLIST WHERE ITEM_CATEGORY = '"+ category +"'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				listCount = rset.getInt(1);
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+	// CATEGORY별로 ITEM 모두 가져오기
+	public ArrayList<Item> categoryList(Connection conn, String category) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Item> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM ITEM_SEARCHLIST WHERE ITEM_CATEGORY = '"+ category +"'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Item it = new Item(rset.getString("item_no"),
+								   rset.getString("item_name"),
+								   rset.getString("keyword_no"),
+								   rset.getString("keyword_name"),
+								   rset.getInt("item_price"),
+								   rset.getInt("item_discount"),
+								   rset.getInt("item_stock"),
+								   rset.getDate("item_cdate"),
+								   rset.getInt("item_scount"),
+								   rset.getInt("item_max"),
+								   rset.getString("image_path"),
+								   rset.getString("image_name"));
+				
+				list.add(it);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+	
+		return list;
+	}
 
 }

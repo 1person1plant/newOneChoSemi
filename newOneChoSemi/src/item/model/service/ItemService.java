@@ -1,14 +1,17 @@
 package item.model.service;
 
-import item.model.dao.ItemDao;
-import item.model.vo.Item;
-import item.model.vo.ItemImage;
-
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Map;
+
+import item.model.dao.ItemDao;
+import item.model.vo.Item;
+import item.model.vo.ItemImage;
 
 public class ItemService {
 
@@ -136,6 +139,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().updateItem(conn, item);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -147,6 +157,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().updateItemImage(conn, item);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -158,6 +175,13 @@ public class ItemService {
 		int result = 0;
 
 		result = new ItemDao().deleteItem(conn, itemNum);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
 
 		close(conn);
 		return result;
@@ -178,6 +202,13 @@ public class ItemService {
 		Connection conn=getConnection();
 		int result=new ItemDao().updateStock(conn,items);
 		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		return result;
 	}
@@ -189,6 +220,18 @@ public class ItemService {
 		
 		close(conn);
 		return items;
+	}
+
+
+	public int nameCheck(String itemName) {
+		
+		Connection conn=getConnection();
+		int result=new ItemDao().nameCheck(conn,itemName);
+		
+		
+		close(conn);
+		return result;
+		
 	}
 
 	// 김경남: ItemDetail
@@ -204,7 +247,39 @@ public class ItemService {
 
 	}
 
+	public ArrayList<Item> searchResult(ArrayList searchList) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Item> resultList = new ItemDao().searchResult(conn, searchList);
+		
+		close(conn);
+		
+		return resultList;
+
+	}
 	
+	public int categoryCount(String category) {
+
+		Connection conn = getConnection();
+		
+		int categoryCount = new ItemDao().categoryCount(conn, category);
+		
+		close(conn);
+		
+		return categoryCount;
+	}
+
+	public ArrayList<Item> categoryList(String category) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Item> categoryList = new ItemDao().categoryList(conn, category);
+		
+		close(conn);
+		
+		return categoryList;
+	}
 
 
 }
