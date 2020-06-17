@@ -211,4 +211,36 @@ public class ReviewDao {
 		return result;
 	}
 
+	public Review loadReview(Connection conn, String reviewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Review rv = new Review();
+		
+		String query = "SELECT * FROM REVIEW WHERE REVIEW_NO = '" + reviewNo + "'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rv = new Review(rset.getString("review_no")
+				  			   ,rset.getInt("review_rate")
+							   ,rset.getString("review_content")
+							   ,rset.getDate("review_udate")
+							   ,rset.getString("review_imagename")
+							   ,rset.getString("review_imagepath"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return rv;
+	}
+
 }

@@ -40,6 +40,7 @@ public class ItemDetailServlet extends HttpServlet {
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
 		Order order = new Order();
+		Review loadReview = new Review();
 		
 		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
 			myReviewList = new ArrayList<>();

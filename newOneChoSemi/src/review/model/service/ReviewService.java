@@ -79,4 +79,15 @@ public class ReviewService {
 		return reviewCreate;
 	}
 
+	public Review loadReview(String reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		Review loadReview = new ReviewDao().loadReview(conn, reviewNo);
+		
+		close(conn);
+		
+		return loadReview;
+	}
+
 }
