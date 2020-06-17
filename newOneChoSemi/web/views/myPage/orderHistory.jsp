@@ -142,7 +142,11 @@
 	<div class="container">
       <div class="row">
          <div class="col-md-3">
-            <%@include file="myPageCategory.jsp"%>
+			<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
+               <%@include file="kakaoCategory.jsp" %>
+            <%} else {%>
+               <%@include file="myPageCategory.jsp" %>
+            <%} %>
          </div>
          <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
@@ -223,29 +227,6 @@
 							
 						</form>
 					</div>
-					<%-- <div class="paginArea" align="center">
-			<!-- 맨 처음으로(<<) -->
-			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=1'"><<</button>
-			
-			<!-- 이전 페이지로(<) -->
-			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=currentPage-1%>'"><</button>
-			
-			<!-- 10개의 페이지 목록 --> 
-			<%for(int p=startPage ;p<=endPage ;p++){ %>
-				<% if(p == currentPage){ %>
-					<button disabled><%=p %></button>
-				<%}else{ %>
-					<button  onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=p%>'"><%=p %></button>
-				<%} %>
-			<%} %>
-			<!-- 다음 페이지로(>) -->
-			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=currentPage+1%>'">></button>
-			
-			<!-- 맨 끝으로(>>) -->
-			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=maxPage%>'">>></button>
-			
-		</div> --%>
-		
 				</fieldset>
 			</div>
 			</div>

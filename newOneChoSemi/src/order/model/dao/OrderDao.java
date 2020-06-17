@@ -37,52 +37,6 @@ public class OrderDao {
 
 
 
-	public ArrayList historyList(Connection conn, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList list = new ArrayList();
-		
-		int ohStart = (currentPage-1)*limit + 1;
-		int ohEnd = currentPage * limit;
-		String query = "SELECT * FROM (SELECT ROWNUM OREDER_NO, O.* FROM ORDERLIST O) WHERE BETWEEN ? AND ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, ohStart);
-			pstmt.setInt(2, ohEnd);
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				Order o = new Order(rset.getString("ORDER_NO"),
-									rset.getString("ITEM_NO"),
-									rset.getString("MEMBER_NO"),
-									rset.getDate("ORDER_DATE"),
-									rset.getInt("ORDER_COUNT"),
-									rset.getInt("ORDER_USEPOINT"),
-									rset.getString("ORDER_NAME"),
-									rset.getString("ORDER_PHONE1"),
-									rset.getString("ORDER_PHONE2"),
-									rset.getString("ORDER_PHONE3"),
-									rset.getString("ORDER_POSTCODE"),
-									rset.getString("ORDER_ADDRESS1"),
-									rset.getString("ORDER_ADDRESS2"),
-									rset.getString("ORDER_REQUEST"),
-									rset.getInt("ORDER_DCOST"),
-									rset.getString("ORDER_CANCELREQUEST"),
-									rset.getString("ORDER_CANCELYN"),
-									rset.getString("DELIVERY_CODE"),
-									rset.getString("PAYMENT_CODE"));
-				list.add(o);			
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-			close(rset);
-		}
-		return list;
-	}
-
 	public ArrayList<OrderHis> historyOrder(Connection conn, String memberNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -169,4 +123,5 @@ public class OrderDao {
 		
 		return ohcancel;
 	}
+
 }

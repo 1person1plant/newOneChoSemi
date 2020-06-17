@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import order.model.service.OrderService;
 import order.model.vo.OrderHis;
+import order.model.vo.Page;
 
 /**
  * Servlet implementation class OrderHistoryServlet

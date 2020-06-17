@@ -22,12 +22,6 @@ public class OrderService {
 	 */
 
 
-	public ArrayList<Order> historyList(int currentPage, int limit) {
-		Connection conn = getConnection();
-		ArrayList list = new OrderDao().historyList(conn, currentPage, limit);
-		close(conn);
-		return list;
-	}
 
 	public ArrayList<OrderHis> historyOrder(String memberNo) {
 		Connection conn = getConnection();

@@ -158,7 +158,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp" %>
+			<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
+               <%@include file="kakaoCategory.jsp" %>
+            <%} else {%>
+               <%@include file="myPageCategory.jsp" %>
+            <%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
