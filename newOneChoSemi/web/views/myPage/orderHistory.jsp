@@ -142,7 +142,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%if(loginUser.getMemberStatus() == "K"){ %>
+				<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
 					<%@include file="kakaoCategory.jsp" %>
 				<%} else {%>
 					<%@include file="myPageCategory.jsp" %>
