@@ -240,12 +240,12 @@
 	            		}else if(deliCode == D1){
 	            		var orderNo = $(this).parents("tr").children("td:first").text();
 	            		var memberNo = "<%=loginUser.getMemberNo()%>";
-						var itemNo = $(this).parents("tr").children("td:nth-child(3)").text()
+						var itemNo = $(this).parents("tr").children("td:nth-child(3)").text();
 	            		console.log("orderNo: " + orderNo + "/memberNo : " + memberNo + "/itemNo : "+ itemNo);
 	            		$.ajax({
 	    					url:"<%=request.getContextPath()%>/cancel.re",
 	    					type:"post",
-	    					data:{orderNo:orderNo,memberNo:memberNo},
+	    					data:{orderNo:orderNo,memberNo:memberNo,itemNo:itemNo},
 	    					success:function(data){
 	    						if(data == "success"){
 	    							location.reload();
