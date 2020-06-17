@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import member.model.vo.Grade;
 import member.model.vo.Member;
@@ -466,6 +467,32 @@ public class MemberDao {
 			return searchPwd_A;
 		}
 		
+		/**
+		 * 임시 비밀번호 발급받은 사용자 패스워드 업데이트
+		 * @param changeMember
+		 * @return
+		 */
+		public int pwdUpdate(Connection conn, Member changeMember) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = "UPDATE MEMBER SET MEMBER_PWD = ? WHERE MEMBER_ID = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, changeMember.getMemberPwd());
+				pstmt.setString(2, changeMember.getMemberId());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+
+			return result;
+		}
 //		------------------------------------------------ 아라
 		
 		public Grade memberGrade(Connection conn, String memberNo) {
@@ -624,5 +651,4 @@ public class MemberDao {
 			return loginUser;
 		}
 
-		
 }

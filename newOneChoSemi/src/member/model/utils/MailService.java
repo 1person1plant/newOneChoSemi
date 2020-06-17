@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 public class MailService {
 
    private final String USER = "dkfk7845@naver.com";   // 운영자의 이메일 아이디
-   private final String PASSWORD = "ehsqjtp12!!";      // 운영자의 이메일 비밀번호
+   private final String PASSWORD = "dkfk12!!@";      // 운영자의 이메일 비밀번호
    
    public MailService(){}
    
@@ -43,16 +43,16 @@ public class MailService {
             return new PasswordAuthentication(USER, PASSWORD);
          }
       });
-      
-      
+
          MimeMessage msg = new MimeMessage(ses);
          msg.setFrom(new InternetAddress(USER));
          
          msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
          
-         msg.setSubject("[일분일초] 임시 비밀번호가 발급되었습니다");         	// 메일 제목
-         msg.setText("임시 비밀번호  : " + pwd + "<br>" + "로그인을 하시고 반드시! 비밀번호를 수정해주세요");		// 메일 내용
+         msg.setSubject("[일분일초] 임시 비밀번호가 발급되었습니다");    // 메일 제목
          
-         Transport.send(msg);            		// 메일 전송 
+         msg.setText(" [ " + "임시 비밀번호 : " + pwd + " ]  * 반드시 비밀번호를 변경하여 사용하세요.");	// 메일 내용
+         
+         Transport.send(msg);      // 메일 전송 
    }
 }

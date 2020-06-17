@@ -189,7 +189,20 @@ public class MemberService {
 		close(conn);
 		return searchPwd_A;
 	}
+	
+	/**
+	 * 임시 비밀번호 발급받은 사용자 패스워드 업데이트
+	 * @param changeMember
+	 * @return
+	 */
+	public int pwdUpdate(Member changeMember) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().pwdUpdate(conn, changeMember);
 
+		close(conn);
+		return result;
+	}
 //	------------------------------------------------ 아라
 	
 	public Grade memberGrade(String memberNo) {
@@ -223,5 +236,6 @@ public class MemberService {
 		close(conn);
 		return loginUser;
 	}
+
 
 }
