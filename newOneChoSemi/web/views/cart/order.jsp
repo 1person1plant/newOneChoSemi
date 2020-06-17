@@ -173,7 +173,12 @@
         padding: 5px 10px;
         border: 1px solid #dddddd;
         border-radius: 5px;
+    }
+    .orderinfo-Recipient textarea{
         resize: none;
+    }
+    .orderinfo-Recipient input.recipient_postcode {
+    	width: auto;
     }
     .orderinfo-Recipient select{
         padding-top: 6px;
@@ -211,7 +216,7 @@
 		height: 43px;
         cursor: pointer;
 		position: absolute;
-        right: 0;
+        right: 1px;
 	}
     .orderinfo-Recipient > .switchLabel {
         right: 0;
