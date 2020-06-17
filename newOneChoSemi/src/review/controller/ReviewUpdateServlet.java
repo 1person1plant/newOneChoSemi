@@ -1,7 +1,6 @@
-package order.controller;
+package review.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +8,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import order.model.service.OrderService;
-import order.model.vo.Order;
+import com.google.gson.Gson;
+
+import review.model.service.ReviewService;
+import review.model.vo.Review;
 
 /**
- * Servlet implementation class OrderCancelServlet
+ * Servlet implementation class ReviewUpdateServlet
  */
-@WebServlet("/cancel.re")
-public class OrderCancelServlet extends HttpServlet {
+@WebServlet("/update.rv")
+public class ReviewUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderCancelServlet() {
+    public ReviewUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +32,18 @@ public class OrderCancelServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String orderNo = request.getParameter("orderNo");
-		String itemNo = request.getParameter("itemNo");
-		String memberNo = request.getParameter("memberNo");
-		System.out.println("orderNo : " + orderNo + "itemNo : " + itemNo + "memberNo : " + memberNo);
-		int result = new OrderService().cancelRequest(new Order(orderNo,itemNo,memberNo));
-		System.out.println("service>servlet : " + result);
-		PrintWriter pw = response.getWriter();
-		if(result>0) {
-			pw.print("success");
-		}else {
-			pw.print("fail");
+		
+		String reviewNo = request.getParameter("reviewNo");
+		
+		Review loadReview = new ReviewService().loadReview(reviewNo);
+		
+		if(loadReview != null) {
+			response.setContentType("application/json;");
+			new Gson().toJson(loadReview, response.getWriter());
 		}
-		pw.flush();
-		pw.close();
+		
 	}
+				
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

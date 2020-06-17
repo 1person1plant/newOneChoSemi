@@ -1,7 +1,7 @@
-package order.controller;
+package Board.controller.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import order.model.service.OrderService;
-import order.model.vo.Order;
+import Board.model.service.QnaService;
+import Board.model.vo.Notice;
 
 /**
- * Servlet implementation class OrderCancelServlet
+ * Servlet implementation class NoticeAdminListServlet
  */
-@WebServlet("/cancel.re")
-public class OrderCancelServlet extends HttpServlet {
+@WebServlet("/adminList.no")
+public class NoticeAdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderCancelServlet() {
+    public NoticeAdminListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +31,27 @@ public class OrderCancelServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String orderNo = request.getParameter("orderNo");
-		String itemNo = request.getParameter("itemNo");
-		String memberNo = request.getParameter("memberNo");
-		System.out.println("orderNo : " + orderNo + "itemNo : " + itemNo + "memberNo : " + memberNo);
-		int result = new OrderService().cancelRequest(new Order(orderNo,itemNo,memberNo));
-		System.out.println("service>servlet : " + result);
-		PrintWriter pw = response.getWriter();
-		if(result>0) {
-			pw.print("success");
+		
+		QnaService qs=new QnaService();
+		
+		//공지사항 조회하자
+		ArrayList<Notice> notices=qs.selectAllNotice();
+		
+		System.out.println(notices);
+		
+		
+		if(!notices.isEmpty()) {
+			
+			request.setAttribute("notices", notices);
+			request.getRequestDispatcher("views/admin/noticeManager.jsp").forward(request, response);
+			
 		}else {
-			pw.print("fail");
+			
+			request.setAttribute("msg", "공지사항 조회 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		
 		}
-		pw.flush();
-		pw.close();
+		
 	}
 
 	/**

@@ -87,4 +87,11 @@ public class OrderService {
 		return result;
 	}
 
+	public ArrayList<OrderHis> cancelHistory(String memberNo) {
+		Connection conn = getConnection();
+		ArrayList<OrderHis> ohcancel = new OrderDao().cancelHistory(conn,memberNo);
+//		System.out.println("ohcancel service"+ohcancel);
+		return ohcancel;
+	}
+
 }

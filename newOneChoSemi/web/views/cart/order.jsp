@@ -12,6 +12,7 @@
 		totalDiscount += cartList.get(i).getItemDiscount();
 	}
 	//System.out.println(cartList);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -98,6 +99,9 @@
     .orderinfo-buyer td{
         padding: 10px;
     }
+    .orderinfo-buyer .kakaoBuyer_name span{
+        color: #FEE500;
+    }
     .orderimg {
         width: 200px;
     }
@@ -169,7 +173,12 @@
         padding: 5px 10px;
         border: 1px solid #dddddd;
         border-radius: 5px;
+    }
+    .orderinfo-Recipient textarea{
         resize: none;
+    }
+    .orderinfo-Recipient input.recipient_postcode {
+    	width: auto;
     }
     .orderinfo-Recipient select{
         padding-top: 6px;
@@ -207,7 +216,7 @@
 		height: 43px;
         cursor: pointer;
 		position: absolute;
-        right: 0;
+        right: 1px;
 	}
     .orderinfo-Recipient > .switchLabel {
         right: 0;
@@ -422,7 +431,8 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
-
+<%	System.out.println(loginUser);
+System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus());  %>
 	<div class="container orderContainer">
 	    <!-- 상품 주문 -->
 	    <div class="orderItem">
@@ -452,46 +462,58 @@
 	    <!-- 구매자 정보 -->
 	    <div class="orderinfo-buyer">
 	        <h2>구매자 정보</h2>
-	        <table>
-	            <colgroup>
-	                <col width="20%">
-	                <col width="80%">
-	            </colgroup>
-	            <tbody>
-	                <tr>
-	                    <td>이름</td>
-	                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
-	                </tr>
-	                <tr>
-	                    <td>연락처</td>
-	                    <td class="buyer_phone">
-	                        <span class="buyer_phone1"><%=loginUser.getMemberPhone1() %></span>
-	                        <span class="buyer_phone2"><%=loginUser.getMemberPhone2() %></span>
-	                        <span class="buyer_phone3"><%=loginUser.getMemberPhone3() %></span>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <td class="buyer_postcodeTag">우편번호</td>
-	                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
-	                </tr>
-	                <tr>
-	                    <td>주소</td>
-	                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
-	                </tr>
-	                <tr>
-	                    <td class="buyer_detailAddressTag">상세주소</td>
-	                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
-	                </tr>
-	            </tbody>
-	        </table>
+			<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
+		        <table>
+		            <tbody>
+		                <tr>
+		                    <td class="kakaoBuyer_name"><%=loginUser.getMemberName() %> 회원님은 <span><b>카카오</b></span> 계정으로 로그인 하셨습니다.</td>
+		                </tr>
+		            </tbody>
+		        </table>
+			<%} else {%>
+		        <table>
+		            <colgroup>
+		                <col width="20%">
+		                <col width="80%">
+		            </colgroup>
+		            <tbody>
+		                <tr>
+		                    <td>이름</td>
+		                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
+		                </tr>
+		                <tr>
+		                    <td>연락처</td>
+		                    <td class="buyer_phone">
+		                        <span class="buyer_phone1"><%=loginUser.getMemberPhone1() %></span>
+		                        <span class="buyer_phone2"><%=loginUser.getMemberPhone2() %></span>
+		                        <span class="buyer_phone3"><%=loginUser.getMemberPhone3() %></span>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td class="buyer_postcodeTag">우편번호</td>
+		                    <td class="buyer_postcode"><%=loginUser.getMemberPostcode() %></td>
+		                </tr>
+		                <tr>
+		                    <td>주소</td>
+		                    <td class="buyer_address"><%=loginUser.getMemberAddress1() %></td>
+		                </tr>
+		                <tr>
+		                    <td class="buyer_detailAddressTag">상세주소</td>
+		                    <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %></td>
+		                </tr>
+		            </tbody>
+		        </table>
+			<%} %>
 	    </div>
 	
 	    <!-- 배송지 정보 -->
 	    <div class="orderinfo-Recipient" id="orderinfo-Recipient">
 	        <h2>배송지 정보</h2>
-	        <label for="order_confirm_switch" class="switchLabel">주문고객과 동일 &nbsp;<span class="switch">
+	        <%if(loginUser.getMemberStatus().equals("N")){ %>
+		        <label for="order_confirm_switch" class="switchLabel">주문고객과 동일 &nbsp;<span class="switch">
 	        	<input type="checkbox" class="order_confirm_switch" id="order_confirm_switch">
-                <span class="slider round"></span></span></label>
+	            <span class="slider round"></span></span></label>
+            <%} %>
 	        <table>
 	            <colgroup>
 	                <col width="15%">

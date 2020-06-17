@@ -1,28 +1,27 @@
-package order.controller;
+package Board.controller.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import order.model.service.OrderService;
-import order.model.vo.Order;
+import Board.model.service.QnaService;
 
 /**
- * Servlet implementation class OrderCancelServlet
+ * Servlet implementation class QnaAdminUpdateServlet
  */
-@WebServlet("/cancel.re")
-public class OrderCancelServlet extends HttpServlet {
+@WebServlet("/adminUpdate.qna")
+public class QnaAdminUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderCancelServlet() {
+    public QnaAdminUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +30,25 @@ public class OrderCancelServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String orderNo = request.getParameter("orderNo");
-		String itemNo = request.getParameter("itemNo");
-		String memberNo = request.getParameter("memberNo");
-		System.out.println("orderNo : " + orderNo + "itemNo : " + itemNo + "memberNo : " + memberNo);
-		int result = new OrderService().cancelRequest(new Order(orderNo,itemNo,memberNo));
-		System.out.println("service>servlet : " + result);
-		PrintWriter pw = response.getWriter();
+		
+		request.setCharacterEncoding("UTF-8");
+		String answer=request.getParameter("editordata");
+		String QNum=request.getParameter("QNum");
+		
+		System.out.println(answer);
+		
+		QnaService qs=new QnaService();
+		int result=qs.updateAnswer(QNum,answer);
+		
 		if(result>0) {
-			pw.print("success");
+			System.out.println("질문 관리자 페이지로 이동");
+			response.sendRedirect("adminList.qna");
 		}else {
-			pw.print("fail");
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "질문 답변 실패");
+			views.forward(request, response);
 		}
-		pw.flush();
-		pw.close();
+		
 	}
 
 	/**
