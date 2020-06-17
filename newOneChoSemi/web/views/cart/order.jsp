@@ -12,6 +12,7 @@
 		totalDiscount += cartList.get(i).getItemDiscount();
 	}
 	//System.out.println(cartList);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -97,6 +98,9 @@
     .orderpayment td,
     .orderinfo-buyer td{
         padding: 10px;
+    }
+    .orderinfo-buyer .kakaoBuyer_name span{
+        color: #FEE500;
     }
     .orderimg {
         width: 200px;
@@ -422,7 +426,8 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
-
+<%	System.out.println(loginUser);
+System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus());  %>
 	<div class="container orderContainer">
 	    <!-- 상품 주문 -->
 	    <div class="orderItem">
@@ -452,12 +457,11 @@
 	    <!-- 구매자 정보 -->
 	    <div class="orderinfo-buyer">
 	        <h2>구매자 정보</h2>
-			<%if(loginUser.getMemberStatus() == "K"){ %>
+			<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
 		        <table>
 		            <tbody>
 		                <tr>
-		                    <td>이름</td>
-		                    <td class="buyer_name"><%=loginUser.getMemberName() %></td>
+		                    <td class="kakaoBuyer_name"><%=loginUser.getMemberName() %> 회원님은 <span><b>카카오</b></span> 계정으로 로그인 하셨습니다.</td>
 		                </tr>
 		            </tbody>
 		        </table>
@@ -500,9 +504,11 @@
 	    <!-- 배송지 정보 -->
 	    <div class="orderinfo-Recipient" id="orderinfo-Recipient">
 	        <h2>배송지 정보</h2>
-	        <label for="order_confirm_switch" class="switchLabel">주문고객과 동일 &nbsp;<span class="switch">
+	        <%if(loginUser.getMemberStatus().equals("N")){ %>
+		        <label for="order_confirm_switch" class="switchLabel">주문고객과 동일 &nbsp;<span class="switch">
 	        	<input type="checkbox" class="order_confirm_switch" id="order_confirm_switch">
-                <span class="slider round"></span></span></label>
+	            <span class="slider round"></span></span></label>
+            <%} %>
 	        <table>
 	            <colgroup>
 	                <col width="15%">
