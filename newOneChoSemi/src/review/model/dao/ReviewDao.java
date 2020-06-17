@@ -20,7 +20,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> otherReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"'";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' ORDER BY 8 DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -62,7 +62,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "'";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "' ORDER BY 8 DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -118,6 +118,9 @@ public class ReviewDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		return result;
@@ -146,11 +149,66 @@ public class ReviewDao {
 								 ,rset.getString("delivery_code")
 								 ,rset.getString("order_review"));
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		return order;
+	}
+
+	public int reviewReady(Connection conn, String orderNo, String itemNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE ORDERLIST SET ORDER_REVIEW = 'Y' WHERE ORDER_NO = ? AND ITEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderNo);
+			pstmt.setString(2, itemNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reviewCreate(Connection conn, Review rv) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query="INSERT INTO REVIEW VALUES('R'||LPAD(SEQ_REVIEW.NEXTVAL,5,'0'), ?, ?, ?, SYSDATE, ?, ?, SYSDATE, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, rv.getOrderNo());
+			pstmt.setString(2, rv.getItemNo());
+			pstmt.setString(3, rv.getMemberNo());
+			pstmt.setInt(4, rv.getReviewRate());
+			pstmt.setString(5, rv.getReviewContent());
+			pstmt.setString(6, rv.getReviewImgName());
+			pstmt.setString(7, rv.getReviewImgPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

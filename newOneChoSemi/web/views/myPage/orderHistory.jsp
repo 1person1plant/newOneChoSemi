@@ -117,10 +117,14 @@
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
-      <div class="row">
-         <div class="col-md-3">
-            <%@include file="myPageCategory.jsp"%>
-         </div>
+		<div class="row">
+			<div class="col-md-3">
+				<%if(loginUser.getMemberStatus() == "K"){ %>
+					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
+				<%} %>
+			</div>
          <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
@@ -240,12 +244,12 @@
 	            		}else if(deliCode == D1){
 	            		var orderNo = $(this).parents("tr").children("td:first").text();
 	            		var memberNo = "<%=loginUser.getMemberNo()%>";
-						var itemNo = $(this).parents("tr").children("td:nth-child(3)").text()
+						var itemNo = $(this).parents("tr").children("td:nth-child(3)").text();
 	            		console.log("orderNo: " + orderNo + "/memberNo : " + memberNo + "/itemNo : "+ itemNo);
 	            		$.ajax({
 	    					url:"<%=request.getContextPath()%>/cancel.re",
 	    					type:"post",
-	    					data:{orderNo:orderNo,memberNo:memberNo},
+	    					data:{orderNo:orderNo,memberNo:memberNo,itemNo:itemNo},
 	    					success:function(data){
 	    						if(data == "success"){
 	    							location.reload();
