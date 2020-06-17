@@ -117,10 +117,14 @@
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
-      <div class="row">
-         <div class="col-md-3">
-            <%@include file="myPageCategory.jsp"%>
-         </div>
+		<div class="row">
+			<div class="col-md-3">
+				<%if(loginUser.getMemberStatus() == "K"){ %>
+					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
+				<%} %>
+			</div>
          <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
