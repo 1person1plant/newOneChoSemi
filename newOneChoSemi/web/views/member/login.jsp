@@ -67,7 +67,7 @@
                 	<div class="modal-footer" style="background: #F2F1DF;">
                     	<div class="row  col-md-12">
                         	<div class="col-md-6" align="left">
-                            	<button type="button" class="btn btn-secondary" onclick="kakaoLogin();">카카오</button>
+                            	<button type="button" class="btn btn-secondary btn-warning" onclick="kakaoLogin();">카카오</button>
                         	</div>
                         	<div class="col-md-6" align="right">
                             	<button type="button" class="btn btn-primary" style="background: #1F598C;" onclick="findAcctGo();">계정찾기</button>

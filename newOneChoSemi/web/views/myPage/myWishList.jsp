@@ -127,7 +127,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<%@include file="myPageCategory.jsp"%>
+				<%if(loginUser.getMemberStatus() == "K"){ %>
+					<%@include file="myPageCategory.jsp" %>
+				<%} else {%>
+					<%@include file="kakaoCategory.jsp" %>
+				<%} %>
 			</div>
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9 fieldset'>
@@ -169,7 +173,8 @@
 								<td id='orderbutton' colspan="2">
 									<input type='button' class='button1' id='<%=mwl.get(i).getWishlistNo()%>UpBtn' value="메모수정"><br>
 									<button type='button' class='button1'>상품구매</button><br>
-									<input type='button' class='button1' id="delBtn" value="위시삭제">
+									<input type='button' class='button1' id="<%=mwl.get(i).getWishlistNo()%>DelBtn" value="위시삭제">
+									
 								</td>
 							</tr>
 							<%} %>
@@ -198,9 +203,10 @@
 		});
 	</script>
 	<%} %>
+	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
 		$(function(){
-			$("#delBtn").click(function(){
+			$("#<%=mwl.get(i).getWishlistNo()%>DelBtn").click(function(){
 				var delChk = confirm("위시리스트에서 삭제하시겠습니까?");
 				var wishNo = $(this).parents("tr").children("td:first").text();
 				var memberNo = "<%=loginUser.getMemberNo()%>";
@@ -227,6 +233,7 @@
 			})
 		})	
 	</script>
+	<%} %>
 	
 	<%for(int i=0;i<mwl.size();i++){ %>
 	<script>
@@ -235,17 +242,18 @@
 		        if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
 		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
 		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false){
-		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
+					$('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
+		            
 		            
 		            var wishNo = $(this).parents("tr").children("td:first").text();
 		            var memberNo = "<%=loginUser.getMemberNo()%>";
-		            var wishMemo = $(this).parents("tr").children().children("textarea").text();
-		            var itemNo = $(this).parents("tr").siblings("#itemNoT").text()
+		            var wishMemo = $(this).parents("tr").children().children("textarea").val();
+		            var itemNo = $(this).parents("tr").children("td:nth-child(2)").children("input").val();
 		            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
 					type:"post",
-					data:{wishNo:wishNo,memberNo:memberNo,wishMemo:wishMemo},
+					data:{wishNo:wishNo,memberNo:memberNo,wishMemo:wishMemo,itemNo:itemNo},
 					success:function(data){
 						if(data == "permit"){
 							alert("메모 수정이 완료되었습니다.");

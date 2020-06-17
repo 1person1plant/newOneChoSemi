@@ -187,13 +187,12 @@ public class OrderDao {
 	public int cancelRequest(Connection conn, Order order) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "UPDATE ORDERLIST SET ORDER_CANCELREQUEST='Y' WHERE DELIVERY_CODE ='D1' AND ORDER_NO=? AND MEMBER_NO=? AND ITEM_NO=?";
+		String query = "UPDATE ORDERLIST SET ORDER_CANCELREQUEST='Y' WHERE DELIVERY_CODE ='D1' AND ORDER_NO=? AND ITEM_NO=? AND MEMBER_NO=?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, order.getOrderNo());
-			pstmt.setString(2, order.getMemberNo());
-			pstmt.setString(3, order.getItemNo());
-			
+			pstmt.setString(2, order.getItemNo());
+			pstmt.setString(3, order.getMemberNo());
 			result = pstmt.executeUpdate();
 			System.out.println("dao : "+result);
 		} catch (SQLException e) {
