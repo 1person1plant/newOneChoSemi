@@ -116,7 +116,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
+                  <a class="nav-link" href="#" id="goStock" onclick="location.href='<%=request.getContextPath()%>/stock.it'">
                     <span data-feather="shopping-cart"></span>
                    	 재고관리
                   </a>
@@ -338,7 +338,7 @@
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
                        		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/stock.it'" style="background-color: #1f598c;color: white;">새로고침</button></p>
+                       		<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/stock.it'">새로고침</button></p>
                        		
                       
                        		</div>
@@ -586,6 +586,7 @@
                        
                     })
                 </script>
+                
 
 
        

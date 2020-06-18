@@ -344,7 +344,7 @@
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
                        		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/list.it'">새로고침</button></p>
+                       		<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/list.it'">새로고침</button></p>
                        		
                       
                        		</div>
@@ -582,7 +582,7 @@
 
 
 
-</div>
+
 
 
 <div class="container-fluid" >
