@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="order.model.vo.OrderHis, java.util.ArrayList"%>
+	pageEncoding="UTF-8" import="order.model.vo.*,java.util.ArrayList"%>
 
 <%
 	ArrayList<OrderHis> ohcancel = (ArrayList<OrderHis>)request.getAttribute("ohcancel");
-%>
+	%>
 <!DOCTYPE html>
 <html>
 <head>

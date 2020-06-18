@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import cartList.model.dao.CartDao;
 import cartList.model.service.CartService;
 import member.model.service.MemberService;
 import order.model.dao.OrderDao;
@@ -83,6 +84,28 @@ public class OrderService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<OrderHis> cancelHistory(String memberNo) {
+		Connection conn = getConnection();
+		ArrayList<OrderHis> ohcancel = new OrderDao().cancelHistory(conn,memberNo);
+//		System.out.println("ohcancel service"+ohcancel);
+		return ohcancel;
+	}
+
+	public int chkPostcode(String postcode) {
+		Connection conn = getConnection();
+
+		int result = new OrderDao().chkPostcode(conn, postcode);
+		
+		if(result < 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		return result;
 	}

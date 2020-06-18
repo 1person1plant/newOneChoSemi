@@ -42,7 +42,7 @@
 	  	}
 	  	
 	  	.loading{
-			width:1550px;
+			width:100%;
     		height:100px;
     		position:fixed; /* 스크롤 내려도 그 위치에 */
     		left:0%;
@@ -122,7 +122,6 @@
                           								<p class="ara-label-text">&nbsp;@&nbsp;</p>
                          	 							<select id="memberEmail2" name="memberEmail2" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                             								<option value="@naver.com">naver.com</option>
-                      	      								<option value="@daum.net">daum.net</option>
                      								       	<option value="@gmail.com">gmail.com</option>
                            								 	<option value="@nate.com">nate.com</option>
                             								<option value="@hanmail.net">hanmail.net</option>
@@ -178,7 +177,6 @@
                           								<p class="ara-label-text">&nbsp;@&nbsp;</p>
                          	 							<select id="memberEmail2_P" name="memberEmail2_P" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                             								<option value="@naver.com">naver.com</option>
-                      	      								<option value="@daum.net">daum.net</option>
                      								       	<option value="@gmail.com">gmail.com</option>
                            								 	<option value="@nate.com">nate.com</option>
                             								<option value="@hanmail.net">hanmail.net</option>

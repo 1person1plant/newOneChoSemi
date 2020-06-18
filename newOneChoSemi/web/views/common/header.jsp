@@ -6,22 +6,22 @@
 	String adminChk = "";
 	String kakaoChk = "";
 	String userNo = "";
-	String kakaoNo = "";
 	String userRank = "";
+	String kakaoNo = "";
    
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		kakaoUser = (Member)session.getAttribute("kakaoUser");
 		
-		if(kakaoUser != null && loginUser == null){	// 카카오 user 일때는
-			kakaoChk = kakaoUser.getMemberStatus();
-			kakaoNo = kakaoUser.getMemberNo();
-			userNo = loginUser.getMemberNo();
-			userRank = loginUser.getMemberRank();
+		System.out.println("해더에서 출력 : " + loginUser);
+		
+		if(kakaoUser != null && loginUser == null){
+			kakaoChk = loginUser.getMemberStatus();
+			kakaoNo = loginUser.getMemberNo();
 			result = false;
-		} else if(kakaoUser == null && loginUser != null){	// 로그인 user 일때는
-			adminChk = loginUser.getMemberAdmin();
+		} else if(kakaoUser == null && loginUser != null){
 			userNo = loginUser.getMemberNo();
+			adminChk = loginUser.getMemberAdmin();
 			userRank = loginUser.getMemberRank();
 			result = false;
 		}
@@ -31,6 +31,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169937382-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-169937382-1');
+	</script>
+	
+	
     <meta charset="UTF-8">
     <title>Cho-당신을 위한 반려식물</title>
     
@@ -318,7 +330,7 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goAll();">ALL</a>
+                    <a class="nav-link" onclick="goAll();" id="AllId">ALL</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="goSoil();">SOIL</a>

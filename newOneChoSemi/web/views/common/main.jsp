@@ -124,40 +124,40 @@
             <div class="item-row row">
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/hanging_tillandsia_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">야자수염틸란드시아</p>
+                            <p class="card-text">26,500원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/soil_moonshine_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">문샤인</p>
+                            <p class="card-text">25,000원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/soil_monstera_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">몬스테라</p>
+                            <p class="card-text">27,000원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/hanging_dischidia_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">디시디아</p>
+                            <p class="card-text">19,500원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
         </div>
     
         <!--토스트-->
-        <div class="toast" style="position: absolute; top: 300px; right: 0;" data-delay='4000'>
+        <div class="toast" style="position: absolute; top: 300px; right: 100px;" data-delay='4000'>
             <div class="toast-header">
                 <strong class="mr-auto"><i class="fas fa-seedling"></i>일분일초</strong>
                 <small>11 mins ago</small>
@@ -175,9 +175,11 @@
                 </button>
             </div>
             <div class="toast-body">
-                	광고처럼 보이지만...토스트입니다.<br>
-                	지금 가입하면 배송비 무료!<br>
-                	곧 사라집니다..걱정마시오
+                Q : 식물은 그냥 잡초일 뿐인가요?<br>
+                <br>
+				A : 당신이 기르기로 마음 먹고<br>
+				또 그렇게 정성들여 기르고 있다면<br>
+				더 이상 잡초가 아닙니다.<br>
             </div>
         </div>
         <script>
@@ -203,40 +205,40 @@
             <div class="item-row row">
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/soil_monstera_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">라탄포레스트</p>
+                            <p class="card-text">28,900원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/hanging_dischidia_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">스파티필름</p>
+                            <p class="card-text">22,000원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/soil_rattanforest_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">행운목</p>
+                            <p class="card-text">20,000원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=request.getContextPath() %>/images/고무나무.jpg" class="card-img-top" alt="...">
+                        <img src="<%=request.getContextPath() %>/items_uploadFiles/water_spath_main.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-title">고무나무</p>
-                            <p class="card-text">48,000원</p>
+                            <p class="card-title">산세베리아</p>
+                            <p class="card-text">23,500원</p>
                             <a href="#" class="btn btn-outline-info float-right">VIEW DETAIL</a>
                         </div>
                     </div>

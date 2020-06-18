@@ -78,8 +78,8 @@
         margin: 0 10px 0 10px;
     }
     .carttable input{
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
     }
 
     .carttable img {
@@ -674,6 +674,8 @@
 							$cartListTbody.append($tr);
 							
 							$('input[class=cart_count]:last').spinner();
+							
+							$(".carttable")[0].scrollIntoView();
 		                } // 장바구니 데이터 (data) 가져옴
 					},
 						error:function(request,status,error){
