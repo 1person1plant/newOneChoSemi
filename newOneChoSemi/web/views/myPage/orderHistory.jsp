@@ -119,12 +119,13 @@
 	<div class="container">
       <div class="row">
          <div class="col-md-3">
-				<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
-					<%@include file="kakaoCategory.jsp" %>
-				<%} else {%>
-					<%@include file="myPageCategory.jsp" %>
-				<%} %>
+			<%if(loginUser.getMemberStatus() == "K" || loginUser.getMemberStatus().equals("K")){ %>
+				<%@include file="kakaoCategory.jsp" %>
+			<%} else {%>
+				<%@include file="myPageCategory.jsp" %>
+			<%} %>
          </div>
+
          <!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
@@ -189,6 +190,7 @@
 							</table>
 						</form>
 					</div>
+<<<<<<< HEAD
 					<%-- <div class="paginArea" align="center">
 			<!-- 맨 처음으로(<<) -->
 			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=1'"><<</button>
@@ -211,6 +213,8 @@
 			<button onclick="location.href='<%=request.getContextPath()%>/list.bo?currentPage=<%=maxPage%>'">>></button>
 			
 		</div> --%>
+=======
+>>>>>>> refs/remotes/origin/dev_sh
 				</fieldset>
 			</div>
 			</div>
