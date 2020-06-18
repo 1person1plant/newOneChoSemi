@@ -211,20 +211,6 @@
 											<td colspan="7" class="ordertd" align="right"><input type="button" class="cancelListBtn" value="주문 취소 내역"></td>
 										</tr>
 								<%} %>
-								<%-- <tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd'><%=orderNo %></td>
-									<td class='ordertd'><img src='flo.jpg' width='150px'
-										height='150px'></td>
-									<td class='ordertd'><%=itemNo %></td>
-									<td class='ordertd'><%=itemName %></td>
-									<td class='ordertd'><%=orderCount %></td>
-									<td class='ordertd'><%=deliveryCode %></td>
-									<td id='orderbutton'><a href='main.jsp' id='delete'><button
-												type='button' class='button1'>취소신청</button></a><br> <a
-										href='main.jsp' id='delete'><button type='button'
-												class='button1'>리뷰쓰기</button></a><br> <a href='main.jsp'
-										id='delete'><button type='button' class='button1'>상세보기</button></a></td>
-								</tr> --%>
 								</tbody>
 							</table>
 							
@@ -244,7 +230,7 @@
 							alert("배송 완료되어야 리뷰 작성이 가능합니다.");
 						}else if("<%=(oh.get(i)).getDeliveryStatus()%>"=="배송 완료"){
 						var itemNo = "<%=(oh.get(i)).getItemNo()%>"
-						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo+"#goReview-btn";
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo+"#myReview-writing";
 						}
 					})
 				})

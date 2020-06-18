@@ -1,19 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	/* String memberId = member.getmemberId();
-String memberPwd = member.getMemberPwd();
-String memberName = member.getMemberName();
-String memberPhone1 = member.getMemberPhone1();
-String memberPhone2 = member.getMemberPhone1();
-String memberPhone3 = member.getMemberPhone1();
-String memberEmail1 = member.getMemberEmail1();
-String memberEmail2 = member.getMemberEmail2();
-String memberPostcode = member.getMemberPostcode();
-String memberAddress1 = member.getMemberAddress1();
-String memberAddress2 = member.getMemberAddress2();
-*/
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -281,17 +267,6 @@ label {
 		</div>
 	</div>
 
-	<!-- <input type="text" id="sample3_postcode" placeholder="우편번호"> -->
-	<!-- <button type="button" onclick="sample3_execDaumPostcode()" value="우편번호 검색" class='button1' id='attBtn'><br> -->
-	<!-- <input type="text" id="sample3_address" placeholder="주소"><br> -->
-	<!-- <input type="text" id="sample3_detailAddress" placeholder="상세주소"> -->
-	<!-- <input type="text" id="sample3_extraAddress" placeholder="참고항목"> -->
-
-	<!-- <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-</div> -->
-
-
 	<script
 		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -372,30 +347,7 @@ label {
 			apiId.style.display = "table-row";
 		}
 	</script>
-<!-- <script>
-			function updateUser(){
-				if ($("#password1").val() == "") {
-					alert("비밀번호를 입력해 주세요.");
-				} else if ($("#password2").val() == "") {
-					alert("비밀번호 확인을 입력해 주세요.")
-				} else if ($("#phone2").val() == "") {
-					alert("핸드폰 번호를 입력해 주세요.")
-				} else if ($("#phone3").val() == "") {
-					alert("핸드폰 번호를 입력해 주세요.")
-				} else if ($("#email1").val() == "") {
-					alert("이메일을 입력해 주세요.")
-				} else if ($("#sample3_postcode").val() == "") {
-					alert("우편 번호를 입력해 주세요.")
-				} else if ($("#sample3_address").val() == "") {
-					alert("주소를 입력해 주세요.")
-				} else if ($("#sample3_detailAddress").val() == "") {
-					alert("상세 주소를 입력해 주세요.")
-				} else {
-					$("#updateForm").submit();
-				}
-				return true;
-			}
-		</script> -->
+
 
 	<script>
 		$(function() {

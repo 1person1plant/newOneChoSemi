@@ -256,7 +256,6 @@
 		})
 		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
-           
 				var wishNo = $(this).parents("tr").children("td:first").text();
 	            var memberNo = "<%=loginUser.getMemberNo()%>";
 	            var wishMemo = $(this).parents("tr").children().children("textarea").val();
@@ -264,6 +263,7 @@
 	            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 				var memoLength = wishMemo.length;
 	            console.log("textarea" + memoLength);
+	            
 	            if(memoLength>100){
 	            	alert("100자까지 입력 가능합니다.");
 	            }
