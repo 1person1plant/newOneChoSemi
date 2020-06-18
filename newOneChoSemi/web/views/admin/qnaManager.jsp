@@ -167,7 +167,7 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
@@ -179,7 +179,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">>
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>
@@ -352,7 +352,7 @@
                                 
                                 <ul style="padding: 0;">
                                 	<li><label>질문번호</label><br><input class="form-control" type="text" readonly id="Qnum" name="QNum" style="width:100%;"></li>
-                                	<li><label>작성자</label><br><input class="form-control" type="text" readonly id="Qwriter" name="QNum" style="width:100%;"></li>
+                                	<li><label>작성자</label><br><input class="form-control" type="text" readonly id="Qwriter" name="QWriter" style="width:100%;"></li>
                                     <li><label>분류</label><br><input class="form-control" type="text" readonly id="Qcategory" style="width: 100%;"></li>
                                     <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Qdate" style="width: 100%;"></li>
                                     <li><label>제목</label><br><input class="form-control" type="text" readonly id="Qtitle" style="width: 100%;"></li>

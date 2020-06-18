@@ -164,19 +164,19 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
+              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
                 <span data-feather="file"></span>
                 	Q&A
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>

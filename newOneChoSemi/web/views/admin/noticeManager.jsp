@@ -204,10 +204,11 @@
 
         <div class="row">
        
-                 <div class="container" id="noticeBoard" style="display:none;text-align: center;">
+                 <div class="container" id="noticeBoard" style="text-align: center;">
                    
                     <div class="container mx-auto"  style="text-align: center;">
                         
+                        <%if(!notices.isEmpty()){ %>
                         <table id="noticelist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
                             <thead>
                                 <tr>
@@ -246,10 +247,42 @@
                             
                             
                         </table>
-
+						<%}else{ %>
+							<div class="container">
+                       		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
+         
+                       		<p style="padding-top:8rem;">공지사항이 존재하지 않아요.<br><br>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">새로고침</button></p>
+                       		
+                      
+                       		</div>
+                       		</div>
+						
+						<%} %>
                         
                     </div>  
+                    
+                    
        
+        </div>
+        
+        <div class="container">
+        
+        	<div class="container mx-auto" id="composeN" style="margin-top: 50px;">
+                     <form method="post" action="<%=request.getContextPath()%>/insert.no">
+
+                        <ul style="list-style-type: none;padding: 0;width: 100%;">
+                        	<li><input type="hidden" name="noticeWriter" id="noticeWriter" value="<%=loginUser.getMemberNo()%>"></li>
+                            <li style="margin-top:20px;"><label>제목</label><br><input name="newNoticeTitle" type="text" style="width: 100%;"></li>
+                         </ul>
+                        
+                          <textarea id="Nsummernote" name="Neditordata"></textarea>
+                         	
+
+                         <button type="submit" class="btn btn-outline-info btn-lg btn-block" style="margin-top: 50px;" id="ask">작성하기</button>
+                       </form>
+                     </div>
+        
         </div>
                
                    <!--Notice 상세 내용 Modal-->
@@ -259,7 +292,7 @@
                         <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                     
-                            <!-- Modal Header -->
+                   <!-- Modal Header -->
                             <div class="modal-header">
                             <h4 class="modal-title">공지사항</h4>
                             
@@ -268,32 +301,36 @@
                     
                             <!-- Modal body -->
                             <div class="modal-body">
-                            <form>
+                            <form method="post" action="<%=request.getContextPath()%>/adminUpdate.no">
 
                                 
                                 <ul style="padding: 0;">
                                 	
-                                	<input type="hidden" id="noticeNum">
-                                    
+                                	<input type="hidden" name="writer" id="writer">
+                                	<li><label>글번호</label><br><input class="form-control" readonly type="text" id="noticeNum" name="noticeNum" style="width: 100%;"></li>
                                     <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Ndate" style="width: 100%;"></li>
-                                    <li><label>제목</label><br><input class="form-control" type="text" readonly id="Ntitle" style="width: 100%;"></li>
-                                    <li><label>내용</label><br><div id="notice" readonly style="width: 100%;border:1px solid lightgrey;"></div></li>
+                                    <li><label>제목</label><br><input class="form-control" type="text"  id="Ntitle" name="Ntitle" style="width: 100%;"></li>
+                                    <li><label>내용</label><br>
+                                    <div id="notice" readonly style="width: 100%;border:1px solid lightgrey;"></div>
+                                    <textarea id="summernote" name="editordata"></textarea>
+                                    </li>
                                    
                                     
                                 </ul>    
-                            </form>
+                           
                             </div>
                     
                             <!-- Modal footer -->
                             <div class="modal-footer">
                             
                             <%if(adminChk.equals("Y")){ %>
-                            <button type="button" class="btn btn-outline-success" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">수정하기</button>
+                            <button type="button" class="btn btn-outline-success" onclick="resetNotice();">리셋하기</button>
+                            <button type="submit" class="btn btn-outline-success">수정하기</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteNotice();">삭제하기</button>
                             <%} %>
                             
                             </div>
-                    
+                     </form>
                         </div>
                         </div>
                     </div>
@@ -304,6 +341,11 @@
  
        
 </div>
+
+ 					
+
+
+
 </div>
 
 
@@ -343,6 +385,15 @@
             focus: true   
 
         });
+        
+        
+        $('#Nsummernote').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             
+            maxHeight: null,             
+            focus: true   
+
+        });
     });
 </script>
 
@@ -357,6 +408,12 @@
  <script>
      $(document).ready(function(){
     	 
+    	<%if(loginUser != null){%>
+    		var loginAdmin='<%=loginUser.getMemberNo()%>'
+    		
+    		$("#writer").val(loginAdmin);
+    		
+    	 <%}%>
     	 
     	$('#noticelist thead tr').clone(true).appendTo('#noticelist thead');
        	$('#noticelist thead tr:eq(1) th').each(function(i){
@@ -418,10 +475,14 @@
          		
          		if(noticeNum=='<%=notices.get(i).getNoticeNo()%>'){
          			
-         			
+         			$("#noticeNum").val('<%=notices.get(i).getNoticeNo()%>');
          			$("#Ndate").val('<%=notices.get(i).getNoticeCDate()%>');
          			$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
-         			$("#notice").html('<%=notices.get(i).getNoticeContent()%>');
+         			
+         			var usedContent='<%=notices.get(i).getNoticeContent()%>';
+         			$("#summernote").summernote('code',usedContent);
+         			
+         			
          			
          		}
          		
@@ -451,6 +512,47 @@
         </script>
        
         <!--모달에서 수정/삭제 시 서버로 값 넘기기-->
+        <script>
+        
+        	function resetNotice(){
+        		
+        		var reNoNum=$("#noticeNum").val();
+        		
+        		<%for(int i=0;i<notices.size();i++){%>
+        		
+        		if(reNoNum=='<%=notices.get(i).getNoticeNo()%>'){
+        			
+					$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
+         			
+         			var usedContent='<%=notices.get(i).getNoticeContent()%>';
+         			$("#summernote").summernote('code',usedContent);
+        			
+        			
+        		}
+        		
+        		<%}%>
+        		
+        		
+        	}
+        
+        
+        </script>
+        <script>
+        
+        	function deleteNotice(){
+        		
+        		var delAgree=confirm("정말 삭제하시겠어요?");
+        		
+        		var delNoNum=$("#noticeNum").val();
+        		
+        		if(delAgree){
+        			
+        			location.href="<%=request.getContextPath()%>/adminDelete.no?noticeNum="+delNoNum;
+        			
+        		}
+        	}
+        
+        </script>
        
 
 

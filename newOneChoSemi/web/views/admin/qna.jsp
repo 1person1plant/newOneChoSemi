@@ -218,7 +218,7 @@
        <div class="container" id="noticeBoard" style="display:none;text-align: center;">
                    
                     <div class="container mx-auto"  style="text-align: center;">
-                        
+                       <%if(!notices.isEmpty()){ %> 
                         <table id="noticelist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
                             <thead>
                                 <tr>
@@ -258,7 +258,16 @@
                             
                         </table>
 
+                        <%}else{ %>
                         
+                        	<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
+         
+                       		<p style="padding-top:8rem;">공지사항 준비중!<br><br>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/index.jsp'">메인으로</button></p>
+                       		
+                      
+                       		</div>
+                        <%} %>
                     </div>  
        
         </div>
@@ -322,7 +331,7 @@
                 <div class="container" id="askBoard" style="display:none;text-align: center;">
                    
                     <div class="container mx-auto"  style="text-align: center;">
-                        
+                         <%if(!qnas.isEmpty()){ %>
                         <table id="qnalist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
                             <thead>
                                 <tr>
@@ -369,7 +378,17 @@
                             
                         </table>
 
+                        <%}else{ %>
                         
+                       		 <div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
+         
+                       		<p style="padding-top:8rem;">질문 게시판 준비중!<br><br>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/index.jsp'">메인으로</button></p>
+                       		
+                      
+                       		</div>
+                        
+                        <%} %>
                     </div>  
                         
                         
@@ -653,7 +672,7 @@
          		
          		if(noticeNum=='<%=notices.get(i).getNoticeNo()%>'){
          			
-         			
+         			$("#noticeNum").val(noticeNum);
          			$("#Ndate").val('<%=notices.get(i).getNoticeCDate()%>');
          			$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
          			$("#notice").html('<%=notices.get(i).getNoticeContent()%>');
@@ -892,6 +911,22 @@
         		
         	};
         
+        
+        </script>
+        <script>
+        
+        	function deleteNotice(){
+        		
+        		var delAgree=confirm("정말 삭제하시겠어요?");
+        		
+        		var delNoNum=$("#noticeNum").val();
+        		
+        		if(delAgree){
+        			
+        			location.href="<%=request.getContextPath()%>/adminDelete.no?noticeNum="+delNoNum;
+        			
+        		}
+        	}
         
         </script>
        
