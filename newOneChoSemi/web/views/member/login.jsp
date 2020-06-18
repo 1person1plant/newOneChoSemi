@@ -16,6 +16,7 @@
     		console.log('카카오' + Kakao.isInitialized());
    	 	</script>
    	 	<style>
+   	 		/* 카카오 버튼 이미지 */
    	 		.kakaoBtn{
    	 		 	background: url("<%=request.getContextPath() %>/images/kakao_login_medium_narrow.png") no-repeat center;
    	 		 	width: 183px;
