@@ -9,8 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
 <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -738,7 +736,7 @@
              }
          })
          
-         
+          
          
          	
        	
@@ -754,7 +752,7 @@
            
             
             
-            $("#modifyExhibitStatus").change(function(){
+             $("#modifyExhibitStatus").change(function(){
                 var selected=$('#modifyExhibitStatus').children("option:selected").text();
                 $("#exhibitStatus").val(selected);
 
@@ -772,6 +770,7 @@
                 }
             });
          
+            });
 
             $("#modifyCategory").change(function(){
 
@@ -782,8 +781,7 @@
                     $("#category").val(selected);
                     $("#category").css("background","yellow");
                 }
-            });
-            
+            })
             
             $("#modifyKeyword").change(function(){
             	
