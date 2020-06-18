@@ -14,8 +14,15 @@ import javax.mail.internet.MimeMessage;
 
 public class MailService {
 
-   private final String USER = "dkfk7845@naver.com";   // 운영자의 이메일 아이디
-   private final String PASSWORD = "dkfk12!!@";      // 운영자의 이메일 비밀번호
+   private final String USER = "";   // 운영자의 이메일 아이디
+   private final String PASSWORD = "";      // 운영자의 이메일 비밀번호
+   
+   /*
+  		1. Properties -  Java Build Path - Libraries - Add JARs - javax.mail 추가
+		2. 네이버 내 메일함 톱니바퀴 - 메일함 관리 - IMAP/SMTP - 사용함 체크
+		3. 전역변수 USER랑 PASSWORD : 운영자의 네이버 로그인 (이메일/비번)
+		(테스트할때만 맞춰놓고 지워두거나 바꿔두기 ==> 깃허브 조심!!)
+    */
    
    public MailService(){}
    

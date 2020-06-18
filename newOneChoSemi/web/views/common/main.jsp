@@ -166,7 +166,7 @@
         </div>
     
         <!--토스트-->
-        <div class="toast" style="position: absolute; top: 300px; right: 0;" data-delay='4000'>
+        <div class="toast" style="position: absolute; top: 300px; right: 100px;" data-delay='4000'>
             <div class="toast-header">
                 <strong class="mr-auto"><i class="fas fa-seedling"></i>일분일초</strong>
                 <small>11 mins ago</small>
@@ -175,9 +175,11 @@
                 </button>
             </div>
             <div class="toast-body">
-                	광고처럼 보이지만...토스트입니다.<br>
-                	지금 가입하면 배송비 무료!<br>
-                	곧 사라집니다..걱정마시오
+                Q : 식물은 그냥 잡초일 뿐인가요?<br>
+                <br>
+				A : 당신이 기르기로 마음 먹고<br>
+				또 그렇게 정성들여 기르고 있다면<br>
+				더 이상 잡초가 아닙니다.<br>
             </div>
         </div>
         <script>
