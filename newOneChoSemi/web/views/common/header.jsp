@@ -404,10 +404,8 @@
 			<%} else {%>
 				var chkKao = "<%=loginUser.getMemberStatus() %>";
 				if(chkKao == "K"){
-					alert("카카오 로그인");
 					location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				} else {
-					alert("일반 로그인");
 	        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 				}
 				

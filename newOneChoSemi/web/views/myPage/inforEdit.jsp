@@ -205,9 +205,7 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>이메일 : </label></td>
-									<td colspan="2"><input type='text' id='email1'
-										name='memberEmail1' class="inputBtn"
-										value="<%=loginUser.getMemberEmail1()%>"> @ <select
+									<td colspan="2"><input type='text' id='email1' name='memberEmail1' class="inputBtn" value="<%=loginUser.getMemberEmail1()%>"> @ <select
 										id='email2' name='memberEmail2'>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
