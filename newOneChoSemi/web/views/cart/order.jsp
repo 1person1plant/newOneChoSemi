@@ -926,12 +926,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 }
 			});
-            
-            
-/*             if($("#recipient_address").val().indexOf("제주특별자치도")==0){
-                delivery = Number("8000");
-                $("#orderpayment_delivery").text(delivery);
-            } */
+
         }
         
         // 최종 결제 금액 계산
