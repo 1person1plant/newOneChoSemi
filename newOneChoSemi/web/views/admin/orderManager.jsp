@@ -294,13 +294,13 @@
                                				<td><%=orders.get(i).getOrderDate() %></td>
                                				<td><%=orders.get(i).getItemNo() %></td>
                                				<td><%=orders.get(i).getItemName() %></td>
-                               				<td><select id="paymentStatus<%=orders.get(i).getOrderNo()%>" name="paymentStatus" style="height:30px;">
+                               				<td><select id="paymentStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>" name="paymentStatus" style="height:30px;">
                                					<option value="P1">입금 전</option>
                                					<option value="P2">입금 후</option>
                                					</select></td>
                                				<script>
                                				
-                               					var pOptions=$("#paymentStatus<%=orders.get(i).getOrderNo()%>").children();
+                               					var pOptions=$("#paymentStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>").children();
                                					for(var j=0;j<pOptions.length;j++){
                                						
                                						if(pOptions.eq(j).text()=='<%=orders.get(i).getPaymentStatus()%>'){
@@ -309,13 +309,13 @@
                                					}
                                				</script>
                                				<td><%=orders.get(i).getCancelRequest() %></td>
-                               				<td><select id="deliveryStatus<%=orders.get(i).getOrderNo()%>" name="deliveryStatus" style="height:30px;">
+                               				<td><select id="deliveryStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>" name="deliveryStatus" style="height:30px;">
                                					<option value="D1">배송 전</option>
                                					<option value="D2">배송 중</option>
                                					<option value="D3">배송 완료</option>
                                				</select></td>
                                				<script>
-                               					var dOptions=$("#deliveryStatus<%=orders.get(i).getOrderNo()%>").children();
+                               					var dOptions=$("#deliveryStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>").children();
                                					
 													for(var j=0;j<dOptions.length;j++){
                                						
@@ -469,7 +469,7 @@
     	   var selectedRows=table.rows('.selected').data();
     	   var length=table.rows('.selected').data().length;
     	   
-    	   //선택된 행들의 아이템 넘버를 배열에 담는다
+    	   //선택된 행들의 주문번호와 아이템 넘버를 배열에 담는다
     	   var ids=[];
     	   
     	   for(var i=0;i<length;i++){
@@ -500,8 +500,8 @@
     	   
  		   for(var i=0;i<length;i++){
     		 
- 			  payment.push(document.getElementById("paymentStatus"+ids[i]).value);
- 			  delivery.push(document.getElementById("deliveryStatus"+ids[i]).value);
+ 			  payment.push(document.getElementById("paymentStatus"+ids[i]+items[i]).value);
+ 			  delivery.push(document.getElementById("deliveryStatus"+ids[i]+items[i]).value);
 
     	   };
     	   
