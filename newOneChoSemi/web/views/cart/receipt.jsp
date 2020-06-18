@@ -291,14 +291,14 @@
 
             </div>
 
-            <div class="orderinfo-buyer">
+            <%-- <div class="orderinfo-buyer">
                 <h2>구매자 정보</h2>
                 <table>
                     <colgroup>
                         <col width="20%">
                         <col width="80%">
                     </colgroup>
-                    <%-- <tbody>
+                    <tbody>
                         <tr>
                             <td>이름</td>
                             <td class="buyer_name"><%=loginUser.getMemberName() %></td>
@@ -319,9 +319,9 @@
                             <td>상세주소</td>
                             <td class="buyer_detailAddress"><%=loginUser.getMemberAddress2() %> </td>
                         </tr>
-                    </tbody> --%>
+                    </tbody> 
                 </table>
-            </div>
+            </div>--%>
             
             <div class="orderinfo-recipient">
                 <h2>배송지 정보</h2>

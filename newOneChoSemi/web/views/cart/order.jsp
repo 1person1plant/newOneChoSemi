@@ -1103,28 +1103,15 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
             console.log(orderPayOption);
              
             // iamport api
-            var IMP = window.IMP; // 생략가능
+            var IMP = window.IMP;
             IMP.init('imp99515555');
-            // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-            // i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
             IMP.request_pay({
-               pg: 'inicis', // version 1.1.0부터 지원.
+               pg: 'inicis',
                pay_method: orderPayOption,
-               /*
-                  'samsung':삼성페이,
-                  'card':신용카드,
-                  'trans':실시간계좌이체,
-                  'vbank':가상계좌,
-                  'phone':휴대폰소액결제
-               */
                merchant_uid: 'merchant_' + new Date().getTime() + ', memberNo=' + orderMemberNo,
-               /*
-                  merchant_uid (https://docs.iamport.kr/implementation/payment) 참고
-               */
                name: itemName,
-               //결제창에서 보여질 이름
+               
                amount: orderTotalPrice,
-               //가격
                buyer_email: orderMemberEmail,
                buyer_name: orderName,
                buyer_tel: orderPhone,
@@ -1135,20 +1122,11 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
             }, function (rsp) {
                console.log(rsp);
                if (rsp.success) {
-                  /* 
-                     var msg = '결제가 완료되었습니다.';
-                     msg += '고유ID : ' + rsp.imp_uid;
-                     msg += '상점 거래ID : ' + rsp.merchant_uid;
-                     msg += '결제 금액 : ' + rsp.paid_amount;
-                     msg += '카드 승인번호 : ' + rsp.apply_num;
-                  */
-                   // 결제 완료 후 결과 화면으로...
                   $("#orderCompForm").submit();
                } else {
                   var msg = rsp.error_msg;
                   alert(msg);
                }
-               //alert(msg);
             });
 
             

@@ -54,7 +54,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-image: url("<%=request.getContextPath() %>/images/aboutus/birds.jpg");
+      background-image: url("../../images/aboutus/birds.jpg");
       background-blend-mode: soft-light;
       background-size: cover;
       background-position: center center;
@@ -62,7 +62,7 @@
     }
 
     .bird {
-      background-image: url(<%=request.getContextPath() %>/images/aboutus/bird-cells-new.svg);
+      background-image: url(../../images/aboutus/bcn.png);
       background-size: auto 100%;
       width: 88px;
       height: 125px;
@@ -228,28 +228,26 @@
 
 	<div class="container">
 		<div class="row memberLi">
-			<nav class="col-md-5 d-none d-xl-block d-lg-block" id="myScrollspy">
+			<nav class="col-md-3 d-none d-xl-block d-lg-block" id="myScrollspy">
 				<ul class="nav nav-pills flex-column sticky-top" style="top: 63px;">
-					<li class="nav-item"><a class="nav-link active" href="#section1">정 유 진 &lt; 팀 장 ></a></li>
+					<li class="nav-item"><a class="nav-link active" href="#section1">정 유 진 &lt; 팀 &nbsp; 장 ></a></li>
 					<li class="nav-item"><a class="nav-link" href="#section2">강 광 산 &lt; 부팀장 ></a></li>
-					<li class="nav-item"><a class="nav-link" href="#section3">이 아 라 &lt; 팀 원 ></a></li>
-					<li class="nav-item"><a class="nav-link" href="#section4">김 경 남 &lt; 팀 원 ></a></li>
-					<li class="nav-item"><a class="nav-link" href="#section5">이 수 한 &lt; 팀 원 ></a></li>
+					<li class="nav-item"><a class="nav-link" href="#section3">이 아 라 &lt; 팀 &nbsp; 원 ></a></li>
+					<li class="nav-item"><a class="nav-link" href="#section4">김 경 남 &lt; 팀 &nbsp; 원 ></a></li>
+					<li class="nav-item"><a class="nav-link" href="#section5">이 수 한 &lt; 팀 &nbsp; 원 ></a></li>
 				</ul>
 			</nav>
-			<div class="col-lg-7">
+			<div class="col-lg-9">
 				<div>
 					<div class="card mb-5">
 						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar4.png" alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">정 유 진 &lt; 팀장 ></h1>
 							<div id="section2"></div>
-							<p class="card-text">
-								<h3>당당 : 관리자 페이지</h3>
-							</p>
-							<p class="card-text">
-								<small class="text-muted">마지막 접속: 2020/06/22</small>
-							</p>
+							<div class="card-text">
+								<h3>담당 : 관리자 페이지</h3>
+							</div>
+							<p class="card-text"><small class="text-muted">마지막 접속: 2020/06/22</small></p>
 						</div>
 					</div>
 				</div>
@@ -260,12 +258,10 @@
 						<div class="card-body">
 							<h1 class="card-title">강 광 산 &lt; 부팀장 ></h1>
 							<div id="section3"></div>
-							<p class="card-text">
-								<h3>당당 : 장바구니, 결제, About Us</h3>
-							</p>
-							<p class="card-text">
-								<small class="text-muted">마지막 접속: 2020/06/22</small>
-							</p>
+							<div class="card-text">
+								<h3>담당 : 장바구니, 결제, About Us</h3>
+							</div>
+							<p class="card-text"><small class="text-muted">마지막 접속: 2020/06/22</small></p>
 						</div>
 					</div>
 				</div>
@@ -276,12 +272,10 @@
 						<div class="card-body">
 							<h1 class="card-title">이 아 라 &lt; 팀원 ></h1>
 							<div id="section4"></div>
-							<p class="card-text">
-							<h3>당당 : 로그인, 회원 가입</h3>
-							</p>
-							<p class="card-text">
-								<small class="text-muted">마지막 접속: 2020/06/22</small>
-							</p>
+							<div class="card-text">
+								<h3>담당 : 로그인, 회원 가입</h3>
+							</div>
+							<p class="card-text"><small class="text-muted">마지막 접속: 2020/06/22</small></p>
 						</div>
 					</div>
 				</div>
@@ -291,12 +285,10 @@
 						<div class="card-body">
 							<h1 class="card-title">김 경 남 &lt; 팀원 ></h1>
 							<div id="section5"></div>
-							<p class="card-text">
-							<h3>당당 : 상품 페이지, 상품 상세 페이지</h3>
-							</p>
-							<p class="card-text">
-								<small class="text-muted">마지막 접속: 2020/06/22</small>
-							</p>
+							<div class="card-text">
+								<h3>담당 : 상품 페이지, 상품 상세 페이지</h3>
+							</div>
+							<p class="card-text"><small class="text-muted">마지막 접속: 2020/06/22</small></p>
 						</div>
 					</div>
 				</div>
@@ -305,12 +297,8 @@
 						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar3.png" alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">이 수 한 &lt; 팀원 ></h1>
-							<p class="card-text">
-							<h3>당당 : 마이 페이지</h3>
-							</p>
-							<p class="card-text">
-								<small class="text-muted">마지막 접속: 2020/06/22</small>
-							</p>
+							<div class="card-text"><h3>담당 : 마이 페이지</h3></div>
+							<p class="card-text"><small class="text-muted">마지막 접속: 2020/06/22</small></p>
 						</div>
 					</div>
 				</div>
