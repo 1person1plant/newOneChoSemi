@@ -43,20 +43,21 @@ public class QnaListServlet extends HttpServlet {
 				
 		System.out.println(notices);
 		
-		if(!qnas.isEmpty()) {
 		
-			if(qnas!=null&&notices!=null) {
-				
-				request.setAttribute("qnas", qnas);
-				request.getRequestDispatcher("views/admin/qna.jsp").forward(request, response);
-				
-			}else {
-				
-				request.setAttribute("msg", "질문 조회 실패");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		
+		if(qnas!=null&&notices!=null) {
 			
-			}
+			request.setAttribute("notices", notices);
+			request.setAttribute("qnas", qnas);
+			request.getRequestDispatcher("views/admin/qna.jsp").forward(request, response);
+			
+		}else {
+			
+			request.setAttribute("msg", "질문 조회 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		
 		}
+		
 		
 		
 	}

@@ -2,6 +2,8 @@ package Board.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Map;
+
 import static common.JDBCTemplate.*;
 
 import Board.model.dao.QnaDao;
@@ -108,5 +110,10 @@ public class QnaService {
 		close(conn);
 		return result;
 	}
+
+	
+	
+
+	
 
 }
