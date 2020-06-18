@@ -4,6 +4,7 @@
     
  <%
  ArrayList<Qna> qnas=(ArrayList<Qna>)request.getAttribute("qnas");
+ ArrayList<Notice> notices=(ArrayList<Notice>)request.getAttribute("notices");
  %>
 <!DOCTYPE html>
 <html>
@@ -105,13 +106,16 @@
         
         <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons" style="margin:100px 0;">
   		<label class="btn btn-outline-info active">
-    	<input type="radio" id="showFrequentQ" onclick="showBoard(1);" autocomplete="off" checked> 자주 하는 질문 보기
+    	<input type="radio" id="showFrequentQ" onclick="showBoard(1);" autocomplete="off" checked> 자주 하는 질문 
   		</label>
   		<label class="btn btn-outline-info">
-    	<input type="radio" id="showAskBoard" onclick="showBoard(2);" autocomplete="off"> 질문 게시판 보기
+    	<input type="radio" id="showAskBoard" onclick="showBoard(2);" autocomplete="off"> 질문 게시판
   		</label>
   		<label class="btn btn-outline-info">
     	<input type="radio" id="showComposeQ" onclick="showBoard(3);" autocomplete="off"> 질문 작성하기
+  		</label>
+  		<label class="btn btn-outline-info">
+    	<input type="radio" id="showNotice" onclick="showBoard(4);" autocomplete="off"> 공지사항
   		</label>
 		</div>
         
@@ -209,6 +213,108 @@
         <!-- 아코디언 끝 -->
         
        </div>
+       
+       
+       <div class="container" id="noticeBoard" style="display:none;text-align: center;">
+                   
+                    <div class="container mx-auto"  style="text-align: center;">
+                        
+                        <table id="noticelist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>글번호</th>
+                                    <th>제목</th>
+                                    <th>게시자ID</th>
+                                    <th>작성일</th>
+                                    
+                                    
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                            
+                            <%if(!notices.isEmpty()){ %>
+                            	<%for(int i=0;i<notices.size();i++){
+                            		
+                            		
+                            		
+                            		%>
+                            	
+                            	
+                            	
+                                <tr>
+
+                                    <td><%=notices.get(i).getNoticeNo() %></td>
+                                    <td><%=notices.get(i).getNoticeTitle() %></td>
+                                    <td><%=notices.get(i).getMemberId() %></td>
+                                    <td><%=notices.get(i).getNoticeCDate() %></td>
+                                   
+                                    
+                                </tr>
+                                <%} %>
+                             <%} %> 
+                            </tbody>
+                            
+                            
+                        </table>
+
+                        
+                    </div>  
+       
+        </div>
+        
+        
+        
+        
+        	<!--Notice 상세 내용 Modal-->
+                    
+                    <!-- The Modal -->
+                    <div class="modal" id="noticeModal">
+                        <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                            <h4 class="modal-title">공지사항</h4>
+                            
+                            <button type="button" class="close" data-dismiss="modal" id="modalClose">&times;</button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                            <form>
+
+                                
+                                <ul style="padding: 0;">
+                                	
+                                	<input type="hidden" id="noticeNum">
+                                    
+                                    <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Ndate" style="width: 100%;"></li>
+                                    <li><label>제목</label><br><input class="form-control" type="text" readonly id="Ntitle" style="width: 100%;"></li>
+                                    <li><label>내용</label><br><div id="notice" readonly style="width: 100%;border:1px solid lightgrey;"></div></li>
+                                   
+                                    
+                                </ul>    
+                            </form>
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                            
+                            <%if(adminChk.equals("Y")){ %>
+                            <button type="button" class="btn btn-outline-success" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">수정하기</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteNotice();">삭제하기</button>
+                            <%} %>
+                            
+                            </div>
+                    
+                        </div>
+                        </div>
+                    </div>
+                   
+       
+       
+       
         
         
                
@@ -270,7 +376,7 @@
                 
             	 </div>
                
-                    <!--제품 상세 내용 Modal-->
+                    <!--QNA 상세 내용 Modal-->
                     
                     <!-- The Modal -->
                     <div class="modal" id="myModal">
@@ -292,11 +398,11 @@
                                 <ul style="padding: 0;">
                                 	<input type="hidden" id="writer" name="writer">
                                 	<input type="hidden" id="questionNum">
-                                    <li><label>분류</label><br><input type="text" readonly id="Qcategory" style="width: 100%;"></li>
-                                    <li><label>작성일</label><br><input type="date" readonly id="Qdate" style="width: 100%;"></li>
-                                    <li><label>제목</label><br><input type="text" readonly id="Qtitle" style="width: 100%;"></li>
-                                    <li><label>문의내용</label><br><div id="question" readonly style="width: 100%;border:1px solid lightgrey"></div></li>
-                                    <li><label>답변내용</label><br><textarea id="answer" style="width: 100%;"></textarea></li>
+                                    <li><label>분류</label><br><input class="form-control" type="text" readonly id="Qcategory" style="width: 100%;"></li>
+                                    <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Qdate" style="width: 100%;"></li>
+                                    <li><label>제목</label><br><input class="form-control" type="text" readonly id="Qtitle" style="width: 100%;"></li>
+                                    <li><label>문의내용</label><br><div id="question" readonly style="width: 100%;border:1px solid lightgrey;"></div></li>
+                                    <li><label>답변내용</label><br><div id="answer" readonly style="width: 100%;border:1px solid lightgrey;"></div></li>
                                     
                                 </ul>    
                             </form>
@@ -336,12 +442,12 @@
                                 <option value="취소문의">취소문의</option>
                             </select>
                             </li>
-                            <li><label>비밀번호</label></li>
+                            <li style="margin-top:20px;"><label>비밀번호</label></li>
                             <li>
                             <input type="password" id="qnaPwd" name="password" maxlength="4" pattern="[0-9]*" placeholder="4자리의 숫자를 입력하세요" style="width: 20%;">
                             <div id="pwdChk" style="font-size: 10px;display: none;">숫자인가요?</div>
                             </li>
-                            <li><label>제목</label><br><input name="title" type="text" style="width: 100%;"></li>
+                            <li style="margin-top:20px;"><label>제목</label><br><input name="title" type="text" style="width: 100%;"></li>
                          </ul>
                         
                           <textarea id="summernote" name="editordata"></textarea>
@@ -378,7 +484,7 @@
 
                     </script>
 
-    </div>
+   
         
     </div>
     </div>
@@ -436,6 +542,43 @@
      $(document).ready(function(){
     	 
     	 
+    	$('#noticelist thead tr').clone(true).appendTo('#noticelist thead');
+      	$('#noticelist thead tr:eq(1) th').each(function(i){
+      		
+ 			var title=$(this).text();
+      		
+      		if(title!=""){
+      		
+      		$(this).html('<input type="text" placeholder="search '+title+'"/>');
+      		
+      		$('input',this).on('keyup change',function(){
+      			
+      			if(table.column(i).search()!==this.value){
+      				table
+      					.column(i)
+      					.search(this.value)
+      					.draw();
+      			}
+      			
+      		});
+      		
+      		}
+      		
+      	}); 
+    	 
+    	 
+    	$('#noticelist').DataTable({
+    	       
+     	   
+    	  	orderCellsTop:true,
+ 	   		fixedHeader:true,
+ 	   		
+ 	   		
+         	
+          });
+    	 
+    	 
+    	 
     	$('#qnalist thead tr').clone(true).appendTo('#qnalist thead');
       	$('#qnalist thead tr:eq(1) th').each(function(i){
       		
@@ -472,7 +615,7 @@
          
          
          
-         
+        //질문게시판에 모달 토글 달기 
          var rows=$("#qnalist").children().children()
           
          
@@ -485,8 +628,52 @@
                  
                 }
             }
+         
+         
+         //공지사항에 모달 토글 달기
+		var nrows=$("#noticelist").children().children()
+          
+         
+         for(var i=0;i<nrows.length;i++){
+             
+             if(i>0&&i<=(nrows.length-1)){
+                 
+                 console.log(i);
+                 nrows.eq(i).attr({"data-toggle":"modal","data-target":"#noticeModal"});
+                 
+                }
+            }
+         
+         
+         	nrows.click(function(){
+         		
+         		var noticeNum=$(this).children().eq(0).text();
+         		
+         		<%for(int i=0;i<notices.size();i++){%>
+         		
+         		if(noticeNum=='<%=notices.get(i).getNoticeNo()%>'){
+         			
+         			
+         			$("#Ndate").val('<%=notices.get(i).getNoticeCDate()%>');
+         			$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
+         			$("#notice").html('<%=notices.get(i).getNoticeContent()%>');
+         			
+         		}
+         		
+         		
+         		<%}%>
+         		
+         		
+         	});
+         	
+         	
+         	
+         
+         
             
             
+         
+         //질문게시판 행 클릭시, 모달 내용 채우기
             rows.click(function(){
             	
             	var qNum=$(this).children().eq(0).text();
@@ -530,10 +717,10 @@
                     $("#question").html('<%=qnas.get(i).getQnaContent()%>');
                     
                     <%if(qnas.get(i).getQnaAnswer()!=null){%>
-                    $("#answer").val('<%=qnas.get(i).getQnaAnswer()%>');
+                    $("#answer").html('<%=qnas.get(i).getQnaAnswer()%>');
                     
                     <%}else{%>
-                    $("#answer").val('');
+                    $("#answer").text('');
                     <%}%>
                    
                     
@@ -615,19 +802,31 @@
 					$("#frequentQ").css("display","block");
 					$("#askBoard").css("display","none");
 					$("#composeQ").css("display","none");
+					$("#noticeBoard").css("display","none");
 				}else if(num==2){
 					
 					console.log("질문 게시판");
 					$("#askBoard").css("display","block");
 					$("#frequentQ").css("display","none");
 					$("#composeQ").css("display","none");
+					$("#noticeBoard").css("display","none");
 					
-				}else{
+				}else if(num==3){
 					
 					console.log("문의하기");
 					$("#composeQ").css("display","block");
 					$("#frequentQ").css("display","none");
 					$("#askBoard").css("display","none");
+					$("#noticeBoard").css("display","none");
+					
+					
+				}else{
+					
+					console.log("공지사항");
+					$("#composeQ").css("display","none");
+					$("#frequentQ").css("display","none");
+					$("#askBoard").css("display","none");
+					$("#noticeBoard").css("display","block");
 					
 					
 				};
