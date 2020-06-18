@@ -143,7 +143,7 @@
         display: none;
     }
     .trash{
-        background: url("<%=request.getContextPath() %>/images/cart/trash-alt-regular.svg") no-repeat center;
+        background: url("<%=request.getContextPath() %>/images/cart/cancelx32.png") no-repeat center;
         border: none;
         width: 20px;
         height: 20px;
