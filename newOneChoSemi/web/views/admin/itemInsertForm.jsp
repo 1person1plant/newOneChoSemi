@@ -583,7 +583,7 @@
               </script>
                   
                  <input type="hidden" id="mSource" name="mSource">
-                 <div id="mdropbox"  name="mdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;">
+                 <div id="mdropbox"  name="mdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;display:none;">
                   <span id="mdroplabel">
                 	  이곳에 파일을 드랍해 주세요...
                   </span>
@@ -702,7 +702,7 @@
                 };
               </script>
 				 <input type="hidden" id="sSource" name="sSource">
-                 <div id="sdropbox"  name="sdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;">
+                 <div id="sdropbox"  name="sdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;display:none;">
                   <span id="sdroplabel">
                   	이곳에 파일을 드랍해 주세요...
                   </span>
@@ -830,7 +830,7 @@
     	function iivalidate(){
     		var category=$("#category").val();
     		var keyword=$("#keyword").val();
-    		var display=$("display").val();
+    		var display=$("#display").val();
     		
     		if(category=="none"){
     			alert("카테고리를 선택해주세요.");
