@@ -301,7 +301,8 @@
 	<script>
 		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>BuyBtn').click(function(){
-				
+				var itemNo = "<%=mwl.get(i).getItemNo()%>"
+				location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
 			})
 		})
 	</script>

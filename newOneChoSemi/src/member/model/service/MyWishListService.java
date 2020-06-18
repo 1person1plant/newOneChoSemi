@@ -34,9 +34,9 @@ public class MyWishListService {
 		return mwl;
 	}
 
-	public int deleteWish(MyWishList myWishList) {
+	public int deleteWish(String wishNo) {
 		Connection conn = getConnection();
-		int result = new MyWishListDao().deleteWish(conn,myWishList);
+		int result = new MyWishListDao().deleteWish(conn,wishNo);
 		System.out.println("dao>service : " + result);
 		if(result>0) {
 			commit(conn);

@@ -70,15 +70,14 @@ public class MyWishListDao {
 		return mwl;
 	}
 
-	public int deleteWish(Connection conn, MyWishList myWishList) {
+	public int deleteWish(Connection conn, String wishNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "DELETE FROM WISHLIST WHERE WISHLIST_NO = ? AND MEMBER_NO = ?";
+		String query = "DELETE FROM WISHLIST WHERE WISHLIST_NO = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, myWishList.getWishlistNo());
-			pstmt.setString(2, myWishList.getMemberNo());
+			pstmt.setString(1, wishNo);
 			result = pstmt.executeUpdate();
 			System.out.println("dao result : " +result);
 		} catch (SQLException e) {

@@ -167,7 +167,7 @@ label {
 			<div class='col-md-9'>
 				<fieldset>
 					<form id="updateForm"
-						action="<%=request.getContextPath()%>/update.inf" method="post">
+						action="<%=request.getContextPath()%>/update.inf" method="get">
 						<table class="table information1">
 							<thead>
 								<tr>
@@ -225,6 +225,7 @@ label {
 										id='email2' name='memberEmail2'>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
+											<option value="@nate.com">nate.com</option>
 											<option value="@hanmail.net">hanmail.net</option>
 
 									</select></td>

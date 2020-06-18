@@ -226,7 +226,9 @@ td.ordertd {
 			<script>
 				$(function(){
 					$("#<%=(ohcancel.get(i)).getOrderNo()%>odBtn").click(function(){
-						
+						var itemNo = "<%=(ohcancel.get(i)).getItemNo()%>"
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
+							
 					})
 				})
 			</script>
