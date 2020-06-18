@@ -80,7 +80,7 @@ public class MyWishListDao {
 			pstmt.setString(1, myWishList.getWishlistNo());
 			pstmt.setString(2, myWishList.getMemberNo());
 			result = pstmt.executeUpdate();
-			/* System.out.println("dao result : " +result); */
+			System.out.println("dao result : " +result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -89,7 +89,27 @@ public class MyWishListDao {
 		return result;
 	}
 
-	
-	
+	public int wishCheck(Connection conn, String itemNo, String memberNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "SELECT COUNT(*) FROM WISHLIST WHERE ITEM_NO = ? AND MEMBER_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }

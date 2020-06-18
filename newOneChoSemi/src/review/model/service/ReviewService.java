@@ -57,26 +57,4 @@ public class ReviewService {
 		
 	}
 
-	public int reviewReady(String orderNo, String itemNo) {
-		
-		Connection conn = getConnection();
-		
-		int reviewReady = new ReviewDao().reviewReady(conn, orderNo, itemNo);
-		
-		close(conn);
-		
-		return reviewReady;
-	}
-
-	public int reviewCreate(Review rv) {
-		
-		Connection conn = getConnection();
-		
-		int reviewCreate = new ReviewDao().reviewCreate(conn, rv);
-		
-		close(conn);
-		
-		return reviewCreate;
-	}
-
 }

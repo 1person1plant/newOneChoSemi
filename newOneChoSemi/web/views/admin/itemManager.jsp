@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, item.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,item.model.vo.*"%>
     
  <%
  ArrayList<Item> items=(ArrayList<Item>)request.getAttribute("items");
@@ -769,7 +769,7 @@
                     $("#itemInfo").prop("readonly",true);
                 }
             });
-         
+
 
             $("#modifyCategory").change(function(){
 
