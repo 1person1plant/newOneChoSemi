@@ -409,40 +409,7 @@ public class ItemDao {
 		return result;
 	}
 
-	public int updateItemImage(Connection conn, Item item) {
-		PreparedStatement pstmt=null;
-		int result=0;
-		
-		try {
-		for(int i=0;i<2;i++) {
-			
-			if(i==0) {
-				
-							
-				String query="update itemimage set image_no=(select concat('IMG',LPAD((substr(max(image_no),4)-1),5,0)) from image) where item_no=? and itemimage_category=1";
-				pstmt=conn.prepareStatement(query);
-				pstmt.setString(1, item.getItemNo());
-				result+=pstmt.executeUpdate();	
-			
-			}else {
-				
-				
-				String query="update itemimage set image_no=(select max(image_no)from image) where item_no=? and itemimage_category=2";
-				pstmt=conn.prepareStatement(query);
-				pstmt.setString(2, item.getItemNo());
-				result+=pstmt.executeUpdate();
-			
-			}
-			
-		}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+	
 
 	public int deleteItem(Connection conn, String itemNum) {
 		
@@ -935,6 +902,139 @@ public class ItemDao {
 		}
 	
 		return list;
+	}
+
+	public int updateMainImage(Item item, Connection conn) {
+		
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="update itemimage set image_no=(select concat('IMG',LPAD((substr(max(image_no),4)-1),5,0)) from image) where item_no=? and itemimage_category=1";
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, item.getItemNo());
+			result=pstmt.executeUpdate();	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int updateSubImage(Item item, Connection conn) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="update itemimage set image_no=(select max(image_no)from image) where item_no=? and itemimage_category=2";
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, item.getItemNo());
+			result+=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertOneMain(Connection conn, ItemImage im) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="insert into image values('IMG'||LPAD(IMAGE_SEQ.NEXTVAL,5,'0'),?,?)";
+		
+		try {
+		
+			
+			
+					pstmt=conn.prepareStatement(query);
+					pstmt.setString(1,im.getmPath());
+					pstmt.setString(2, im.getmImgName());
+					result=pstmt.executeUpdate();
+					
+			
+			
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int updateOneMain(Item item, Connection conn) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="update itemimage set image_no=(select max(image_no)from image) where item_no=? and itemimage_category=1";
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, item.getItemNo());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertOneSub(Connection conn, ItemImage im) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="insert into image values('IMG'||LPAD(IMAGE_SEQ.NEXTVAL,5,'0'),?,?)";
+		
+		try {
+		
+					pstmt=conn.prepareStatement(query);
+					pstmt.setString(1, im.getsPath());
+					pstmt.setString(2, im.getsImgName());
+					result=pstmt.executeUpdate();
+					
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int updateOneSub(Item item, Connection conn) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="update itemimage set image_no=(select max(image_no)from image) where item_no=? and itemimage_category=2";
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, item.getItemNo());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

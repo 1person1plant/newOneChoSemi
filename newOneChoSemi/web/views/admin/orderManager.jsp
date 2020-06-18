@@ -8,8 +8,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
 <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -164,19 +162,19 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
+              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">
                 <span data-feather="file"></span>
                 	Q&A
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>
@@ -357,11 +355,11 @@
                        		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
                        		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.or'">새로고침</button></p>
+                       		<button type="button" class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.or'">새로고침</button></p>
                        		
                       
                        		</div>
-                       		<div>
+                       		</div>
                        <%} %>
                         
                        <form id="hiddenForm" method="post" action="<%=request.getContextPath()%>/orderUpdate.or" onsubmit="return orderValidate();">
@@ -379,12 +377,12 @@
     </div>  
        
 </div>
-</div>
 
 
 
 
-</div>
+
+
 
 
 <div class="container-fluid" >
