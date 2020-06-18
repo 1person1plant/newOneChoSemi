@@ -1,8 +1,8 @@
-package Board.controller;
+package Board.controller.admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Board.model.service.QnaService;
-import Board.model.vo.Notice;
-import Board.model.vo.Qna;
 
 /**
- * Servlet implementation class QnaListServlet
+ * Servlet implementation class NoticeAdminDeleteServlet
  */
-@WebServlet("/list.qna")
-public class QnaListServlet extends HttpServlet {
+@WebServlet("/adminDelete.no")
+public class NoticeAdminDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaListServlet() {
+    public NoticeAdminDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,29 +31,21 @@ public class QnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//질문을 조회하러 가자~
+		String noticeNum=request.getParameter("noticeNum");
+		System.out.println(noticeNum);
 		
 		QnaService qs=new QnaService();
-		ArrayList<Qna> qnas=qs.selectAllQna();
+		int result=qs.deleteNotice(noticeNum);
 		
-		//공지사항 조회하자
-		ArrayList<Notice> notices=qs.selectAllNotice();
-				
-		System.out.println(notices);
-		
-		if(!qnas.isEmpty()) {
-		
-			if(qnas!=null&&notices!=null) {
-				
-				request.setAttribute("qnas", qnas);
-				request.getRequestDispatcher("views/admin/qna.jsp").forward(request, response);
-				
-			}else {
-				
-				request.setAttribute("msg", "질문 조회 실패");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		if(result>0) {
+			System.out.println("공지사항 관리페이지로 이동");
+			response.sendRedirect("adminList.no");
+		}else {
 			
-			}
+			RequestDispatcher views= request.getRequestDispatcher("views/common/errorPage.jsp");
+			request.setAttribute("msg", "공지사항 삭제 실패");
+			views.forward(request, response);
+			
 		}
 		
 		

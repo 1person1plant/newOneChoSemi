@@ -179,7 +179,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
               <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">
                 <span data-feather="shopping-cart"></span>
                 	공지사항

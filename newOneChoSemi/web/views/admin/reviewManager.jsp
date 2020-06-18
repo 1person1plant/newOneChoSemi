@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList,Board.model.vo.* "%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,review.model.vo.admin.* "%>
     
  <%
- ArrayList<Notice> notices=(ArrayList<Notice>)request.getAttribute("notices");
+ ArrayList<AdReview> reviews=(ArrayList<AdReview>)request.getAttribute("reviews");
  %>
 <!DOCTYPE html>
 <html>
@@ -32,8 +32,7 @@
         <!--jQuery-->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-        <!-- include summernote css/js -->
-        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+       
        
   
 
@@ -167,7 +166,7 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">
+              <a class="nav-link active" href="#">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
@@ -197,35 +196,87 @@
     <!--form 시작-->
     
     <div class="col-10">
-        <h1 style="margin-top: 30px;margin-bottom: 80px;">공지사항 관리</h1>
+        <h1 style="margin-top: 30px;margin-bottom: 80px;">리뷰관리</h1>
         
-       
+        <div class="row">    
+            
+            <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/adminSearch.re">
                 
+                <table class="mx-auto" style="border: double black; width: 100%;" id="searchTable">
+                        <tr>
+                        <th colspan="5" style="text-align: center;height: 7rem;">검색</th>
+                        
+                        </tr>
+                        <tr style="height: 3rem;">
+                        <th style="text-align: center; width: 10rem;">기간</th>
+                        <td>
+                            <select style="position: relative;margin-left: 6px; width: 7rem;right: 9px;height: 2rem;" id="searchDate" name="searchDate">
+                            	<option value="">전체</option>
+                                <option value="REVIEW_CDATE">작성일</option>
+                                <option value="REVIEW_UDATE">수정일</option>
+                                
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" id="today" class="btn btn-outline-dark btn-sm">오늘</button>
+                            <button type="button" id="aweek" class="btn btn-outline-dark btn-sm">1주일</button>
+                            <button type="button" id="amonth" class="btn btn-outline-dark btn-sm">1개월</button>
+                        </td>
+                        <td colspan="2" style="position: relative;top:2px;"><input type="date" id="date1" name="date1"><label>~</label><input type="date" id="date2" name="date2"></td>
+                        
+                        </tr>
+                        <tr style="height: 3rem;">
+                        <th style="text-align: center; width: 10rem;">별점</th>
+                        <td colspan="4" style="text-align: left;">
+                            <input type="radio" name="rate" value="1" id="r1"><label for="r1">★</label>
+                            <input type="radio" name="rate" value="2" id="r2"><label for="r2">★★</label>
+                            <input type="radio" name="rate" value="3" id="r3"><label for="r3">★★★</label>
+                            <input type="radio" name="rate" value="4" id="r4"><label for="r4">★★★★</label>
+                            <input type="radio" name="rate" value="5" id="r5"><label for="r5">★★★★★</label> 
+                        </td>
+                            
+                            
+                        </tr>
+                        <tr>
+                            
+                            <td colspan="5" style="text-align: right; height: 5rem;">
+                                <button type="submit" style="background-color: #1f598c;color: white;width: 7rem;" class="btn btn-dark" style="width: 7rem;margin-right: 2rem;">조회</button>
+                                <button type="reset" class="btn btn-outline-dark" style="width: 7rem;margin-right: 2rem;">초기화</button>
+                                
+                            </td>
+                                
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+
 
         <div class="row">
        
-                 <div class="container" id="noticeBoard" style="text-align: center;">
+                <div class="container" id="askBoard" style="text-align: center;">
                    
                     <div class="container mx-auto"  style="text-align: center;">
                         
-                        <%if(!notices.isEmpty()){ %>
-                        <table id="noticelist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
+                       <%if(!reviews.isEmpty()){ %> 
+                        
+                        <table id="reviewlist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
                             <thead>
                                 <tr>
-                                    <th>글번호</th>
-                                    <th>제목</th>
+                                    <th>글번호</th>                                  
+                                    <th>상품명</th>
                                     <th>게시자ID</th>
+                                    <th>별점</th>
                                     <th>작성일</th>
-                                    
+                                    <th>수정일</th>
                                     
                                 </tr>
                                 
                             </thead>
                             <tbody>
                             
-                            <%if(!notices.isEmpty()){ %>
-                            	<%for(int i=0;i<notices.size();i++){
-                            		
+                            <%if(!reviews.isEmpty()){ %>
+                            	<%for(int i=0;i<reviews.size();i++){
                             		
                             		
                             		%>
@@ -234,11 +285,12 @@
                             	
                                 <tr>
 
-                                    <td><%=notices.get(i).getNoticeNo() %></td>
-                                    <td><%=notices.get(i).getNoticeTitle() %></td>
-                                    <td><%=notices.get(i).getMemberId() %></td>
-                                    <td><%=notices.get(i).getNoticeCDate() %></td>
-                                   
+                                    <td><%=reviews.get(i).getReviewNo()%></td>
+                                    <td><%=reviews.get(i).getItemName() %></td>
+                                    <td><%=reviews.get(i).getMemberId() %></td>
+                                    <td><%=reviews.get(i).getReviewRate() %></td>
+                                    <td><%=reviews.get(i).getReviewCDate()%></td>
+                                    <td><%=reviews.get(i).getReviewUDate()%></td>
                                     
                                 </tr>
                                 <%} %>
@@ -248,89 +300,64 @@
                             
                         </table>
 						<%}else{ %>
-							<div class="container">
-                       		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
+						
+							<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
          
-                       		<p style="padding-top:8rem;">공지사항이 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">새로고침</button></p>
+                       		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
+                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">새로고침</button></p>
                        		
                       
-                       		</div>
                        		</div>
 						
 						<%} %>
                         
                     </div>  
-                    
-                    
-       
-        </div>
-        
-        <div class="container">
-        
-        	<div class="container mx-auto" id="composeN" style="margin-top: 50px;">
-                     <form method="post" action="<%=request.getContextPath()%>/insert.no">
-
-                        <ul style="list-style-type: none;padding: 0;width: 100%;">
-                        	<li><input type="hidden" name="noticeWriter" id="noticeWriter" value="<%=loginUser.getMemberNo()%>"></li>
-                            <li style="margin-top:20px;"><label>제목</label><br><input name="newNoticeTitle" type="text" style="width: 100%;"></li>
-                         </ul>
                         
-                          <textarea id="Nsummernote" name="Neditordata"></textarea>
-                         	
-
-                         <button type="submit" class="btn btn-outline-info btn-lg btn-block" style="margin-top: 50px;" id="ask">작성하기</button>
-                       </form>
-                     </div>
-        
-        </div>
+                        
+                
+            	 </div>
                
-                   <!--Notice 상세 내용 Modal-->
+                    <!--제품 상세 내용 Modal-->
                     
                     <!-- The Modal -->
-                    <div class="modal" id="noticeModal">
+                    <div class="modal" id="myModal">
                         <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                     
-                   <!-- Modal Header -->
+                            <!-- Modal Header -->
                             <div class="modal-header">
-                            <h4 class="modal-title">공지사항</h4>
+                            <h4 class="modal-title">REVIEW</h4>
                             
                             <button type="button" class="close" data-dismiss="modal" id="modalClose">&times;</button>
                             </div>
                     
                             <!-- Modal body -->
                             <div class="modal-body">
-                            <form method="post" action="<%=request.getContextPath()%>/adminUpdate.no">
-
+                            
                                 
                                 <ul style="padding: 0;">
-                                	
-                                	<input type="hidden" name="writer" id="writer">
-                                	<li><label>글번호</label><br><input class="form-control" readonly type="text" id="noticeNum" name="noticeNum" style="width: 100%;"></li>
-                                    <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Ndate" style="width: 100%;"></li>
-                                    <li><label>제목</label><br><input class="form-control" type="text"  id="Ntitle" name="Ntitle" style="width: 100%;"></li>
-                                    <li><label>내용</label><br>
-                                    <div id="notice" readonly style="width: 100%;border:1px solid lightgrey;"></div>
-                                    <textarea id="summernote" name="editordata"></textarea>
-                                    </li>
+                                	<li><label>리뷰번호</label><br><input class="form-control" type="text" readonly id="Rnum" name="RNum" style="width:100%;"></li>
+                                	<li><label>작성자</label><br><input class="form-control" type="text" readonly id="Rwriter" name="RWriter" style="width:100%;"></li>
+                                    <li><label>작성일</label><br><input class="form-control" type="date" readonly id="RDdate" style="width: 100%;"></li>
+                                    <li><label>수정일</label><br><input class="form-control" type="date" readonly id="RUdate" style="width: 100%;"></li>
+                                    <li><label>내용</label><br><input class="form-control" type="text" readonly id="review" name="review" style="width: 100%;"></li>
+                                    <li><label>이미지</label><br><img id="RImg" name="RImg" width=100% height=500px></li>
                                    
                                     
                                 </ul>    
-                           
                             </div>
                     
                             <!-- Modal footer -->
                             <div class="modal-footer">
                             
                             <%if(adminChk.equals("Y")){ %>
-                            <button type="button" class="btn btn-outline-success" onclick="resetNotice();">리셋하기</button>
-                            <button type="submit" class="btn btn-outline-success">수정하기</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteNotice();">삭제하기</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="deleteReview();">리뷰삭제</button>
+                            
                             <%} %>
                             
                             </div>
-                     </form>
+                    
+                           
                         </div>
                         </div>
                     </div>
@@ -341,11 +368,6 @@
  
        
 </div>
-
- 					
-
-
-
 </div>
 
 
@@ -374,28 +396,7 @@
     crossorigin="anonymous"></script>
 
 
-<!--summerNote-->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             
-            maxHeight: null,             
-            focus: true   
 
-        });
-        
-        
-        $('#Nsummernote').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             
-            maxHeight: null,             
-            focus: true   
-
-        });
-    });
-</script>
 
  
  <!-- dataTable -->
@@ -408,95 +409,81 @@
  <script>
      $(document).ready(function(){
     	 
-    	<%if(loginUser != null){%>
-    		var loginAdmin='<%=loginUser.getMemberNo()%>'
-    		
-    		$("#writer").val(loginAdmin);
-    		
-    	 <%}%>
     	 
-    	$('#noticelist thead tr').clone(true).appendTo('#noticelist thead');
-       	$('#noticelist thead tr:eq(1) th').each(function(i){
-       		
-  			var title=$(this).text();
-       		
-       		if(title!=""){
-       		
-       		$(this).html('<input type="text" placeholder="search '+title+'"/>');
-       		
-       		$('input',this).on('keyup change',function(){
-       			
-       			if(table.column(i).search()!==this.value){
-       				table
-       					.column(i)
-       					.search(this.value)
-       					.draw();
-       			}
-       			
-       		});
-       		
-       		}
-       		
-       	}); 
-     	 
-     	 
-     	$('#noticelist').DataTable({
-     	       
-      	   
-     	  	orderCellsTop:true,
-  	   		fixedHeader:true,
-  	   		
-  	   		
-          	
-           });
-     	
-     	
-     	
-     	 //공지사항에 모달 토글 달기
-		var nrows=$("#noticelist").children().children()
+    	$('#reviewlist thead tr').clone(true).appendTo('#reviewlist thead');
+      	$('#reviewlist thead tr:eq(1) th').each(function(i){
+      		
+ 			var title=$(this).text();
+      		
+      		if(title!=""){
+      		
+      		$(this).html('<input type="text" placeholder="search '+title+'"/>');
+      		
+      		$('input',this).on('keyup change',function(){
+      			
+      			if(table.column(i).search()!==this.value){
+      					table
+      					.column(i)
+      					.search(this.value)
+      					.draw();
+      			}
+      			
+      		});
+      		
+      		}
+      		
+      	}); 
+    	 
+    	 
+    	 
+    	 
+         $('#reviewlist').DataTable({
+        	 orderCellsTop:true,
+ 	   		fixedHeader:true,
+ 	   		scrollX:true
+         });
+         
+         
+         
+         
+         
+         var rows=$("#reviewlist").children().children()
           
          
-         for(var i=0;i<nrows.length;i++){
+         for(var i=0;i<rows.length;i++){
              
-             if(i>0&&i<=(nrows.length-1)){
+             if(i>0&&i<=(rows.length-1)){
                  
                  console.log(i);
-                 nrows.eq(i).attr({"data-toggle":"modal","data-target":"#noticeModal"});
+                 rows.eq(i).attr({"data-toggle":"modal","data-target":"#myModal"});
                  
                 }
             }
-         
-         
-         	nrows.click(function(){
-         		
-         		var noticeNum=$(this).children().eq(0).text();
-         		
-         		<%for(int i=0;i<notices.size();i++){%>
-         		
-         		if(noticeNum=='<%=notices.get(i).getNoticeNo()%>'){
-         			
-         			$("#noticeNum").val('<%=notices.get(i).getNoticeNo()%>');
-         			$("#Ndate").val('<%=notices.get(i).getNoticeCDate()%>');
-         			$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
-         			
-         			var usedContent='<%=notices.get(i).getNoticeContent()%>';
-         			$("#summernote").summernote('code',usedContent);
-         			
-         			
-         			
-         		}
-         		
-         		
-         		<%}%>
-         		
-         		
-         	});
-     	
-     	
-     	
-     	
-     	
-    	
+            
+            
+            rows.click(function(){
+            	   
+
+            		var RNum=$(this).children().eq(0).text();
+                    
+                    
+					<%for(int i=0;i<reviews.size();i++){%>
+                    
+                    if(RNum=='<%=reviews.get(i).getReviewNo()%>'){
+                    	
+                    $("#Rnum").val('<%=reviews.get(i).getReviewNo()%>');
+                    $("#Rwriter").val('<%=reviews.get(i).getMemberId()%>');
+                    $("#review").val('<%=reviews.get(i).getReviewContent()%>');
+                    $("#RCdate").val('<%=reviews.get(i).getReviewCDate()%>');
+                    $("#RUdate").val('<%=reviews.get(i).getReviewUDate()%>');
+                    $("#RImg").attr('src','<%=request.getContextPath()%>/review_uploadFiles/<%=reviews.get(i).getReviewImgName()%>');
+                    
+                  
+                    }
+                    
+                   
+                    <%}%>
+
                     
                 
   
@@ -506,56 +493,82 @@
 
             
             
-    
+        });
         
         
         </script>
        
         <!--모달에서 수정/삭제 시 서버로 값 넘기기-->
         <script>
+            
         
-        	function resetNotice(){
-        		
-        		var reNoNum=$("#noticeNum").val();
-        		
-        		<%for(int i=0;i<notices.size();i++){%>
-        		
-        		if(reNoNum=='<%=notices.get(i).getNoticeNo()%>'){
-        			
-					$("#Ntitle").val('<%=notices.get(i).getNoticeTitle()%>');
-         			
-         			var usedContent='<%=notices.get(i).getNoticeContent()%>';
-         			$("#summernote").summernote('code',usedContent);
-        			
-        			
-        		}
-        		
-        		<%}%>
-        		
-        		
-        	}
-        
-        
+        </script>
+
+
+        <!--date 관련-->
+        <script>
+
+            $(function(){
+            	
+            	var date= new Date();
+                var month=date.getMonth()+1;
+                var day=date.getDate();
+                var today=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
+
+                $("#today").click(function(){
+
+                    
+                    
+                    $("#date1").val(today);
+                    $("#date2").val(today);
+
+                   
+                })
+
+
+                $("#aweek").click(function(){
+
+                    var date=new Date();
+                    date.setDate(date.getDate()-7);
+                    var month=date.getMonth()+1;
+                    var day=date.getDate();
+                    var aweek=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
+                    
+
+                    
+                    $("#date1").val(aweek);
+                    $("#date2").val(today);
+
+                })
+
+                $("#amonth").click(function(){
+
+                    var date=new Date();
+                    date.setMonth(date.getMonth()-1);
+                    var month=date.getMonth()+1;
+                    var day=date.getDate();
+                    var amonth=date.getFullYear()+"-"+(month<10? '0':'')+month+"-"+(day<10? '0':'')+day;
+
+                    $("#date1").val(amonth);
+                    $("#date2").val(today);
+
+                    
+                })
+
+
+                
+            })
+       
         </script>
         <script>
-        
-        	function deleteNotice(){
+        	
+        	function deleteReview(){
         		
-        		var delAgree=confirm("정말 삭제하시겠어요?");
+        		alert("고객이 작성한 소중한 리뷰를 지우기 전에 신중하게 생각해보자.");
         		
-        		var delNoNum=$("#noticeNum").val();
-        		
-        		if(delAgree){
-        			
-        			location.href="<%=request.getContextPath()%>/adminDelete.no?noticeNum="+delNoNum;
-        			
-        		}
         	}
         
         </script>
-       
-
-
         
         <%@ include file="../common/footer.jsp" %>
 
