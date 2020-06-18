@@ -48,6 +48,7 @@ public class KakaoLoginServlet extends HttpServlet {
 			
 			// 자동 로그인
 			Member loginUser = new MemberService().kakaoLoginMember(member);
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			response.sendRedirect("index.jsp"); 
@@ -56,9 +57,7 @@ public class KakaoLoginServlet extends HttpServlet {
 			Member loginUser = new MemberService().kakaoLoginMember(member);
 			
 			HttpSession session = request.getSession();
-			
 			session.setAttribute("loginUser", loginUser);
-				
 			response.sendRedirect("index.jsp"); 
 		}		
 	}

@@ -40,6 +40,19 @@
 	    	padding-top: 6px;
 	   	 	text-align: right;
 	  	}
+	  	
+	  	.loading{
+			width:1550px;
+    		height:100px;
+    		position:fixed; /* 스크롤 내려도 그 위치에 */
+    		left:0%;
+    		top:30%;
+   			background:#F2F1DF;
+   			text-align: center;
+   			z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
+    		display: none;
+    		border: 1px solid gray;
+		}
 		</style>
 		<!-- 아라 스타일 적용 -->
     
@@ -147,7 +160,7 @@
                       							<div class="test col-md-2 ara-label-text">아이디</div>
                       							<div class="test col-md-4">
                         							<div class="row">
-                          								<input type="text" class="form-control" placeholder="아이디를 입력하세요" aria-describedby="basic-addon1">
+                          								<input id="memberId_A" name="memberId_A" type="text" class="form-control" required placeholder="아이디를 입력하세요" aria-describedby="basic-addon1">
                         							</div>
                       							</div>
                       							<div class="test col-md-6"></div>
@@ -155,20 +168,20 @@
                   						</th>
                 					</tr>
                 					<br>
-                					<tr class="user-email">
-                 	 					<th>
-                    						<div class="row">
+									<tr class="user-email">
+                  						<th>
+                   	 						<div class="row">
                       							<div class="test col-md-2 ara-label-text">이메일</div>
                       							<div class="test col-md-8">
                         							<div class="row">
-                          								<input id="email1" name="email" type="email" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                          								<input id="memberEmail1_P" name="memberEmail1_P" type="text" required maxlength="16" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
                           								<p class="ara-label-text">&nbsp;@&nbsp;</p>
-                          								<select id="email2" name="email" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
-                           	 								<option value="email">naver.com</option>
-                            								<option value="email">daum.net</option>
-                            								<option value="email">gmail.com</option>
-                            								<option value="email">nate.com</option>
-                            								<option value="email">hanmail.net</option>
+                         	 							<select id="memberEmail2_P" name="memberEmail2_P" class="form-control" aria-describedby="basic-addon1" style="width: 150px;">
+                            								<option value="@naver.com">naver.com</option>
+                      	      								<option value="@daum.net">daum.net</option>
+                     								       	<option value="@gmail.com">gmail.com</option>
+                           								 	<option value="@nate.com">nate.com</option>
+                            								<option value="@hanmail.net">hanmail.net</option>
                           								</select>
                         							</div>
                       							</div>
@@ -181,7 +194,7 @@
             				<div class="row">
               					<div class="test col-md-8"></div>
               					<div class="test col-md-4">
-                					<button type="button" class="btn btn-default" style="background: #1f598c; color:white;">비밀번호 찾기</button>
+                					<button id="searchPwd_btn" class="btn btn-default" style="background: #1f598c; color:white;" onclick="searchPwd();">비밀번호 찾기</button>
               					</div>
             				</div>
           				</div>
@@ -192,7 +205,14 @@
 				</div>
 			</div>
     		<div class="container-fluid"></div>
-    
+    		
+    		<!-- 로딩 팝업창  -->
+    		<div class="loading">
+      			<br>&nbsp;로딩중입니다. <br>&nbsp;잠시만 기다려 주세요 ^-^*
+      			<div class="spinner-border text-primary" role="status">
+        		<span class="sr-only">Loading...</span>
+      			</div>
+   			</div>  
     		
     		<!-- 아라 _ 계정찾기-->
     	
@@ -202,10 +222,13 @@
     	function searchId() {
 			if($("#memberPhone2").val() == null || $("#memberPhone2").val() == "" ){
 				alert('핸드폰 번호를 입력해주세요');
+				$("#memberPhone2").focus();
 			} else if($("#memberPhone3").val() == null || $("#memberPhone3").val() == "" ){
 				alert('핸드폰 번호를 입력해주세요');
+				$("#memberPhone3").focus();
 			} else if( $("#memberEmail1").val() == null || $("#memberEmail1").val() == "" ){
 				alert('이메일을 입력해주세요');
+				$("#memberEmail1").focus();
 			} else{    		
 				
 				var jsonData = {
@@ -236,7 +259,50 @@
 				})
 			}
     	} 
-    </script>		
+    </script>	
+    
+    <script>
+    	function searchPwd() {
+
+			if($("#memberId_A").val() == null || $("#memberId_A").val() == "" ){
+				alert('아이디를 입력해주세요');
+				$("#memberId_A").focus();
+			} else if( $("#memberEmail1_P").val() == null || $("#memberEmail1_P").val() == "" ){
+				alert('이메일을 입력해주세요');
+				$("#memberEmail1_P").focus();
+			} else{    		
+	    		$(".loading").show();
+	    		
+				var jsonData = {
+						memberId_A : $("#memberId_A").val(),
+						memberEmail1_P : $("#memberEmail1_P").val(),
+						memberEmail2_P : $("#memberEmail2_P").val()
+				}
+					
+				$.ajax({
+					url: "<%=request.getContextPath()%>/searchPwd.me",
+					type: "POST",
+					data: jsonData,
+					dataType: 'json',
+					
+					success: function(data){
+						debugger;
+						$(".loading").fadeOut(); // 로딩창 사라지게 
+						
+						if(data != null){
+							alert("임시 비밀번호가 메일로 전송되었습니다.");
+						}else{
+							alert("내용과 일치하는 회원정보가 없습니다");
+						}
+					},
+					error: function(request,status,error){
+						$(".loading").fadeOut();
+						alert("예기치 못한 에러가 발생했습니다. 관리자에게 문의하여 주십시오");
+					}
+				})
+			}
+		}
+    </script>	
     
 
 	<%@ include file="../common/footer.jsp"%>

@@ -21,7 +21,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
 		</script>
 
-		<!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+		<!-- 부트스트랩 스크립트 -->
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
 		</script>
 
@@ -65,7 +65,7 @@
 	</head>
 	
 	<body>		
-		<%@ include file="../common/header.jsp"%>
+		<%@ include file="../common/header.jsp"%>	
 		
 		<!-- 아라_ 회원가입 페이지 -->
 		<form id="joinForm" action="<%=request.getContextPath()%>/insertMember.me" method="post">
@@ -461,7 +461,7 @@
 
 		<!-- 체크박스 클릭 이벤트 리스너 -->
 		<script>
-		/*	function oneCheck(a){
+		function oneCheck(a){
 	    		var allChkBox = $("[name=allChk]");
 	    		var chkBoxName = $(a).attr("name");
 	 
@@ -491,7 +491,7 @@
 	           	 		oneCheck(this);
 	        		});
 	    		});
-			}); */
+			});
 
 
 			// 동의함 체크박스 
@@ -601,18 +601,25 @@
 	
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
+  					$("#userid").focus();
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
 					alert('비밀번호를 입력해주세요');
+					$("#pwd").focus();
 				}else if( $("#pwdChk").val() == null || $("#pwdChk").val() == "" ){
 					alert('비밀번호를 다시 한번 더 입력해주세요');
+					$("#pwdChk").focus();
 				} else if( $("#name").val() == null || $("#name").val() == "" ){
 					alert('이름을 입력해주세요');
+					$("#name").focus();
 				} else if( $("#phone2").val() == null || $("#phone2").val() == "" ){
 					alert('핸드폰 번호를 입력해주세요');
+					$("#phone2").focus();
 				} else if( $("#phone3").val() == null || $("#phone3").val() == "" ){
 					alert('핸드폰 번호를 입력해주세요');
+					$("#phone3").focus();
 				} else if( $("#email1").val() == null || $("#email1").val() == "" ){
 					alert('이메일을 입력해주세요');
+					$("#email1").focus();
 				} else if( checkbox1.checked != true || checkbox2.checked != true ){
 				alert('약관에 동의를 해주세요');
 				} else{

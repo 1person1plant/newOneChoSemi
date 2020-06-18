@@ -15,6 +15,22 @@
     		console.log('카카오');
     		console.log('카카오' + Kakao.isInitialized());
    	 	</script>
+   	 	<style>
+   	 		.kakaoBtn{
+   	 		 	background: url("<%=request.getContextPath() %>/images/kakao_login_medium_narrow.png") no-repeat center;
+   	 		 	width: 183px;
+		        height: 45px;
+		        object-fit: cover;
+		        border: none;
+		        padding: auto;
+		        cursor: pointer;
+		        vertical-align: center;
+   	 		}
+   	 		.findAccBtn{
+   	 			width: 183px;
+		        height: 45px;
+   	 		}
+   	 	</style>
 	</head>
 	<body>
     	<!-- Modal -->
@@ -67,10 +83,10 @@
                 	<div class="modal-footer" style="background: #F2F1DF;">
                     	<div class="row  col-md-12">
                         	<div class="col-md-6" align="left">
-                            	<button type="button" class="btn btn-secondary" onclick="kakaoLogin();">카카오</button>
+                            	<button type="button" class="btn btn-secondary kakaoBtn" onclick="kakaoLogin();"></button>
                         	</div>
                         	<div class="col-md-6" align="right">
-                            	<button type="button" class="btn btn-primary" style="background: #1F598C;" onclick="findAcctGo();">계정찾기</button>
+                            	<button type="button" class="btn btn-primary findAccBtn" style="background: #1F598C;" onclick="findAcctGo();">계정찾기</button>
                         	</div>
                     	</div>
                 	</div>

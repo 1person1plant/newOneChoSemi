@@ -6,19 +6,22 @@
 	String adminChk = "";
 	String kakaoChk = "";
 	String userNo = "";
-	String userRank = "";
 	String kakaoNo = "";
+	String userRank = "";
    
 	if(session!=null || !request.isRequestedSessionIdValid()){
 		loginUser = (Member)session.getAttribute("loginUser");
 		kakaoUser = (Member)session.getAttribute("kakaoUser");
-		if(kakaoUser != null && loginUser == null){
+		
+		if(kakaoUser != null && loginUser == null){	// 카카오 user 일때는
 			kakaoChk = kakaoUser.getMemberStatus();
 			kakaoNo = kakaoUser.getMemberNo();
-			result = false;
-		} else if(kakaoUser == null && loginUser != null){
 			userNo = loginUser.getMemberNo();
+			userRank = loginUser.getMemberRank();
+			result = false;
+		} else if(kakaoUser == null && loginUser != null){	// 로그인 user 일때는
 			adminChk = loginUser.getMemberAdmin();
+			userNo = loginUser.getMemberNo();
 			userRank = loginUser.getMemberRank();
 			result = false;
 		}

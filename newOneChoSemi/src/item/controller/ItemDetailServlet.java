@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
 import item.model.vo.Item;
+import member.model.service.MyWishListService;
 import member.model.vo.Member;
+import member.model.vo.MyWishList;
 import order.model.vo.Order;
 import review.model.service.ReviewService;
 import review.model.vo.Review;
@@ -39,6 +41,7 @@ public class ItemDetailServlet extends HttpServlet {
 		String itemNo = request.getParameter("itemNo");
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
+		int wishCheck = 0;
 		Order order = new Order();
 		
 		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
@@ -46,6 +49,7 @@ public class ItemDetailServlet extends HttpServlet {
 		}else {
 			String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 			myReviewList = new ReviewService().myReviewList(itemNo, memberNo);
+			wishCheck = new MyWishListService().wishCheck(itemNo, memberNo);
 			order = new ReviewService().orderCheck(itemNo, memberNo);
 		}
 		
@@ -55,6 +59,7 @@ public class ItemDetailServlet extends HttpServlet {
 		request.setAttribute("myReviewList", myReviewList);
 		request.setAttribute("otherReviewList", otherReviewList);
 		request.setAttribute("orderCheck", order);
+		request.setAttribute("wishCheck", wishCheck);
 		request.getRequestDispatcher("views/item/itemDetail.jsp").forward(request, response);
 		
 	}

@@ -153,4 +153,89 @@ public class ReviewDao {
 		return order;
 	}
 
+	public int reviewReady(Connection conn, String orderNo, String itemNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE ORDERLIST SET ORDER_REVIEW = 'Y' WHERE ORDER_NO = ? AND ITEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderNo);
+			pstmt.setString(2, itemNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reviewCreate(Connection conn, Review rv) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query="INSERT INTO REVIEW VALUES('R'||LPAD(SEQ_REVIEW.NEXTVAL,5,'0'), ?, ?, ?, SYSDATE, ?, ?, SYSDATE, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, rv.getOrderNo());
+			pstmt.setString(2, rv.getItemNo());
+			pstmt.setString(3, rv.getMemberNo());
+			pstmt.setInt(4, rv.getReviewRate());
+			pstmt.setString(5, rv.getReviewContent());
+			pstmt.setString(6, rv.getReviewImgName());
+			pstmt.setString(7, rv.getReviewImgPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Review loadReview(Connection conn, String reviewNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Review rv = new Review();
+		
+		String query = "SELECT * FROM REVIEW WHERE REVIEW_NO = '" + reviewNo + "'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rv = new Review(rset.getString("review_no")
+				  			   ,rset.getInt("review_rate")
+							   ,rset.getString("review_content")
+							   ,rset.getDate("review_udate")
+							   ,rset.getString("review_imagename")
+							   ,rset.getString("review_imagepath"));
+			}
+			
+			System.out.println(rv);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return rv;
+	}
+
 }

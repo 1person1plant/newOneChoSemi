@@ -35,9 +35,10 @@
             <div class="col-4">
                 <h5>Site Map</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Hanging</a></li>
-                    <li><a class="text-muted" href="#">Plant</a></li>
-                    <li><a class="text-muted" href="#">FAQ</a></li>
+                    <li><a class="text-muted" href="#">All</a></li>
+                    <li><a class="text-muted" href="#">SOIL</a></li>
+                    <li><a class="text-muted" href="#">WATER</a></li>
+                    <li><a class="text-muted" href="#">HANGING</a></li>
                 </ul>
             </div>
             <div class="col-1">
