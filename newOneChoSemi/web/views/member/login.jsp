@@ -5,6 +5,8 @@
     	<!-- Required meta tags -->
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	
+		<script src="${contextPath}/resources/js/js.cookie.js"></script>
 
 		<!-- 카카오 로그인 연결 (리소스) -->
     	<script	src="<%=request.getContextPath() %>/resource/kakaoLogin.js"></script>	
@@ -16,6 +18,7 @@
     		console.log('카카오' + Kakao.isInitialized());
    	 	</script>
    	 	<style>
+   	 		/* 카카오 버튼 이미지 */
    	 		.kakaoBtn{
    	 		 	background: url("<%=request.getContextPath() %>/images/kakao_login_medium_narrow.png") no-repeat center;
    	 		 	width: 183px;
@@ -32,9 +35,10 @@
    	 		}
    	 	</style>
 	</head>
-	<body>
+	<body onload='javascript:getValue();'> 
+	<!-- memberId 객체가 생성된 후 실행하기 위해서(저장할 변수명과 가져올 변수명은 memberId를 저장할때 쿠키에 저장할 이름을 정해 놓아야 가져올때도 가져올수 있기 때문이다 (이름을 이용하여 불러오기때문에 불러올때와 집어넣을때의 이름은 똑같이 해준다) --> 
     	<!-- Modal -->
-    	<form id = "loginForm" action = "<%=request.getContextPath() %>/login.me" method = "post">
+    	<form id = "loginForm" name="form" action = "<%=request.getContextPath() %>/login.me" method = "post">
 		
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         	<div class="modal-dialog">
@@ -62,6 +66,7 @@
                     	</div>
                     	<div class="col-md-12">
                         	<input type="text" class="form-control" placeholder="아이디를 입력해주세요" maxlength="16" required name="memberId" id="memberId">
+                        	<input type="checkbox" id="cb_saveId" name='btn' value='setCookie' onclick='javascript:setValue();' style="margin-top: 10px; margin-bottom: 10px;"> 아이디 저장 <br>
                     	</div>
                     	<br>
                     	<div class="col-md-12">
@@ -74,7 +79,7 @@
                     	<br>
 
                     	<div class="col-md-12" align="center">
-                        	<input type="submit" value="로그인" class="btn btn-primary"
+                        	<input type="submit" value="로그인" class="btn btn-primary" id="loginBtn"
                             	style="width: 80%; margin-bottom: 5px; background: #1F598C;" onclick="loginGo();"><br>
                         	<input class="btn btn-secondary" style="width: 80%;" onclick="joinGo();"value="회원가입">
                     	</div>
@@ -99,7 +104,67 @@
 			<input type="hidden" name="kakaoId" id="kakaoId">
 			<input type="hidden" name="kakaoNm" id="kakaoNm">
 		</form>
-	
+		
+		<!-- 아이디 저장 시작 -->
+		<script>
+		
+			// 쿠키값 저장하기 => 저장할 변수명(name)으로 저장할변수(value) 일자(expiredays) 저장하는지
+			function setCookie (name, value, expiredays){
+	 			var todayDate = new Date();
+	 			todayDate.setDate( todayDate.getDate() + expiredays );
+	 			document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";";
+			}
+			
+			function getCookie(name){
+	 			var Found = false;
+	 			var start, end;
+	 			var i = 0;
+
+	 			while (i <= document.cookie.length){
+	  				start = i;
+	  				end = start + name.length;
+	  				
+	  				if (document.cookie.substring(start, end) == name){
+						Found = true;
+						break;
+					}
+						i++;
+				}
+	 			
+	 			if (Found == true){
+	  				start = end + 1;
+	  				end = document.cookie.indexOf(';', start);
+	  				
+	  				if (end < start) end = document.cookie.length;
+	  					return document.cookie.substring(start, end);
+	 			}
+	 			return '';
+			}
+
+			function setValue(){
+	 			var fm = document.form;
+	 			var isRemember;
+	 			
+				if(cb_saveId.checked){
+					isRemember = confirm("이 PC에 로그인 정보를 저장하시겠습니까? PC방등의 공공장소에서는 개인정보가 유출될 수 있으니 주의해주십시오.");
+
+					if(!isRemember){
+						cb_saveId.checked = false;
+					}
+				}
+				
+	 			setCookie ('memberId', fm.memberId.value, 1);
+
+			}
+
+			function getValue(){
+	 			var fm = document.form;
+	 			fm.memberId.value = getCookie('memberId');
+			}
+			
+		</script>
+		<!-- 아이디 저장 끝 -->
+
 		<script>
 			function joinGo() {
 				location.href="<%=request.getContextPath()%>/views/member/join.jsp";

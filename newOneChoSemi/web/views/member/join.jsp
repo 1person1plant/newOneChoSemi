@@ -68,7 +68,7 @@
 		<%@ include file="../common/header.jsp"%>	
 		
 		<!-- 아라_ 회원가입 페이지 -->
-		<form id="joinForm" action="<%=request.getContextPath()%>/insertMember.me" method="post">
+		<form id="joinForm" action="<%=request.getContextPath()%>/insertMember.me" method="post" name="joinForm">
 			<div class="container-fluid" style="margin-top: 80px;">
 			<!-- 공백 : 내용 : 공백  -->
 				
@@ -109,7 +109,8 @@
 													</p>
 												</div>
 												<div class="test col-2" style="margin-left: -70px">
-													<button class="btn btn-default" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
+													<button class="btn btn-default" id="check_id" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
+													<input type="hidden" name="idCheck" value="idUnchk"> <!-- 중복체크 안누른 상태 -->
 												</div>
 											</div>
 										</th>
@@ -584,7 +585,7 @@
 						$(this).val(''); // 지움
 						$(this).focus().css("background", "skyblue");
 					} else {
-						$("#userIdresult").html("정상 입력").css("color", "blue");
+						$("#userIdresult").html("정상 입력  ※중복확인필수→").css("color", "blue");
 						$(this).css("background", "white");
 					}
 				});   
@@ -597,10 +598,14 @@
 			function joinSubmit() {
 			//	var chkAll = $(".allChk");
 			//	var chk = $(".chkbox");
+				var form = document.joinForm;
 	
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
   					$("#userid").focus();
+				} else if(form.idCheck.value == "idUnchk"){
+					alert('중복확인을 해주세요');
+  					$("#check_id").focus();
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
 					alert('비밀번호를 입력해주세요');
 					$("#pwd").focus();
@@ -656,7 +661,7 @@
 						success:function(data){
 							if(data=="permit"){
 								alert("아이디를 사용 하실 수 있습니다.");
-								
+								document.joinForm.idCheck.value = "idChk";
 							}else{
 								alert("아이디가 중복됩니다. 다시 입력해주세요");
 								userId.focus();
