@@ -57,4 +57,16 @@ public class ReviewService {
 		
 	}
 
+	public Review loadReview(String reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		Review rv = new ReviewDao().loadReview(conn, reviewNo);
+		
+		close(conn);
+		
+		return rv;
+	
+	}
+
 }

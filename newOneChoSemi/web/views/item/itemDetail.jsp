@@ -512,7 +512,7 @@ td:nth-of-type(2) {width:45rem;}
                      <hr>
                      <div class="row rating-modal">
                         <div class="container-fluid rating-modal-container">
-                           <p class="h5 my-auto" style="text-align: center">상품은 어떠셨나요?</p>
+                           <p class="h5 my-auto" style="text-align: center" id="updateReviewScore"></p>
                         </div>
                         <div class="container-fluid starRating">
                            <span class="fa fa-star-o" data-rating="1" style="font-size: 3rem"></span>
@@ -520,7 +520,7 @@ td:nth-of-type(2) {width:45rem;}
                            <span class="fa fa-star-o" data-rating="3" style="font-size: 3rem"></span>
                            <span class="fa fa-star-o" data-rating="4" style="font-size: 3rem"></span> 
                            <span class="fa fa-star-o" data-rating="5" style="font-size: 3rem"></span> 
-                           <input type="hidden" name="score" class="rating-value" value="3">
+                           <input type="hidden" name="score" class="rating-value" id="updateReviewRate" value="">
                         </div>
                      </div>
                      <hr>
@@ -863,12 +863,15 @@ td:nth-of-type(2) {width:45rem;}
                      var reviewNo = data.reviewNo;
                      var reviewUDate = data.reviewUDate;
                      var reviewContent = data.reviewContent;
+                     var reviewRate = data.reviewRate;
                      
-                     console.log(reviewUDate);
+                     console.log(reviewRate);
                      
                      $("#updateReviewNo").val(reviewNo);
                      $("#updateReviewUDate").html("[리뷰작성일: " + reviewUDate + "]");
-                     $("#reviewUpdateContent").text(reviewContent);                     
+                     $("#reviewUpdateContent").text(reviewContent);    
+                     $("#updateReviewScore").text(reviewRate +"점을 주셨었네요.");
+                     $("#updateReviewRate").attr("value",reviewRate);
                      
                      $("#updateReview-real-btn").click();
 

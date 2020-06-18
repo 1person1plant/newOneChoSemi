@@ -23,6 +23,17 @@ public class Review implements Serializable {
 	
 	
 	
+	public Review(String reviewNo, int reviewRate, String reviewContent, Date reviewUDate, String reviewImgName,
+			String reviewImgPath) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewRate = reviewRate;
+		this.reviewContent = reviewContent;
+		this.reviewUDate = reviewUDate;
+		this.reviewImgName = reviewImgName;
+		this.reviewImgPath = reviewImgPath;
+	}
+
 	public Review() {}
 
 	public Review(String reviewNo, String orderNo, String itemNo, String memberNo, Date reviewCDate, int reviewRate,
