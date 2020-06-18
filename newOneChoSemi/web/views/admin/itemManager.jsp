@@ -165,7 +165,7 @@
     
              <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.re'">
                 <span data-feather="home"></span>
                 	리뷰관리 <span class="sr-only">(current)</span>
               </a>
@@ -177,7 +177,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">>
+              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>
@@ -350,18 +350,18 @@
                        		
                       
                        		</div>
-                       		<div>
+                       		</div>
                        <%} %>
                         
                         
                 
             
-                 </div>
+                
                     <!--제품 상세 내용 Modal-->
                     
                     <!-- The Modal -->
                     <div class="modal" id="myModal">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                     
                             <!-- Modal Header -->
@@ -376,37 +376,40 @@
                             <form id="modalForm"  method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/update.it" onsubmit="return ivalidate();">
 
                                 
-                                <ul>
-                                    <li><label>상품번호</label><br><input required type="text" readonly id="productNum" name="productNum" style="width:80%"></li>
-                                    <li><label>상품명</label><br><input required type="text" readonly id="productName" style="width:80%" name="modifyName"></li>
-                                    <li><label>전시상태</label><br><input required type="text" readonly id="exhibitStatus" name="modifyExhibitText">
-                                        <select id="modifyExhibitStatus" style="width:35%" name="modifyExhibit">
+                                <ul style="padding:0">
+                                    <li><label>상품번호</label><input class="form-control mx-auto" required type="text" readonly id="productNum" name="productNum" style="width:100%"></li>
+                                    <li><label>상품명</label><br><input class="form-control" required type="text" readonly id="productName" style="width:100%" name="modifyName"></li>
+                                    <li><label>전시상태</label><br>
+                                    
+                                    
+                                    <input class="form-control" required type="text" readonly id="exhibitStatus" name="modifyExhibitText" style="width:100%">
+                                        <select class="form-control" id="modifyExhibitStatus" style="width:100%" name="modifyExhibit">
                                             <option selected value="null">상태수정</option>
                                             <option value="Y">전시중</option>
                                             <option value="N">전시중지</option>
                                             
                                         </select>
                                     </li>
-                                    <li><label>정가</label><br><input required type="number" readonly id="price" name="modifyPrice" style="width:80%"></li>
-                                    <li><label>할인</label><br><input required type="number" readonly id="discount" name="modifyDiscount" style="width:80%"></li>
+                                    <li><label>정가</label><br><input class="form-control" required type="number" readonly id="price" name="modifyPrice" style="width:100%"></li>
+                                    <li><label>할인</label><br><input class="form-control" required type="number" readonly id="discount" name="modifyDiscount" style="width:100%"></li>
                                     <div id="warning" style="display:none;position: relative;top: -2rem;">
                                     	할인가는 정가를 초과할 수 없어요.
                                     </div>
-                                    <li><label>상품설명</label><br><textarea readonly rows="5" cols="45" id="itemInfo" name="modifyInfo"></textarea>
+                                    <li><label>상품설명</label><br><textarea class="form-control" readonly rows="5" cols="45" id="itemInfo" name="modifyInfo"></textarea>
                                     <div id="countText"><span>0</span>/<span>1000</span></div>
                                     </li>
                                     
                                
-                                    <li><label>카테고리</label><br><input required type="text" readonly id="category" name="modifyCategoryText">
-                                        <select id="modifyCategory"  style="width:38%" name="modifyCategory">
+                                    <li><label>카테고리</label><br><input class="form-control" required type="text" readonly id="category" name="modifyCategoryText" style="width:100%">
+                                        <select class="form-control" id="modifyCategory"  style="width:100%" name="modifyCategory">
                                             <option selected value="null">상태수정</option>
                                             <option value="HANGING">HANGING</option>
                                             <option value="WATER">WATER</option>
                                             <option value="SOIL">SOIL</option>
                                         </select>
                                     </li>
-                                    <li><label>키워드</label><br><input required type="text" readonly id="keyword" name="modifyKeywordText">
-                                        <select id="modifyKeyword" style="width:38%" name="modifyKeyword">
+                                    <li><label>키워드</label><br><input class="form-control" required type="text" readonly id="keyword" name="modifyKeywordText" style="width:100%">
+                                        <select class="form-control" id="modifyKeyword" style="width:100%" name="modifyKeyword">
                                             <option selected value="null">상태수정</option>
                                             <option value="K1">산소뿜뿜</option>
                                             <option value="K2">반려동물 친화</option>
@@ -414,35 +417,37 @@
                                             
                                         </select>
                                     </li>
-                                    <li><label>상품등록일</label><br><input type="date" readonly id="registerDate" style="width:80%"></li>
-                                    <li><label>상품수정일</label><br><input type="date" readonly id="modifyDate" style="width:80%"></li>
+                                    <li><label>상품등록일</label><br><input class="form-control" type="date" readonly id="registerDate" style="width:100%"></li>
+                                    <li><label>상품수정일</label><br><input class="form-control" type="date" readonly id="modifyDate" style="width:100%"></li>
                                     
                                     <li>
                                     	<label>대표이미지</label><br>
-                                        <div class="input-group mb-3" style="width:80%">
+                                        <div class="input-group mb-3" style="width:100%">
                                             <div class="input-group-prepend">
                                               <span class="input-group-text">대표이미지</span>
                                             </div>
                                             <div class="custom-file">
+                                              <input type="hidden" name="hiddenMain" id="hiddenMain" value="none">
                                               <input type="file"  disabled class="custom-file-input" id="mainImg" name="modifyMainImg" aria-describedby="fileadd01" accept="image/*" onchange="loadFile(this,1)">
                                               <label class="custom-file-label" for="mainImg">파일을 선택하세요.</label>
                                             </div>
                                           </div>
-                                          <img id="mpreview" alt="[ 미리보기 ]" style="width: 300px;height: 300px;" />
+                                          <img id="mpreview" alt="[ 미리보기 ]" style="width: 100%;height: 500px;" />
 
                                     </li>
                                     <li>
                                     	<label>상세이미지</label><br>
-                                        <div class="input-group mb-3" style="width:80%">
+                                        <div class="input-group mb-3" style="width:100%">
                                             <div class="input-group-prepend">
                                               <span class="input-group-text">상세이미지</span>
                                             </div>
                                             <div class="custom-file">
+                                              <input type="hidden" name="hiddenSub" id="hiddenSub" value="none">
                                               <input type="file" disabled class="custom-file-input" id="subImg" name="modifySubImg" aria-describedby="fileadd01" accept="image/*" onchange="loadFile(this,2)">
                                               <label class="custom-file-label" for="mainImg">파일을 선택하세요.</label>
                                             </div>
                                           </div>
-                                          <img id="spreview" alt="[ 미리보기 ]" style="width: 300px;height: 300px;" />
+                                          <img id="spreview" alt="[ 미리보기 ]" style="width: 100%;height: 500px;" />
 
                                     </li>
                                     
@@ -500,17 +505,23 @@
                     </script>
                     <script>
                     
-										//파일로드시 레이블 수정
+                    
+                    				
+                    					
+                    
+										//파일로드시, 히든 태그에 값 넣고 레이블 수정
 										$(function(){
 											
 											$("#mainImg").change(function(){
 												
 												$("#mainImg").next().text($("#mainImg").val());
+												$("#hiddenMain").val($("#mainImg").val());
 												
 											});
 											
 											$("#subImg").change(function(){
 												$("#subImg").next().text($("#subImg").val());
+												$("#hiddenSub").val($("#subImg").val());
 											})
 											
 										})
@@ -815,6 +826,8 @@
         	}else{
         		return true;
         	}
+        	
+        	
         	
         }
         

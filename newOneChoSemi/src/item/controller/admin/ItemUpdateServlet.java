@@ -48,7 +48,7 @@ public class ItemUpdateServlet extends HttpServlet {
 		
 		
 		
-		//수정값 받아오기
+		//아이템의 수정값 받아오기
 		String itemNum=multiRequest.getParameter("productNum");
 		String name=multiRequest.getParameter("modifyName");
 		String exhibit=multiRequest.getParameter("modifyExhibitText");
@@ -80,6 +80,16 @@ public class ItemUpdateServlet extends HttpServlet {
 		System.out.println("상품수정:"+item);
 		
 		//이미지 가져오기
+		
+		
+		//메인이미지, 서브이미지 구분하기 위해 히든태그의 값을 가져온다.
+		String main=multiRequest.getParameter("hiddenMain");
+		String sub=multiRequest.getParameter("hiddenSub");
+		
+		System.out.println(main);
+		System.out.println(sub);
+		
+		
 		ArrayList<String> saveFiles=new ArrayList<>();
 		Enumeration<String> files=multiRequest.getFileNames();
 		while(files.hasMoreElements()) {
@@ -91,17 +101,38 @@ public class ItemUpdateServlet extends HttpServlet {
 		}
 		
 		ItemImage im=null;
-		if(!saveFiles.isEmpty()) {
+		
+		//2장 다 들어있을 때
+		if(!main.equals("none")&&!sub.equals("none")) {
 		
 		im=new ItemImage();
 		im.setmPath(savePath);
 		im.setsPath(savePath);
+		
+		
 		im.setmImgName(saveFiles.get(0));
 		im.setsImgName(saveFiles.get(1));
+		
+		
 		im.setmCategory(1);
 		im.setsCategory(2);
 		
 		System.out.println("상품수정이미지:"+im);
+		}else if(!main.equals("none")) { //사진이 메인만 들어있을 때,
+			
+			im=new ItemImage();
+			im.setmPath(savePath);
+			im.setmImgName(saveFiles.get(0));
+			im.setmCategory(1);
+			
+		}else if(!sub.equals("none")) {//사진이 서브만 들어있을 때,
+			
+			im=new ItemImage();
+			im.setsPath(savePath);
+			im.setsImgName(saveFiles.get(0));
+			im.setmCategory(2);
+		}else {
+			System.out.println("파일을 업로드 하지 않았다.");
 		}
 		
 		//서비스로 넘길 준비
@@ -110,23 +141,48 @@ public class ItemUpdateServlet extends HttpServlet {
 		//상품수정 메소드
 		int result1=is.updateItem(item);
 		
+		//2장 다 넘어왔을 경우
 		int result2=0;
 		int result3=0;
+		int result4=0;
+		
+		//1장 넘어왔을 경우(메인)
+		int result5=0;
+		int result6=0;
+		
+		//1장 넘어왔을 경우(서브)
+		int result7=0;
+		int result8=0;
+		
+		
 		//상품이미지 수정 메소드
 		
 		//넘어온 파일이 있을 경우에 메소드를 실행한다.
-		if(!saveFiles.isEmpty()) {
+		if(!main.equals("none")&&!sub.equals("none")) {
 			
 			System.out.println("실행이 되는가?");
 			
 			result2=is.insertImage(im);
-			result3=is.updateItemImage(item);
+			result3=is.updateMainImage(item);
+			result4=is.updateSubImage(item);
+		}else if(!main.equals("none")) {
+			
+			result5=is.insertOneMain(im);
+			result6=is.updateOneMain(item);
+			
+		}else if(!sub.equals("none")) {
+			
+			result7=is.insertOneSub(im);
+			result8=is.updateOneSub(item);
+			
+		}else {
+			System.out.println("들어온 게 없으니 넘길 것도 없다");
 		}
 		
 		
 		
 		
-		if(result1+result2+result3>0) {
+		if(result1>0) {
 			System.out.println("상품 조회 페이지로 이동!");
 			response.sendRedirect("list.it");
 		}else {

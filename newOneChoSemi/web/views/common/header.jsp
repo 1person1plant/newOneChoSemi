@@ -31,6 +31,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169937382-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-169937382-1');
+	</script>
+	
+	
     <meta charset="UTF-8">
     <title>Cho-당신을 위한 반려식물</title>
     

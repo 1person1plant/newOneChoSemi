@@ -1,4 +1,4 @@
-package Board.controller;
+package review.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Board.model.service.QnaService;
-import Board.model.vo.Notice;
-import Board.model.vo.Qna;
+import review.model.service.admin.AdminReviewService;
+import review.model.vo.Review;
+import review.model.vo.admin.AdReview;
 
 /**
- * Servlet implementation class QnaListServlet
+ * Servlet implementation class ReviewAdminListServlet
  */
-@WebServlet("/list.qna")
-public class QnaListServlet extends HttpServlet {
+@WebServlet("/adminList.re")
+public class ReviewAdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaListServlet() {
+    public ReviewAdminListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,29 +33,20 @@ public class QnaListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//질문을 조회하러 가자~
+		//review 조회하자
+		AdminReviewService rs=new AdminReviewService();
+		ArrayList<AdReview> reviews=rs.selectAllReview();
 		
-		QnaService qs=new QnaService();
-		ArrayList<Qna> qnas=qs.selectAllQna();
-		
-		//공지사항 조회하자
-		ArrayList<Notice> notices=qs.selectAllNotice();
-				
-		System.out.println(notices);
-		
-		
-		
-		if(qnas!=null&&notices!=null) {
+		if(!reviews.isEmpty()) {
 			
-			request.setAttribute("notices", notices);
-			request.setAttribute("qnas", qnas);
-			request.getRequestDispatcher("views/admin/qna.jsp").forward(request, response);
-			
+			request.setAttribute("reviews", reviews);
+			request.getRequestDispatcher("views/admin/reviewManager.jsp").forward(request, response);
 		}else {
 			
-			request.setAttribute("msg", "질문 조회 실패");
+			request.setAttribute("msg", "리뷰 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		
+			
 		}
 		
 		

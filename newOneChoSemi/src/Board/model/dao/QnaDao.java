@@ -243,6 +243,82 @@ public class QnaDao {
 		return notices;
 	}
 
+	public int updateNotice(Connection conn, Notice n) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="UPDATE NOTICE SET MEMBER_NO=?, NOTICE_TITLE=?, NOTICE_CDATE=SYSDATE, NOTICE_CONTENT=? WHERE NOTICE_NO=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, n.getMemberNo());
+			pstmt.setString(2, n.getNoticeTitle());
+			pstmt.setString(3, n.getNoticeContent());
+			pstmt.setString(4, n.getNoticeNo());
+			
+			result=pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
+	}
+
+	public int insertNotice(Connection conn, Notice n) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="INSERT INTO NOTICE VALUES('N'||LPAD(NOTICE_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE,?,null,null)";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, n.getMemberNo());
+			pstmt.setString(2, n.getNoticeTitle());
+			pstmt.setString(3, n.getNoticeContent());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		
+		return result;
+	}
+
+	public int deleteNotice(Connection conn, String noticeNum) {
+		
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		String query="DELETE FROM NOTICE WHERE NOTICE_NO=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, noticeNum);
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 
 }

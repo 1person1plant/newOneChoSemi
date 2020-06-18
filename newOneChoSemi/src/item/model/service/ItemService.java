@@ -151,23 +151,7 @@ public class ItemService {
 		return result;
 	}
 
-	public int updateItemImage(Item item) {
-
-		Connection conn = getConnection();
-		int result = 0;
-
-		result = new ItemDao().updateItemImage(conn, item);
-		
-		if (result > 0) {
-			commit(conn);
-
-		} else {
-			rollback(conn);
-		}
-
-		close(conn);
-		return result;
-	}
+	
 
 	public int deleteItem(String itemNum) {
 
@@ -279,6 +263,97 @@ public class ItemService {
 		close(conn);
 		
 		return categoryList;
+	}
+
+	public int updateMainImage(Item item) {
+		Connection conn = getConnection();
+
+		int result = new ItemDao().updateMainImage(item,conn);
+
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
+
+	public int updateSubImage(Item item) {
+		Connection conn = getConnection();
+
+		int result = new ItemDao().updateSubImage(item,conn);
+
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
+
+	public int insertOneMain(ItemImage im) {
+		Connection conn=getConnection();
+		
+		int result=new ItemDao().insertOneMain(conn,im);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
+
+	public int updateOneMain(Item item) {
+		Connection conn = getConnection();
+
+		int result = new ItemDao().updateOneMain(item,conn);
+
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
+
+	public int insertOneSub(ItemImage im) {
+		Connection conn=getConnection();
+		
+		int result=new ItemDao().insertOneSub(conn,im);
+		
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
+
+	public int updateOneSub(Item item) {
+		
+		Connection conn = getConnection();
+
+		int result = new ItemDao().updateOneSub(item,conn);
+
+		if (result > 0) {
+			commit(conn);
+
+		} else {
+			rollback(conn);
+		}
+
+		return result;
 	}
 
 
