@@ -34,7 +34,7 @@ public class OrderCancelServlet extends HttpServlet {
 		String orderNo = request.getParameter("orderNo");
 		String memberNo = request.getParameter("memberNo");
 		String itemNo = request.getParameter("itemNo");
-		int result = new OrderService().cancelRequest(new Order(orderNo,memberNo,itemNo));
+		int result = new OrderService().cancelRequest(new Order(orderNo,itemNo,memberNo));
 		System.out.println("service>servlet : " + result);
 		PrintWriter pw = response.getWriter();
 		if(result>0) {
