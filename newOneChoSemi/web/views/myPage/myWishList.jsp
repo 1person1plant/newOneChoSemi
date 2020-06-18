@@ -155,7 +155,7 @@
 							</tr>
 							<%if(mwl.isEmpty()||mwl.size()==0){ %>
 							<tr style='border-bottom: 2px solid black'>
-								<td style="padding:15px" class='mt-2' colspan="9" style="font-size:1rem">위시리스트가 존재하지 않습니다.<br>
+								<td style="padding:15px" class='mt-2' colspan="9" style="font-size:1rem" >위시리스트가 존재하지 않습니다.<br>
 								</td>
 							</tr>
 							<tr>
@@ -308,6 +308,15 @@
 	<%} %>
 	<!-- 상품 구매 버튼 끝 -->
 	
+	<!-- 위시리스트 추가하기 버튼 -->
+	<script>
+		$(function(){
+			$("#wishAddBtn").click(function(){
+				location.href="<%=request.getContextPath()%>/itemMain.it";
+			});
+		});
+	</script>
+	<!-- 위시리스트 추가하기 버튼 끝-->
 	
 	<script>
 		$(function(){
