@@ -10,8 +10,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
 <!-- Required meta tags -->
         <meta charset="utf-8">

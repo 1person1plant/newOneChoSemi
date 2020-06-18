@@ -181,15 +181,28 @@ public class MemberService {
 	 * @param member 입력된 아이디 +이메일 
 	 * @return
 	 */
-	public Member searchPwdMember(Member member) {
+	public String searchPwdMember(Member member) {
 		Connection conn = getConnection();
 		
-		Member searchPwd_A = new MemberDao().searchPwdMember(conn, member);
-		
+		String searchPwd_A = new MemberDao().searchPwdMember(conn, member);
+
 		close(conn);
 		return searchPwd_A;
 	}
+	
+	/**
+	 * 임시 비밀번호 발급받은 사용자 패스워드 업데이트
+	 * @param changeMember
+	 * @return
+	 */
+	public int pwdUpdate(Member changeMember) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().pwdUpdate(conn, changeMember);
 
+		close(conn);
+		return result;
+	}
 //	------------------------------------------------ 아라
 	
 	public Grade memberGrade(String memberNo) {
@@ -223,5 +236,6 @@ public class MemberService {
 		close(conn);
 		return loginUser;
 	}
+
 
 }

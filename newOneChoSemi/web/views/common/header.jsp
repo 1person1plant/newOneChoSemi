@@ -330,7 +330,7 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goAll();">ALL</a>
+                    <a class="nav-link" onclick="goAll();" id="AllId">ALL</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="goSoil();">SOIL</a>

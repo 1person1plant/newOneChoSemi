@@ -769,8 +769,10 @@
                     $("#itemInfo").prop("readonly",true);
                 }
             });
+
          
-            });
+        
+
 
             $("#modifyCategory").change(function(){
 
