@@ -42,7 +42,7 @@
 	  	}
 	  	
 	  	.loading{
-			width:1550px;
+			width:100%;
     		height:100px;
     		position:fixed; /* 스크롤 내려도 그 위치에 */
     		left:0%;
