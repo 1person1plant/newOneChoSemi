@@ -802,7 +802,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	    var orderpayment_point = 0;	// 초기 사용 포인트 값
 	    var additional = false;	// 추가 배송비 지역 어부
 	    var delivery = Number("2500");	// 기본 배송비
-	    var additionalDelivery = Number("5000");
+	    var additionalDelivery = Number("8000");
 	    var orderpayment_total = 0;
 	
 	    var calculate_comp = true;
@@ -900,13 +900,38 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	</script> <!-- 요청사항 스크립트  끝 -->
 	
     <script>	<!-- 결제 금액 스크립트 -->
-        // TODO 제주산간 지역 배송비 계산
+        // 제주산간 지역 배송비 계산
         function checkdelivery(){
-            // 셈플로 제주특별자치도만 추가 배송비를 낸다
-            if($("#recipient_address").val().indexOf("제주특별자치도")==0){
-                delivery = Number("4000");
+			var recipient_postcode = $("#recipient_postcode").val();
+			//console.log("고객이 입력한 주소 : " + $("#recipient_postcode").val());
+			
+			$.ajax({
+				url:"<%=request.getContextPath()%>//orderChkPostcode.or",
+				type:"post",
+				data:{recipient_postcode:recipient_postcode},
+				success:function(data){
+					if(data == 8000){
+						additional = true;
+						delivery = Number("8000");
+		                $("#orderpayment_delivery").text(delivery);
+		                alert("추가 배송비 지역 입니다.");
+					} else if(data == 2500) {
+						additional = false;
+						delivery = Number("2500");
+		                $("#orderpayment_delivery").text(delivery);
+					}
+					
+				},
+				error:function(request,status,error){
+	                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+			});
+            
+            
+/*             if($("#recipient_address").val().indexOf("제주특별자치도")==0){
+                delivery = Number("8000");
                 $("#orderpayment_delivery").text(delivery);
-            }
+            } */
         }
         
         // 최종 결제 금액 계산
