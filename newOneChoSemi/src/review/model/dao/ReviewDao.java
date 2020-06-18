@@ -20,7 +20,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> otherReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' ORDER BY 8 DESC";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -62,7 +62,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "' ORDER BY 8 DESC";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -118,9 +118,6 @@ public class ReviewDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rset);
 		}
 		
 		return result;
@@ -149,12 +146,8 @@ public class ReviewDao {
 								 ,rset.getString("delivery_code")
 								 ,rset.getString("order_review"));
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rset);
 		}
 		
 		return order;

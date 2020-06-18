@@ -222,7 +222,6 @@ td {
 	</div>
 	<script>
 		$(function(){
-			
 			$("#idenBtn").click(function(){
 				var inputPwd1 = document.getElementById("password1").value;
 				<%String chkPwd = loginUser.getMemberPwd();%>
@@ -236,15 +235,9 @@ td {
 					alert("비밀번호가 일치하지 않습니다.");
 				}
 			});
-			$("#password1").keydown(function(key){
-				if(key.keyCode==13){
-					$("#idenBtn").click();
-					return false;
-				}
-			});
 			$("#cancelBtn").click(function(){
 				location.href="<%=request.getContextPath()%>/index.jsp";
-			});
+			})
 		});
 	</script>
 	<script>

@@ -179,7 +179,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/adminList.no'">>
+              <a class="nav-link" href="#">
                 <span data-feather="shopping-cart"></span>
                 	공지사항
               </a>
@@ -201,7 +201,7 @@
         
         <div class="row">    
             
-            <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/adminSearch.qna">
+            <form class="mx-auto" style="margin-bottom: 10rem; width: 60rem;" method="post" action="<%=request.getContextPath()%>/search.it">
                 
                 <table class="mx-auto" style="border: double black; width: 100%;" id="searchTable">
                         <tr>
@@ -213,8 +213,8 @@
                         <td>
                             <select style="position: relative;margin-left: 6px; width: 7rem;right: 9px;height: 2rem;" id="searchDate" name="searchDate">
                             	<option value="">전체</option>
-                                <option value="QNA_CDATE">질문등록일</option>
-                                
+                                <option value="ITEM_CDATE">상품등록일</option>
+                                <option value="ITEM_UDATE">최종수정일</option>
                             </select>
                         </td>
                         <td>
@@ -226,20 +226,28 @@
                         
                         </tr>
                         <tr style="height: 3rem;">
-                        <th style="text-align: center; width: 10rem;">답변여부</th>
+                        <th style="text-align: center; width: 10rem;">전시상태</th>
                         <td colspan="4" style="text-align: left;">
-                            <input type="radio" name="findAnswer" value="Y" id="available"><label for="available">답변완료</label>
-                            <input type="radio" name="findAnswer" value="N" id="inavailable"><label for="inavailable">미답변</label></td>
+                            <input type="radio" name="display" value="Y" id="available"><label for="available">전시중</label>
+                            <input type="radio" name="display" value="N" id="inavailable"><label for="inavailable">전시중지</label></td>
                             
                         </tr>
                         <tr style="height: 3rem;">
-                            <th style="text-align: center; width: 10rem;">질문분류</th>
+                            <th style="text-align: center; width: 10rem;">상품명</th>
+                            <td colspan="4">
+                                <input type="text" placeholder="상품명을 입력하세요." id="pName" name="pName" style="width: 30rem; position: relative;right: 5px;" >
+                                
+                            </td>
+                            
+                        </tr>
+                        <tr style="height: 3rem;">
+                            <th style="text-align: center; width: 10rem;">카테고리</th>
                             <td colspan="1">
                                 <select style="width: 7rem;position: relative;right: 5px;height: 2rem;" name="category">
                                     <option value="">전체</option>
-                                    <option value="상품문의">상품문의</option>
-                                    <option value="배송문의">배송문의</option>
-                                    <option value="취송문의">취소문의</option>
+                                    <option value="HANGING">HANGING</option>
+                                    <option value="WATER">WATER</option>
+                                    <option value="SOIL">SOIL</option>
                                 </select>
                             </td>
                             <td colspan="3"></td>
@@ -265,8 +273,6 @@
                 <div class="container" id="askBoard" style="text-align: center;">
                    
                     <div class="container mx-auto"  style="text-align: center;">
-                        
-                       <%if(!qnas.isEmpty()){ %> 
                         
                         <table id="qnalist" class="display nowrap mx-auto" style="width:100%;text-align: center;">
                             <thead>
@@ -313,17 +319,7 @@
                             
                             
                         </table>
-						<%}else{ %>
-						
-							<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
-         
-                       		<p style="padding-top:8rem;">검색 결과가 존재하지 않아요.<br><br>
-                       		<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/adminList.qna'">새로고침</button></p>
-                       		
-                      
-                       		</div>
-						
-						<%} %>
+
                         
                     </div>  
                         
@@ -347,15 +343,15 @@
                     
                             <!-- Modal body -->
                             <div class="modal-body">
-                            <form method="post" action="<%=request.getContextPath()%>/adminUpdate.qna">
+                            <form>
 
                                 
                                 <ul style="padding: 0;">
-                                	<li><label>질문번호</label><br><input class="form-control" type="text" readonly id="Qnum" name="QNum" style="width:100%;"></li>
-                                	<li><label>작성자</label><br><input class="form-control" type="text" readonly id="Qwriter" name="QNum" style="width:100%;"></li>
-                                    <li><label>분류</label><br><input class="form-control" type="text" readonly id="Qcategory" style="width: 100%;"></li>
-                                    <li><label>작성일</label><br><input class="form-control" type="date" readonly id="Qdate" style="width: 100%;"></li>
-                                    <li><label>제목</label><br><input class="form-control" type="text" readonly id="Qtitle" style="width: 100%;"></li>
+                                	<li><label>질문번호</label><br><input type="text" readonly id="Qnum" name="QNum" style="width:100%;"></li>
+                                	<li><label>작성자</label><br><input type="text" readonly id="Qwriter" name="QNum" style="width:100%;"></li>
+                                    <li><label>분류</label><br><input type="text" readonly id="Qcategory" style="width: 100%;"></li>
+                                    <li><label>작성일</label><br><input type="date" readonly id="Qdate" style="width: 100%;"></li>
+                                    <li><label>제목</label><br><input type="text" readonly id="Qtitle" style="width: 100%;"></li>
                                     <li><label>문의내용</label><br><div id="question" readonly style="width: 100%;border:1px solid lightgrey"></div></li>
                                     <li>
                                     <label>답변내용</label>
@@ -533,6 +529,8 @@
                     var usedText='<%=qnas.get(i).getQnaAnswer()%>'
                     $("#summernote").summernote('code',usedText);
                     
+                    <%}else{%>
+                    $("#answer").val('');
                     <%}%>
                    
                     
@@ -562,33 +560,7 @@
             
         function resetAnswer(){
         	
-        	console.log("리셋하자!");
         	
-        	var resetQNum=$("#Qnum").val();
-        	console.log(resetQNum);
-        	
-        	<%for(int i=0;i<qnas.size();i++){%>
-        	
-        	 if(resetQNum=='<%=qnas.get(i).getQnaNo()%>'){
-        		 
-        		 <%if(qnas.get(i).getQnaAnswer()!=null){%>
-                 
-                 var usedText='<%=qnas.get(i).getQnaAnswer()%>'
-                 $("#summernote").summernote('code',usedText);
-                 
-                 <%}else{%>
-                 
-                 $('#summernote').summernote('code', '');
-                 
-                 
-                 <%}%>
-        		 
-        		 	 
-        		 
-        	 }
-        	 
-        	
-        	<%}%>
         	
         }
        

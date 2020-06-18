@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Board.model.service.QnaService;
-import Board.model.vo.Notice;
 import Board.model.vo.Qna;
 
 /**
@@ -33,10 +32,8 @@ public class QnaAdminListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//질문 조회하자
 		QnaService qs=new QnaService();
 		ArrayList<Qna> qnas=qs.selectAllQna();
-		
 		
 		
 		
