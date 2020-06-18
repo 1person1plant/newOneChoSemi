@@ -43,7 +43,7 @@ public class KakaoLoginServlet extends HttpServlet {
 		int result = new MemberService().joinIdChkMember(userId);
 		
 		if (result == 0) { // 존재하지 않으면
-			System.out.println("여기?");
+			
 			int result_joinK = new MemberService().kakaoinsertMember(member); // 자동 회원가입
 			
 			// 자동 로그인
@@ -55,7 +55,7 @@ public class KakaoLoginServlet extends HttpServlet {
 			
 		}else { // 존재하면 로그인 하기
 			Member loginUser = new MemberService().kakaoLoginMember(member);
-			System.out.println("저기?");
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 			response.sendRedirect("index.jsp"); 

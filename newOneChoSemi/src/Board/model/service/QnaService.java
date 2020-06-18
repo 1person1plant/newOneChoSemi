@@ -84,6 +84,33 @@ public class QnaService {
 		return notices;
 	}
 
+	public int updateNotice(Notice n) {
+		
+		Connection conn=getConnection();
+		int result=new QnaDao().updateNotice(conn,n);
+		
+		close(conn);
+		return result;
+	}
+
+	public int insertNotice(Notice n) {
+		
+		Connection conn=getConnection();
+		int result=new QnaDao().insertNotice(conn,n);
+		
+		close(conn);
+		return result;
+	}
+
+	public int deleteNotice(String noticeNum) {
+		
+		Connection conn=getConnection();
+		int result=new QnaDao().deleteNotice(conn,noticeNum);
+		
+		close(conn);
+		return result;
+	}
+
 	
 	
 

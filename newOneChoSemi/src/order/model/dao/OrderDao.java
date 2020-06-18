@@ -108,7 +108,7 @@ public class OrderDao {
 					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
 					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
 					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
-					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + ", ORDER_REVIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
 					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.NEXTVAL,5,'0'),?,?,SYSDATE" 
 					  + ",?,?,?"
 					  + ",?,?,?,?,?"
@@ -121,7 +121,7 @@ public class OrderDao {
 					  + ", ORDER_ITEMPRICE, ORDER_ITEMDISCOUNT, ORDER_COUNT, ORDER_USEPOINT, ORDER_NAME" 
 					  + ", ORDER_PHONE1, ORDER_PHONE2, ORDER_PHONE3, ORDER_POSTCODE, ORDER_ADDRESS1"
 					  + ", ORDER_ADDRESS2, ORDER_REQUEST, ORDER_DCOST, ORDER_ADDPOINT, ORDER_PAYMENTOPTION"
-					  + ", ORDER_REIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
+					  + ", ORDER_REVIEW, ORDER_CANCELREQUEST, ORDER_CANCELYN, DELIVERY_CODE, PAYMENT_CODE) "
 					  + "VALUES('O'||LPAD(ORDERLIST_SEQ.CURRVAL,5,'0'),?,?,SYSDATE" 
 					  + ",?,?,?"
 					  + ",?,?,?,?,?"
@@ -228,7 +228,7 @@ public class OrderDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 			close(rset);
 		}
@@ -236,4 +236,32 @@ public class OrderDao {
 		return ohcancel;
 	}
 
+	public int chkPostcode(Connection conn, String postcode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+
+		String query = "SELECT COUNT(POSTCODE) FROM ISLANDMOUNTAINAREA WHERE POSTCODE = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postcode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+			
+		return result;
+	}
+	
 }
+

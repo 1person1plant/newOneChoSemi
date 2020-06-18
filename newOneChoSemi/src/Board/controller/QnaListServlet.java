@@ -39,13 +39,13 @@ public class QnaListServlet extends HttpServlet {
 		ArrayList<Qna> qnas=qs.selectAllQna();
 		
 		//공지사항 조회하자
-				ArrayList<Notice> notices=qs.selectAllNotice();
+		ArrayList<Notice> notices=qs.selectAllNotice();
 				
-				System.out.println(notices);
+		System.out.println(notices);
 		
 		
 		
-		if(!qnas.isEmpty()&&!notices.isEmpty()) {
+		if(qnas!=null&&notices!=null) {
 			
 			request.setAttribute("notices", notices);
 			request.setAttribute("qnas", qnas);
