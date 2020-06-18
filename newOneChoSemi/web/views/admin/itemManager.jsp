@@ -730,7 +730,7 @@
              
              if($("#exhibitStatus").val()=="전시중지"){
           	   
-          	   $(".modal-body input").not($("#productNum")).not($("#category")).not($("#registerDate")).not($("#modifyDate")).prop("readonly",false);
+          	   $(".modal-body input").not($("#productNum")).not($("#keyword")).not($("#category")).not($("#registerDate")).not($("#modifyDate")).prop("readonly",false);
                 $("#mainImg").prop("disabled",false);
                 $("#subImg").prop("disabled",false);
                 $("#itemInfo").prop("readonly",false);
@@ -766,8 +766,12 @@
                     
                 }else if(selected=="전시중"){
                     $(".modal-body input").prop("readonly",true);
+                    $("#mainImg").prop("disabled",true);
+                    $("#subImg").prop("disabled",true);
+                    $("#itemInfo").prop("readonly",true);
                 }
-            })
+            });
+         
 
             $("#modifyCategory").change(function(){
 
@@ -778,7 +782,8 @@
                     $("#category").val(selected);
                     $("#category").css("background","yellow");
                 }
-            })
+            });
+            
             
             $("#modifyKeyword").change(function(){
             	

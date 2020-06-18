@@ -583,7 +583,7 @@
               </script>
                   
                  <input type="hidden" id="mSource" name="mSource">
-                 <div id="mdropbox"  name="mdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;">
+                 <div id="mdropbox"  name="mdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;display:none;">
                   <span id="mdroplabel">
                 	  이곳에 파일을 드랍해 주세요...
                   </span>
@@ -702,7 +702,7 @@
                 };
               </script>
 				 <input type="hidden" id="sSource" name="sSource">
-                 <div id="sdropbox"  name="sdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;">
+                 <div id="sdropbox"  name="sdropbox" style="width: 100%px; height: 80px; border: 1px solid #aaa;display:none;">
                   <span id="sdroplabel">
                   	이곳에 파일을 드랍해 주세요...
                   </span>
@@ -814,6 +814,7 @@
   
    <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>
@@ -823,13 +824,14 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     
   
       <script>
     	function iivalidate(){
     		var category=$("#category").val();
     		var keyword=$("#keyword").val();
-    		var display=$("display").val();
+    		var display=$("#display").val();
     		
     		if(category=="none"){
     			alert("카테고리를 선택해주세요.");
