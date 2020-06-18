@@ -18,7 +18,7 @@ public class WishDao {
 	      
 		ArrayList<WishList> wishList = new ArrayList<>();
 	      
-		String query = "SELECT WISHLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, WISHLIST_MEMO, IMAGE_NO, IMAGE_PATH, IMAGE_NAME FROM MEMBER_WISHLIST WHERE MEMBER_NO = ?";
+		String query = "SELECT WISHLIST_NO, ITEM_NO, ITEM_NAME, ITEM_PRICE, NVL(WISHLIST_MEMO,' ') WISHLIST_MEMO, IMAGE_NO, IMAGE_PATH, IMAGE_NAME FROM MEMBER_WISHLIST WHERE MEMBER_NO = ?";
 	      
 		try {
 			pstmt = conn.prepareStatement(query);

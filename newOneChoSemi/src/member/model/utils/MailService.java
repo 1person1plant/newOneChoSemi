@@ -14,8 +14,8 @@ import javax.mail.internet.MimeMessage;
 
 public class MailService {
 
-   private final String USER = "dkfk7845@naver.com";   // 운영자의 이메일 아이디
-   private final String PASSWORD = "dkfk12!!@";      // 운영자의 이메일 비밀번호
+   private final String USER = "";   // 운영자의 이메일 아이디
+   private final String PASSWORD = "";      // 운영자의 이메일 비밀번호
    
    public MailService(){}
    
