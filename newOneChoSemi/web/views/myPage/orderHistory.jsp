@@ -188,8 +188,8 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>reviewBtn">리뷰쓰기</button><br>
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>reviewBtn">리뷰쓰기</button><br>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										
 										<%}else{ %>
@@ -203,7 +203,7 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' class='cancelRequestBtn' value="취소 중" disabled="disabled">
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										<%} %>
 									<%} %>
@@ -239,10 +239,13 @@
 			<%for(int i=0;i<oh.size();i++){ %>
 			<script>
 				$(function(){
-					$("#<%=(oh.get(i)).getOrderNo()%>reviewBtn").click(function(){
+					$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>reviewBtn").click(function(){
+						if("<%=(oh.get(i)).getDeliveryStatus()%>"!="배송 완료"){
+							alert("배송 완료되어야 리뷰 작성이 가능합니다.");
+						}else if("<%=(oh.get(i)).getDeliveryStatus()%>"=="배송 완료"){
 						var itemNo = "<%=(oh.get(i)).getItemNo()%>"
-						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
-						
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo+"#goReview-btn";
+						}
 					})
 				})
 			</script>
@@ -253,7 +256,7 @@
 			<%for(int i=0;i<oh.size();i++){ %>
 			<script>
 				$(function(){
-					$("#<%=(oh.get(i)).getOrderNo()%>detailBtn").click(function(){
+					$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn").click(function(){
 						var itemNo = "<%=(oh.get(i)).getItemNo()%>"
 						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
 					})
