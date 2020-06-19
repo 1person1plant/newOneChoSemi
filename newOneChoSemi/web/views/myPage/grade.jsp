@@ -111,7 +111,7 @@
         td.mt-2{
         	text-align:right;
         	margin:0% !important;
-        	vertical-align: middle;
+        	vertical-align: middle !important;
         }
         
         /* 등급별 혜택 */
@@ -149,6 +149,9 @@
         }
         h1{
         margin:0 !important;
+        }
+        .gradeColor{
+        	background:#FFFFFF;
         }
 	</style>
 </head>
@@ -235,28 +238,8 @@
 			</div>
 		</div>
 	</div>
-	<script>
-	 	<%-- switch("<%=loginUser.getMemberRank()%>"){
-		 	case "R1" : <%=loginUser.getMemberRank()%>="1단계"; break;
-		 	case "R2" : <%=loginUser.getMemberRank()%>="2단계"; break;
-		 	case "R3" : <%=loginUser.getMemberRank()%>="3단계"; break;
-		 	case "R4" : <%=loginUser.getMemberRank()%>="4단계"; break;
-		 	case "R5" : <%=loginUser.getMemberRank()%>="5단계"; break;
-	 	} --%>
-	 	
-	 	
-	 	<%-- <%
-	 	String memberRank = (String)loginUser.getMemberRank();
-	 	switch(memberRank){
-		 	case "R1" : memberRank="1단계"; break;
-		 	case "R2" : memberRank="2단계"; break;
-		 	case "R3" : memberRank="3단계"; break;
-		 	case "R4" : memberRank="4단계"; break;
-		 	case "R5" : memberRank="5단계"; break;
-	 	}
-	 	%> --%>
-	</script>
-
+	
 	<%@ include file="../common/footer.jsp"%>
+
 </body>
 </html>

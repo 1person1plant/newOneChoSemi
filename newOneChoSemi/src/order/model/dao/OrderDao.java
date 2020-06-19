@@ -228,7 +228,7 @@ public class OrderDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 			close(rset);
 		}
@@ -236,4 +236,32 @@ public class OrderDao {
 		return ohcancel;
 	}
 
+	public int chkPostcode(Connection conn, String postcode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+
+		String query = "SELECT COUNT(POSTCODE) FROM ISLANDMOUNTAINAREA WHERE POSTCODE = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postcode);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+			
+		return result;
+	}
+	
 }
+

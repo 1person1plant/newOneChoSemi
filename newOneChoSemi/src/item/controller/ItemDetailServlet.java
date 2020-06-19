@@ -41,8 +41,10 @@ public class ItemDetailServlet extends HttpServlet {
 		String itemNo = request.getParameter("itemNo");
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
-		int wishCheck = 0;
+		int wishCheck = 0;   
+		        
 		Order order = new Order();
+		Review loadReview = new Review();
 		
 		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
 			myReviewList = new ArrayList<>();
@@ -51,6 +53,7 @@ public class ItemDetailServlet extends HttpServlet {
 			myReviewList = new ReviewService().myReviewList(itemNo, memberNo);
 			wishCheck = new MyWishListService().wishCheck(itemNo, memberNo);
 			order = new ReviewService().orderCheck(itemNo, memberNo);
+			System.out.println(wishCheck);
 		}
 		
 		Item itemDetail = new ItemService().selectItemDetail(itemNo);

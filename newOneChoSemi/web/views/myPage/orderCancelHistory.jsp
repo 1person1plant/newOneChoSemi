@@ -193,7 +193,7 @@ td.ordertd {
 										width='150px' height='150px'></td>
 									<td class='ordertd'><%=(ohcancel.get(i)).getItemNo()%></td>
 									<td class='ordertd'><%=(ohcancel.get(i)).getItemName()%></td>
-									<td class='ordertd'><button type='button' class='button1' id="<%=(ohcancel.get(i)).getOrderNo()%>odBtn">재주문</button></td>
+									<td class='ordertd'><button type='button' class='button1' id="<%=(ohcancel.get(i)).getOrderNo()%><%=(ohcancel.get(i)).getItemNo()%>odBtn">재주문</button></td>
 								</tr>
 										<%}%>
 									<%} %>
@@ -225,8 +225,10 @@ td.ordertd {
 			<%for(int i=0;i<ohcancel.size();i++){ %>
 			<script>
 				$(function(){
-					$("#<%=(ohcancel.get(i)).getOrderNo()%>odBtn").click(function(){
-						
+					$("#<%=(ohcancel.get(i)).getOrderNo()%><%=(ohcancel.get(i)).getItemNo()%>odBtn").click(function(){
+						var itemNo = "<%=(ohcancel.get(i)).getItemNo()%>"
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
+							
 					})
 				})
 			</script>

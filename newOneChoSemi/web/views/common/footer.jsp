@@ -19,6 +19,11 @@
                 </svg>
                 <p>일분일초</p>
                 <small class="d-block mb-3 text-muted">&copy; 2020-2022</small>
+				<p>
+					전체 : <%=session.getAttribute("totalVisitCount") %>
+    				<br>
+					오늘 : <%=session.getAttribute("todayVisitCount") %>
+				</p>
             </div>
             <div class="col-5">
                 <h5>Features</h5>

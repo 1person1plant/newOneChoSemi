@@ -21,10 +21,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Cho-당신을 위한 반려식물</title>
-	<!--타이틀 아이콘-->
-	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
-
+<title>Cho-당신을 위한 반려식물</title>
+<!--타이틀 아이콘-->
+<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath()%>/images/logo.png">
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
