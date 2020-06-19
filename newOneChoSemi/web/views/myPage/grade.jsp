@@ -150,6 +150,9 @@
         h1{
         margin:0 !important;
         }
+        .gradeColor{
+        	background:#FFFFFF;
+        }
 	</style>
 </head>
 <body>
@@ -235,7 +238,8 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<%@ include file="../common/footer.jsp"%>
+
 </body>
 </html>

@@ -64,6 +64,7 @@
 ul .list-group-item :hover {
 	color: white;
 }
+
 /* 좌측 메뉴 리스트 끝 */
 </style>
 </head>
@@ -77,7 +78,7 @@ ul .list-group-item :hover {
 		<!-- 사이드바 메뉴목록1 -->
 		<ul class="list-group">
 			<a href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo() %>" class="sideCategory" id="gradeA">
-				<li class="list-group-item" class="gradeL">회원 등급</li>
+				<li class="list-group-item">회원 등급</li>
 			</a>
 			<a href="<%=request.getContextPath()%>/infor.me?memberId=<%=loginUser.getMemberId()%>" class="sideCategory" id="infA">
 				<li class="list-group-item">개인 정보 수정</li>
@@ -102,6 +103,7 @@ ul .list-group-item :hover {
 			location.href="<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>"
 		}
 	</script>
+
 		
 
 </body>

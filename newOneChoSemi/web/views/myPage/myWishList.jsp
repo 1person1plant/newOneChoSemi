@@ -270,8 +270,10 @@
 		       
 	            if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
 		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
+		            $(this).attr("value","수정완료");
 		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false && memoLength<=100){
 					$('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
+					$(this).attr("value","메모수정");
 		            
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
