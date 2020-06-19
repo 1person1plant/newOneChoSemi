@@ -91,6 +91,7 @@ public class MyWishListDao {
 	public int wishCheck(Connection conn, String itemNo, String memberNo) {
 		
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		int result = 0;
 		
 		String query = "SELECT COUNT(*) FROM WISHLIST WHERE ITEM_NO = ? AND MEMBER_NO = ?";
@@ -100,7 +101,11 @@ public class MyWishListDao {
 			pstmt.setString(1, itemNo);
 			pstmt.setString(2, memberNo);
 			
-			result = pstmt.executeUpdate();
+			rset = pstmt.executeQuery();
+
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
