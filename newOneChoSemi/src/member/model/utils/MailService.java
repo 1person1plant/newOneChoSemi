@@ -40,8 +40,8 @@ public class MailService {
    public void sendMail(String email, String pwd) throws Exception{
       // 이메일 사용을 위해 필요한 속성값들
       Properties prop = new Properties();
-//      prop.put("mail.smtp.host", "smtp.naver.com"); // 구글일 경우 smtp.google.com
-//      prop.put("mail.smtp.port", 587);           	// 네이버일 경우 465
+//    prop.put("mail.smtp.host", "smtp.naver.com"); // 구글일 경우 smtp.google.com
+//    prop.put("mail.smtp.port", 587);           	// 네이버일 경우 465
       prop.put("mail.smtp.host", "smtp.gmail.com"); // 구글일 경우 smtp.google.com
       prop.put("mail.smtp.port", 465);           	// 구글일 경우 465
       prop.put("mail.smtp.auth", "true");
