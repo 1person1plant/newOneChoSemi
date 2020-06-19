@@ -303,7 +303,7 @@
 						
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
-		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/views/admin/itemInsertForm.jsp">
+		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/list.st">
 		                   	관리자 페이지</a>
 		                </li>
 		                <%} %>
@@ -355,8 +355,8 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchWhat">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch();">Search</button>
             </form>
         </div>
         <div class="navbotspy spy d-none d-xl-block d-lg-block d-md-block">
@@ -498,6 +498,20 @@
 		
 		
 	});
+    
+    </script>
+    
+    <!-- 헤더의 검색 버튼 클릭 -->
+    <script>
+    
+    	function headerSearch(){
+    		
+    		var searchWhat=$("#searchWhat").val();
+    		console.log(searchWhat);
+    		
+    		location.href="<%=request.getContextPath()%>/itemSearch.it?searchWhat="+searchWhat+"&searchPriceMin=0&searchPriceMax=999999";
+    		
+    	}
     
     </script>
 
