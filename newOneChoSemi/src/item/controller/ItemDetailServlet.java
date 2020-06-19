@@ -42,7 +42,7 @@ public class ItemDetailServlet extends HttpServlet {
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
 		int wishCheck = 0;   
-		
+		        
 		Order order = new Order();
 		Review loadReview = new Review();
 		
