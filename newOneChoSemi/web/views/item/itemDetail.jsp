@@ -654,7 +654,7 @@ td:nth-of-type(2) {width:45rem;}
 								var letsgo = confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
 								
 								if(letsgo) {
-									location.href="<%=request.getContextPath()%>/cart.ca?userNo=" + <%=userNo%>; 
+									location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
 								}
 								
 							}
