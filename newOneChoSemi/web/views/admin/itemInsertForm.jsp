@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="ko">
 
-<head>
+<head> 
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
