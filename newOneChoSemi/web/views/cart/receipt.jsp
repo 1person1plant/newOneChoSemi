@@ -385,11 +385,18 @@
                 </table>
             </div>
             <div class="orderend">
-                <a href="index.jsp" class="btn btn-outline-info">확인</a>
+                <a class="btn btn-outline-info" onclick="goMain()">확인</a>
             </div>
         </div>
       
     </section>
+    <script type="text/javascript">
+		function goMain() {
+			location.replace("index.jsp");
+			
+		}
+    
+	</script>
 
 <%@ include file="../common/footer.jsp" %>
 </body>
