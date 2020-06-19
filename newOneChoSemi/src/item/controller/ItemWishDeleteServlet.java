@@ -1,9 +1,8 @@
 package item.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,44 +10,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
-import item.model.vo.Item;
-import item.model.vo.Pagination;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class MainItemServlet
+ * Servlet implementation class ItemWishDeleteServlet
  */
-@WebServlet("/mainItem.it")
-public class MainItemServlet extends HttpServlet {
+@WebServlet("/wishDelete.it")
+public class ItemWishDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainItemServlet() {
+    public ItemWishDeleteServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = null;
-		
-		ArrayList<Item> bestList = new ItemService().bestList();
-		ArrayList<Item> newList = new ItemService().newList();
+		String itemNo = request.getParameter("itemNo");
+		PrintWriter out = response.getWriter();
 				
-		request.setAttribute("bestList", bestList);
-		request.setAttribute("newList", newList);
+		int result = 0;
+
+		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		result = new ItemService().wishDelete(itemNo, memberNo);
+					
+		if(result != 0) {
+			out.print("success");
+		}
 		
-		view = request.getRequestDispatcher("views/item/itemMain.jsp");
-		
-		view.forward(request, response);
+		out.flush();
+		out.close();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
