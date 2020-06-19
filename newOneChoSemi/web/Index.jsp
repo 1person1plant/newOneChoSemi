@@ -270,9 +270,9 @@
                 	곧 사라집니다..걱정마시오
             </div>
         </div>
-        <script>
+		<script>
             $(document).ready(function () {
-                $('.toast').toast('show');
+                $(".toast").toast("show");
             });
         </script>
     </section>
