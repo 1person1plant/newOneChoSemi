@@ -33,8 +33,7 @@ public class WithdrawalServlet extends HttpServlet {
 		/* System.out.println("탈퇴 servlet" + result); */
 		request.getSession().invalidate();
 		if(result>0) {
-			request.getRequestDispatcher("views/common/withSuccessPage.jsp").forward(request, response);
-			request.setAttribute("msg", "");
+			response.sendRedirect("views/member/join.jsp");
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "실패");
