@@ -1,17 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="order.model.vo.*,java.util.ArrayList"%>
-	<%-- <%Page pg = (Page)request.getAttribute("pg");
-	  ArrayList list = (ArrayList)request.getAttribute("list");
-	  
-	  int listCount = pg.getListCount();
-	  int currentPage = pg.getCurrentPage();
-	  int maxPage = pg.getMaxPage();
-	  int startPage = pg.getStartPage();
-	  int endPage = pg.getEndPage();
-	%>  --%>
-	<%
+<%
 	ArrayList<OrderHis> oh = (ArrayList<OrderHis>)request.getAttribute("oh");
-	%>
+%>
 <!DOCTYPE html>
 <html>
 <head>
