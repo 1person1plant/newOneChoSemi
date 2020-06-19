@@ -577,7 +577,7 @@ td:nth-of-type(2) {width:45rem;}
 		<script>
 		$(function(){
             $("#iteminfo-wish-span").click(function(){
-               
+               console.log("왔냐?");
                if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
                   
                   var addWish = confirm("찜 목록에 추가하시겠습니까?");
