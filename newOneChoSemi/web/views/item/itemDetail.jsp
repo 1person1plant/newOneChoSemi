@@ -337,11 +337,12 @@ td:nth-of-type(2) {width:45rem;}
 								}
 							%>
 							<td>
-								<input type="hidden" value="<%=myReviewList.get(i).getReviewNo()%>">
+								<input type="hidden" id="myReviewNo" value="<%=myReviewList.get(i).getReviewNo()%>">
 								<img src="<%=request.getContextPath()%>/images/rank/<%=rank%>" class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
 							 	<a href="#" id="updateReview-btn" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;
-							 	<a href="#" id="deleteReview-btn" style="font-size: 0.8rem; color: grey;">삭제하기</a></td>
+							 	<a href="#" id="deleteReview-btn" style="font-size: 0.8rem; color: grey;">삭제하기</a>
 							 	<input type="hidden" id="updateReview-real-btn" data-toggle="modal" href="#updateReview">
+							</td>
 							<td>
 								<div class="row review-star-score">
 									<%for(int k = 0; k < 1; k++) {%>
@@ -357,8 +358,8 @@ td:nth-of-type(2) {width:45rem;}
 									<%}%>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id"><%=myReviewList.get(i).getMemberId()%>/</span><span
-										class="review-date"><%=myReviewList.get(i).getReviewUDate()%></span>
+									<span class="review-id"><%=myReviewList.get(i).getMemberId()%>/</span>
+									<span class="review-date"><%=myReviewList.get(i).getReviewUDate()%></span>
 								</div>
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=myReviewList.get(i).getReviewContent()%></p>
@@ -366,8 +367,7 @@ td:nth-of-type(2) {width:45rem;}
 								<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
 								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image"
-										style="width: 30rem; height: 30rem;">
+									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 								<%}%>
 							</td>
@@ -375,9 +375,8 @@ td:nth-of-type(2) {width:45rem;}
 							<td>
 							</td>
 							<%}else {%>
-							<td class="fadeout-image"><img
-								src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
+							<td class="fadeout-image">
+								<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
 							</td>
 							<%}%>	
 						</tr>
@@ -393,7 +392,22 @@ td:nth-of-type(2) {width:45rem;}
 
 
 
-
+		<!--리뷰 삭제하기 스크립트-->
+		<script>
+		$(function(){
+			$("#deleteReview-btn").click(function(){
+				
+                var itemNo = $("#itemRealNo").val();
+				var reviewNo = $(this).siblings("#myReviewNo").val();
+				var deleteYes = confirm("리뷰를 삭제하시겠습니까?");
+				
+				if(deleteYes) {
+					location.href="<%=request.getContextPath()%>/delete.rv?reviewNo="+reviewNo+"&itemNo="+itemNo;
+					alert("리뷰가 삭제되었습니다.");
+				}
+			})
+		})
+		</script>
 
 
 
