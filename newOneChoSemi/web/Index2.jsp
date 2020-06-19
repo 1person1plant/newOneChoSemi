@@ -76,6 +76,56 @@
         	transform: translateY(-50%);
         	left: 0;
         }
+                .visual_container {
+           
+            background: url(images/TS/20_summer2_bev_bg.jpg) no-repeat center top;
+            background-size: cover;
+        }
+        .visual_container > div{ 
+            position: relative;
+            width: 100%;
+            max-width: 74.5rem;
+            height: 646px;
+            margin: 0 auto;
+        }
+        .visual_container > div div{
+            position: absolute;
+        }
+        .visual_container > div div.visual_img1{
+            left: 0;
+            top: 100px;
+            z-index: 3;
+        }
+        .visual_container > div div.visual_img1 img{
+            display: block;
+            margin-bottom: 100px;
+        }
+        .visual_container > div div.visual_img1 a{
+            display: inline-block;
+            width: 120px;
+            border: 2px solid #3a62ad;
+            text-align: center;
+            line-height: 33px;
+            border-radius: 3px;
+            font-size: 13px;
+            columns: #3a62ad;
+            text-decoration: none;
+        }
+        .visual_container > div div.visual_img2{
+            left: 18%;
+            top: 100px;
+            z-index: 3;
+        }
+        .visual_container > div div.visual_img3{
+            left: 45%;
+            top: 10px;
+            z-index: 2;
+        }
+        .visual_container > div div.visual_img4{
+            left: 58%;
+            top: 140px;
+            z-index: 4;
+        }
     </style>
     
     <!-- video css -->
@@ -232,7 +282,7 @@
 		<div class="vbox_card vbox_card1">
 			<div class="vbox">
 			<div class="videoBx">
-			    <video src="images/TS/Coffee.mp4" muted autoplay loop></video>
+			    <video src="images/TS/Spring.mp4" muted autoplay loop></video>
 			</div>
 			<div class="contentBx">
 			    <div class="vbox_content">
@@ -314,7 +364,6 @@
             <img src="images/TS/mossball.png" class="onechoitem1_img">
         </div>
 	</div>
-	
 	<script>
         gsap.timeline({
             scrollTrigger: {
@@ -328,6 +377,33 @@
         })
         .from(".onechoitem1_text1, .onechoitem1_text2, .onechoitem1_text3", { x : innerWidth * -1 , opacity : 0  })
         .from(".onechoitem1_img", { opacity : 0 })
+	</script>
+	
+    <section class="visual_container">
+        <div>
+            <div class="visual_img1">
+                <img src="images/TS/logo-1.png" alt="onecho">
+                <a href="#" class="btn">자세히 보기</a>
+            </div>
+            <div class="visual_img2"><img src="images/TS/water_monstera.png" alt="monstera"></div>
+            <div class="visual_img3"><img src="images/TS/soil_stuckyi.png" alt="stuckyi"></div>
+            <div class="visual_img4"><img src="images/TS/water_scindapsus.png" alt="scindapsus"></div>
+        </div>
+    </section>
+   	<script>
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: ".visual_container",
+                start: "center center", // 에니메이션 시작
+                end: "bottom top", // 에니메이션 끝
+                markers: false,
+                scrub : true,
+                pin : true
+            }
+        })
+        .from(".visual_img3", { opacity : 0 })
+        .from(".visual_img4", { opacity : 0 })
+        .from(".visual_img2", { opacity : 0 })
 	</script>
 	
 	<div class="container onechoitem2">
