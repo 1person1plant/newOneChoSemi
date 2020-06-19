@@ -348,7 +348,7 @@ label {
 						}
 					}
 					if (result == true) {
-						alert("ㅂㅂ");
+						alert("환영합니다.");
 						$("#withdrawalform").submit();
 						$("#reasonForm").submit();
 					} else {

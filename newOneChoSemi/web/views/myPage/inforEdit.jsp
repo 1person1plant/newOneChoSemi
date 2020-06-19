@@ -253,7 +253,7 @@ label {
 									<td scope="row" colspan='3' class="mt-2"><input
 										type='button' id='save' class='button1' value="변경저장"
 										onclick="saveBtn();">&nbsp;&nbsp;
-										<button type='button' class='button1' onclick="cancelBtn();">취소</button></td>
+										<button type='button' class='button1' id="cancelBtn">취소</button></td>
 								</tr>
 
 							</tbody>
@@ -479,46 +479,48 @@ label {
 		} --%>
 	</script>
 	<script>
-		function cancelBtn(){
-			var password1 = document.getElementById("password1");
-			var password2 = document.getElementById("password2");
+		$(function(){
+			$("#cancelBtn").click(function(){
+				var password1 = document.getElementById("password1");
+				var password2 = document.getElementById("password2");
 
-			var phone1 = document.getElementById("phone1");
-			var phone2 = document.getElementById("phone2");
-			var phone3 = document.getElementById("phone3");
-			
-			var email1 = document.getElementById("email1");
-			var email2 = document.getElementById("email2");
-			
-			var postCode = document.getElementById("sample3_postcode");
-			var address1 = document.getElementById("sample3_address");
-			var address2 = document.getElementById("sample3_detailAddress");
+				var phone1 = document.getElementById("phone1");
+				var phone2 = document.getElementById("phone2");
+				var phone3 = document.getElementById("phone3");
+				
+				var email1 = document.getElementById("email1");
+				var email2 = document.getElementById("email2");
+				
+				var postCode = document.getElementById("sample3_postcode");
+				var address1 = document.getElementById("sample3_address");
+				var address2 = document.getElementById("sample3_detailAddress");
 
-			
-			if(
-			(password1.value != "<%=loginUser.getMemberPwd()%>")||
-			(password2.value != "<%=loginUser.getMemberPwd()%>")||
+				
+				if(
+				(password1.value != "<%=loginUser.getMemberPwd()%>")||
+				(password2.value != "<%=loginUser.getMemberPwd()%>")||
 
-			(phone1.value != "<%=loginUser.getMemberPhone1()%>")||
-			(phone2.value != "<%=loginUser.getMemberPhone2()%>")||
-			(phone3.value != "<%=loginUser.getMemberPhone3()%>")||
+				(phone1.value != "<%=loginUser.getMemberPhone1()%>")||
+				(phone2.value != "<%=loginUser.getMemberPhone2()%>")||
+				(phone3.value != "<%=loginUser.getMemberPhone3()%>")||
 
-			(email1.value != "<%=loginUser.getMemberEmail1()%>")||
-			(email2.value != "<%=loginUser.getMemberEmail2()%>")||
+				(email1.value != "<%=loginUser.getMemberEmail1()%>")||
+				(email2.value != "<%=loginUser.getMemberEmail2()%>")||
 
-			(postCode.value != "<%=loginUser.getMemberPostcode()%>")||
-			(address1.value != "<%=loginUser.getMemberAddress1()%>")||
-			(address2.value != "<%=loginUser.getMemberAddress2()%>")
-			){
-				var result = confirm("변경 사항이 있습니다. 취소하시겠습니까?");
-				if(result){
+				(postCode.value != "<%=loginUser.getMemberPostcode()%>")||
+				(address1.value != "<%=loginUser.getMemberAddress1()%>")||
+				(address2.value != "<%=loginUser.getMemberAddress2()%>")
+				){
+					var result = confirm("변경 사항이 있습니다. 취소하시겠습니까?");
+					if(result){
+						location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+					}
+				}else{
 					location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
 				}
-			}else{
-				location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
-			}
-			
-		}
+			})
+		})
+	
 	</script>
 	<%@ include file="../common/footer.jsp"%>
 </body>
