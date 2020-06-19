@@ -469,6 +469,39 @@
 		}
         
     </script>
+    
+    <!-- 방문자 수 체크용 -->
+    <script>
+    
+	    $(document).click(function(){
+			
+			var ipAddr='<%=request.getRemoteAddr()%>';
+			var sessionId='<%=session.getId()%>';
+			
+		
+		$.ajax({
+		
+			url:"<%=request.getContextPath()%>/count.vi",
+			type:"post",
+			data:{ip:ipAddr,id:sessionId},
+			success:function(data){
+				
+				if(data=="success"){
+					console.log("방문자 기록");
+				}
+			},
+			error:function(data){
+				console.log("방문자 기록 실패");
+			}
+			
+		});
+		
+		
+		
+		
+	});
+    
+    </script>
 
 </body>
 </html>

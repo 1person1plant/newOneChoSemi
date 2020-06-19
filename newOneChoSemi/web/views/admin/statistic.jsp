@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList,statistic.model.vo.* "%>
+    
+    
+ <%
+ ArrayList<Statistic> sales=(ArrayList<Statistic>)request.getAttribute("sales"); 
+ Statistic stat=(Statistic)request.getAttribute("stat");
+ 	%>
 <!doctype html>
 <html lang="ko">
 
@@ -23,6 +29,17 @@
     
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <!--dashbord-->
+  	<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/">
+  	<link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+   <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
    
    <style>
    
@@ -38,8 +55,9 @@
     * {
       font-family: "basicFont";
     }
-
-
+    
+    	
+	
   </style>
 
 
@@ -163,13 +181,306 @@
 
           <!--vertical nav 끝-->
  
-
-
+		 <div class="col-10">
+		<div class="container" style="margin-top:100px">
+		
+		 <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+		
+		
+		</div>
           
+          <script>
+        window.onload = function () {
+
+
+
+            var options = {
+                title: {
+                    text: "이번달 매출  추이"
+                },
+                axisX: {
+            		valueFormatString: "DD MMM,YY"
+            	},
+            	axisY: {
+            		title: "매출 (in 원)",
+            		includeZero: false,
+            		suffix: " 원"
+            	},
+                animationEnabled: true,
+                exportEnabled: true,
+                data: [
+                {
+                    type: "spline", //change it to line, area, column, pie, etc
+                    dataPoints: [
+                    	
+                    	<%for(int i=0;i<sales.size();i++){
+                    		
+                    		String day=sales.get(i).getOrderDate();
+                    		String year=day.substring(0, 4);
+                    		String month=day.substring(5, 7);
+                    		String date=day.substring(8,10);
+                    	%>
+                    	
+                    	<%if(i!=sales.size()-1){%>
+                    	
+                    		
+                    	
+                    		{x:new Date(<%=year%>,<%=month%>,<%=date%>),y:<%=sales.get(i).getSales()%>},
+                    		
+                 
+                    	
+                    	<%}else{%>
+                    	
+                    		{x:new Date(<%=year%>,<%=month%>,<%=date%>),y:<%=sales.get(i).getSales()%>}
+                    	
+                    	<%}%>
+                    	 
+                        <%}%>
+                    ]
+                }
+                ]
+            };
+            $("#chartContainer").CanvasJSChart(options);
+             
+
+           
+        }
+        </script>
 
 			
-				
+		<div class="container">
+			 <div class="row " style="margin-top:100px;">
 
+            
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">DAILY SALE</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getNewSale() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">WEEKLY SALE</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getWeekSale() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">MONTHLY SALE</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getAmonthSale() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row mx" >
+
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">오늘 방문자 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getNewVisit() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+              <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">신규 가입 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getNewMember() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+             
+          <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">전체 멤버 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getAllMember() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+            
+            
+      
+         
+            
+            
+            
+         
+          
+        
+          
+          
+          <div class="row" >
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">배송전 상품</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getdBefore() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">주문 취소 요청</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getCancel() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+           	<!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">신규 주문 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getNewOrder() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+               
+          </div>
+          
+          
+          <div class="row mx-auto" >
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">신규 질문 수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getNewQna() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">미답변 질문</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=stat.getUnAnsw() %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+			
+		</div>
+			
+			
+		</div>	
+			
+			
+			
+				
+		</div>
         	
 
 
@@ -204,6 +515,16 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+    
+    
+    <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+        <script src="dashboard.js"></script>
+
+
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
  
 

@@ -157,6 +157,13 @@
             </a>
           </li>
           
+           <li class="nav-item">
+            <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/list.st'">
+              <span data-feather="shopping-cart"></span>
+             	 통계
+            </a>
+          </li>
+          
         </ul>
           </div>
         </nav>
