@@ -123,7 +123,7 @@ public class AdminMemberDao {
 			if(count==0) {
 				
 				query+=" WHERE ";
-				query+=searchDate+" BETWEEN "+"'"+date1+"'"+" AND "+"'"+date2+"'";
+				query+="TO_DATE(TO_CHAR("+searchDate+",'YYYY-MM-DD')) BETWEEN TO_DATE('"+date1+"','YYYY-MM-DD') AND TO_DATE('"+date2+"','YYYY-MM-DD')";
 			}
 			
 			count++;

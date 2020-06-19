@@ -870,11 +870,23 @@
     
     </script>
     <script>
-    
+    	
+    	//제출 전 초기화 누를 경우, 다시 유효하지 않은 상태로 바꾸어야 함
     	$('button[type=reset]').click(function(){
         $("#countText").children('span').first().text('0');
         document.getElementById("mpreview").style.display="none";
         document.getElementById("spreview").style.display="none";
+        $("#itemName").removeClass("is-valid");
+        $("#itemName").addClass("is-invalid");
+        $("#price").addClass("is-invalid");
+        $("#price").removeClass("is-valid");
+        $("#discount").removeClass("is-valid");
+        $("#discount").addClass("is-invalid");
+        $("#maxbuy").removeClass("is-valid");
+        $("#maxbuy").addClass("is-invalid");
+        $("#stock").removeClass("is-valid");
+        $("#stock").addClass("is-invalid");
+        
         
         
       });
