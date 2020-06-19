@@ -111,7 +111,7 @@
         td.mt-2{
         	text-align:right;
         	margin:0% !important;
-        	vertical-align: middle;
+        	vertical-align: middle !important;
         }
         
         /* 등급별 혜택 */
@@ -149,6 +149,9 @@
         }
         h1{
         margin:0 !important;
+        }
+        .gradeColor{
+        	background:#FFFFFF;
         }
 	</style>
 </head>

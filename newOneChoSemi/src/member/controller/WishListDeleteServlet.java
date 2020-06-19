@@ -32,10 +32,9 @@ public class WishListDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String wishNo = request.getParameter("wishNo");
-		String memberNo = request.getParameter("memberNo");
-		System.out.println("wishNo" + wishNo + "memberNo : " + memberNo);
+		System.out.println("wishNo" + wishNo);
 		
-		int result = new MyWishListService().deleteWish(new MyWishList(wishNo,memberNo));
+		int result = new MyWishListService().deleteWish(wishNo);
 		
 		System.out.println("servlet result : " +result);
 		

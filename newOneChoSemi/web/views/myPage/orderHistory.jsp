@@ -152,13 +152,17 @@
 			<div class='col-md-9'>
 				<fieldset>
 					<div class="table" id='orderTable'>
-						<h1>주문 내역</h1>
 						<form>
 							<table>
 								<thead>
-								
-									<tr class='ollist' style='border-bottom: 2px solid black'>
+								<th colspan="9" scope="col" style='border-bottom: 2px solid black'>
 									<input type="text" style="display:none;" value="<%=loginUser.getMemberNo()%>" id="memberNo" name="memberNo">
+									<h1>주문 내역</h1>
+								</th>
+								
+								</thead>
+								<tbody>
+									<tr class='ollist' style='border-bottom: 2px solid black'>
 										<td>주문번호</td>
 										<td>상품이미지</td>
 										<td>상품번호</td>
@@ -167,7 +171,6 @@
 										<td>배송상태</td>
 										<td>기타</td>
 									</tr>
-								</thead>
 								<%if(oh.isEmpty()||oh.size()==0){ %>
 									<tr class='ollist' style='border-bottom: 2px solid black'>
 									<td style="padding:15px"class='ordertd' colspan="7" style="font-size:1rem">주문 내역이 존재하지 않습니다.</td>
@@ -185,8 +188,8 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>Btn" class='button1' value="취소신청"><br>
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>reviewBtn">리뷰쓰기</button><br>
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>reviewBtn">리뷰쓰기</button><br>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										
 										<%}else{ %>
@@ -200,7 +203,7 @@
 											<td class='ordertd'><%=(oh.get(i)).getDeliveryStatus()%></td>
 											<td id='orderbutton'>
 											<input type='button' class='cancelRequestBtn' value="취소 중" disabled="disabled">
-											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%>detailBtn">상세보기</button></td>
+											<button type='button' class='button1' id="<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn">상세보기</button></td>
 										</tr>
 										<%} %>
 									<%} %>
@@ -208,21 +211,7 @@
 											<td colspan="7" class="ordertd" align="right"><input type="button" class="cancelListBtn" value="주문 취소 내역"></td>
 										</tr>
 								<%} %>
-								<%-- <tr class='ollist' style='border-bottom: 2px solid black'>
-									<td class='ordertd'><%=orderNo %></td>
-									<td class='ordertd'><img src='flo.jpg' width='150px'
-										height='150px'></td>
-									<td class='ordertd'><%=itemNo %></td>
-									<td class='ordertd'><%=itemName %></td>
-									<td class='ordertd'><%=orderCount %></td>
-									<td class='ordertd'><%=deliveryCode %></td>
-									<td id='orderbutton'><a href='main.jsp' id='delete'><button
-												type='button' class='button1'>취소신청</button></a><br> <a
-										href='main.jsp' id='delete'><button type='button'
-												class='button1'>리뷰쓰기</button></a><br> <a href='main.jsp'
-										id='delete'><button type='button' class='button1'>상세보기</button></a></td>
-								</tr> --%>
-								
+								</tbody>
 							</table>
 							
 						</form>
@@ -236,8 +225,13 @@
 			<%for(int i=0;i<oh.size();i++){ %>
 			<script>
 				$(function(){
-					$("#<%=(oh.get(i)).getOrderNo()%>reviewBtn").click(function(){
-						
+					$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>reviewBtn").click(function(){
+						if("<%=(oh.get(i)).getDeliveryStatus()%>"!="배송 완료"){
+							alert("배송 완료되어야 리뷰 작성이 가능합니다.");
+						}else if("<%=(oh.get(i)).getDeliveryStatus()%>"=="배송 완료"){
+						var itemNo = "<%=(oh.get(i)).getItemNo()%>"
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo+"#myReview-writing";
+						}
 					})
 				})
 			</script>
@@ -248,8 +242,9 @@
 			<%for(int i=0;i<oh.size();i++){ %>
 			<script>
 				$(function(){
-					$("#<%=(oh.get(i)).getOrderNo()%>detailBtn").click(function(){
-						
+					$("#<%=(oh.get(i)).getOrderNo()%><%=(oh.get(i)).getItemNo()%>detailBtn").click(function(){
+						var itemNo = "<%=(oh.get(i)).getItemNo()%>"
+						location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
 					})
 				})
 			</script>

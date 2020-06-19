@@ -1,19 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	/* String memberId = member.getmemberId();
-String memberPwd = member.getMemberPwd();
-String memberName = member.getMemberName();
-String memberPhone1 = member.getMemberPhone1();
-String memberPhone2 = member.getMemberPhone1();
-String memberPhone3 = member.getMemberPhone1();
-String memberEmail1 = member.getMemberEmail1();
-String memberEmail2 = member.getMemberEmail2();
-String memberPostcode = member.getMemberPostcode();
-String memberAddress1 = member.getMemberAddress1();
-String memberAddress2 = member.getMemberAddress2();
-*/
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -219,12 +205,11 @@ label {
 								</tr>
 								<tr>
 									<td scope="row" class="mt-2"><label>이메일 : </label></td>
-									<td colspan="2"><input type='text' id='email1'
-										name='memberEmail1' class="inputBtn"
-										value="<%=loginUser.getMemberEmail1()%>"> @ <select
+									<td colspan="2"><input type='text' id='email1' name='memberEmail1' class="inputBtn" value="<%=loginUser.getMemberEmail1()%>"> @ <select
 										id='email2' name='memberEmail2'>
 											<option value="@naver.com">naver.com</option>
 											<option value="@gmail.com">gmail.com</option>
+											<option value="@nate.com">nate.com</option>
 											<option value="@hanmail.net">hanmail.net</option>
 
 									</select></td>
@@ -241,7 +226,7 @@ label {
 									</td>
 								</tr>
 								<tr id="apiId" style="display: none;">
-									<td colspan="3" text-align="center">
+									<td colspan="3" align="center">
 										<div id="wrap" class="mx-auto"
 											style="display: none; border: 1px solid; width: 80%; height: 300px; margin: 5px 0; position: relative">
 											<img
@@ -279,17 +264,6 @@ label {
 			</div>
 		</div>
 	</div>
-
-	<!-- <input type="text" id="sample3_postcode" placeholder="우편번호"> -->
-	<!-- <button type="button" onclick="sample3_execDaumPostcode()" value="우편번호 검색" class='button1' id='attBtn'><br> -->
-	<!-- <input type="text" id="sample3_address" placeholder="주소"><br> -->
-	<!-- <input type="text" id="sample3_detailAddress" placeholder="상세주소"> -->
-	<!-- <input type="text" id="sample3_extraAddress" placeholder="참고항목"> -->
-
-	<!-- <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-</div> -->
-
 
 	<script
 		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -371,30 +345,7 @@ label {
 			apiId.style.display = "table-row";
 		}
 	</script>
-<!-- <script>
-			function updateUser(){
-				if ($("#password1").val() == "") {
-					alert("비밀번호를 입력해 주세요.");
-				} else if ($("#password2").val() == "") {
-					alert("비밀번호 확인을 입력해 주세요.")
-				} else if ($("#phone2").val() == "") {
-					alert("핸드폰 번호를 입력해 주세요.")
-				} else if ($("#phone3").val() == "") {
-					alert("핸드폰 번호를 입력해 주세요.")
-				} else if ($("#email1").val() == "") {
-					alert("이메일을 입력해 주세요.")
-				} else if ($("#sample3_postcode").val() == "") {
-					alert("우편 번호를 입력해 주세요.")
-				} else if ($("#sample3_address").val() == "") {
-					alert("주소를 입력해 주세요.")
-				} else if ($("#sample3_detailAddress").val() == "") {
-					alert("상세 주소를 입력해 주세요.")
-				} else {
-					$("#updateForm").submit();
-				}
-				return true;
-			}
-		</script> -->
+
 
 	<script>
 		$(function() {
@@ -514,7 +465,7 @@ label {
 			</script>
 
 	<script>
-		function cancelBtn() {
+		<%-- function cancelBtn() {
 			if ($(".inputBtn").val() == "") {
 				location.href = "grade.jsp";
 			} else if ($(".inputBtn").val() != "") {
@@ -525,9 +476,50 @@ label {
 					
 				}
 			}
+		} --%>
+	</script>
+	<script>
+		function cancelBtn(){
+			var password1 = document.getElementById("password1");
+			var password2 = document.getElementById("password2");
+
+			var phone1 = document.getElementById("phone1");
+			var phone2 = document.getElementById("phone2");
+			var phone3 = document.getElementById("phone3");
+			
+			var email1 = document.getElementById("email1");
+			var email2 = document.getElementById("email2");
+			
+			var postCode = document.getElementById("sample3_postcode");
+			var address1 = document.getElementById("sample3_address");
+			var address2 = document.getElementById("sample3_detailAddress");
+
+			
+			if(
+			(password1.value != "<%=loginUser.getMemberPwd()%>")||
+			(password2.value != "<%=loginUser.getMemberPwd()%>")||
+
+			(phone1.value != "<%=loginUser.getMemberPhone1()%>")||
+			(phone2.value != "<%=loginUser.getMemberPhone2()%>")||
+			(phone3.value != "<%=loginUser.getMemberPhone3()%>")||
+
+			(email1.value != "<%=loginUser.getMemberEmail1()%>")||
+			(email2.value != "<%=loginUser.getMemberEmail2()%>")||
+
+			(postCode.value != "<%=loginUser.getMemberPostcode()%>")||
+			(address1.value != "<%=loginUser.getMemberAddress1()%>")||
+			(address2.value != "<%=loginUser.getMemberAddress2()%>")
+			){
+				var result = confirm("변경 사항이 있습니다. 취소하시겠습니까?");
+				if(result){
+					location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+				}
+			}else{
+				location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+			}
+			
 		}
 	</script>
-
 	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

@@ -76,7 +76,7 @@
         	transform: translateY(-50%);
         	left: 0;
         }
-                .visual_container {
+        .visual_container {
            
             background: url(images/TS/20_summer2_bev_bg.jpg) no-repeat center top;
             background-size: cover;
