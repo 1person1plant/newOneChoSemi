@@ -4,10 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Cho-당신을 위한 반려식물</title>
-	<!--타이틀 아이콘-->
-	<link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
-
+<title>Insert title here</title>
 <style>
 /* item search start */
 .item-search {margin-top:5rem;}

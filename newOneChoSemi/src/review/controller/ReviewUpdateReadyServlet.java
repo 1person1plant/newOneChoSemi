@@ -1,7 +1,6 @@
 package review.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +8,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.vo.Member;
-import order.model.vo.Order;
+import com.google.gson.Gson;
+
 import review.model.service.ReviewService;
+import review.model.vo.Review;
 
 /**
- * Servlet implementation class ReviewStatusServlet
+ * Servlet implementation class ReviewUpdateServlet
  */
-@WebServlet("/status.rv")
-public class ReviewStatusServlet extends HttpServlet {
+@WebServlet("/updateReady.rv")
+public class ReviewUpdateReadyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviewStatusServlet() {
+    public ReviewUpdateReadyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,30 +33,21 @@ public class ReviewStatusServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String itemNo = request.getParameter("itemNo");
-		PrintWriter out = response.getWriter();
-				
-		int result = 0;
-
-		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
-			result = -1;
-		}else {
-			String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-			result = new ReviewService().statusCheck(itemNo, memberNo);
-		}
-					
-		if(result==-1) {
-			out.print("plzLogin");
-		}else if(result==0){
-			out.print("nothing");
-		}else {
-			out.print("something");
-		}
+		request.setCharacterEncoding("UTF-8");
 		
-		out.flush();
-		out.close();
+		// 리뷰 수정할 때 리뷰정보 가져오는 코드				
+		String reviewNo = request.getParameter("reviewNo");
+		
+		Review loadReview = new ReviewService().loadReview(reviewNo);
+
+		if(loadReview != null) {
+			response.setContentType("application/json;");
+			new Gson().toJson(loadReview, response.getWriter());
+		}
+		// 리뷰 수정할 때 리뷰정보 가져오는 코드 종료
 		
 	}
+				
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
