@@ -26,6 +26,9 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
+		
+//		회원의 로그아웃 때 세션을 유지하기 위해 (하지만 세미에는 카운트를 보여주기 위해 세션을 지움) 
+//		request.getSession().removeAttribute("sessionID");
 
 		response.sendRedirect("index.jsp");
 	}

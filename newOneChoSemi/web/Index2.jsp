@@ -441,7 +441,7 @@
 	    </div>
 	</div>
 	
-	    <script>
+	<script>
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".onecho2",
