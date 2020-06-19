@@ -361,7 +361,7 @@
             <h2 class="onechoitem1_text1">기분이 좋을땐 물 위를 둥둥</h2>
             <h2 class="onechoitem1_text2">보기만 해도 행복해지는</h2>
             <h2 class="onechoitem1_text3">귀여운 마리모를 소개해드립니다.</h2>
-            <img src="images/TS/mossball.png" class="onechoitem1_img">
+            <img src="images/TS/mossball.png" class="onechoitem1_img" style="cursor:pointer" onclick="goMossball();">
         </div>
 	</div>
 	<script>
@@ -383,7 +383,7 @@
         <div>
             <div class="visual_img1">
                 <img src="images/TS/logo-1.png" alt="onecho">
-                <a href="#" class="btn">자세히 보기</a>
+                <a onclick="goAll();" class="btn">자세히 보기</a> <!-- goAll()은 헤더에 있음 -->
             </div>
             <div class="visual_img2"><img src="images/TS/water_monstera.png" alt="monstera"></div>
             <div class="visual_img3"><img src="images/TS/soil_stuckyi.png" alt="stuckyi"></div>
@@ -411,7 +411,7 @@
             <h2 class="onechoitem2_text1">코뿔소의 뿔을 닮은</h2>
             <h2 class="onechoitem2_text2">NASA에서 인정한 공기정화와</h2>
             <h2 class="onechoitem2_text3">미세먼지에 탁월한 효과를 보여줘요</h2>
-            <img src="images/TS/1279252424_L.jpg" class="onechoitem2_img">
+            <img src="images/TS/1279252424_L.jpg" class="onechoitem2_img" style="cursor:pointer" onclick="goStuckyi();">
         </div>
 	</div>
 	
@@ -457,6 +457,14 @@
         .from(".onecho2_hr", { opacity : 0 })
         .from(".onecho2_text3", { opacity : 0 })
         .from(".onecho2_btn", { x : innerWidth * 1, rotate : 360 })
+	</script>
+	<script>
+		function goMossball() {
+			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=I00017";
+		}
+		function goStuckyi() {
+			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=I00016";
+		}
 	</script>
 
 <%@ include file="views/common/footer.jsp" %>
