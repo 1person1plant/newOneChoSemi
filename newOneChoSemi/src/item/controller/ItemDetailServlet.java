@@ -41,7 +41,7 @@ public class ItemDetailServlet extends HttpServlet {
 		String itemNo = request.getParameter("itemNo");
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		ArrayList<Review> otherReviewList = new ReviewService().otherReviewList(itemNo);
-		int wishCheck = 0;
+		int wishCheck = 0;   
 		
 		Order order = new Order();
 		Review loadReview = new Review();
