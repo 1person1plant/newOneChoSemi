@@ -355,6 +355,40 @@ public class ItemService {
 
 		return result;
 	}
+	
+	public int wishDelete(String itemNo, String memberNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ItemDao().wishDelete(conn, itemNo, memberNo);
+		
+		close(conn);
+		
+		return result;
+		
+	}
 
+	public int wishAdd(String itemNo, String memberNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ItemDao().wishAdd(conn, itemNo, memberNo);
+		
+		close(conn);
+		
+		return result;
+
+	}
+
+	public int cartAdd(String itemNo, String memberNo, int itemCount) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ItemDao().cartAdd(conn, itemNo, memberNo, itemCount);
+		
+		close(conn);
+		
+		return result;
+	}
 
 }
