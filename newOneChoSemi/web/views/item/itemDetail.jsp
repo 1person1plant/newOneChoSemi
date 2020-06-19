@@ -363,14 +363,22 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=myReviewList.get(i).getReviewContent()%></p>
 								</div>
+								<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
+								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
 									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image"
 										style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
+							<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
+							<td>
+							</td>
+							<%}else {%>
 							<td class="fadeout-image"><img
 								src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>"
-								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
+								id="mini-review-image" style="width: 7rem; height: 7rem;">
+							</td>
+							<%}%>	
 						</tr>
 						<%}%>
 					</tbody>
@@ -575,32 +583,8 @@ td:nth-of-type(2) {width:45rem;}
 
 		<!--위시리스트 추가하고 삭제하기-->
 		<script>
-			$(function(){
-				$("#iteminfo-wish-span").click(function(){
-					console.log("왔냐?");
-			    	if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
-			               
-						var addWish = confirm("찜 목록에 추가하시겠습니까?");
-						var itemNo = $("#itemRealNo").val();
-						console.log(" 추가 왔냐? " + itemNo);
-						if(addWish) {
-							$.ajax({
-								url:"<%=request.getContextPath()%>/wishAdd.it",
-								type : "POST",
-								data : {itemNo:itemNo},
-								success : function(data) {                  
-									if(data == "plzLogin") {
-										alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
-									}else {
-										alert("찜 목록에 추가되었습니다.");
-										$(".fa-heart").css("color","pink");
-									}
-								},
-								error : function(request, status, error) {
-									alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-								}
-							})
-						}
+		$(function(){
+            $("#iteminfo-wish-span").click(function(){
                
 					} else {
 						var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
@@ -626,7 +610,60 @@ td:nth-of-type(2) {width:45rem;}
 					 	}
 					}
 				})
+               if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
+                  
+                  var addWish = confirm("찜 목록에 추가하시겠습니까?");
+                  var itemNo = $("#itemRealNo").val();
+                  
+                  console.log("회색일 때 눌렸다.")
+                  
+                  if(addWish) {
+                     $.ajax({
+                        url:"<%=request.getContextPath()%>/wishAdd.it",
+                        type : "POST",
+                        data : {itemNo:itemNo},
+                        success : function(data) {                  
+                           if(data == "plzLogin") {
+                              alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
+                           }else {
+                              alert("찜 목록에 추가되었습니다.");
+                              $(".fa-heart").css("color","pink");
+                           }
+                        },
+                        error : function(request, status, error) {
+                           alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+                        }
+                     })
+                  }
+                  
+               }else {
+            	   
+            	   
+                  var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
+                  var itemNo = $("#itemRealNo").val();
+                  
+                  console.log("핑크일 때 눌렸다. itemNo: " + itemNo);
+                  
+                  if(deleteWish) {
+                	  
+                	  $.ajax({
+                		url : "<%=request.getContextPath()%>/wishDelete.it",
+                		type : "POST",
+						data : {itemNo : itemNo},
+						success : function(data) {
+							if (data == "success") {
+								alert("찜 목록에서 삭제되었습니다.");
+								$(".fa-heart").css("color","gray");
+							}
+						},
+						error : function(request, status, error) {
+							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+						}
+					})
+				}
+			}
 			})
+		})
 		</script>
 
 
@@ -659,7 +696,7 @@ td:nth-of-type(2) {width:45rem;}
 								}
 								
 							}
-							
+						
 							console.log(data);
 											
 						},
@@ -730,15 +767,23 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=otherReviewList.get(i).getReviewContent()%></p>
 								</div>
-								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img
-										src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
-										id="big-review-image" style="width: 30rem; height: 30rem;">
+								<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
+								<div>
 								</div>
+								<%}else {%>
+								<div class="row review-bigImage" style="margin-top: 1rem;">
+									<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
+								</div>
+								<%}%>
 							</td>
-							<td class="fadeout-image"><img
-								src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
-								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
+							<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
+							<td>
+							</td>
+							<%}else {%>
+							<td class="fadeout-image">
+								<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
+							</td>
+							<%}%>
 						</tr>
 						<%}%>
 					</tbody>
