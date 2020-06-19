@@ -1036,5 +1036,77 @@ public class ItemDao {
 		
 		return result;
 	}
+	
+	public int wishDelete(Connection conn, String itemNo, String memberNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM WISHLIST WHERE ITEM_NO = ? AND MEMBER_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			
+			result = pstmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int wishAdd(Connection conn, String itemNo, String memberNo) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO WISHLIST VALUES('W'||LPAD(SEQ_WID.NEXTVAL,5,'0'), ?, ?, NULL)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int cartAdd(Connection conn, String itemNo, String memberNo, int itemCount) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO CARTLIST VALUES('C'||LPAD(SEQ_CID.NEXTVAL,5,'0'), ?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, itemNo);
+			pstmt.setString(2, memberNo);
+			pstmt.setInt(3, itemCount);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }

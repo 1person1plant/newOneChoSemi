@@ -20,7 +20,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> otherReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"'";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' ORDER BY 8 DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -62,7 +62,7 @@ public class ReviewDao {
 		
 		ArrayList<Review> myReviewList = new ArrayList<>();
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "'";
+		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' AND MEMBER_NO = '" + memberNo + "' ORDER BY 8 DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -118,6 +118,9 @@ public class ReviewDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		return result;
@@ -146,8 +149,12 @@ public class ReviewDao {
 								 ,rset.getString("delivery_code")
 								 ,rset.getString("order_review"));
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		return order;
@@ -181,24 +188,56 @@ public class ReviewDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query="INSERT INTO REVIEW VALUES('R'||LPAD(SEQ_REVIEW.NEXTVAL,5,'0'), ?, ?, ?, SYSDATE, ?, ?, SYSDATE, ?, ?)";
+		String orderNo = rv.getOrderNo();
+		String itemNo = rv.getItemNo();
+		String memberNo = rv.getMemberNo();
+		int reviewRate = rv.getReviewRate();
+		String reviewContent = rv.getReviewContent();
+		String reviewImgName = rv.getReviewImgName();
+		String reviewImgPath = rv.getReviewImgPath();
 		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, rv.getOrderNo());
-			pstmt.setString(2, rv.getItemNo());
-			pstmt.setString(3, rv.getMemberNo());
-			pstmt.setInt(4, rv.getReviewRate());
-			pstmt.setString(5, rv.getReviewContent());
-			pstmt.setString(6, rv.getReviewImgName());
-			pstmt.setString(7, rv.getReviewImgPath());
+		if(reviewImgName == null) {
 			
-			result = pstmt.executeUpdate();
+			String query = "INSERT INTO REVIEW VALUES('R'||LPAD(SEQ_REVIEW.NEXTVAL,5,'0'), ?, ?, ?, SYSDATE, ?, ?, SYSDATE, NULL, NULL)";
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, orderNo);
+				pstmt.setString(2, itemNo);
+				pstmt.setString(3, memberNo);
+				pstmt.setInt(4, reviewRate);
+				pstmt.setString(5, reviewContent);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+		}else {				
+			
+			String query = "INSERT INTO REVIEW VALUES('R'||LPAD(SEQ_REVIEW.NEXTVAL,5,'0'), ?, ?, ?, SYSDATE, ?, ?, SYSDATE, ?, ?)";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, orderNo);
+				pstmt.setString(2, itemNo);
+				pstmt.setString(3, memberNo);
+				pstmt.setInt(4, reviewRate);
+				pstmt.setString(5, reviewContent);
+				pstmt.setString(6, reviewImgName);
+				pstmt.setString(7, reviewImgPath);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		
 		}
 		
 		return result;
@@ -236,6 +275,34 @@ public class ReviewDao {
 		}
 		
 		return rv;
+	}
+
+	public int reviewUpdate(Connection conn, Review updateRv) {
+		
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE REVIEW SET REVIEW_RATE = ?, REVIEW_CONTENT = ?, REVIEW_UDATE = SYSDATE, REVIEW_IMAGENAME = ? WHERE REVIEW_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, updateRv.getReviewRate());
+			pstmt.setString(2, updateRv.getReviewContent());
+			pstmt.setString(3, updateRv.getReviewImgName());
+			pstmt.setString(4, updateRv.getReviewNo());
+		
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
 	}
 
 }

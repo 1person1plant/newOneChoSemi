@@ -256,7 +256,6 @@
 		})
 		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>UpBtn').click(function(){
-           
 				var wishNo = $(this).parents("tr").children("td:first").text();
 	            var memberNo = "<%=loginUser.getMemberNo()%>";
 	            var wishMemo = $(this).parents("tr").children().children("textarea").val();
@@ -264,14 +263,17 @@
 	            console.log("wishNo : " +wishMemo + "memberNo : " + memberNo + "wishMemo : " + wishMemo + "itemNo : "+itemNo);
 				var memoLength = wishMemo.length;
 	            console.log("textarea" + memoLength);
+	            
 	            if(memoLength>100){
 	            	alert("100자까지 입력 가능합니다.");
 	            }
 		       
 	            if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==true){
 		            $('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',false);
+		            $(this).attr("value","수정완료");
 		        }else if($('.<%=mwl.get(i).getWishlistNo()%>text').prop('disabled')==false && memoLength<=100){
 					$('.<%=mwl.get(i).getWishlistNo()%>text').attr('disabled',true);
+					$(this).attr("value","메모수정");
 		            
 		            $.ajax({
 					url:"<%=request.getContextPath()%>/wishmemo.up",
@@ -301,7 +303,8 @@
 	<script>
 		$(function(){
 			$('#<%=mwl.get(i).getWishlistNo()%>BuyBtn').click(function(){
-				
+				var itemNo = "<%=mwl.get(i).getItemNo()%>"
+				location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=" + itemNo;
 			})
 		})
 	</script>

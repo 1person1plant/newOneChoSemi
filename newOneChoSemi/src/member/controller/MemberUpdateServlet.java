@@ -45,12 +45,23 @@ public class MemberUpdateServlet extends HttpServlet {
 		String memberAddress1 = request.getParameter("memberAddress1");
 		String memberAddress2 = request.getParameter("memberAddress2");
 		int result = new MemberService().memberUpdate(new Member(memberId,memberPwd,memberName,memberPhone1,memberPhone2,memberPhone3,memberEmail1,memberEmail2,memberPostcode,memberAddress1,memberAddress2));
+		Member member = new Member(memberId,memberPwd);
+		Member loginUser = new MemberService().loginMember(member);
+	
+		
+		
 		if(result>0) {
-			request.setAttribute("msg", "");
-			request.getRequestDispatcher("views/common/successPage.jsp").forward(request,response);
-			request.getSession().invalidate();
+			if(loginUser!=null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("loginUser", loginUser);
+			
+				response.sendRedirect("grade.me?memberNo="+loginUser.getMemberNo());
+			}else {
+				request.setAttribute("msg", "member값 조회 실패");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
+			}
 		}else {
-			request.setAttribute("msg", "실패");
+			request.setAttribute("msg", "Update실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
 		}
 	}
