@@ -575,57 +575,58 @@ td:nth-of-type(2) {width:45rem;}
 
 		<!--위시리스트 추가하고 삭제하기-->
 		<script>
-		$(function(){
-            $("#iteminfo-wish-span").click(function(){
-               console.log("왔냐?");
-               if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
-                  
-                  var addWish = confirm("찜 목록에 추가하시겠습니까?");
-                  var itemNo = $("#itemRealNo").val();
-                  
-                  if(addWish) {
-                     $.ajax({
-                        url:"<%=request.getContextPath()%>/wishAdd.it",
-                        type : "POST",
-                        data : {itemNo:itemNo},
-                        success : function(data) {                  
-                           if(data == "plzLogin") {
-                              alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
-                           }else {
-                              alert("찜 목록에 추가되었습니다.");
-                              $(".fa-heart").css("color","pink");
-                           }
-                        },
-                        error : function(request, status, error) {
-                           alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-                        }
-                     })
-                  }
-                  
-               }else {
-                  var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
-                  var itemNo = $("#itemRealNo").val();
-                  
-                  if(deleteWish) {
-                	  
-                	  $.ajax({
-                		url:"<%=request.getContextPath()%>/wishDelete.it",
-                		type : "POST",
-						data : {itemNo : itemNo},
-						success : function(data) {
-							if (data == "success") {
-								alert("찜 목록에서 삭제되었습니다.");
-								$(".fa-heart").css("color","gray");
-							}
-						},
-						error : function(request, status, error) {
-							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+			$(function(){
+				$("#iteminfo-wish-span").click(function(){
+					console.log("왔냐?");
+			    	if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
+			               
+						var addWish = confirm("찜 목록에 추가하시겠습니까?");
+						var itemNo = $("#itemRealNo").val();
+						console.log(" 추가 왔냐? " + itemNo);
+						if(addWish) {
+							$.ajax({
+								url:"<%=request.getContextPath()%>/wishAdd.it",
+								type : "POST",
+								data : {itemNo:itemNo},
+								success : function(data) {                  
+									if(data == "plzLogin") {
+										alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
+									}else {
+										alert("찜 목록에 추가되었습니다.");
+										$(".fa-heart").css("color","pink");
+									}
+								},
+								error : function(request, status, error) {
+									alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+								}
+							})
 						}
-					})
-				}
-			}
+               
+					} else {
+						var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
+						var itemNo = $("#itemRealNo").val();
+						console.log("삭제 왔냐? " + itemNo);
+						console.log("삭제 왔냐? " + deleteWish);
+						if(deleteWish) {
+					        	  
+							$.ajax({
+								url:"<%=request.getContextPath()%>/wishDelete.it",
+								type : "POST",
+								data : {itemNo : itemNo},
+								success : function(data) {
+									if (data == "success") {
+										alert("찜 목록에서 삭제되었습니다.");
+										$(".fa-heart").css("color","gray");
+									}
+								},
+								error : function(request, status, error) {
+									alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+								}
+					 		})
+					 	}
+					}
+				})
 			})
-		})
 		</script>
 
 

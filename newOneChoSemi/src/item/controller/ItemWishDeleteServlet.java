@@ -33,10 +33,12 @@ public class ItemWishDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String itemNo = request.getParameter("itemNo");
 		PrintWriter out = response.getWriter();
-				
+		
+		System.out.println("아이템 위시 델트 서블릿");
 		int result = 0;
 
 		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		System.out.println("wishdeleteservlet : " + itemNo + " , " + memberNo);
 		result = new ItemService().wishDelete(itemNo, memberNo);
 					
 		if(result != 0) {
