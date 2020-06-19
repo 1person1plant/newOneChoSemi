@@ -226,7 +226,7 @@ label {
 									</td>
 								</tr>
 								<tr id="apiId" style="display: none;">
-									<td colspan="3" text-align="center">
+									<td colspan="3" align="center">
 										<div id="wrap" class="mx-auto"
 											style="display: none; border: 1px solid; width: 80%; height: 300px; margin: 5px 0; position: relative">
 											<img
@@ -465,7 +465,7 @@ label {
 			</script>
 
 	<script>
-		function cancelBtn() {
+		<%-- function cancelBtn() {
 			if ($(".inputBtn").val() == "") {
 				location.href = "grade.jsp";
 			} else if ($(".inputBtn").val() != "") {
@@ -476,9 +476,50 @@ label {
 					
 				}
 			}
+		} --%>
+	</script>
+	<script>
+		function cancelBtn(){
+			var password1 = document.getElementById("password1");
+			var password2 = document.getElementById("password2");
+
+			var phone1 = document.getElementById("phone1");
+			var phone2 = document.getElementById("phone2");
+			var phone3 = document.getElementById("phone3");
+			
+			var email1 = document.getElementById("email1");
+			var email2 = document.getElementById("email2");
+			
+			var postCode = document.getElementById("sample3_postcode");
+			var address1 = document.getElementById("sample3_address");
+			var address2 = document.getElementById("sample3_detailAddress");
+
+			
+			if(
+			(password1.value != "<%=loginUser.getMemberPwd()%>")||
+			(password2.value != "<%=loginUser.getMemberPwd()%>")||
+
+			(phone1.value != "<%=loginUser.getMemberPhone1()%>")||
+			(phone2.value != "<%=loginUser.getMemberPhone2()%>")||
+			(phone3.value != "<%=loginUser.getMemberPhone3()%>")||
+
+			(email1.value != "<%=loginUser.getMemberEmail1()%>")||
+			(email2.value != "<%=loginUser.getMemberEmail2()%>")||
+
+			(postCode.value != "<%=loginUser.getMemberPostcode()%>")||
+			(address1.value != "<%=loginUser.getMemberAddress1()%>")||
+			(address2.value != "<%=loginUser.getMemberAddress2()%>")
+			){
+				var result = confirm("변경 사항이 있습니다. 취소하시겠습니까?");
+				if(result){
+					location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+				}
+			}else{
+				location.href = "<%=request.getContextPath()%>/grade.me?memberNo=<%=loginUser.getMemberNo()%>";
+			}
+			
 		}
 	</script>
-
 	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
