@@ -179,7 +179,6 @@
 		    align-items: center;
 		    background: rgba(0,0,0,0.95);
 		    display: flex;
-		    justify-content: center;
 		    align-items: center;
 		    transition: transform 0.5s;
 		    transform-origin: right;
