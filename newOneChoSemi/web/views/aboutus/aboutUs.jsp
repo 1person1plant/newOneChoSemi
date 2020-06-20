@@ -241,7 +241,7 @@
 							</p>
 						</div>
 					</div>
-				</div>
+				</div>     
 				<div>
 					<div class="card mb-5">
 						<img class="card-img-top" src="<%=request.getContextPath() %>/images/aboutus/ara.jpg"
