@@ -363,22 +363,14 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=myReviewList.get(i).getReviewContent()%></p>
 								</div>
-								<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
-								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
 									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image"
 										style="width: 30rem; height: 30rem;">
 								</div>
 							</td>
-							<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
-							<td>
-							</td>
-							<%}else {%>
 							<td class="fadeout-image"><img
 								src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>"
-								id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
-							<%}%>	
+								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<%}%>
 					</tbody>
@@ -586,36 +578,10 @@ td:nth-of-type(2) {width:45rem;}
 		$(function(){
             $("#iteminfo-wish-span").click(function(){
                
-					} else {
-						var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
-						var itemNo = $("#itemRealNo").val();
-						console.log("삭제 왔냐? " + itemNo);
-						console.log("삭제 왔냐? " + deleteWish);
-						if(deleteWish) {
-					        	  
-							$.ajax({
-								url:"<%=request.getContextPath()%>/wishDelete.it",
-								type : "POST",
-								data : {itemNo : itemNo},
-								success : function(data) {
-									if (data == "success") {
-										alert("찜 목록에서 삭제되었습니다.");
-										$(".fa-heart").css("color","gray");
-									}
-								},
-								error : function(request, status, error) {
-									alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-								}
-					 		})
-					 	}
-					}
-				})
                if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
                   
                   var addWish = confirm("찜 목록에 추가하시겠습니까?");
                   var itemNo = $("#itemRealNo").val();
-                  
-                  console.log("회색일 때 눌렸다.")
                   
                   if(addWish) {
                      $.ajax({
@@ -637,17 +603,13 @@ td:nth-of-type(2) {width:45rem;}
                   }
                   
                }else {
-            	   
-            	   
                   var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
                   var itemNo = $("#itemRealNo").val();
-                  
-                  console.log("핑크일 때 눌렸다. itemNo: " + itemNo);
                   
                   if(deleteWish) {
                 	  
                 	  $.ajax({
-                		url : "<%=request.getContextPath()%>/wishDelete.it",
+                		url:"<%=request.getContextPath()%>/wishDelete.it",
                 		type : "POST",
 						data : {itemNo : itemNo},
 						success : function(data) {
@@ -692,11 +654,11 @@ td:nth-of-type(2) {width:45rem;}
 								var letsgo = confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
 								
 								if(letsgo) {
-									location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
+									location.href="<%=request.getContextPath()%>/cart.ca?userNo=" + <%=userNo%>; 
 								}
 								
 							}
-						
+							
 							console.log(data);
 											
 						},
@@ -767,23 +729,15 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=otherReviewList.get(i).getReviewContent()%></p>
 								</div>
-								<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
-								<div>
-								</div>
-								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
+									<img
+										src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
+										id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
-								<%}%>
 							</td>
-							<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
-							<td>
-							</td>
-							<%}else {%>
-							<td class="fadeout-image">
-								<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
-							</td>
-							<%}%>
+							<td class="fadeout-image"><img
+								src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>"
+								id="mini-review-image" style="width: 7rem; height: 7rem;"></td>
 						</tr>
 						<%}%>
 					</tbody>
