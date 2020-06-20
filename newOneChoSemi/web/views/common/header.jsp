@@ -499,8 +499,17 @@
 			
 		});
 	});
-    
     </script>
+    
+    <script>
+    	function headerSearch() {
+			var searchWhat=$("#searchWhat").val();
+			consloe.log(searchWhat);
+			
+			location.href="<%=request.getContextPath()%>/itemSearch.it?searchWhat=" + searchWhat + "&searchPriceMin=0&searchPriceMax=999999";
+		}
+    </script>
+    
 
 </body>
 </html>

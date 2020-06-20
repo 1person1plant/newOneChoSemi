@@ -410,6 +410,16 @@
 		$(".carttable tbody input:checkbox").click(function(){
 			checkCount();
 		});
+		// 상품명으로 개별 선택
+		$(".cartName").click(function(){
+			$(this).parents("tr").children("td:first-child").children(".cart_checkbox").trigger("click");
+			checkCount();
+		});
+		// 상품이미지로 개별 선택
+		$(".cartImg").click(function(){
+			$(this).parents("tr").children("td:first-child").children(".cart_checkbox").trigger("click");
+			checkCount();
+		});
 		// 전체 선택 카운트
 		function checkCount(){
 		    var checkeds = $("[class=cart_checkbox]:checked");

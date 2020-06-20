@@ -951,6 +951,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			    this.value = userAvailablePoints;
 			    orderpayment_point = this.value;
 			    Calculate();
+			    alert("사용가능한 포인트는 " + userAvailablePoints + " 입니다.");
 			} else{
 			    orderpayment_point = this.value;
 			    Calculate();
@@ -962,6 +963,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			    this.value = userAvailablePoints;
 			    orderpayment_point = this.value;
 			    Calculate();
+			    alert("사용가능한 포인트는 " + userAvailablePoints + " 입니다.");
 			} else{
 			    orderpayment_point = this.value;
 			    Calculate();
