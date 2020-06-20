@@ -32,9 +32,12 @@ font-family: 'basicFont'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/no
 
 /* itemdetail page start */
 .item-container {margin-top:10rem;}
-#iteminfo-itemmain-img {width:28.2rem; height:28.2rem; margin-left:3rem; margin-right:2rem;}
+#iteminfo-itemmain-img {width:32rem; height:30rem;}
 #itemmain-img {width:100%; height:100%;}
+.iteminfo-col-left {padding-left:0; width:40%;}
+.iteminfo-row {padding-left:1rem; padding-right:1rem;}
 .iteminfo-row .row {margin-bottom:0.2rem;}
+.iteminfo-title {padding-top:0.3rem; padding-bottom:0.2rem;}
 .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
 #iteminfo-keyword {padding-top:0.5rem; padding-bottom:0.5rem; color:#1f598c}
 #iteminfo-keyword-hash {margin-right:1rem;}
@@ -102,9 +105,6 @@ dd {margin:0;}
 .attachPhoto-modal {padding-left:1rem; padding-right:1rem;}
 /* review modal end */
 
-/* photo review start */
-/* photo review end */
-
 /* star rating start */
 .starRating {cursor:pointer; margin:1rem 0rem; text-align:center;}
 /* star rating end*/
@@ -130,6 +130,7 @@ td:nth-of-type(2) {width:45rem;}
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<section>
+	
 		<!--아이템 판매정보-->
 		<div class="container item-container">
 			<div class="row title-row">
@@ -138,9 +139,7 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row iteminfo-row">
 				<div class="col iteminfo-col-left">
 					<div class="iteminfo-itemmain-img" id="iteminfo-itemmain-img">
-						<img
-							src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>"
-							id="itemmain-img">
+						<img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" id="itemmain-img">
 					</div>
 				</div>
 				<div class="col iteminfo-col-right">
@@ -150,18 +149,15 @@ td:nth-of-type(2) {width:45rem;}
 					</div>
 					<div class="row iteminfo-keyword" id="iteminfo-keyword">
 						<%if(!(item.getItemKeywordNo().equals("K3"))) {%>
-						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
-							id="iteminfo-keyword-hash">#<%=item.getKeywordName()%></span>
+						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=item.getKeywordName()%></span>
 						<%}else { %>
 						<%
 							keyword = item.getKeywordName();
 							key1 = keyword.split(",")[0];
 							key2 = keyword.split(",")[1];
 						%>
-						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
-							id="iteminfo-keyword-hash">#<%=key1%></span> <span
-							class="h5 font-weight-bold my-auto iteminfo-keyword-hash"
-							id="iteminfo-keyword-hash">#<%=key2%></span>
+						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=key1%></span>
+						<span class="h5 font-weight-bold my-auto iteminfo-keyword-hash" id="iteminfo-keyword-hash">#<%=key2%></span>
 						<%}%>
 					</div>
 					<div class="row iteminfo-explain-area" id="iteminfo-explain-area">
@@ -169,26 +165,21 @@ td:nth-of-type(2) {width:45rem;}
 					</div>
 					<div class="row row-1 iteminfo-rating" id="iteminfo-rating">
 						<div class="col iteminfo-starRating" id="iteminfo-starRating">
-							<i class="my-auto fa fa-star"></i> <i class="my-auto fa fa-star"></i>
-							<i class="my-auto fa fa-star"></i> <i class="my-auto fa fa-star"></i>
-							<i class="my-auto fa fa-star-o"></i> <span
-								class="iteminfo-starRating-text my-auto" style="color: gray">5개
-								구매평</span>
+							<i class="my-auto fa fa-star"></i> 
+							<i class="my-auto fa fa-star"></i>
+							<i class="my-auto fa fa-star"></i> 
+							<i class="my-auto fa fa-star"></i>
+							<i class="my-auto fa fa-star-o"></i> 
+							<span class="iteminfo-starRating-text my-auto" style="color: gray"><%=otherReviewList.size()%>개 구매평</span>
 						</div>
 					</div>
-					<div class="row iteminfo-price" id="iteminfo-price"
-						style="display: block;">
-						<div class="row iteminfo-beforeSale" id="iteminfo-beforeSale"
-							style="color: gray">
-							<p class="h4 beforeSale-price" id="beforeSale-price"
-								style="text-decoration: line-through;">
-								&#8361;<%=item.getItemPrice()%></p>
+					<div class="row iteminfo-price" id="iteminfo-price" style="display: block;">
+						<div class="row iteminfo-beforeSale" id="iteminfo-beforeSale" style="color: gray">
+							<p class="h4 beforeSale-price" id="beforeSale-price" style="text-decoration: line-through;">&#8361;<%=item.getItemPrice()%></p>
 						</div>
 						<div class="row iteminfo-afterSale" id="iteminfo-afterSale">
-							<div class="col-10 iteminfo-afterSale-price"
-								id="iteminfo-afterSale-price" style="color: #1f598c;">
-								<p class="h3 afterSale-price" style="font-weight: bold">
-									&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
+							<div class="col-10 iteminfo-afterSale-price" id="iteminfo-afterSale-price" style="color: #1f598c;">
+								<p class="h3 afterSale-price" style="font-weight: bold">&#8361;<%=(item.getItemPrice() - item.getItemDiscount())%></p>
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
 								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
@@ -214,17 +205,14 @@ td:nth-of-type(2) {width:45rem;}
 						<dl class="row iteminfo-shipinfo" id="iteminfo-shipinfo">
 							<dt class="col-2 my-auto shipinfo-left">구매혜택</dt>
 							<dd class="col-10 my-auto shipinfo-right">
-								<button type="button" style="border: none; background: white;"
-									data-toggle="tooltip" data-placement="right"
-									title="누적금액에 따라 등급업">
+								<button type="button" style="border: none; background: white;" data-toggle="tooltip" data-placement="right" title="누적금액에 따라 등급업">
 									<i class="far fa-question-circle"></i>
 								</button>
 							</dd>
 							<dt class="col-2 my-auto shipinfo-left">배송방법</dt>
 							<dd class="col-10 my-auto shipinfo-right">택배</dd>
 							<dt class="col-2 my-auto shipinfo-left">배송비</dt>
-							<dd class="col-10 my-auto shipinfo-right">3,000원 (도서산간 지역
-								배송비 추가)</dd>
+							<dd class="col-10 my-auto shipinfo-right">3,000원 (도서산간 지역 배송비 추가)</dd>
 						</dl>
 					</div>
 					<div class="row iteminfo-quantity">
@@ -239,10 +227,7 @@ td:nth-of-type(2) {width:45rem;}
 									available = item.getItemStock();
 								}
 							%>
-							<input type="number"
-								class="form-control form-control-sm item-quantity"
-								id="quantityNumber" name="item-quantity" value="0" min="0"
-								max="<%=available%>" step="1">
+							<input type="number" class="form-control form-control-sm item-quantity" id="quantityNumber" name="item-quantity" value="0" min="0" max="<%=available%>" step="1">
 						</div>
 						<div class="col col-1 my-auto item-cancel">
 							<button class="btn btn-default cancel-button">
@@ -250,21 +235,19 @@ td:nth-of-type(2) {width:45rem;}
 							</button>
 						</div>
 					</div>
-					<div class="row iteminfo-quantity-result"
-						id="iteminfo-quantity-result" style="text-align: right">
-						<span class="quantity-result"> <span
-							style="font-size: 0.9rem">총 수량: </span><span id="whole-quantity"
-							style="font-weight: bold; color: #1f598c;"></span> <span
-							id="howmany" style="font-size: 0.9rem">개/ </span>
-						</span> <span class="whole-price-result"> <span
-							style="font-size: 0.9rem">총 구매금액: </span><span id="whole-price"
-							style="font-weight: bold; color: #1f598c;"></span> <span
-							id="quantity-won" style="font-size: 0.9rem">원</span>
+					<div class="row iteminfo-quantity-result" id="iteminfo-quantity-result" style="text-align: right">
+						<span class="quantity-result">
+							<span style="font-size: 0.9rem">총 수량: </span>
+							<span id="whole-quantity" style="font-weight: bold; color: #1f598c;"></span>
+							<span id="howmany" style="font-size: 0.9rem">개/ </span>
+						</span>
+						<span class="whole-price-result">
+							<span style="font-size: 0.9rem">총 구매금액: </span><span id="whole-price" style="font-weight: bold; color: #1f598c;"></span> 
+							<span id="quantity-won" style="font-size: 0.9rem">원</span>
 						</span>
 					</div>
 					<div class="row iteminfo-buy">
-						<button type="button"
-							class="btn btn-block btn-secondary btn-buybutton">구매하기</button>
+						<button type="button" class="btn btn-block btn-secondary btn-buybutton">구매하기</button>
 					</div>
 				</div>
 			</div>
@@ -272,29 +255,15 @@ td:nth-of-type(2) {width:45rem;}
 
 
 
-		
-
-
-
-
-
-
-		<!--아이템 디테일사진-->
+		<!--아이템 디테일-->
 		<div class="container detail-container">
 			<div class="row title-row">
 				<p class="h1">DETAIL</p>
 			</div>
 			<div class="row detail-row">
-				<img id="detail-image"
-					src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
+				<img id="detail-image" src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
 			</div>
 		</div>
-
-
-
-
-
-
 
 
 
@@ -308,9 +277,7 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row myReview-writing" id="myReview-writing">
 				<div id="myReview-writing-wrap">
 					<p class="h2" style="color: #2d2d2d; font-weight: bold;">REVIEW</p>
-					<p style="font-size: 1rem; color: black;">
-						식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!
-					</p>
+					<p style="font-size: 1rem; color: black;">식물 친구와의 첫만남은 어떠셨나요?<br>다른 회원님들도 참고하실 수 있도록 리뷰를 남겨주세요!</p>
 					<input type="button" class="btn btn-default" value="리뷰 쓰러 가기" id="goReview-btn">
 					<input type="hidden" id="goReview-real-btn" data-toggle="modal" href="#createReview">
 				</div>
@@ -388,33 +355,7 @@ td:nth-of-type(2) {width:45rem;}
 
 
 
-
-
-
-
-		<!--리뷰 삭제하기 스크립트-->
-		<script>
-		$(function(){
-			$("#deleteReview-btn").click(function(){
-				
-                var itemNo = $("#itemRealNo").val();
-				var reviewNo = $(this).siblings("#myReviewNo").val();
-				var deleteYes = confirm("리뷰를 삭제하시겠습니까?");
-				
-				if(deleteYes) {
-					location.href="<%=request.getContextPath()%>/delete.rv?reviewNo="+reviewNo+"&itemNo="+itemNo;
-					alert("리뷰가 삭제되었습니다.");
-				}
-			})
-		})
-		</script>
-
-
-
-		
-
-
-		<!--리뷰쓰기 모달-->
+		<!--리뷰 쓰러가기 모달-->
 		<form action="<%=request.getContextPath()%>/create.rv" method="post" encType="multipart/form-data">
 			<div class="modal fade reviewModal" id="createReview">
 				<div class="modal-dialog modal-dialog-centered">
@@ -495,15 +436,7 @@ td:nth-of-type(2) {width:45rem;}
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-	 
-		<!--리뷰수정하기 모달-->
+		<!--리뷰 수정하기 모달-->
 		<form action="<%=request.getContextPath()%>/update.rv" method="post" encType="multipart/form-data">
 			<div class="modal fade reviewModal" id="updateReview">
 				<div class="modal-dialog modal-dialog-centered">
@@ -583,131 +516,8 @@ td:nth-of-type(2) {width:45rem;}
 			</div>
 		</form>
 		
-		<!--로그인한 멤버의 위시리스트에 해당 상품이 들어있을 경우-->
-		<script>
-			$(function(){
-				
-				if(<%=wishCheck%> == 0) {
-					$(".fa-heart").css("color","gray");
-				}else {
-					$(".fa-heart").css("color","pink");
-				}
-			
-			})
-		</script>
-
-		<!--위시리스트 추가하고 삭제하기-->
-		<script>
-		$(function(){
-            $("#iteminfo-wish-span").click(function(){
-               
-               if($(".fa-heart").css("color") == "rgb(128, 128, 128)") {
-                  
-                  var addWish = confirm("찜 목록에 추가하시겠습니까?");
-                  var itemNo = $("#itemRealNo").val();
-                  
-                  console.log("회색일 때 눌렸다.")
-                  
-                  if(addWish) {
-                     $.ajax({
-                        url:"<%=request.getContextPath()%>/wishAdd.it",
-                        type : "POST",
-                        data : {itemNo:itemNo},
-                        success : function(data) {                  
-                           if(data == "plzLogin") {
-                              alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
-                           }else {
-                              alert("찜 목록에 추가되었습니다.");
-                              $(".fa-heart").css("color","pink");
-                           }
-                        },
-                        error : function(request, status, error) {
-                           alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-                        }
-                     })
-                  }
-                  
-               }else {
-            	   
-            	   
-                  var deleteWish = confirm("찜 목록에서 삭제하시겠습니까?");
-                  var itemNo = $("#itemRealNo").val();
-                  
-                  console.log("핑크일 때 눌렸다. itemNo: " + itemNo);
-                  
-                  if(deleteWish) {
-                	  
-                	  $.ajax({
-                		url : "<%=request.getContextPath()%>/wishDelete.it",
-                		type : "POST",
-						data : {itemNo : itemNo},
-						success : function(data) {
-							if (data == "success") {
-								alert("찜 목록에서 삭제되었습니다.");
-								$(".fa-heart").css("color","gray");
-							}
-						},
-						error : function(request, status, error) {
-							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-						}
-					})
-				}
-			}
-			})
-		})
-		</script>
-
-
-
-		<!--카트 추가하기-->
-		<script>
-			$(function(){
-				$("#iteminfo-cart-btn").click(function(){
-					
-					var itemCount = $("#quantityNumber").val();
-					var itemNo = $("#itemRealNo").val();
-					
-					console.log(itemCount + "," + itemNo);
-					
-					$.ajax({
-						url:"<%=request.getContextPath()%>/cart.it",
-						type:"POST",
-						data:{itemCount:itemCount, itemNo:itemNo},
-						success:function(data) {
-							
-							if(data == "plzLogin") {
-								alert("로그인한 회원만 장바구니에 추가할 수 있습니다.");
-							}else if(data == "noCount") {
-								alert("수량을 선택해주세요.");
-							}else {
-								var letsgo = confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
-								
-								if(letsgo) {
-									location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
-								}
-								
-							}
-						
-							console.log(data);
-											
-						},
-						error:function(request, status, error) {
-							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
-						}
-					})
-				})
-			})
-		</script>
-					
-					
-					
-					
-					
-					
-				
-
-
-
+		
+		
 		<!--다른 사람 리뷰-->
 		<div class="container review-container">
 			<div class="row review-title">
@@ -734,9 +544,7 @@ td:nth-of-type(2) {width:45rem;}
 										   break;
 								}
 							%>
-							<td><img
-								src="<%=request.getContextPath()%>/images/rank/<%=rank%>"
-								class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
+							<td><img src="<%=request.getContextPath()%>/images/rank/<%=rank%>" class="user-grade-image" style="width: 5rem; height: 5rem;"></td>
 							<td>
 								<div class="row review-star-score">
 									<%for(int k = 0; k < 1; k++) {%>
@@ -752,8 +560,8 @@ td:nth-of-type(2) {width:45rem;}
 									<%}%>
 								</div>
 								<div class="row review-set" id="review-set">
-									<span class="review-id"><%=otherReviewList.get(i).getMemberId()%>/</span><span
-										class="review-date"><%=otherReviewList.get(i).getReviewUDate()%></span>
+									<span class="review-id"><%=otherReviewList.get(i).getMemberId()%>/</span>
+									<span class="review-date"><%=otherReviewList.get(i).getReviewUDate()%></span>
 								</div>
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=otherReviewList.get(i).getReviewContent()%></p>
@@ -781,8 +589,9 @@ td:nth-of-type(2) {width:45rem;}
 				</table>
 				<nav class="review-pagination mx-auto">
 					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						<li class="page-item">
+							<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
 						</a></li>
 						<li class="page-item"><a class="page-link" href="#">1</a></li>
 						<li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -798,7 +607,14 @@ td:nth-of-type(2) {width:45rem;}
 		
 		
 		
-		<!--수량 체크와 관련된 script-->
+		
+		
+		
+		
+		
+		
+		
+		<!--수량 체크하기-->
 		<script>
 			$(function(){
 				$(".cancel-button").click(function(e){
@@ -809,113 +625,214 @@ td:nth-of-type(2) {width:45rem;}
                     	$(".iteminfo-quantity").css("background","white");
                         $(".iteminfo-quantity-result").css("display","none");
                     }
-
-                    })
-                })
+				})
+			})
                 
 			$(function(){
 				$("#quantityNumber").change(function(e){
 					
-					var quantity = $("#quantityNumber").val();
+					var quantity=$("#quantityNumber").val();
 
 					if(quantity>0){
 						$(".iteminfo-quantity").css("background","lightgray");
 						$(".iteminfo-quantity").css("margin-bottom","0");
 						$(".iteminfo-quantity-result").css("display","block");
-					}else {
+					}else{
 						$(".iteminfo-quantity").css("background","white");
 						$(".iteminfo-quantity-result").css("display","none");
 					}
 					
 					$("#whole-quantity").text(quantity);
 
-					var wholePrice = quantity * (<%=item.getItemPrice()-item.getItemDiscount()%>);
+					var wholePrice=quantity*(<%=item.getItemPrice()-item.getItemDiscount()%>);
 
 					$("#whole-price").text(wholePrice);
 				})
-				
 			})
 		</script>
-
-
-
-		<!--리뷰 사진 확대-->
+		
+		<!--리뷰 사진 확대하기-->
 		<script>
-		$(function() {
-			$("tr").click(function() {
+			$(function() {
+				$("tr").click(function() {
 				
-					if ($(this).find("#big-review-image").css("display") == "none") {
-						$(this).find("#big-review-image").css("display", "block");
-						$(this).find("#mini-review-image").css("visibility", "hidden");
-					} else {
-						$(this).find("#big-review-image").css("display", "none");
-						$(this).find("#mini-review-image").css("visibility", "visible");
+					if ($(this).find("#big-review-image").css("display")=="none") {
+						$(this).find("#big-review-image").css("display","block");
+						$(this).find("#mini-review-image").css("visibility","hidden");
+					}else{
+						$(this).find("#big-review-image").css("display","none");
+						$(this).find("#mini-review-image").css("visibility","visible");
 					}
+					
+				})
 			})
-		})
 		</script>
 
-		<!--리뷰 쓰러가기 버튼 누르면-->
+		<!--리뷰 쓰러가기 버튼 누르기-->
 		<script>
-		$(function() {
-			$("#goReview-btn").click(function(){
-				
-				var itemNo = "<%=item.getItemNo()%>";
+			$(function(){
+				$("#goReview-btn").click(function(){
+					
+					var itemNo = "<%=item.getItemNo()%>";
 
 					$.ajax({
 						url:"<%=request.getContextPath()%>/status.rv",
-						type : "POST",
-						data : {itemNo:itemNo},
-						success : function(data) {						
-							if(data == "something") {
+						type:"POST",
+						data:{itemNo:itemNo},
+						success:function(data){						
+							if(data=="something"){
 								$("#goReview-real-btn").click();
-							}else if(data == "nothing"){
+							}else if(data=="nothing"){
 								alert("등록할 리뷰가 없습니다.");
-							}else {
-								alert("로그인한 회원만 리뷰를 작성할 수 있습니다.")
+							}else{
+								alert("로그인한 회원만 리뷰를 작성할 수 있습니다.");
 							}
 						},
-						error : function(request, status, error) {
-							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+						error:function(request,status,error){
+							alert("code: "+request.status+"message: "+request.responseText+"error: "+ error);
 						}
 					})
+				})
 			})
-		})
 		</script>
 
+		<!--위시리스트 체크하기-->
+		<script>
+			$(function(){
+				
+				if(<%=wishCheck%>==0){
+					$(".fa-heart").css("color","gray");
+				}else{
+					$(".fa-heart").css("color","pink");
+				}
+			
+			})
+		</script>
 
+		<!--위시리스트 추가하고 삭제하기-->
+		<script>
+			$(function(){
+				$("#iteminfo-wish-span").click(function(){
+					
+					if($(".fa-heart").css("color")=="rgb(128, 128, 128)"){
+						
+						var addWish=confirm("찜 목록에 추가하시겠습니까?");
+						var itemNo=$("#itemRealNo").val();
+						
+						if(addWish){
+							
+							$.ajax({
+								url:"<%=request.getContextPath()%>/wishAdd.it",
+								type:"POST",
+								data:{itemNo:itemNo},
+								success:function(data){
+									if(data=="plzLogin"){
+										alert("로그인한 회원만 찜 목록에 추가할 수 있습니다.");
+									}else{
+										alert("찜 목록에 추가되었습니다.");
+										$(".fa-heart").css("color","pink");
+									}
+								},
+								error:function(request,status,error){
+									alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
+								}
+							})
+						}
+						
+					}else{
+						
+						var deleteWish=confirm("찜 목록에서 삭제하시겠습니까?");
+						var itemNo=$("#itemRealNo").val();
+						
+						if(deleteWish){
+							
+							$.ajax({
+								url:"<%=request.getContextPath()%>/wishDelete.it",
+								type:"POST",
+								data:{itemNo:itemNo},
+								success:function(data){
+									if(data=="success"){
+										alert("찜 목록에서 삭제되었습니다.");
+										$(".fa-heart").css("color","gray");
+									}
+								},
+								error:function(request,status,error){
+									alert("code: "+request.status+"message: "+request.responseText+"error: " + error);
+								}
+							})
+							
+						}
+						
+					}
+					
+				})
+			})
+		</script>
 
+		<!--카트 추가하기-->
+		<script>
+			$(function() {				
+				$("#iteminfo-cart-btn").click(function() {
+									
+					var itemCount=$("#quantityNumber").val();
+					var itemNo=$("#itemRealNo").val();
+					
+					$.ajax({
+						url:"<%=request.getContextPath()%>/cart.it",
+						type:"POST",
+						data:{itemCount:itemCount, itemNo:itemNo},
+						success:function(data) {
+														
+							if(data=="plzLogin") {
+								alert("로그인한 회원만 장바구니에 추가할 수 있습니다.");
+							}else if(data=="noCount") {
+								alert("수량을 선택해주세요.");
+							}else {
+								var letsgo=confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
+								
+								if(letsgo) {								
+									location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
+								}
+							}
+											
+						},
+						error:function(request,status,error) {
+							alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
+						}
+					})
+					
+				})
+			})
+		</script>
 
-		<!--리뷰 수정하기 버튼 누르면-->
+		<!--리뷰 수정하기 버튼 누르기-->
 		<script>
 			$(function() {
-				$("#updateReview-btn").click(function(){
+				$("#updateReview-btn").click(function() {
 					
-					var reviewNo = $(this).siblings("input").val();
-					
-					console.log(reviewNo);
+					var reviewNo=$(this).siblings("input").val();
 					
 					$.ajax({
 						url:"<%=request.getContextPath()%>/updateReady.rv",
-						type : "POST",
-						data : {reviewNo:reviewNo},
-						success : function(data) {
-							var reviewNo = data.reviewNo;
-							var reviewRate = data.reviewRate;
-							var date = data.reviewUDate;
+						type:"POST",
+						data:{reviewNo:reviewNo},
+						success:function(data) {
+							var reviewNo=data.reviewNo;
+							var reviewRate=data.reviewRate;
+							var date=data.reviewUDate;
 							
-							var reviewMonth = data.reviewUDate.substring(0,1);
-							var reviewDay = data.reviewUDate.substring(3,5);
-							var reviewYear = data.reviewUDate.substring(7,11);
-							var realMonth = 0;
+							var reviewMonth=data.reviewUDate.substring(0,1);
+							var reviewDay=data.reviewUDate.substring(3,5);
+							var reviewYear=data.reviewUDate.substring(7,11);
+							var realMonth=0;
 							
-							if(reviewMonth < 10) {
-								realMonth = "0"+reviewMonth; 
+							if(reviewMonth<10) {
+								realMonth="0"+reviewMonth; 
 							}else {
-								realMonth = reviewMonth;
+								realMonth=reviewMonth;
 							}
 							
-							var reviewUDate = reviewYear.concat("-",realMonth,"-",reviewDay);
+							var reviewUDate=reviewYear.concat("-",realMonth,"-",reviewDay);
 
 							$("#updateReviewNo").val(reviewNo);
 							$("#updateReviewUDate").html("[리뷰 작성일: " + reviewUDate + "]");
@@ -923,28 +840,47 @@ td:nth-of-type(2) {width:45rem;}
 							$("#reviewUpdate-star-rating").children("span[data-rating="+reviewRate+"]").click();
 							$("#updateReview-real-btn").click();
 						},
-						error : function(request, status, error) {
-							alert("code: " + request.status + "message: " + request.responseText + "error: " + error);
+						error:function(request,status,error) {
+							alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
 						}
 					})
+					
 				})
 			})
 		</script>
 
+		<!--리뷰 삭제하기-->
+		<script>
+			$(function() {
+				$("#deleteReview-btn").click(function() {
+					
+					var itemNo=$("#itemRealNo").val();
+					var reviewNo=$(this).siblings("#myReviewNo").val();
+					var deleteYes=confirm("리뷰를 삭제하시겠습니까?");
 
+					if(deleteYes) {
+						location.href="<%=request.getContextPath()%>/delete.rv?reviewNo="+reviewNo+"&itemNo="+itemNo;
+						alert("리뷰가 삭제되었습니다.");
+					}
+					
+				})
+			})
+		</script>
 
-
-		<!--리뷰 글자 수 세기(script)-->
-		<script>          
-            $(function(){            	
-            	$(".review-textarea").keyup(function(){
-            		var inputLength = $(this).val().length;            		
+		<!--리뷰 글자 수 세기-->
+		<script>
+			$(function() {
+				$(".review-textarea").keyup(function() {
+					
+            		var inputLength=$(this).val().length;            		
             		$(".counter").text(inputLength);
+            		
             	})
             })
             
-            $(function(){
-                $(".review-textarea").keydown(function(){
+            $(function() {
+                $(".review-textarea").keydown(function() {
+                	
                     var inputLength=$(this).val().length;
                     $(".counter").text(inputLength);
                     
@@ -955,61 +891,57 @@ td:nth-of-type(2) {width:45rem;}
             		}else {
             			$(".counter").parent().css("color","red");
             		}
+            		
                 })
             })
         </script>
 
-
-
-		<!--별 평점 주기(script)-->
+		<!--별 평점 주기-->
 		<script>
-            var starRating=$(".starRating .fa");
-
-            var SetRatingStar = function(){
-                return starRating.each(function(){
-                    if (parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+			var starRating=$(".starRating .fa");
+			
+			var SetRatingStar=function() {
+				return starRating.each(function() {
+					
+                    if(parseInt(starRating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
                         return $(this).removeClass('fa-star-o').addClass('fa-star');
-                    } else {
+                    }else {
                         return $(this).removeClass('fa-star').addClass('fa-star-o');
                     }
-                });
-            };
+                    
+                })
+            }
             
-            starRating.on('click', function(){
+            starRating.on('click',function() {
             	starRating.siblings('input.rating-value').val($(this).data('rating'));
-            	
             	return SetRatingStar();
-            });
+            })
             
             SetRatingStar();
         </script>
 
-
-
-		<!--사진 첨부 버튼을 누르면 숨겨진 input이 눌리게-->
+		<!--사진 첨부하기 버튼 누르기-->
 		<script>
-			$(function(){
-				$("#createReview-attach").click(function(){
+			$(function() {
+				$("#createReview-attach").click(function() {
 					$("#createReview-attach-real").click();
 				})
 			})
 			
-			$(function(){
-				$("#updateReview-attach").click(function(){
+			$(function() {
+				$("#updateReview-attach").click(function() {
 					$("#updateReview-attach-real").click();
 				})
 			})
 		</script>
 
-
-
 		<!--사진 미리보기-->
 		<script>
 			function loadImg(value) {
-				if(value.files && value.files[0]) {
-					var reader = new FileReader();
+				if(value.files&&value.files[0]) {
+					var reader=new FileReader();
 					
-					reader.onload = function(e) {
+					reader.onload=function(e) {
 						$(".photo-preview").attr("src", e.target.result);
 					}
 				}

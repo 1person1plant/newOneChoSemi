@@ -35,10 +35,11 @@
 
 /* item page */
 .item-container {margin-top:10rem;}
-#item-card {width:15rem; height:28rem; margin:auto; border-radius:0px; border:none; text-align:center;}
+#item-card {width:15rem; height:28rem; border-radius:0px; border:none; text-align:center;}
 #item-card:focus,
 #item-card:hover {cursor:pointer;}
 .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
+.item-row {padding-left:1rem; padding-right:1rem;}
 .item-card-title {margin-bottom:0rem; font-size:1.3rem;}
 .item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
 .item-order li {padding:0 0.5rem;}
@@ -162,9 +163,9 @@
 					</div>
 					<div class="col-sm title-col-order">
 						<ul class="float-right item-order" id="all-item-order">
-							<li><a href="#" style="color: grey">낮은가격</a></li>
-							<li><a href="#" style="color: grey">높은가격</a></li>
-							<li><a href="#" style="color: grey">제품명</a></li>
+							<li><a href="<%=request.getContextPath()%>/sort.it?sort=rowPrice" style="color: grey">낮은가격</a></li>
+							<li><a href="<%=request.getContextPath()%>/sort.it?sort=rowPrice" style="color: grey">높은가격</a></li>
+							<li><a href="<%=request.getContextPath()%>/sort.it?sort=rowPrice" style="color: grey">제품명</a></li>
 						</ul>
 					</div>
 				</div>
