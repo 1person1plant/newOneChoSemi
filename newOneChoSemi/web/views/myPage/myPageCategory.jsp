@@ -89,7 +89,7 @@ ul .list-group-item :hover {
 			<a style="display: none;" href="<%=request.getContextPath()%>/ohcancel.oh?memberNo=<%=loginUser.getMemberNo() %>" class="sideCategory" id="orderA">
 				<li class="list-group-item">주문 취소 내역</li>
 			</a>
-			<a href="<%=request.getContextPath() %>//myWishList.my?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="wishA">
+			<a href="<%=request.getContextPath() %>/myWishList.my?memberNo=<%=loginUser.getMemberNo()%>" class="sideCategory" id="wishA">
 				<li class="list-group-item">위시리스트</li>
 			</a>
 			<a href="<%=request.getContextPath()%>/views/myPage/withdrawal.jsp" class="sideCategory" id="withA">
