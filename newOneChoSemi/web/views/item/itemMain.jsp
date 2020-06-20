@@ -83,7 +83,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)bestList.get(i)).getItemNo()%>">
 							<div class="card-image-zoom" id="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item)bestList.get(i)).getItemImagePath()%>/<%=((Item)bestList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item)bestList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-danger item-badge">best</span>
@@ -124,7 +124,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)newList.get(i)).getItemNo()%>">
 							<div class="card-image-zoom" id="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item)newList.get(i)).getItemImagePath()%>/<%=((Item)newList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item)newList.get(i)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<span class="badge badge-pill badge-warning item-badge">new</span>
@@ -176,7 +176,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
@@ -209,7 +209,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
@@ -236,7 +236,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) allList.get(j)).getItemImagePath()%>/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>

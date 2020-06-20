@@ -91,7 +91,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)resultList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(4*i+j)).getItemImagePath()%>/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) resultList.get(4*i+j)).getItemName()%></p>
@@ -118,7 +118,7 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)resultList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/<%=((Item) resultList.get(4*i+j)).getItemImagePath()%>/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) resultList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
 								<p class="card-title item-card-title"><%=((Item) resultList.get(4*i+j)).getItemName()%></p>
