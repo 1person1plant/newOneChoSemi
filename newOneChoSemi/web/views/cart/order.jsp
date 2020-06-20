@@ -443,7 +443,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	            	<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 	                <tr>
 	                    <td rowspan="3" class="orderimg">
-	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=cartList.get(i).getImageName() %>" alt="상품1">
+	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=cartList.get(i).getImageName() %>" alt="상품: <%=cartList.get(i).getItemName() %>">
 	                    </td>
 	                    <td colspan="2" class="orderItem_title"><%=cartList.get(i).getItemName() %></td>
 	                </tr>
@@ -742,7 +742,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                <tr>
 	                    <td>
 	                    	<label class="orderterms_check" for="inP-cBox1">
-	                            <input id="inP-cBox1" type="checkbox" required> 
+	                            <input id="inP-cBox1" name="inP_cBox" type="checkbox" required> 
 	                            <span class="icon1"></span>
 	                        </label>
 	                    </td>
@@ -752,7 +752,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                <tr>
 	                    <td>
 	                        <label class="orderterms_check" for="inP-cBox2">
-	                            <input id="inP-cBox2" type="checkbox" required>
+	                            <input id="inP-cBox2" name="inP_cBox" type="checkbox" required>
 	                            <span class="icon2"></span>
 	                        </label>
 	                    </td>
@@ -932,7 +932,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
         // 최종 결제 금액 계산
         function Calculate(){
             if(calculate_comp){
-                checkdelivery();
                 orderpayment_total = orderpayment_price
                                     + delivery
                                     - orderpayment_discount
@@ -1073,7 +1072,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			} else if($("#recipient_detailAddress").val() == "" || $("#recipient_detailAddress").val() == null || $("#recipient_detailAddress").val() == "undefined") {
 		    	alert("상세 주소를 입력해 주세요.");
 				$("#recipient_detailAddress").focus();
-		    } else if(document.getElementById("inP-cBox1").checked != true && document.getElementById("inP-cBox2").checked != true) {
+		    } else if($("input[name=inP_cBox]:checked").length != 2) {
 		        alert("약관에 동의해 주세요.");
 				$("#orderterms").focus();
 		    } else {

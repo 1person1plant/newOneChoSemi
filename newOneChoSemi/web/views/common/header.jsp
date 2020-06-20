@@ -95,7 +95,6 @@
         #navbar-bot a {
         	cursor:pointer
         }
-    
         #navbar-top .nav-item,
         #navbar-bot .nav-item{
             padding-left: 10px;
@@ -264,7 +263,7 @@
         <button onclick="topFunction()" id="top-btn" title="Go to top">Top</button>
 
         <!--로고 이미지-->
-        <div id="mainlogo" onclick="goMainPage();">
+        <div id="mainlogo" onclick="goMainPage()">
             <img src="<%=request.getContextPath() %>/images/logo.png" class="img-fluid" alt="Responsive image" style="width: 150px; height: 100px; margin-top: 40px;">
         </div>
     <!--상단 navbar -->
@@ -275,10 +274,10 @@
 		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		        <ul class="navbar-nav ml-auto">
 		            <li class="nav-item">
-		                <a id="loginBtn" class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">로그인</a>
+		                <a id="Header_loginBtn" class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">로그인</a>
 		            </li>
 		            <li class="nav-item">
-		                <a class="nav-link" style="cursor: pointer" onclick="myPageBtn();">마이페이지</a>
+		                <a class="nav-link" style="cursor: pointer" onclick="myPageBtn()">마이페이지</a>
 		            </li>
 		        </ul>
 		    </div>
@@ -310,10 +309,10 @@
 		                <%} %>
 		                <li class="nav-item">
 		                	<input type="hidden" id="userNo" value="<%=userNo %>"> <!-- 로그인유저 번호 저장 -->
-		                    <a class="nav-link" style="cursor: pointer" onclick="logout();">로그 아웃</a>
+		                    <a class="nav-link" style="cursor: pointer" onclick="logout()">로그 아웃</a>
 		                </li>
 		                <li class="nav-item">
-		                    <a class="nav-link" style="cursor: pointer" onclick="myPageBtn();">마이페이지</a>
+		                    <a class="nav-link" style="cursor: pointer" onclick="myPageBtn()">마이페이지</a>
 		                </li>
 		                
 		            </ul>
@@ -331,16 +330,16 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goAll();" id="AllId">ALL</a>
+                    <a class="nav-link" onclick="goAll()" id="AllId">ALL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goSoil();">SOIL</a>
+                    <a class="nav-link" onclick="goSoil()">SOIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goWater();">WATER</a>
+                    <a class="nav-link" onclick="goWater()">WATER</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goHanging();">HANGING</a>
+                    <a class="nav-link" onclick="goHanging()">HANGING</a>
                 </li>
             </ul>
         </div>
@@ -351,13 +350,13 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item px-3">
-                    <a class="nav-link" style="cursor: pointer" onclick="goCart();"><i class="fas fa-cart-plus"></i></a>
+                    <a class="nav-link" style="cursor: pointer" onclick="goCart()"><i class="fas fa-cart-plus"></i></a>
                 </li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <input id="searchWhat" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch()">Search</button>
             </form>
         </div>
         <div class="navbotspy spy d-none d-xl-block d-lg-block d-md-block">
@@ -402,18 +401,12 @@
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
-        
-        function logIn(){
-        	<%if(result){%>
-    			document.getElementById('loginEx').style.display='block';
-			<%} else {%>
-				location.href="<%=request.getContextPath()%>/views/myPage/grade.jsp";
-   			<%} %>
-		}
+        </script>
+        <script>
         function myPageBtn(){
-
         	<%if(result){%>
-    			$("#loginBtn").click();
+        		alert("로그인이 필요한 기능 입니다.");
+        		$("#Header_loginBtn").click();
 			<%} else {%>
 				var chkKao = "<%=loginUser.getMemberStatus() %>";
 				if(chkKao == "K"){
@@ -421,13 +414,13 @@
 				} else {
 	        		location.href="<%=request.getContextPath()%>/views/myPage/identification.jsp?memberId=<%=loginUser.getMemberId()%>";
 				}
-				
 	   		<%} %>
 		}
         function goCart(){
         	var userNo = $("#userNo").val();
         	<%if(result){%>
-        		$("#loginBtn").click();
+    			alert("로그인이 필요한 기능 입니다.");
+        		$("#Header_loginBtn").click();
 			<%} else {%>
 				location.href="<%=request.getContextPath()%>/cart.ca?userNo=" + userNo;
        		<%} %>
@@ -470,46 +463,38 @@
 		function goHanging() {
 			location.href="<%=request.getContextPath()%>/category.it?category=HANGING";
 		}
-        
-    </script>
-    
-    <!-- 방문자 수 체크용 -->
-    <script>
-    
-	    $(document).click(function(){
-			
-			var ipAddr='<%=request.getRemoteAddr()%>';
-			var sessionId='<%=session.getId()%>';
-			
-		
-		$.ajax({
-		
-			url:"<%=request.getContextPath()%>/count.vi",
-			type:"post",
-			data:{ip:ipAddr,id:sessionId},
-			success:function(data){
-				
-				if(data=="success"){
-					console.log("방문자 기록");
-				}
-			},
-			error:function(data){
-				console.log("방문자 기록 실패");
-			}
-			
-		});
-	});
-    </script>
-    
-    <script>
     	function headerSearch() {
-			var searchWhat=$("#searchWhat").val();
-			consloe.log(searchWhat);
+			var searchWhat = $("#searchWhat").val();
+			console.log(searchWhat);
 			
 			location.href="<%=request.getContextPath()%>/itemSearch.it?searchWhat=" + searchWhat + "&searchPriceMin=0&searchPriceMax=999999";
 		}
     </script>
     
-
+    <!-- 방문자 수 체크용 -->
+<%-- 	<script>
+	    $(document).click(function(){
+			
+			var ipAddr='<%=request.getRemoteAddr()%>';
+			var sessionId='<%=session.getId()%>';
+		
+			$.ajax({
+			
+				url:"<%=request.getContextPath()%>/count.vi",
+				type:"post",
+				data:{ip:ipAddr,id:sessionId},
+				success:function(data){
+					
+					if(data=="success"){
+						console.log("방문자 기록");
+					}
+				},
+				error:function(data){
+					console.log("방문자 기록 실패");
+				}
+				
+			});
+		});
+    </script> --%>
 </body>
 </html>
