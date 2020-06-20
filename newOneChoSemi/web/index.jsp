@@ -14,17 +14,17 @@
     
     <!-- 제이쿼리 -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    
-    <!-- 부트스트랩 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- popper 툴팁 -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	
 	<!-- 스크롤 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/ScrollTrigger.min.js"></script>
+    
+    <!-- 부트스트랩 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- popper 툴팁 -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- 부트스트랩 스크립트(jQuery보다 아래 있어야함) -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	
     <style>
         /* font start */
         @font-face {
@@ -255,26 +255,6 @@
 	            </a>
 	        </div>
 	    </div>
-        <!--토스트-->
-        <div class="toast" style="position: absolute; top: 300px; right: 0;" data-delay='4000'>
-            <div class="toast-header">
-                <strong class="mr-auto"><i class="fas fa-seedling"></i>일분일초</strong>
-                <small>11 mins ago</small>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body">
-                	광고처럼 보이지만...토스트입니다.<br>
-                	지금 가입하면 배송비 무료!<br>
-                	곧 사라집니다..걱정마시오
-            </div>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-        </script>
     </section>
     
 	<div class="vbox_container">
@@ -465,7 +445,27 @@
 			location.href="<%=request.getContextPath()%>/itemDetail.it?itemNo=I00016";
 		}
 	</script>
-
+	
+	<!-- 토스트 못살리겠다... 계속 오류남-->
+<!-- 	<div id="onecho_toast" class="toast" style="position: absolute; top: 300px; right: 0;" data-delay='4000'>
+		<div class="toast-header">
+			<strong class="mr-auto"><i class="fas fa-seedling"></i>일분일초</strong>
+			<small>11 mins ago</small>
+			<button type="button" id="onecho_toast_close" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		</div>
+		<div class="toast-body">
+			Q : 식물은 그냥 잡초일 뿐인가요?<br><br>
+			A : 당신이 기르기로 마음 먹고<br>
+			또 그렇게 정성들여 기르고 있다면<br>
+			더 이상 잡초가 아닙니다.<br>
+		</div>
+	</div>
+	<script>
+        $(document).ready(function () {
+            $('#onecho_toast').toast('show');
+            $('#onecho_toast_close').toast('hide');
+        });
+    </script> -->
 
 <%@ include file="views/common/footer.jsp" %>
 </body>

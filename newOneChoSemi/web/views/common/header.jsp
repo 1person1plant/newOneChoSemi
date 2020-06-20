@@ -61,6 +61,7 @@
             float: left;
             position: relative;
             margin: 0;
+            cursor:pointer
         }
         /* 로고 이미지 end */
     
@@ -263,7 +264,7 @@
         <button onclick="topFunction()" id="top-btn" title="Go to top">Top</button>
 
         <!--로고 이미지-->
-        <div id="mainlogo">
+        <div id="mainlogo" onclick="goMainPage();">
             <img src="<%=request.getContextPath() %>/images/logo.png" class="img-fluid" alt="Responsive image" style="width: 150px; height: 100px; margin-top: 40px;">
         </div>
     <!--상단 navbar -->
@@ -449,7 +450,11 @@
 			location.href="<%=request.getContextPath()%>/logout.me";
 		}
 		
+		
 		// 메인 페이지로 가는 펑션
+		function goMainPage() {
+			location.href="<%=request.getContextPath()%>/index.jsp";
+		}
 		function goAll() {
 			location.href="<%=request.getContextPath()%>/itemMain.it";
 		}
@@ -493,10 +498,6 @@
 			}
 			
 		});
-		
-		
-		
-		
 	});
     
     </script>
