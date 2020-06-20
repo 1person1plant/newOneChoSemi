@@ -38,8 +38,7 @@ public class WdReasonServlet extends HttpServlet {
 		int result = new MemberService().reasonMember(new Member(memberId,memberName,memberReason));
 		request.getSession().invalidate();
 		if(result>0) {
-			request.getRequestDispatcher("views/common/withSuccessPage.jsp").forward(request, response);
-			request.setAttribute("msg", "");
+			response.sendRedirect("views/member/join.jsp");
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "실패");

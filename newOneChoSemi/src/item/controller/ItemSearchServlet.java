@@ -31,8 +31,8 @@ public class ItemSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("테스트");
 		request.setCharacterEncoding("UTF-8");
+		
 		// 입력받은 검색어를 ArrayList에 담고 Dao에 보내기
 		int priceMin = Integer.valueOf(request.getParameter("searchPriceMin"));
 		int priceMax = Integer.valueOf(request.getParameter("searchPriceMax"));

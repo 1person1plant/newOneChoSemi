@@ -729,7 +729,7 @@
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
-             
+
 				if($(".wishcardcol").length == 0){
 					// 상품 없음 테이블 추가
 					$wishListhead = $(".wishListhead");
@@ -739,8 +739,6 @@
 			}
 		});
 	</script>
-	
-
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

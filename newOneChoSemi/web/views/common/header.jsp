@@ -303,10 +303,9 @@
 						
 		            	<%if(adminChk.equals("Y")){ %>
 						<li class="nav-item">
-		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/views/admin/itemInsertForm.jsp">
-		                   	관리자 페이지</a>
-		                </li>
-		                <%} %>
+		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/list.st">관리자 페이지</a>
+						</li>
+						<%} %>
 		                <li class="nav-item">
 		                	<input type="hidden" id="userNo" value="<%=userNo %>"> <!-- 로그인유저 번호 저장 -->
 		                    <a class="nav-link" style="cursor: pointer" onclick="logout()">로그 아웃</a>
@@ -330,7 +329,7 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"><i class="fas fa-home"></i> HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="goAll()" id="AllId">ALL</a>
+                    <a class="nav-link" onclick="goAll()">ALL</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="goSoil()">SOIL</a>
@@ -472,7 +471,7 @@
     </script>
     
     <!-- 방문자 수 체크용 -->
-<%-- 	<script>
+ 	<script>
 	    $(document).click(function(){
 			
 			var ipAddr='<%=request.getRemoteAddr()%>';
@@ -495,6 +494,6 @@
 				
 			});
 		});
-    </script> --%>
+    </script>
 </body>
 </html>
