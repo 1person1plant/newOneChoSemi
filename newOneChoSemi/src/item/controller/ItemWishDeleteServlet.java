@@ -20,7 +20,7 @@ public class ItemWishDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
-     * @see HttpServlet#HttpServlet()
+     * @see HttpServlet#HttpServlet()   
      */
     public ItemWishDeleteServlet() {
         super();
@@ -32,13 +32,21 @@ public class ItemWishDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String itemNo = request.getParameter("itemNo");
+		
+		System.out.println("wishdelete 서브릿 왓냐?");
+		
 		PrintWriter out = response.getWriter();
 				
 		int result = 0;
 
 		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+
+		System.out.println("wishdeleteservlet : " + itemNo + " , " + memberNo);
+		
 		result = new ItemService().wishDelete(itemNo, memberNo);
 					
+		System.out.println(result);
+		
 		if(result != 0) {
 			out.print("success");
 		}

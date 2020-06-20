@@ -18,7 +18,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         
         <!--title icon-->
-        <link rel="shortcut icon" type="image⁄x-icon" href="img_main/logo.png">
+        <link rel="shortcut icon" type="image⁄x-icon" href="<%=request.getContextPath() %>/images/logo.png">
         <title>Cho-당신을 위한 반려식물</title>
        
          <!--icon-->
@@ -292,13 +292,13 @@
                                				<td><%=orders.get(i).getOrderDate() %></td>
                                				<td><%=orders.get(i).getItemNo() %></td>
                                				<td><%=orders.get(i).getItemName() %></td>
-                               				<td><select id="paymentStatus<%=orders.get(i).getOrderNo()%>" name="paymentStatus" style="height:30px;">
+                               				<td><select id="paymentStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>" name="paymentStatus" style="height:30px;">
                                					<option value="P1">입금 전</option>
                                					<option value="P2">입금 후</option>
                                					</select></td>
                                				<script>
                                				
-                               					var pOptions=$("#paymentStatus<%=orders.get(i).getOrderNo()%>").children();
+                               					var pOptions=$("#paymentStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>").children();
                                					for(var j=0;j<pOptions.length;j++){
                                						
                                						if(pOptions.eq(j).text()=='<%=orders.get(i).getPaymentStatus()%>'){
@@ -307,13 +307,13 @@
                                					}
                                				</script>
                                				<td><%=orders.get(i).getCancelRequest() %></td>
-                               				<td><select id="deliveryStatus<%=orders.get(i).getOrderNo()%>" name="deliveryStatus" style="height:30px;">
+                               				<td><select id="deliveryStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>" name="deliveryStatus" style="height:30px;">
                                					<option value="D1">배송 전</option>
                                					<option value="D2">배송 중</option>
                                					<option value="D3">배송 완료</option>
                                				</select></td>
                                				<script>
-                               					var dOptions=$("#deliveryStatus<%=orders.get(i).getOrderNo()%>").children();
+                               					var dOptions=$("#deliveryStatus<%=orders.get(i).getOrderNo()%><%=orders.get(i).getItemNo()%>").children();
                                					
 													for(var j=0;j<dOptions.length;j++){
                                						
@@ -498,8 +498,8 @@
     	   
  		   for(var i=0;i<length;i++){
     		 
- 			  payment.push(document.getElementById("paymentStatus"+ids[i]).value);
- 			  delivery.push(document.getElementById("deliveryStatus"+ids[i]).value);
+ 			  payment.push(document.getElementById("paymentStatus"+ids[i]+items[i]).value);
+ 			  delivery.push(document.getElementById("deliveryStatus"+ids[i]+items[i]).value);
 
     	   };
     	   

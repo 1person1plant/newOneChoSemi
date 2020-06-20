@@ -28,7 +28,7 @@
             <div class="col-5">
                 <h5>Features</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Cool stuff</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath()%>/views/common/errorPage.jsp">Cool stuff</a></li>
                     <li><a class="text-muted" href="#">Random feature</a></li>
                     <li><a class="text-muted" href="#">Team feature</a></li>
                     <li><a class="text-muted" href="#">Stuff for developers</a></li>
@@ -40,17 +40,17 @@
             <div class="col-4">
                 <h5>Site Map</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">All</a></li>
-                    <li><a class="text-muted" href="#">SOIL</a></li>
-                    <li><a class="text-muted" href="#">WATER</a></li>
-                    <li><a class="text-muted" href="#">HANGING</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath()%>/itemMain.it">All</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath()%>/category.it?category=SOIL">SOIL</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath()%>/category.it?category=WATER">WATER</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath()%>/category.it?category=HANGING">HANGING</a></li>
                 </ul>
             </div>
             <div class="col-1">
                 <h5>About</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="<%=request.getContextPath() %>/views/aboutus/aboutUs.jsp">Team</a></li>
-                    <li><a class="text-muted" href="#">Notice</a></li>
+                    <li><a class="text-muted" href="<%=request.getContextPath() %>/list.qna">Notice</a></li>
                 </ul>
             </div>
         </div>
