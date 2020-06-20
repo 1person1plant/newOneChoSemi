@@ -35,7 +35,7 @@
 
 /* item page */
 .item-container {margin-top:10rem;}
-#item-card {width:15rem; height:28rem; margin:auto; border-radius:0px; border:none; text-align:center;}
+#item-card {width:15rem; height:28rem; border-radius:0px; border:none; text-align:center;}
 #item-card:focus,
 #item-card:hover {cursor:pointer;}
 .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
@@ -91,7 +91,7 @@
 					<%for (int j = 0; j < colCount; j++) {%>
 					<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
-						<div class="card item-card mx-auto" id="item-card">
+						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
 								<img src="<%=request.getContextPath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImagePath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
@@ -118,7 +118,7 @@
 					<%for(int j = 0; j < remain; j++) {%>
 					<input type="hidden" value="<%=((Item) categoryList.get(4*i+j)).getItemNo()%>">
 					<div class="col-sm item-col" id="item-col">
-						<div class="card item-card mx-auto" id="item-card">
+						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
 								<img src="<%=request.getContextPath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImagePath()%>/<%=((Item) categoryList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">

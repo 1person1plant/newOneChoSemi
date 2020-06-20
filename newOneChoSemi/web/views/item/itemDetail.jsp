@@ -80,6 +80,7 @@ dd {margin:0;}
 #myReview-writing {padding-top:0rem; padding-bottom:0.5rem; padding-left:1rem; padding-right:1rem; height:13rem;}
 #myReview-writing-wrap {margin:0; width:100%; height:100%; text-align:center; padding:1rem; background-image:url("<%=request.getContextPath()%>/images/review-banner.jfif"); background-size:100%; background-repeat:no-repeat; background-position:center;}
 #goReview-btn {border:none; width:10rem; height:3rem; background-color: rgba(242,238,188,0.4); color:black;} 
+.photo-result {display:none;}
 /* 리뷰 쓰러 가기 누르는 공간 */
 			
 /* myReview start */
@@ -165,11 +166,29 @@ td:nth-of-type(2) {width:45rem;}
 					</div>
 					<div class="row row-1 iteminfo-rating" id="iteminfo-rating">
 						<div class="col iteminfo-starRating" id="iteminfo-starRating">
-							<i class="my-auto fa fa-star"></i> 
-							<i class="my-auto fa fa-star"></i>
-							<i class="my-auto fa fa-star"></i> 
-							<i class="my-auto fa fa-star"></i>
-							<i class="my-auto fa fa-star-o"></i> 
+							<%for(int k = 0; k < 1; k++) {%>
+								<%
+									int rate = 0;
+									if(item.getItemRate() >= 4 && item.getItemRate() < 5) {
+										rate = 4;										
+									}else if(item.getItemRate() >= 3 && item.getItemRate() < 4) {
+										rate = 3;
+									}else if(item.getItemRate() >= 2 && item.getItemRate() < 3) {
+										rate = 2;
+									}else if(item.getItemRate() >= 1 && item.getItemRate() < 2) {
+										rate = 1;
+									}else {
+										rate = 5;
+									}
+								%>
+								<%for(int j = 0; j < 5; j++) {%>
+									<%if(j < rate) {%>
+										<i class="fa fa-star"></i>
+									<%}else {%>
+										<i class="fa fa-star-o"></i>
+									<%}%>
+								<%}%>
+							<%}%>
 							<span class="iteminfo-starRating-text my-auto" style="color: gray"><%=otherReviewList.size()%>개 구매평</span>
 						</div>
 					</div>
@@ -305,6 +324,7 @@ td:nth-of-type(2) {width:45rem;}
 							%>
 							<td>
 								<input type="hidden" id="myReviewNo" value="<%=myReviewList.get(i).getReviewNo()%>">
+								<input type="hidden" id="myReviewOrderNo" value="<%=myReviewList.get(i).getOrderNo()%>">
 								<img src="<%=request.getContextPath()%>/images/rank/<%=rank%>" class="user-grade-image" style="width: 5rem; height: 5rem;"><br>
 							 	<a href="#" id="updateReview-btn" style="font-size: 0.8rem; color: grey;">수정하기</a>&nbsp;
 							 	<a href="#" id="deleteReview-btn" style="font-size: 0.8rem; color: grey;">삭제하기</a>
@@ -419,7 +439,7 @@ td:nth-of-type(2) {width:45rem;}
 								<button type="button" class="btn-secondary btn-block" id="createReview-attach" style="height: 2.5rem; font-weight: lighter; border: none;">
 									<i class="fa fa-camera"></i>&nbsp;사진 첨부하기
 								</button>
-								<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
+								<div class="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
 									<img class="photo-preview" style="width: 100%; height: 100%; border:none;">
 								</div>
 								<input type="file" id="createReview-attach-real" name="reviewPhoto" style="display: none;" onchange="loadImg(this)">
@@ -501,7 +521,7 @@ td:nth-of-type(2) {width:45rem;}
 								<button type="button" class="btn-secondary btn-block" id="updateReview-attach" style="height: 2.5rem; font-weight: lighter; border: none;">
 									<i class="fa fa-camera"></i>&nbsp;사진 첨부하기
 								</button>
-								<div id="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
+								<div class="photo-result" style="margin-top:1rem; width:10rem; height:12rem; border-style:none;">
 									<img class="photo-preview" style="width: 100%; height: 100%; border:none;">
 								</div>
 								<input type="file" id="updateReview-attach-real" name="updateReviewPhoto" style="display: none;" onchange="loadImg(this)">
@@ -509,7 +529,7 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="reset" class="btn btn-light" data-dismiss="modal">취소하기</button>
-							<button type="submit" class="btn btn-secondary">수정하기</button>
+							<button type="submit" id="updateReview-btn" class="btn btn-secondary">수정하기</button>
 						</div>
 					</div>
 				</div>
@@ -773,34 +793,36 @@ td:nth-of-type(2) {width:45rem;}
 		<script>
 			$(function() {				
 				$("#iteminfo-cart-btn").click(function() {
-									
+					
+					var addWish=confirm("장바구니에 추가하시겠습니까?");
 					var itemCount=$("#quantityNumber").val();
 					var itemNo=$("#itemRealNo").val();
 					
-					$.ajax({
-						url:"<%=request.getContextPath()%>/cart.it",
-						type:"POST",
-						data:{itemCount:itemCount, itemNo:itemNo},
-						success:function(data) {
-														
-							if(data=="plzLogin") {
-								alert("로그인한 회원만 장바구니에 추가할 수 있습니다.");
-							}else if(data=="noCount") {
-								alert("수량을 선택해주세요.");
-							}else {
-								var letsgo=confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
-								
-								if(letsgo) {								
-									location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
+					if(addWish) {						
+						$.ajax({
+							url:"<%=request.getContextPath()%>/cart.it",
+							type:"POST",
+							data:{itemCount:itemCount, itemNo:itemNo},
+							success:function(data) {
+															
+								if(data=="plzLogin") {
+									alert("로그인한 회원만 장바구니에 추가할 수 있습니다.");
+								}else if(data=="noCount") {
+									alert("수량을 선택해주세요.");
+								}else {
+									var letsgo=confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?");
+									
+									if(letsgo) {								
+										location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
+									}
 								}
+												
+							},
+							error:function(request,status,error) {
+								alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
 							}
-											
-						},
-						error:function(request,status,error) {
-							alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
-						}
-					})
-					
+						})
+					}
 				})
 			})
 		</script>
@@ -810,7 +832,7 @@ td:nth-of-type(2) {width:45rem;}
 			$(function() {
 				$("#updateReview-btn").click(function() {
 					
-					var reviewNo=$(this).siblings("input").val();
+					var reviewNo=$(this).siblings("#myReviewNo").val();
 					
 					$.ajax({
 						url:"<%=request.getContextPath()%>/updateReady.rv",
@@ -856,10 +878,11 @@ td:nth-of-type(2) {width:45rem;}
 					
 					var itemNo=$("#itemRealNo").val();
 					var reviewNo=$(this).siblings("#myReviewNo").val();
+					var orderNo=$(this).siblings("#myReviewOrderNo").val();
 					var deleteYes=confirm("리뷰를 삭제하시겠습니까?");
 
 					if(deleteYes) {
-						location.href="<%=request.getContextPath()%>/delete.rv?reviewNo="+reviewNo+"&itemNo="+itemNo;
+						location.href="<%=request.getContextPath()%>/delete.rv?reviewNo="+reviewNo+"&itemNo="+itemNo+"&orderNo="+orderNo;
 						alert("리뷰가 삭제되었습니다.");
 					}
 					
@@ -923,15 +946,24 @@ td:nth-of-type(2) {width:45rem;}
 		<!--사진 첨부하기 버튼 누르기-->
 		<script>
 			$(function() {
+				$("#goReview-btn").click(function() {
+					$(".photo-result").css("display","none");
+				})
+				
+				$("#updateReview-btn").click(function() {
+					$(".photo-result").css("display","none");
+				})
+				
 				$("#createReview-attach").click(function() {
 					$("#createReview-attach-real").click();
+					$(".photo-result").css("display","block");
 				})
-			})
-			
-			$(function() {
+				
 				$("#updateReview-attach").click(function() {
 					$("#updateReview-attach-real").click();
+					$(".photo-result").css("display","block");
 				})
+				
 			})
 		</script>
 
@@ -948,7 +980,6 @@ td:nth-of-type(2) {width:45rem;}
 				reader.readAsDataURL(value.files[0]);
 			}
 		</script>
-		
 	</section>
 	<%@ include file="../common/footer.jsp"%>
 	<!-- 제이쿼리 -->

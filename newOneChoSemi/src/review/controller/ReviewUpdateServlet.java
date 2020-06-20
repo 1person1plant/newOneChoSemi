@@ -65,15 +65,22 @@ public class ReviewUpdateServlet extends HttpServlet {
 		}
 				
 		Review updateRv = new Review();
-		updateRv.setReviewNo(updateReviewNo);
-		updateRv.setReviewRate(updateReviewScore);
-		updateRv.setReviewContent(updateReviewContent);
-		updateRv.setReviewImgName(saveFiles.get(0));
+		
+		if(saveFiles.size() == 0) {
+			updateRv.setReviewNo(updateReviewNo);
+			updateRv.setReviewRate(updateReviewScore);
+			updateRv.setReviewContent(updateReviewContent);
+		}else {				
+			updateRv.setReviewNo(updateReviewNo);
+			updateRv.setReviewRate(updateReviewScore);
+			updateRv.setReviewContent(updateReviewContent);
+			updateRv.setReviewImgName(saveFiles.get(0));
+		}
 				
 		// 리뷰 업데이트 하러 가기		
-		int reviewCreate = new ReviewService().reviewUpdate(updateRv);
+		int reviewUpdate = new ReviewService().reviewUpdate(updateRv);
 			
-		if(reviewCreate == 1) {
+		if(reviewUpdate == 1) {
 			response.sendRedirect("itemDetail.it?itemNo=" + itemNo);
 		}
 	}

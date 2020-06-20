@@ -279,29 +279,58 @@ public class ReviewDao {
 
 	public int reviewUpdate(Connection conn, Review updateRv) {
 		
-		
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE REVIEW SET REVIEW_RATE = ?, REVIEW_CONTENT = ?, REVIEW_UDATE = SYSDATE, REVIEW_IMAGENAME = ? WHERE REVIEW_NO = ?";
+		String updateReviewNo = updateRv.getReviewNo();
+		int updateReviewRate = updateRv.getReviewRate();
+		String updateReviewContent = updateRv.getReviewContent();
+		String updateReviewImgName = updateRv.getReviewImgName();
 		
-		try {
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setInt(1, updateRv.getReviewRate());
-			pstmt.setString(2, updateRv.getReviewContent());
-			pstmt.setString(3, updateRv.getReviewImgName());
-			pstmt.setString(4, updateRv.getReviewNo());
 		
-			result = pstmt.executeUpdate();
+		if(updateReviewImgName == null) {
+						
+			String query = "UPDATE REVIEW SET REVIEW_RATE = ?, REVIEW_CONTENT = ?, REVIEW_UDATE = SYSDATE, REVIEW_IMAGENAME = NULL WHERE REVIEW_NO = ?";
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
+			try {
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setInt(1, updateRv.getReviewRate());
+				pstmt.setString(2, updateRv.getReviewContent());
+				pstmt.setString(3, updateRv.getReviewNo());
+			
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		
+		}else {
+			
+			String query = "UPDATE REVIEW SET REVIEW_RATE = ?, REVIEW_CONTENT = ?, REVIEW_UDATE = SYSDATE, REVIEW_IMAGENAME = ? WHERE REVIEW_NO = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setInt(1, updateRv.getReviewRate());
+				pstmt.setString(2, updateRv.getReviewContent());
+				pstmt.setString(3, updateRv.getReviewImgName());
+				pstmt.setString(4, updateRv.getReviewNo());
+			
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
 		}
-		
-		return result;
 		
 	}
 
@@ -317,6 +346,29 @@ public class ReviewDao {
 			pstmt.setString(1, reviewNo);
 			
 			result = pstmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int reviewRevival(Connection conn, String orderNo, String itemNo) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE ORDERLIST SET ORDER_REVIEW = 'N' WHERE ORDER_NO = ? AND ITEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, orderNo);
+			pstmt.setString(2, itemNo);
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

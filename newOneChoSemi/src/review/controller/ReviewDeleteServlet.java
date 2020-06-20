@@ -32,14 +32,20 @@ public class ReviewDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String reviewNo = request.getParameter("reviewNo");
+		String orderNo = request.getParameter("orderNo");
 		String itemNo = request.getParameter("itemNo");
 				
-		int result = new ReviewService().reviewDelete(reviewNo);
+		int reviewRevival = new ReviewService().reviewRevival(orderNo, itemNo);
 		
-		if(result == 1) {
-			response.sendRedirect("itemDetail.it?itemNo=" + itemNo);
+		if(reviewRevival == 1) {
+			
+			int reviewDelete =  new ReviewService().reviewDelete(reviewNo);
+			
+			if(reviewDelete == 1)
+				response.sendRedirect("itemDetail.it?itemNo=" + itemNo);
+				
 		}
-
+		
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
