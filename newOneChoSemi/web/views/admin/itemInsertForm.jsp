@@ -156,14 +156,6 @@
              	 공지사항
             </a>
           </li>
-          
-           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="location.href='<%=request.getContextPath()%>/list.st'">
-              <span data-feather="shopping-cart"></span>
-             	 통계
-            </a>
-          </li>
-          
         </ul>
           </div>
         </nav>
@@ -566,6 +558,7 @@
 
                     $("#mainImg").next().text("파일을 선택하세요.");
                     $("#mdroplabel").text("이 곳에 파일을 드랍해주세요...");
+                    $("#warning").css("display","none");
                   })
                 })
 

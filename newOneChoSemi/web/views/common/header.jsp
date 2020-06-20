@@ -306,6 +306,7 @@
 		                    <a class="nav-link" style="cursor: pointer" href="<%=request.getContextPath() %>/list.st">관리자 페이지</a>
 						</li>
 						<%} %>
+
 		                <li class="nav-item">
 		                	<input type="hidden" id="userNo" value="<%=userNo %>"> <!-- 로그인유저 번호 저장 -->
 		                    <a class="nav-link" style="cursor: pointer" onclick="logout()">로그 아웃</a>

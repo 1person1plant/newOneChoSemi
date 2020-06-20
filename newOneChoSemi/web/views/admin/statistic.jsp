@@ -173,6 +173,7 @@
         </ul>
           </div>
         </nav>
+        </nav>
 
           <!--vertical nav 끝-->
  

@@ -383,7 +383,7 @@
             var orderCheckeds = $("input:checkbox[class=cart_checkbox]:checked");
             var disabledChg = $("input:checkbox[class=cart_checkbox]");
            	//console.log("구매하려는 상품 수량 : " + orderCheckeds.length);
-	        if(orderCheckeds.length == 0){
+			if(orderCheckeds.length == 0){
             	alert("구입하려는 상품을 체크 해주세요.");
             } else {
 	        	// 구매 해려는 상품의 수량만 폼태그에 담아 보내기 위해 input number의 값 전송을 막는 속성인 disabled를 false로 변환
