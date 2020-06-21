@@ -101,4 +101,26 @@ public class ReviewService {
 		return result;
 	}
 
+	public int reviewDelete(String reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().reviewDelete(conn, reviewNo);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int reviewRevival(String orderNo, String itemNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().reviewRevival(conn, orderNo, itemNo);
+		
+		close(conn);
+		
+		return result;
+	}
+
 }

@@ -303,7 +303,10 @@
                                			<td></td>
                                			<td><%=items.get(i).getItemNo() %></td>
                                 		<td><%=items.get(i).getItemName()%></td>
-                                		<td><input id="<%=items.get(i).getItemNo()%>" type="number" value="<%=items.get(i).getItemStock()%>"></td>
+                                		<td>
+                                		<span style="display:none"><%=items.get(i).getItemStock()%></span>
+                                		<input id="<%=items.get(i).getItemNo()%>" type="number" value="<%=items.get(i).getItemStock()%>">
+                                		</td>
                                 		<td id="status"><%=stockStatus %></td>
                                 		<td><%=items.get(i).getItemSCount() %></td>
                                 		<td><%=display %></td>
