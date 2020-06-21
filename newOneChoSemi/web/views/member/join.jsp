@@ -109,7 +109,7 @@
 													</p>
 												</div>
 												<div class="test col-2" style="margin-left: -70px">
-													<button class="btn btn-default" id="check_id" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
+													<button type="button" class="btn btn-default" id="check_id" style="background: #1f598c; color: white;" onclick="joinIdChk();">중복확인</button>
 													<input type="hidden" name="idCheck" value="idUnchk"> <!-- 중복체크 안누른 상태 -->
 												</div>
 											</div>
@@ -380,7 +380,7 @@
 			</div>
 		</form>
 		<div class="test col-12" align="center">
-			<button id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;" onclick="joinSubmit();">회 원 가 입</button>&nbsp; 
+			<button type="button" id="insertMember" class="btn btn-default col-3" style="background: #1f598c; color: white;" onclick="joinSubmit();">회 원 가 입</button>&nbsp; 
 			<input type="reset" value="회 원 가 입 취소" class="btn btn-default col-3" onclick="goMain();" style="background: #F2F1DF; color: black;">
 		</div>
 		
@@ -603,9 +603,6 @@
 				if( $("#userid").val() == null || $("#userid").val() == ""){
   					alert('아이디를 입력해주세요');
   					$("#userid").focus();
-				} else if(form.idCheck.value == "idUnchk"){
-					alert('중복확인을 해주세요');
-  					$("#check_id").focus();
 				} else if( $("#pwd").val() == null || $("#pwd").val() == "" ){
 					alert('비밀번호를 입력해주세요');
 					$("#pwd").focus();
@@ -625,9 +622,14 @@
 					alert('이메일을 입력해주세요');
 					$("#email1").focus();
 				} else if( checkbox1.checked != true || checkbox2.checked != true ){
-				alert('약관에 동의를 해주세요');
+					alert('약관에 동의를 해주세요');
+				} else if(form.idCheck.value == "idUnchk"){
+					alert('중복확인을 해주세요');
+  					$("#check_id").focus();
 				} else{
-  					$('#joinForm').submit();
+					if(window.checkDu){
+  						$('#joinForm').submit();
+					}
 				}
 			}
 		
@@ -646,6 +648,8 @@
 				}
 			}
 				
+			var checkDu=false;
+			
 			// 아이디 중복체크
         	function joinIdChk(){
 				var userId = $("#joinForm input[name='memberId']");
@@ -662,10 +666,12 @@
 							if(data=="permit"){
 								alert("아이디를 사용 하실 수 있습니다.");
 								document.joinForm.idCheck.value = "idChk";
+								window.checkDu=true;
 							}else{
 								alert("아이디가 중복됩니다. 다시 입력해주세요");
 								userId.focus();
 								$("input[name='memberId']").val('');	// 입력값 초기화
+								window.checkDu=false;
 							}
 						},
 						error:function(request,status,error){
