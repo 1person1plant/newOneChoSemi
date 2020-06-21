@@ -140,7 +140,7 @@ td:nth-of-type(2) {width:45rem;}
 			<div class="row iteminfo-row">
 				<div class="col iteminfo-col-left">
 					<div class="iteminfo-itemmain-img" id="iteminfo-itemmain-img">
-						<img src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>" id="itemmain-img">
+						<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=item.getItemMainImg()%>" id="itemmain-img">
 					</div>
 				</div>
 				<div class="col iteminfo-col-right">
@@ -282,7 +282,7 @@ td:nth-of-type(2) {width:45rem;}
 				<p class="h1">DETAIL</p>
 			</div>
 			<div class="row detail-row">
-				<img id="detail-image" src="<%=request.getContextPath()%>/<%=item.getItemSubImgPath()%>/<%=item.getItemSubImg()%>">
+				<img id="detail-image" src="<%=request.getContextPath()%>/items_uploadFiles/<%=item.getItemSubImg()%>">
 			</div>
 		</div>
 
@@ -393,7 +393,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="row iteminfo-modal">
 								<div class="col col-4 iteminfo-modal-img">
-									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
+									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/items_uploadFiles/<%=item.getItemMainImg()%>">
 								</div>
 								<div class="col col-8 iteminfo-modal-text">
 									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
@@ -474,7 +474,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="row iteminfo-modal">
 								<div class="col col-4 iteminfo-modal-img">
-									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/<%=item.getItemMainImgPath()%>/<%=item.getItemMainImg()%>">
+									<img class="iteminfo-modal-image" src="<%=request.getContextPath()%>/items_uploadFiles/<%=item.getItemMainImg()%>">
 								</div>
 								<div class="col col-8 iteminfo-modal-text">
 									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
