@@ -12,6 +12,7 @@
 	int ultimatePage = pagination.getUltimatePage();
 	int startPage = pagination.getStartPage();
 	int endPage = pagination.getEndPage();
+	int beginPage = 1;
 	
 	String keyword = "";
 	String key1 = "";
@@ -35,10 +36,11 @@
 
 /* item page */
 .item-container {margin-top:10rem;}
-#item-card {width:15rem; height:28rem; margin:auto; border-radius:0px; border:none; text-align:center;}
+#item-card {width:15rem; height:28rem; border-radius:0px; border:none; text-align:center;}
 #item-card:focus,
 #item-card:hover {cursor:pointer;}
 .title-row {border-bottom:0.3rem solid lightgray; margin-bottom:3rem;}
+.item-row {padding-left:1rem; padding-right:1rem;}
 .item-card-title {margin-bottom:0rem; font-size:1.3rem;}
 .item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
 .item-order li {padding:0 0.5rem;}
@@ -152,6 +154,9 @@
 		
 		
 		
+		
+		
+		
 
 		<!--ALL-->
 		<form>
@@ -160,19 +165,12 @@
 					<div class="col-sm title-col">
 						<h1 class="display-6">ALL</h1>
 					</div>
-					<div class="col-sm title-col-order">
-						<ul class="float-right item-order" id="all-item-order">
-							<li><a href="#" style="color: grey">낮은가격</a></li>
-							<li><a href="#" style="color: grey">높은가격</a></li>
-							<li><a href="#" style="color: grey">제품명</a></li>
-						</ul>
-					</div>
 				</div>
 				<%if (allList.size() <= 4) {%>
 				<%for (int i = 0; i < 1; i++) {%>
 				<div class="row item-row">
 					<%for (int j = 0; j < allList.size(); j++) {%>
-					<div class="col-sm item-col" id="item-col">
+					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
@@ -205,7 +203,7 @@
 					<%if (i == 0) {%>
 					<%for (int j = 0; j < 4; j++) {%>
 					<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
+					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
@@ -232,7 +230,7 @@
 					<%}else {%>
 					<%for(int j = 4; j < allList.size(); j++) {%>
 					<input type="hidden" value="<%=((Item) allList.get(j)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
+					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
 							<div class="card-image-zoom">
@@ -262,11 +260,15 @@
 				<%}%>
 				<nav class="item-pagination mx-auto" id="item-pagination">
 					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage = 1%>">맨 처음</a></li>
-						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage - 1%>">이전</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">맨 처음</a></li>
+						<%if(currentPage-1 <= 0) {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">이전</a></li>
+						<%}else {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage-1%>">이전</a></li>
+						<%}%>
 						<%for(int p = startPage; p <= endPage; p++) {%>
 							<%if (p == currentPage) {%>
-							<li class="page-item"><a class="page-link"><%=p%></a></li>
+							<li class="page-item disabled"><a class="page-link"><%=p%></a></li>
 							<%}else {%>
 							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=p%>"><%=p%></a></li>
 							<%}%>
@@ -278,6 +280,15 @@
 			</div>
 		</form>
 	</section>
+	
+	<script>
+		$(function() {
+			$(".disabled").children(".page-link").css("background-color","lightgray");
+		})
+	</script>
+	
+	
+	
 	<script>
 	// 아이템 카드 눌렀을 때 아이템 상세보기로 넘어가기
 	$(function(){
