@@ -741,7 +741,7 @@ public class ItemDao {
 		return item;
 	}
 
-	// 김경남 조회 결과 LIST
+	// 조회 결과
 	public ArrayList<Item> searchResult(Connection conn, ArrayList searchList) {
 		
 		PreparedStatement pstmt = null;
@@ -914,7 +914,6 @@ public class ItemDao {
 			pstmt.setString(1, item.getItemNo());
 			result=pstmt.executeUpdate();	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -935,7 +934,6 @@ public class ItemDao {
 			pstmt.setString(1, item.getItemNo());
 			result+=pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -983,7 +981,6 @@ public class ItemDao {
 			pstmt.setString(1, item.getItemNo());
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -1027,7 +1024,6 @@ public class ItemDao {
 			pstmt.setString(1, item.getItemNo());
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);

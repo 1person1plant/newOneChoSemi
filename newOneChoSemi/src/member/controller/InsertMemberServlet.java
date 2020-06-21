@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,8 +53,11 @@ public class InsertMemberServlet extends HttpServlet {
 			page = "views/common/successPage_join.jsp";
 			request.setAttribute("msg", "회원가입 성공");
 		}else{				// 회원가입이 실패했다면 
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "회원 가입 실패");
+			page = "views/member/join.jsp";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('회원가입에 실패했습니다.');</script>"); 
+			out.flush();
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request,response);

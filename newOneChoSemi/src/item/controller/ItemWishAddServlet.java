@@ -31,19 +31,21 @@ public class ItemWishAddServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String itemNo = request.getParameter("itemNo");
+		
 		PrintWriter out = response.getWriter();
 				
 		int result = 0;
 
 		if(((Member)request.getSession().getAttribute("loginUser")) == null) {
-			result = 0;
+			result = -1;
 		}else {
 			String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 			result = new ItemService().wishAdd(itemNo, memberNo);
 		}
 					
-		if(result == 0) {
+		if(result == -1) {
 			out.print("plzLogin");
 		}else {
 			out.print("success");

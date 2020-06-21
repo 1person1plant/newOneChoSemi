@@ -2,6 +2,8 @@ package item.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,26 +38,28 @@ public class ItemMainServlet extends HttpServlet {
 		ItemService itService = new ItemService();
 		RequestDispatcher view = null;
 		
+		
+		
 		// BEST, NEW 시작
 		ArrayList<Item> bestList = itService.bestList();
 		ArrayList<Item> newList = itService.newList();
-				
+		
 		request.setAttribute("bestList", bestList);
 		request.setAttribute("newList", newList);
 		
 		view = request.getRequestDispatcher("views/item/itemMain.jsp");
 		// BEST, NEW 끝
+		
+		
 				
 		// ALL PAGINATION START
 		int itemCount = itService.itemCount();
 		int currentPage;
 		int howManyAtOnce;
-		int beginPage;
 		int ultimatePage;
 		int startPage;
 		int endPage;
 		
-		beginPage = 1;
 		currentPage = 1;
 		
 		if(request.getParameter("currentPage")!=null) {
