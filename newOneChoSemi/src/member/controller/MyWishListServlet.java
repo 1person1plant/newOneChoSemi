@@ -33,7 +33,7 @@ public class MyWishListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberNo = request.getParameter("memberNo");
-		/* System.out.println("넘버는 받아와 지냐?" + memberNo); */
+		System.out.println("넘버는 받아와 지냐?" + memberNo);
 		
 		ArrayList<MyWishList> mwl = new MyWishListService().myWishList(memberNo);
 		/* System.out.println("service > servlet ="+mwl); */

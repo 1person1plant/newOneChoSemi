@@ -215,7 +215,7 @@
 			<div class="col-lg-9">
 				<div>
 					<div class="card mb-5">
-						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar4.png" alt="Card image cap">
+						<img class="card-img-top" src="<%=request.getContextPath() %>/images/aboutus/jyj.png" alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">정 유 진 &lt; 팀장 ></h1>
 							<div id="section2"></div>
@@ -241,16 +241,16 @@
 							</p>
 						</div>
 					</div>
-				</div>
+				</div>     
 				<div>
 					<div class="card mb-5">
-						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar6.png"
+						<img class="card-img-top" src="<%=request.getContextPath() %>/images/aboutus/ara.jpg"
 							alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">이 아 라 &lt; 팀원 ></h1>
 							<div id="section4"></div>
 							<div>
-							<h3 class="card-text">담당 : 회원 가입, 일반/네이버 로그인</h3>
+							<h3 class="card-text">담당 : 회원 가입, 일반/카카오 로그인</h3>
 							</div>
 							<p class="card-text">
 								<small class="text-muted">마지막 접속: 2020/06/22</small>
@@ -260,7 +260,7 @@
 				</div>
 				<div>
 					<div class="card mb-5">
-						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar1.png" alt="Card image cap">
+						<img class="card-img-top" src="<%=request.getContextPath() %>/images/aboutus/kkn.png" alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">김 경 남 &lt; 팀원 ></h1>
 							<div id="section5"></div>
@@ -275,7 +275,7 @@
 				</div>
 				<div>
 					<div class="card mb-5">
-						<img class="card-img-top" src="<%=request.getContextPath() %>/images/sample/img_avatar3.png" alt="Card image cap">
+						<img class="card-img-top" src="<%=request.getContextPath() %>/images/aboutus/sh.jpg" alt="Card image cap">
 						<div class="card-body">
 							<h1 class="card-title">이 수 한 &lt; 팀원 ></h1>
 							<div class="card-text">

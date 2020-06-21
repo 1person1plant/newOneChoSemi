@@ -153,7 +153,7 @@ label {
 			<div class='col-md-9'>
 				<fieldset>
 					<form id="updateForm"
-						action="<%=request.getContextPath()%>/update.inf" method="get">
+						action="<%=request.getContextPath()%>/update.inf" method="post">
 						<table class="table information1">
 							<thead>
 								<tr>

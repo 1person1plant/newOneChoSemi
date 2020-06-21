@@ -67,12 +67,10 @@
         margin-bottom: 25px;
         display: inline-block;
     }
-
     .orderContainer div > span {
         font-size: 14px;
         color: gray;
     }
-
     .orderContainer table{
         border-collapse: collapse;
         vertical-align: middle;
@@ -81,19 +79,16 @@
         padding: 0;
         margin: 0;
     }
-
     .orderContainer .orderimg img {
         width: 200px;
         height: 200px;
     }
-
     .orderContainer tr{
         font-size: 1.3rem;
     }
     .orderItem_title{
         font-size: 1.7rem;
     }
-
     .orderItem td,
     .orderpayment td,
     .orderinfo-buyer td{
@@ -105,25 +100,20 @@
     .orderimg {
         width: 200px;
     }
-
     .orderItem_count {
         text-align: right;
         padding-right: 10px;
     }
-
     .orderItem_count::after {
         content: " 개 ";
     }
-
     .orderItem_price {
         text-align: right;
         padding-right: 10px;
     }
-
     .orderItem_price::after {
         content: " 원 ";
     }
-
     /* 대항목 구분선 */
     .orderItem > table,
     .orderinfo-buyer > table tr:last-child td,
@@ -132,13 +122,11 @@
     .orderpaymentoption > table {
         border-bottom: 1px solid gray;
     }
-    
     /* 소항목 구분선 */
     .orderinfo-buyer > table td,
     .orderpayment > table td {
         border-bottom: 1px solid rgba(211, 211, 211, 0.5);
     }
-
     .orderinfo-buyer td:last-child {
         text-align: right;
     }
@@ -146,7 +134,6 @@
     .orderinfo-buyer .buyer_phone2:after{
     	content: " - ";
     }
-
     /* 배송지 정보 */
     .orderinfo-Recipient {
         position: relative;
@@ -193,7 +180,6 @@
     .orderinfo-Recipient table table{
         text-align: center;
     }   
-    
     .orderpayment_point::-webkit-inner-spin-button,
     .orderpayment_point::-webkit-outer-spin-button,
     .orderinfo-Recipient #recipient_phone2::-webkit-inner-spin-button,
@@ -223,7 +209,6 @@
         position: absolute;
         top: 64px;
     }
-    
     /* 스위치 버튼 */
     .orderinfo-Recipient .switch {
         position: relative;
@@ -232,13 +217,11 @@
         height: 34px;
         transform: translateY(2px);
     }
-
     .orderinfo-Recipient .switch input { 
         opacity: 0;
         width: 0;
         height: 0;
     }
-
     .orderinfo-Recipient .slider {
         position: absolute;
         cursor: pointer;
@@ -251,7 +234,6 @@
         transition: .4s;
         transform: translateY(-8px);
     }
-
     .orderinfo-Recipient .slider:before {
         position: absolute;
         content: "";
@@ -263,25 +245,20 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     .orderinfo-Recipient input:checked + .slider {
         background-color: #5B89A6;
     }
-
     .orderinfo-Recipient input:focus + .slider {
         box-shadow: 0 0 1px #5B89A6;
     }
-
     .orderinfo-Recipient input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-
     .orderinfo-Recipient .slider.round {
         border-radius: 34px;
     }
-
     .orderinfo-Recipient .slider.round:before {
         border-radius: 50%;
     }
@@ -293,25 +270,21 @@
         font-size: 1.4rem;
         padding: 10px 0;
     }
-
     .orderpayment td:nth-child(2),
     .orderpayment th:nth-child(2),
     .orderpayment td:nth-child(2) input{
         text-align: right;
     }
-
     .orderpayment td:nth-child(2)::after,
     .orderpayment th:nth-child(2)::after {
         content: " 원";
     }
-
     .orderpayment tr:nth-child(3) td:nth-child(2)::before,
     .orderpayment tr:nth-child(4) td:nth-child(2)::before{
         content: "- ";
     }
     .orderpayment_point {
         width: 6.8rem;
-        
     }
     /* 결제 금액 끝 */
 
@@ -327,7 +300,6 @@
     .orderpaymentoption label {
         margin: 0px;
     }
-        
     .orderpaymentoption table td {
         margin: 5px;
         padding: 15px;
@@ -335,24 +307,20 @@
         font-size: 20px;
         color: gray;
     }
-
     .orderpaymentoption tfoot td {
         border: none;
         font-size: 1.3rem;
         margin: 0;
         padding: 0 10;
     }
-
     .orderpaymentoption td:first-child {
         color: black;
     }
     /* 결제 방법 끝 */
-
     /* 결제 약관 */
     .orderterms {
         margin-top: 30px;
     }
-
     .orderterms td {
         padding: 10px 5px;
     }
@@ -360,7 +328,6 @@
         min-width: 65px;
     }
     /* 결제 약관 끝 */
-
     /* 결제 버튼 */
     .orderEnd {
         text-align: center;
@@ -374,7 +341,6 @@
     }
     /* 결제 버튼 끝 */
 </style>
-
 <!-- 체크 에니메이션 -->
 <style>
     .orderterms_check input {
@@ -443,7 +409,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	            	<%for(int i = 0 ; i < cartList.size() ; i++) { %>
 	                <tr>
 	                    <td rowspan="3" class="orderimg">
-	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=cartList.get(i).getImageName() %>" alt="상품1">
+	                        <img class="orderItem_img" src="<%=request.getContextPath() %>/items_uploadFiles/<%=cartList.get(i).getImageName() %>" alt="상품: <%=cartList.get(i).getItemName() %>">
 	                    </td>
 	                    <td colspan="2" class="orderItem_title"><%=cartList.get(i).getItemName() %></td>
 	                </tr>
@@ -458,7 +424,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	            </tbody>
 	        </table>
 	    </div>
-	
 	    <!-- 구매자 정보 -->
 	    <div class="orderinfo-buyer">
 	        <h2>구매자 정보</h2>
@@ -505,7 +470,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 		        </table>
 			<%} %>
 	    </div>
-	
 	    <!-- 배송지 정보 -->
 	    <div class="orderinfo-Recipient" id="orderinfo-Recipient">
 	        <h2>배송지 정보</h2>
@@ -588,92 +552,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                </tfoot>
 	            </tbody>
 	        </table> <!-- 배송지 정보 끝 -->
-
-	        <!-- 다음 주소 스크립트 -->
-	        <script>
-	            // 우편번호 찾기 찾기 화면을 넣을 element
-	            var element_wrap = document.getElementById('wrap');
-	            function foldDaumPostcode() {
-	                // iframe을 넣은 element를 안보이게 한다.
-	                element_wrap.style.display = 'none';
-	            }
-	            function recipient_execDaumPostcode() {
-	                // 현재 scroll 위치를 저장해놓는다. 
-	                // var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-	                new daum.Postcode({
-	                    oncomplete: function (data) {
-	                        // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	    
-	                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                        var addr = ''; // 주소 변수
-	                        var extraAddr = ''; // 참고항목 변수
-	    
-	                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                            addr = data.roadAddress;
-	                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                            addr = data.jibunAddress;
-	                        }
-	    
-	                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                        if (data.userSelectedType === 'R') {
-	                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-	                                extraAddr += data.bname;
-	                            }
-	                            // 건물명이 있고, 공동주택일 경우 추가한다.
-	                            if (data.buildingName !== '' && data.apartment === 'Y') {
-	                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                            }
-	                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                            if (extraAddr !== '') {
-	                                extraAddr = ' (' + extraAddr + ')';
-	                            }
-	                            // 조합된 참고항목을 해당 필드에 넣는다.
-	                            // document.getElementById("sample3_extraAddress").value = extraAddr;
-	    
-	                        } else {
-	                            // document.getElementById("sample3_extraAddress").value = '';
-	                        }
-	    
-	                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                        document.getElementById('recipient_postcode').value = data.zonecode;
-	                        document.getElementById("recipient_address").value = addr + extraAddr;
-	                        // 커서를 상세주소 필드로 이동한다.
-	                        document.getElementById("recipient_detailAddress").focus();
-	                        // 주소 컨테이너로 이동
-	                        document.getElementById("orderinfo-Recipient").scrollIntoView();
-	
-	                        // 산간지역 배송비 계산
-	                        calculate_comp = true;
-	                        Calculate();
-	                        recipient_address_check();
-	    
-	                        // iframe을 넣은 element를 안보이게 한다.
-	                        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-	                        element_wrap.style.display = 'none';
-	    
-	                        // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다. 
-	                        // document.body.scrollTop = currentScroll;
-	                        
-	                    },
-	                    // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-	                    onresize: function (size) {
-	                        element_wrap.style.height = size.height + 'px';
-	                    },
-	                    width: '100%',
-	                    height: '100%'
-	                }).embed(element_wrap);
-	    
-	                // iframe을 넣은 element를 보이게 한다.
-	                element_wrap.style.display = 'block';
-	          
-	            }
-	        </script><!-- 다음 주소 스크립트 끝 -->
 	    </div>
-
 	    <div class="orderpayment">	<!-- 결제 금액 -->
 	        <h2>결제 금액</h2>
 	        <table>
@@ -742,7 +621,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                <tr>
 	                    <td>
 	                    	<label class="orderterms_check" for="inP-cBox1">
-	                            <input id="inP-cBox1" type="checkbox" required> 
+	                            <input id="inP-cBox1" name="inP_cBox" type="checkbox" required> 
 	                            <span class="icon1"></span>
 	                        </label>
 	                    </td>
@@ -752,7 +631,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	                <tr>
 	                    <td>
 	                        <label class="orderterms_check" for="inP-cBox2">
-	                            <input id="inP-cBox2" type="checkbox" required>
+	                            <input id="inP-cBox2" name="inP_cBox" type="checkbox" required>
 	                            <span class="icon2"></span>
 	                        </label>
 	                    </td>
@@ -769,7 +648,88 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	    </div>
 	    
 	</div>
-	
+	<!-- 다음 주소 스크립트 -->
+    <script>
+        // 우편번호 찾기 찾기 화면을 넣을 element
+        var element_wrap = document.getElementById('wrap');
+        function foldDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
+            element_wrap.style.display = 'none';
+        }
+        function recipient_execDaumPostcode() {
+            // 현재 scroll 위치를 저장해놓는다. 
+            // var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if (data.userSelectedType === 'R') {
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        // 조합된 참고항목을 해당 필드에 넣는다.
+                        // document.getElementById("sample3_extraAddress").value = extraAddr;
+
+                    } else {
+                        // document.getElementById("sample3_extraAddress").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('recipient_postcode').value = data.zonecode;
+                    document.getElementById("recipient_address").value = addr + extraAddr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("recipient_detailAddress").focus();
+                    // 주소 컨테이너로 이동
+                    document.getElementById("orderinfo-Recipient").scrollIntoView();
+
+                    // 산간지역 배송비 계산
+                    calculate_comp = true;
+                    Calculate();
+                    recipient_address_check();
+
+                    // iframe을 넣은 element를 안보이게 한다.
+                    // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                    element_wrap.style.display = 'none';
+
+                    // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다. 
+                    // document.body.scrollTop = currentScroll;
+                    
+                },
+                // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+                onresize: function (size) {
+                    element_wrap.style.height = size.height + 'px';
+                },
+                width: '100%',
+                height: '100%'
+            }).embed(element_wrap);
+
+            // iframe을 넣은 element를 보이게 한다.
+            element_wrap.style.display = 'block';
+        }
+    </script><!-- 다음 주소 스크립트 끝 -->
 	<script>
 	    // 구매자 정보
 	    var buyer_name = $(".buyer_name").text();	// 이름
@@ -932,7 +892,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
         // 최종 결제 금액 계산
         function Calculate(){
             if(calculate_comp){
-                checkdelivery();
                 orderpayment_total = orderpayment_price
                                     + delivery
                                     - orderpayment_discount
@@ -951,6 +910,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			    this.value = userAvailablePoints;
 			    orderpayment_point = this.value;
 			    Calculate();
+			    alert("사용가능한 포인트는 " + userAvailablePoints + " 입니다.");
 			} else{
 			    orderpayment_point = this.value;
 			    Calculate();
@@ -962,6 +922,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			    this.value = userAvailablePoints;
 			    orderpayment_point = this.value;
 			    Calculate();
+			    alert("사용가능한 포인트는 " + userAvailablePoints + " 입니다.");
 			} else{
 			    orderpayment_point = this.value;
 			    Calculate();
@@ -1071,7 +1032,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 			} else if($("#recipient_detailAddress").val() == "" || $("#recipient_detailAddress").val() == null || $("#recipient_detailAddress").val() == "undefined") {
 		    	alert("상세 주소를 입력해 주세요.");
 				$("#recipient_detailAddress").focus();
-		    } else if(document.getElementById("inP-cBox1").checked != true && document.getElementById("inP-cBox2").checked != true) {
+		    } else if($("input[name=inP_cBox]:checked").length != 2) {
 		        alert("약관에 동의해 주세요.");
 				$("#orderterms").focus();
 		    } else {
@@ -1098,7 +1059,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 				$(".comp_paymentTotal").val($("#orderpayment_total").text());
 
 				$(".comp_paymentOption").val($(".payoption").val());
-				
 				
 				// 주문 api용 변수들
 				var orderMemberNo = $(".comp_userNo").val();
@@ -1170,13 +1130,9 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 					}
 					//alert(msg);
 				});
-
-				
-
 		    }
 		});
 	</script>
-
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

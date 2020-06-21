@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("admin", adminChk);
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect((String)request.getHeader("REFERER"));
 			
 		} else {
 			response.setContentType("text/html; charset=UTF-8");

@@ -6,8 +6,6 @@
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     	
-		<script src="${contextPath}/resources/js/js.cookie.js"></script>
-
 		<!-- 카카오 로그인 연결 (리소스) -->
     	<script	src="<%=request.getContextPath() %>/resource/kakaoLogin.js"></script>	
     	<script>

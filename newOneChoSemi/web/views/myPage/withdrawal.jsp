@@ -206,7 +206,7 @@ label {
 			<!-- 9단길이의 첫번째 열 -->
 			<div class='col-md-9'>
 				<fieldset>
-					<form id="withdrawalform" action="<%=request.getContextPath()%>/withdrawal.me" method="get">
+					<form id="withdrawalform" action="<%=request.getContextPath()%>/withdrawal.me" method="post">
 						<table class="table">
 							<thead>
 								<tr>

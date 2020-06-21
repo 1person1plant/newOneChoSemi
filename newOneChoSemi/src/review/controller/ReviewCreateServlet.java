@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.xml.internal.ws.api.message.Attachment;
 
 import member.model.vo.Member;
+import review.model.service.ReviewService;
 import review.model.vo.Review;
 
 /**
@@ -29,6 +30,7 @@ public class ReviewCreateServlet extends HttpServlet {
      */
     public ReviewCreateServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -38,20 +40,23 @@ public class ReviewCreateServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
+		RequestDispatcher view = null;
+		
 		int maxSize = 1024 * 1024 * 10;		
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String savePath = root + "review_uploadFiles/";		
+		String savePath = root + "review_uploadFiles/";	
 		MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 		
-		
+		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		int score = Integer.valueOf(multiRequest.getParameter("score"));
 		String content = multiRequest.getParameter("content");
-		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		String orderInfo = multiRequest.getParameter("orderInfo");
+		String realPath = "review_uploadFiles";
+		
+		String orderNo = orderInfo.split(",")[0];
+		String itemNo = orderInfo.split(",")[1];
 		
 		ArrayList<String> saveFiles = new ArrayList<>();
-		ArrayList<String> originFiles = new ArrayList<>();
-		
 		Enumeration<String> files = multiRequest.getFileNames();
 		
 		while(files.hasMoreElements()) {
@@ -60,31 +65,47 @@ public class ReviewCreateServlet extends HttpServlet {
 			
 			if(multiRequest.getFilesystemName(name) != null) {
 				saveFiles.add(multiRequest.getFilesystemName(name));			
-				originFiles.add(multiRequest.getOriginalFileName(name));
 			}
 		}
 		
-		System.out.println("saveFiles: "+ saveFiles);
-		System.out.println("originFiles: "+originFiles);
-		
-		
 		Review rv = new Review();
-//		// 4. DB에 보낼 Board와 Attachment객체 생성
-//		Board b = new Board();
-//		b.setbTitle(title);
-//		b.setbContent(content);
-//		b.setbWriter(UserNo);
-//		
-//		
-//		
-//		int result = new BoardService().insertThumbnail(b,fileList);
-//		
+		
+		if(saveFiles.size() == 0) {
+			rv.setOrderNo(orderNo);
+			rv.setItemNo(itemNo);
+			rv.setMemberNo(memberNo);
+			rv.setReviewRate(score);
+			rv.setReviewContent(content);
+		}else {
+			rv.setOrderNo(orderNo);
+			rv.setItemNo(itemNo);
+			rv.setMemberNo(memberNo);
+			rv.setReviewRate(score);
+			rv.setReviewContent(content);
+			rv.setReviewImgName(saveFiles.get(0));
+			rv.setReviewImgPath(realPath);
+		}
+		
+		int reviewReady = new ReviewService().reviewReady(orderNo, itemNo);
+			
+		if(reviewReady == 1) {
+			
+			int reviewCreate = 0;
+			
+			reviewCreate = new ReviewService().reviewCreate(rv);
+				
+			if(reviewCreate == 1) {
+				response.sendRedirect("itemDetail.it?itemNo=" + itemNo);
+			}
+			
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
