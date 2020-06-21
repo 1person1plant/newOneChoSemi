@@ -5,7 +5,7 @@
     	<!-- Required meta tags -->
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    	
 		<!-- 카카오 로그인 연결 (리소스) -->
     	<script	src="<%=request.getContextPath() %>/resource/kakaoLogin.js"></script>	
     	<script>
