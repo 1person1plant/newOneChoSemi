@@ -800,7 +800,7 @@ td:nth-of-type(2) {width:45rem;}
 					var itemCount=$("#quantityNumber").val();
 					var itemNo=$("#itemRealNo").val();
 					
-					if(addWish) {						
+					if(addWish) {		    				
 						$.ajax({
 							url:"<%=request.getContextPath()%>/cart.it",
 							type:"POST",
