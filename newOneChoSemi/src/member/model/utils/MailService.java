@@ -17,7 +17,6 @@ public class MailService {
    private final String USER = "onebunonecho@gmail.com";   // 운영자의 이메일 아이디
    private final String PASSWORD = "Onecho1234";      // 운영자의 이메일 비밀번호
 
-   
    /*
   		1. Properties -  Java Build Path - Libraries - Add JARs - javax.mail 추가
 		
