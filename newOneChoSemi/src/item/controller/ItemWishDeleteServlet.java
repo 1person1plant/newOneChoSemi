@@ -40,8 +40,7 @@ public class ItemWishDeleteServlet extends HttpServlet {
 		int result = 0;
 
 		String memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-
-		System.out.println("wishdeleteservlet : " + itemNo + " , " + memberNo);
+		System.out.println("memberNo가 누군데" + memberNo);
 		
 		result = new ItemService().wishDelete(itemNo, memberNo);
 					

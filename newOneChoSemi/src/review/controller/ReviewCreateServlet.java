@@ -88,11 +88,9 @@ public class ReviewCreateServlet extends HttpServlet {
 		
 		int reviewReady = new ReviewService().reviewReady(orderNo, itemNo);
 			
-		if(reviewReady == 1) {
+		if(reviewReady == 1) {		
 			
-			int reviewCreate = 0;
-			
-			reviewCreate = new ReviewService().reviewCreate(rv);
+			int reviewCreate = new ReviewService().reviewCreate(rv);
 				
 			if(reviewCreate == 1) {
 				response.sendRedirect("itemDetail.it?itemNo=" + itemNo);

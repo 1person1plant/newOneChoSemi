@@ -66,13 +66,9 @@
 		<input type="hidden" id="searchPriceMin" name="searchPriceMin">
 		<input type="hidden" id="searchPriceMax" name="searchPriceMax">
 		<input type="hidden" id="searchWhat" name="searchWhat">
-	</form>
+	</form>	
 	
-	
-	
-	
-	
-	<!--SEARCH 검색 출발 -->
+	<!--SEARCH 검색-->
 	<script>
 		$(function(){
 			$("#search-btn").click(function(){
@@ -96,11 +92,12 @@
 				$("#searchPriceMin").val(priceMin);
 				$("#searchPriceMax").val(priceMax);
 				$("#searchWhat").val(searchWhat);
-				
-				/* console.log(priceMin + "/" + priceMax + "/" + searchWhat); */				
+								
  				$("#searchForm").submit();
-		})
+			})
 		})
 	</script>
+	
+	
 </body>
 </html>
