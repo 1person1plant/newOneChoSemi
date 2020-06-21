@@ -165,13 +165,6 @@
 					<div class="col-sm title-col">
 						<h1 class="display-6">ALL</h1>
 					</div>
-					<div class="col-sm title-col-order">
-						<ul class="float-right item-order" id="all-item-order">
-							<li><a href="#" class="sortStandard" id="sortRowPrice" style="color: grey">낮은가격</a></li>
-							<li><a href="#" class="sortStandard" id="sortHighPrice" style="color: grey">높은가격</a></li>
-							<li><a href="#" class="sortStandard" id="sortItemName" style="color: grey">제품명</a></li>
-						</ul>
-					</div>
 				</div>
 				<%if (allList.size() <= 4) {%>
 				<%for (int i = 0; i < 1; i++) {%>
@@ -267,7 +260,6 @@
 				<%}%>
 				<nav class="item-pagination mx-auto" id="item-pagination">
 					<ul class="pagination justify-content-center">
-						<input type="hidden" id="sortStandard" val="">
 						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">맨 처음</a></li>
 						<%if(currentPage-1 <= 0) {%>
 							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">이전</a></li>

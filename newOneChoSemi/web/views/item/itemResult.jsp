@@ -75,13 +75,6 @@
 					<div class="col-sm title-col">
 						<h1 class="display-6">RESULT</h1>
 					</div>
-					<div class="col-sm title-col-order">
-						<ul class="float-right item-order" id="all-item-order">
-							<li><a href="#" style="color: grey">낮은가격</a></li>
-							<li><a href="#" style="color: grey">높은가격</a></li>
-							<li><a href="#" style="color: grey">제품명</a></li>
-						</ul>
-					</div>
 				</div>				
 				<%for(int i = 0; i < rowCount; i++) {%>
 				<div class="row item-row">
@@ -144,6 +137,7 @@
 				<%}%>
 			</div>
 		</form>
+	
 	</section>
 	<script>
 	// 아이템 카드 눌렀을 때 아이템 상세보기로 넘어가기

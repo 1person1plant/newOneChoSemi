@@ -64,7 +64,7 @@ input[type=number] {text-align:center;}
 #iteminfo-icons {padding:0;}
 #iteminfo-wish-span {padding:0;}
 #iteminfo-cart-span {padding:0;}
-#iteminfo-share-span {padding:0;}
+#iteminfo-share-span {padding:0; visibility:hidden;}
 #icons-button {padding:0;}
 .iteminfo-quantity {padding-right:0.5rem;}
 #iteminfo-quantity-result {display:none; background-color:lightgray; padding-right:1rem; padding-bottom:0.5rem; padding-top:0.5rem;}            
@@ -204,7 +204,7 @@ td:nth-of-type(2) {width:45rem;}
 							</div>
 							<div class="col-2 iteminfo-icons" id="iteminfo-icons">
 								<span class="col iteminfo-share-span" id="iteminfo-share-span" style="justify-content: center;">
-									<button class="btn btn-default iteminfo-icons" id="iteminfo-share-btn" data-toggle="popover">
+									<button class="btn btn-default iteminfo-icons" id="iteminfo-share-btn">
 										<i class="fa fa-paperclip" style="font-size: 1.5rem; color: #5b89a6;"></i>
 									</button>
 								</span>
@@ -828,6 +828,52 @@ td:nth-of-type(2) {width:45rem;}
 				})
 			})
 		</script>
+		
+		
+		
+		
+		<!--구매하기-->
+		<script>
+			$(function() {				
+				$(".btn-buybutton").click(function() {
+					
+					var buy=confirm("구매하시겠습니까?");
+					var itemCount=$("#quantityNumber").val();
+					var itemNo=$("#itemRealNo").val();
+					
+					if(buy) {						
+						$.ajax({
+							url:"<%=request.getContextPath()%>/cart.it",
+							type:"POST",
+							data:{itemCount:itemCount, itemNo:itemNo},
+							success:function(data) {
+															
+								if(data=="plzLogin") {
+									alert("로그인한 회원만 구매할 수 있습니다.");
+								}else if(data=="noCount") {
+									alert("수량을 선택해주세요.");
+								}else {
+									var letsgo=confirm("구매를 위한 페이지로 이동합니다.");
+									
+									if(letsgo) {								
+										location.href="<%=request.getContextPath()%>/cart.ca?userNo=<%=userNo%>"; 
+									}else {
+										alert("장바구니에 추가했습니다.\n장바구니를 이용해 언제든지 구매가 가능합니다.");
+									}
+								}
+												
+							},
+							error:function(request,status,error) {
+								alert("code: "+request.status+"message: "+request.responseText+"error: "+error);
+							}
+						})
+					}
+				})
+			})
+		</script>
+		
+		
+		
 
 		<!--리뷰 수정하기 버튼 누르기-->
 		<script>
