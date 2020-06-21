@@ -496,7 +496,7 @@
 
 			// 동의함 체크박스 
 			function chkAction() {
-			// debugger;  // 콘솔창에서 실시간으로 테스트 해볼수 있는 작업(꿀팁)
+
         		var chk = $(".chkbox");
 
 				for (var i = 0; i < chk.length; i++) {
