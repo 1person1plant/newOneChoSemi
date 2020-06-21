@@ -381,7 +381,7 @@ public class ItemDao {
 		
 		PreparedStatement pstmt=null;
 		int result=0;
-		String query="update item set item_name=?, item_category=?,keyword_no=?,item_price=?,item_discount=?,item_stock=?,item_display=?,item_info=?,item_udate=SYSDATE where item_no=?";
+		String query="update item set item_name=?, item_category=?,keyword_no=?,item_price=?,item_discount=?,item_display=?,item_info=?,item_udate=SYSDATE where item_no=?";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -390,10 +390,9 @@ public class ItemDao {
 			pstmt.setString(3, item.getItemKeywordNo());
 			pstmt.setInt(4, item.getItemPrice());
 			pstmt.setInt(5, item.getItemDiscount());
-			pstmt.setInt(6,item.getItemStock());
-			pstmt.setString(7,item.getItemDisplay());
-			pstmt.setString(8, item.getItemInfo());
-			pstmt.setString(9, item.getItemNo());
+			pstmt.setString(6,item.getItemDisplay());
+			pstmt.setString(7, item.getItemInfo());
+			pstmt.setString(8, item.getItemNo());
 			
 			result=pstmt.executeUpdate();
 			

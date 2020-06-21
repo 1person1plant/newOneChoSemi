@@ -354,9 +354,9 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchWhat">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch();">Search</button>
+            <form class="form-inline my-2 my-lg-0" method="post" action="<%=request.getContextPath()%>/itemSearch.it">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchWhat" name="searchWhat">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="button">Search</button>
             </form>
         </div>
         <div class="navbotspy spy d-none d-xl-block d-lg-block d-md-block">
@@ -501,19 +501,7 @@
     
     </script>
     
-    <!-- 헤더의 검색 버튼 클릭 -->
-    <script>
     
-    	function headerSearch(){
-    		
-    		var searchWhat=$("#searchWhat").val();
-    		console.log(searchWhat);
-    		
-    		location.href="<%=request.getContextPath()%>/itemSearch.it?searchWhat="+searchWhat+"&searchPriceMin=0&searchPriceMax=999999";
-    		
-    	}
-    
-    </script>
 
 </body>
 </html>
