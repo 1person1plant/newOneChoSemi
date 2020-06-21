@@ -401,22 +401,26 @@
     <!-- 상품 삭제 스크립트 -->
     <script>
 		// 전체 선택
-		$(".carttable thead input:checkbox").change(function(){
+		$(document).on("click",".carttable thead input:checkbox",function(){
+		//$(".carttable thead input:checkbox").change(function(){
 		    var bool = $(this).prop("checked");
 		    $(".carttable tbody input:checkbox").prop("checked",bool);
 		    checkCount();
 		});
 		// 개별 선택 카운트
-		$(".carttable tbody input:checkbox").click(function(){
+		$(document).on("click",".carttable tbody input:checkbox",function(){
+		//$(".carttable tbody input:checkbox").click(function(){
 			checkCount();
 		});
 		// 상품명으로 개별 선택
-		$(".cartName").click(function(){
+		$(document).on("click",".cartName",function(){
+		//$(".cartName").click(function(){
 			$(this).parents("tr").children("td:first-child").children(".cart_checkbox").trigger("click");
 			checkCount();
 		});
 		// 상품이미지로 개별 선택
-		$(".cartImg").click(function(){
+		$(document).on("click",".cartImg",function(){
+		//$(".cartImg").click(function(){
 			$(this).parents("tr").children("td:first-child").children(".cart_checkbox").trigger("click");
 			checkCount();
 		});
@@ -431,7 +435,8 @@
 		    }
 		    $(".cart_total_count").html(count);
 		}
-		$("#allTrash").click(function(){
+		$(document).on("click","#allTrash",function(){
+		//$("#allTrash").click(function(){
 		    deleteChecked();
 		});
 		// 선택항목 한번에 삭제
@@ -475,8 +480,9 @@
 				}
 			}
 		}
-       // 개별항목 삭제
-		$(".carttable tbody tr td input:button").click(function(){
+		// 개별항목 삭제
+		$(document).on("click",".carttable tbody tr td input:button",function(){
+		//$(".carttable tbody tr td input:button").click(function(){
 			var result = confirm("삭제 하시겠습니까?");
 			var cartItem = $(this);
 			// 삭제 재확인 후 삭제
