@@ -177,8 +177,10 @@ td:nth-of-type(2) {width:45rem;}
 										rate = 2;
 									}else if(item.getItemRate() >= 1 && item.getItemRate() < 2) {
 										rate = 1;
-									}else {
+									}else if(item.getItemRate() == 5){
 										rate = 5;
+									}else {
+										rate = 0;
 									}
 								%>
 								<%for(int j = 0; j < 5; j++) {%>

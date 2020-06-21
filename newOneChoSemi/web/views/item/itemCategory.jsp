@@ -90,7 +90,7 @@
 					<%if (i != rowCount-1) {%>
 					<%for (int j = 0; j < colCount; j++) {%>
 					<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
+					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
@@ -117,7 +117,7 @@
 					<%}else {%>
 					<%for(int j = 0; j < remain; j++) {%>
 					<input type="hidden" value="<%=((Item) categoryList.get(4*i+j)).getItemNo()%>">
-					<div class="col-sm item-col" id="item-col">
+					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="<%=((Item)categoryList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
