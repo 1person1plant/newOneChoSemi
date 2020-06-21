@@ -741,7 +741,7 @@ public class ItemDao {
 		return item;
 	}
 
-	// 김경남 조회 결과 LIST
+	// 조회 결과
 	public ArrayList<Item> searchResult(Connection conn, ArrayList searchList) {
 		
 		PreparedStatement pstmt = null;

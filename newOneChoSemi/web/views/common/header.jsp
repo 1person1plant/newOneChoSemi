@@ -450,15 +450,17 @@
 		function goAll() {
 			location.href="<%=request.getContextPath()%>/itemMain.it";
 		}
-		// 흙에 사는 친구들 페이지로 가는 펑션
+		
+		
+		// SOIL 페이지로 가는 펑션
 		function goSoil() {
 			location.href="<%=request.getContextPath()%>/category.it?category=SOIL";
 		}
-		// 물에 사는 친구들 페이지로 가는 펑션
+		// WATER 페이지로 가는 펑션
 		function goWater() {
 			location.href="<%=request.getContextPath()%>/category.it?category=WATER";
 		}
-		// 공중에 사는 친구들 페이지로 가는 펑션
+		// HANGING 페이지로 가는 펑션
 		function goHanging() {
 			location.href="<%=request.getContextPath()%>/category.it?category=HANGING";
 		}
