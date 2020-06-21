@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="order.model.vo.Order, item.model.vo.Item, review.model.vo.Review, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="order.model.vo.Order, item.model.vo.*, review.model.vo.Review, java.util.ArrayList"%>
 <%
 	Item item = (Item)request.getAttribute("itemDetail");
 	ArrayList<Review> otherReviewList = (ArrayList)request.getAttribute("otherReviewList");
@@ -7,7 +7,16 @@
 	Order order = (Order)request.getAttribute("orderCheck");
 	Review loadReview = (Review)request.getAttribute("loadReview");
 	int wishCheck = ((Integer)request.getAttribute("wishCheck"));
+	Pagination pagination = (Pagination)request.getAttribute("pagination");
 
+	int currentPage = pagination.getCurrentPage();
+	int howManyAtOnce = pagination.getHowManyAtOnce();
+	int itemCount = pagination.getItemCount();
+	int ultimatePage = pagination.getUltimatePage();
+	int startPage = pagination.getStartPage();
+	int endPage = pagination.getEndPage();
+	int beginPage = 1;
+	
 	String keyword = "";
 	String key1 = "";
 	String key2 = "";
@@ -126,6 +135,15 @@ td:nth-of-type(2) {width:45rem;}
 .pagination * {color:black;}
 #review-set {color:gray;}
 /* review end */
+
+
+/* review pagination */
+#reivew-pagination * {color:#2d2d2d;}
+#review-pagination li > a:focus,
+#review-pagination li > a:hover, 
+#review-pagination li > span:focus, 
+#review-pagination li > span:hover {color: #2d2d2d; background-color: lightgray;}
+/* review pagination */
 </style>
 </head>
 <body>
@@ -353,15 +371,16 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=myReviewList.get(i).getReviewContent()%></p>
 								</div>
-								<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
+								<%if(myReviewList.get(i).getReviewImgName() == null) {%>
 								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
 									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 								<%}%>
 							</td>
-							<%if(myReviewList.get(i).getReviewImgPath() == null && myReviewList.get(i).getReviewImgName() == null) {%>
+							<%if(myReviewList.get(i).getReviewImgName() == null) {%>
 							<td>
+								<img src="#" style="width: 7rem; height: 7rem; visibility:hidden;">
 							</td>
 							<%}else {%>
 							<td class="fadeout-image">
@@ -588,7 +607,7 @@ td:nth-of-type(2) {width:45rem;}
 								<div class="row review-cont">
 									<p class="review-cont-real"><%=otherReviewList.get(i).getReviewContent()%></p>
 								</div>
-								<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
+								<%if(otherReviewList.get(i).getReviewImgName() == null) {%>
 								<div>
 								</div>
 								<%}else {%>
@@ -597,8 +616,9 @@ td:nth-of-type(2) {width:45rem;}
 								</div>
 								<%}%>
 							</td>
-							<%if(otherReviewList.get(i).getReviewImgPath() == null && otherReviewList.get(i).getReviewImgName() == null) {%>
+							<%if(otherReviewList.get(i).getReviewImgName() == null) {%>
 							<td>
+								<img src="#" style="width: 7rem; height: 7rem; visibility:hidden;">
 							</td>
 							<%}else {%>
 							<td class="fadeout-image">
@@ -609,21 +629,28 @@ td:nth-of-type(2) {width:45rem;}
 						<%}%>
 					</tbody>
 				</table>
-				<nav class="review-pagination mx-auto">
+				<%if(otherReviewList.size()==0) {%>
+				<%}else {%>
+				<nav class="review-pagination mx-auto" id="review-pagination">
 					<ul class="pagination justify-content-center">
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=beginPage%>&itemNo=<%=item.getItemNo()%>">맨 처음</a></li>
+						<%if(currentPage-1 <= 0) {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=beginPage%>&itemNo=<%=item.getItemNo()%>">이전</a></li>
+						<%}else {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=currentPage-1%>&itemNo=<%=item.getItemNo()%>">이전</a></li>
+						<%}%>
+						<%for(int p = startPage; p <= endPage; p++) {%>
+							<%if (p == currentPage) {%>
+							<li class="page-item disabled"><a class="page-link"><%=p%></a></li>
+							<%}else {%>
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=p%>&itemNo=<%=item.getItemNo()%>"><%=p%></a></li>
+							<%}%>
+						<%}%>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=currentPage+1%>&itemNo=<%=item.getItemNo()%>">다음</a></li>
+						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemDetail.it?currentPage=<%=ultimatePage%>&itemNo=<%=item.getItemNo()%>">맨 끝</a></li>
 					</ul>
 				</nav>
+				<%}%>
 			</div>
 		</div>
 		
@@ -1027,6 +1054,13 @@ td:nth-of-type(2) {width:45rem;}
 				}
 				reader.readAsDataURL(value.files[0]);
 			}
+		</script>
+		
+		<!--페이지네이션 현재 페이지 표시-->
+		<script>
+			$(function() {
+				$(".disabled").children(".page-link").css("background-color","lightgray");
+			})
 		</script>
 	</section>
 	<%@ include file="../common/footer.jsp"%>
