@@ -429,7 +429,7 @@ td:nth-of-type(2) {width:45rem;}
 								</div>
 								<div class="container textarea-modal-container">
 									<div class="row textarea-row">
-										<textarea class="form-control review-textarea" name="content" rows="5" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
+										<textarea class="form-control review-textarea" name="content" rows="5" maxlength="150" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
 									</div>
 									<div class="row float-right textarea-count-row">
 										<span class="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
@@ -511,7 +511,7 @@ td:nth-of-type(2) {width:45rem;}
 								</div>
 								<div class="container textarea-modal-container">
 									<div class="row textarea-row">
-										<textarea class="form-control review-textarea" name="updateReviewContent" rows="5" id="reviewUpdateContent" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
+										<textarea class="form-control review-textarea" name="updateReviewContent" rows="5" maxlength="150" id="reviewUpdateContent" placeholder="이곳에 작성해주세요." style="background-color: lightgray; resize: none;"></textarea>
 									</div>
 									<div class="row float-right textarea-count-row">
 										<span class="counter">0</span><span class="textarea-count" style="margin-right: 0.5rem;">/150자</span>
