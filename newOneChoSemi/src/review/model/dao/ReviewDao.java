@@ -13,14 +13,14 @@ import review.model.vo.Review;
 
 public class ReviewDao {
 
-	public ArrayList<Review> otherReviewList(Connection conn, String itemNo) {
+	public int otherReviewCount(Connection conn, String itemNo) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		ArrayList<Review> otherReviewList = new ArrayList<>();
+		int result = 0;
 		
-		String query = "SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' ORDER BY 8 DESC";
+		String query = "SELECT COUNT(*) FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -28,21 +28,7 @@ public class ReviewDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Review rv = new Review(rset.getString("review_no"),
-						   			   rset.getString("order_no"),
-						   			   rset.getString("item_no"),
-						   			   rset.getString("member_no"),						   		
-						   			   rset.getDate("review_cdate"),
-						   			   rset.getInt("review_rate"),
-						   			   rset.getString("review_content"),
-						   			   rset.getDate("review_udate"),
-						   			   rset.getString("review_imagename"),
-						   			   rset.getString("review_imagepath"),
-									   rset.getString("order_review"),
-									   rset.getString("member_id"),
-									   rset.getString("member_rank"));
-				
-				otherReviewList.add(rv);
+				result = rset.getInt(1);
 			}
 			
 		} catch (SQLException e) {
@@ -52,7 +38,7 @@ public class ReviewDao {
 			close(rset);
 		}
 		
-		return otherReviewList;
+		return result;
 	}
 
 	public ArrayList<Review> myReviewList(Connection conn, String itemNo, String memberNo) {
@@ -377,6 +363,54 @@ public class ReviewDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Review> otherReviewList(Connection conn, String itemNo, int currentPage, int howManyAtOnce) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Review> otherReviewList = new ArrayList<>();
+		
+		int startRow = (currentPage-1) * howManyAtOnce + 1;
+		int endRow = currentPage * howManyAtOnce;
+		
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, R.* FROM (SELECT * FROM REVIEW_LIST WHERE ITEM_NO = '"+ itemNo +"' ORDER BY 8 DESC) R) WHERE RNUM BETWEEN ? AND ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review rv = new Review(rset.getString("review_no"),
+						   			   rset.getString("order_no"),
+						   			   rset.getString("item_no"),
+						   			   rset.getString("member_no"),						   		
+						   			   rset.getDate("review_cdate"),
+						   			   rset.getInt("review_rate"),
+						   			   rset.getString("review_content"),
+						   			   rset.getDate("review_udate"),
+						   			   rset.getString("review_imagename"),
+						   			   rset.getString("review_imagepath"),
+									   rset.getString("order_review"),
+									   rset.getString("member_id"),
+									   rset.getString("member_rank"));
+				
+				otherReviewList.add(rv);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return otherReviewList;
+		
 	}
 
 }
