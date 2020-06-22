@@ -230,8 +230,8 @@
                         <tr style="height: 3rem;">
                         <th style="text-align: center; width: 10rem;">회원분류</th>
                         <td colspan="4" style="text-align: left;">
-                            <input type="radio" name="memberType" value="Y" id="available"><label for="available">관리자</label>
-                            <input type="radio" name="memberType" value="N" id="inavailable"><label for="inavailable">일반회원</label></td>
+                            <input type="radio" name="memberType" value="Y" id="admintype"><label for="admintype">관리자</label>
+                            <input type="radio" name="memberType" value="N" id="usertype"><label for="usertype">일반회원</label></td>
                             
                         </tr>
                         
@@ -475,10 +475,13 @@
   								   <li>
   								   <div class="form-inline">
                                    <div class="col-md-12 form-group">
-                                   <label class="col-sm-2 col-form-label">주문내역</label>
-  								   
-  								   <table id="modalOrderlist" class="display nowrap">
-		  								    <thead>
+                                   <label class="col-sm-2 col-form-label">주문내역<span id="howMany">0</span><span>건</span></label>
+                                   
+                                  
+                                  
+                                  <%if(!orders.isEmpty()){ %>
+  								   <table id="modalOrderlist" class="display nowrap" style="text-align:center;">
+		  								<thead>
 		                                <tr>
 		                                	
 		                                    <th>주문번호</th>
@@ -492,27 +495,30 @@
 		                                </tr>
 		                     
 		                            </thead>
-		                            <tbody>
+		                            <tbody id="orderBody">
 		                             
-		                               			<tr>
-		                               				
-		                               				<td id="moOrderNo"></td>
-		                               				<td id="moOrderDate"></td>
-		                               				<td id="moOrderItemNo"></td>
-		                               				<td id="moOrderItemName"></td>
-		                               				<td id="moPaymentStat"></td>
-		                               				<td id="moDeliveryStat"></td>
-		                               				<td id="moOrderCount"></td>
-		                               				
-		                               			</tr>
-		                               		  		
+		                               			
 		                               
 		                            </tbody>
 		                            
 		  								   
   								   
   								   </table>
-  								   
+  									<%}else{ %>
+  									
+  									<div class="container">
+		                       		<div class="mx-auto" style="text-align:center;width:60rem;height:20rem; background:lightgray;">
+		         
+		                       		<p style="padding-top:8rem;">주문결과가 존재하지 않아요.
+		                       		</p>
+		                       		
+		                      
+		                       		</div>
+		                       		</div>
+  									
+  									
+  									<%} %>
+  								 
   								   </div>
                                    </div>
   								   
@@ -660,7 +666,7 @@
      	$('#modalOrderlist thead tr:eq(1) th').each(function(i){
      		
      		var title=$(this).text();
-     		$(this).html('<input type="text" placeholder="search '+title+'"/>');
+     		$(this).html('<input disabled style="text-align:center;" type="text" placeholder="'+title+'">');
      		
      		$('input',this).on('keyup change',function(){
      			
@@ -674,6 +680,9 @@
      		});
      		
      	}); 
+     	
+     	
+     	
     	 
        var table=$('#memberlist').DataTable({
        
@@ -688,9 +697,19 @@
     	  
     	  orderCellsTop:true,
 	   	  fixedHeader:true,
-    	  scrollY: 200,
+    	  scrollY: 150,
           scrollX: true,
-          bFilter: false
+          bFilter: false,
+          bInfo : false,
+          paging:   false,
+          aoColumnDefs: [
+              { "bSortable": false, "aTargets": [ 0, 1, 2, 3, 4, 5, 6 ] }, 
+              { "bSearchable": false, "aTargets": [ 0, 1, 2, 3, 4, 5, 6 ] }
+          ]
+          
+          
+        
+         
        	
         });
        
@@ -748,10 +767,18 @@
              	$("#modal-memPoint").val('<%=members.get(i).getMemberPoint()%>');
              	
              	
+           		<%if(!orders.isEmpty()){%>
+           		
+           		$body=$("#orderBody");
+         		$body.html("");
+         		$count=0;
              	
              	<%for(int j=0;j<orders.size();j++){%>
              	
              	if(memberId=='<%=orders.get(j).getMemberId()%>'){
+             		
+             		
+             		$count++;
              		
              		var orderNo='<%=orders.get(j).getOrderNo()%>'
              		var orderDate='<%=orders.get(j).getOrderDate()%>'
@@ -761,22 +788,35 @@
              		var orderDelivery='<%=orders.get(j).getDeliveryStatus()%>'
              		var orderCount='<%=orders.get(j).getOrderCount()%>'
              		
-             		$("#moOrderNo").text(orderNo);
-             		$("#moOrderDate").text(orderDate);
-             		$("#moOrderItemNo").text(orderItemNo);
-             		$("#moOrderItemName").text(orderItemName);
-             		$("#moPaymentStat").text(orderPayment);
-             		$("#moDeliveryStat").text(orderDelivery);
-             		$("#moOrderCount").text(orderCount);
+             		
+             		$row=$("<tr>");
+             		$orderNo=$("<td>").text(orderNo);
+             		$orderDate=$("<td>").text(orderDate);
+             		$orderItNo=$("<td>").text(orderItemNo);
+             		$orderItName=$("<td>").text(orderItemName);
+             		$orderPay=$("<td>").text(orderPayment);
+             		$orderDel=$("<td>").text(orderDelivery);
+             		$orderCount=$("<td>").text(orderCount);
+             		
+             		$row.append($orderNo);
+             		$row.append($orderDate);
+             		$row.append($orderItNo);
+             		$row.append($orderItName);
+             		$row.append($orderPay);
+             		$row.append($orderDel);
+             		$row.append($orderCount);
+             		$body.append($row);
+             		
+             		$("#howMany").text($count);
              		
              		
              	}
              	
              	
-             	
+             	<%}%>
              	<%}%>
              	
-             	
+           
              	
              	
              	var adminChk='<%=members.get(i).getMemberAdmin()%>';
@@ -806,8 +846,10 @@
             	 if(memberNum=='<%=members.get(i).getMemberNo()%>'){
                    	
                    	$("#modal-memSignDate").val('<%=members.get(i).getMemberJoinDate()%>');
-                   	$("#modal-memDropReason").val('<%=members.get(i).getMemberExit()%>');
                    	
+                   	if('<%=members.get(i).getMemberExit()%>'!=null){
+                   	$("#modal-memDropReason").val('<%=members.get(i).getMemberExit()%>');
+                   	}
                    	
                    }
              	 

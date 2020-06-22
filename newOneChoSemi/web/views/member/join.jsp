@@ -83,7 +83,7 @@
 								<h1 style="text-align-last: center;">회 원 가 입</h1>
 							</div>
 							<div class="test col-12" style="text-align: center;">
-								<a href="<%=request.getContextPath()%>/index.jsp";>HOME</a>
+								<a href="<%=request.getContextPath()%>/index.jsp">HOME</a>
 							</div>
 							<hr>
 							<br>
