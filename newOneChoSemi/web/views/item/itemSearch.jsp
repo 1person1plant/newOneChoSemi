@@ -65,7 +65,7 @@
 	<form action="<%=request.getContextPath()%>/itemSearch.it" method="post" id="searchForm" name="searchForm">
 		<input type="hidden" id="searchPriceMin" name="searchPriceMin">
 		<input type="hidden" id="searchPriceMax" name="searchPriceMax">
-		<input type="hidden" id="searchWhat2" name="searchWhat">
+		<input type="hidden" class="searchWhat" name="searchWhat">
 	</form>	
 	
 	<!--SEARCH 검색-->
@@ -91,7 +91,7 @@
 				
 				$("#searchPriceMin").val(priceMin);
 				$("#searchPriceMax").val(priceMax);
-				$("#searchWhat2").val(searchWhat);
+				$(".searchWhat").val(searchWhat);
 								
  				$("#searchForm").submit();
 			})
