@@ -758,7 +758,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	        userAvailablePoints = user_point;
 	    }
 	    // 배송비 관련 
-	    // TODO 지역별 배송 계산  
 	    var orderpayment_point = 0;	// 초기 사용 포인트 값
 	    var additional = false;	// 추가 배송비 지역 어부
 	    var delivery = Number("2500");	// 기본 배송비
