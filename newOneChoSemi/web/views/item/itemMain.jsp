@@ -281,16 +281,16 @@
 		</form>
 	</section>
 	
+	
+	<!--페이지네이션 현재 페이지 표시-->
 	<script>
 		$(function() {
 			$(".disabled").children(".page-link").css("background-color","lightgray");
 		})
 	</script>
 	
-	
-	
+	<!--아이템 카드 눌렀을 때 아이템 상세보기로 넘어가기-->
 	<script>
-	// 아이템 카드 눌렀을 때 아이템 상세보기로 넘어가기
 	$(function(){
 		$(".item-card").click(function(){
 			var itemNo = $(this).children("input").val();

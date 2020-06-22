@@ -73,8 +73,6 @@ public class ItemMainServlet extends HttpServlet {
 		
 		if(ultimatePage < endPage) {
 			endPage = ultimatePage;
-		}else if(currentPage < 1){
-			currentPage=1;
 		}
 		
 		Pagination pagination = new Pagination(currentPage, itemCount, howManyAtOnce, ultimatePage, startPage, endPage);

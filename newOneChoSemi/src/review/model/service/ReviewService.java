@@ -11,15 +11,15 @@ import review.model.vo.Review;
 
 public class ReviewService {
 
-	public ArrayList<Review> otherReviewList(String itemNo) {
+	public int otherReviewCount(String itemNo) {
 
 		Connection conn = getConnection();
 		
-		ArrayList<Review> otherReviewList = new ReviewDao().otherReviewList(conn, itemNo);
+		int otherReviewCount = new ReviewDao().otherReviewCount(conn, itemNo);
 		
 		close(conn);
 		
-		return otherReviewList;
+		return otherReviewCount;
 	}
 
 	public ArrayList<Review> myReviewList(String itemNo, String memberNo) {
@@ -121,6 +121,17 @@ public class ReviewService {
 		close(conn);
 		
 		return result;
+	}
+
+	public ArrayList<Review> otherReviewList(String itemNo, int currentPage, int howManyAtOnce) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> otherReviewList = new ReviewDao().otherReviewList(conn, itemNo, currentPage, howManyAtOnce);
+		
+		close(conn);
+		
+		return otherReviewList;
 	}
 
 }
