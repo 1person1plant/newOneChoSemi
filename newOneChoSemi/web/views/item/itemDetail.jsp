@@ -375,7 +375,7 @@ td:nth-of-type(2) {width:45rem;}
 								<%if(myReviewList.get(i).getReviewImgName() == null) {%>
 								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
+									<img src="<%=request.getContextPath()%>/review_uploadFiles/<%=myReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 								<%}%>
 							</td>
@@ -385,7 +385,7 @@ td:nth-of-type(2) {width:45rem;}
 							</td>
 							<%}else {%>
 							<td class="fadeout-image">
-								<img src="<%=request.getContextPath()%>/<%=myReviewList.get(i).getReviewImgPath()%>/<%=myReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
+								<img src="<%=request.getContextPath()%>/review_uploadFiles/<%=myReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
 							</td>
 							<%}%>	
 						</tr>
@@ -500,7 +500,7 @@ td:nth-of-type(2) {width:45rem;}
 									<div class="row iteminfo-modal-title" style="margin-bottom: 0rem;">
 										<p class="h6 my-auto" style="color: gray; font-size: 1rem;">[<%=item.getItemName()%>]</p>
 										<input type="hidden" name="updateReviewNo" id="updateReviewNo" value="">
-										<input type="hidden" name="updateItemInfo" value="<%=order.getItemNo()%>">
+										<input type="hidden" name="updateItemInfo" value="<%=item.getItemNo()%>">
 									</div>
 									<div class="row iteminfo-modal-date">
 										<p class="my-auto" style="color:#5b89a6; font-size:0.8rem;" id="updateReviewUDate"></p>
@@ -623,7 +623,7 @@ td:nth-of-type(2) {width:45rem;}
 							</td>
 							<%}else {%>
 							<td class="fadeout-image">
-								<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
+								<img src="<%=request.getContextPath()%>/review_uploadFiles/<%=otherReviewList.get(i).getReviewImgName()%>" id="mini-review-image" style="width: 7rem; height: 7rem;">
 							</td>
 							<%}%>
 						</tr>
