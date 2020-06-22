@@ -354,7 +354,7 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input id="searchWhat" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2 searchWhat" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch()">Search</button>
             </form>
         </div>
@@ -465,7 +465,7 @@
 			location.href="<%=request.getContextPath()%>/category.it?category=HANGING";
 		}
     	function headerSearch() {
-			var searchWhat = $("#searchWhat").val();
+			var searchWhat = $(".searchWhat").val();
 			console.log(searchWhat);
 			
 			location.href="<%=request.getContextPath()%>/itemSearch.it?searchWhat=" + searchWhat + "&searchPriceMin=0&searchPriceMax=999999";

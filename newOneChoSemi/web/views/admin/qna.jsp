@@ -97,7 +97,7 @@
 
     
     <div class="col-12">
-        <h3 style="margin-top: 30px;margin-bottom: 80px;margin-left: 100px;"">소중한 고객님의 목소리를 듣습니다.</h3>
+        <h3 style="margin-top: 30px;margin-bottom: 80px;margin-left: 100px;">소중한 고객님의 목소리를 듣습니다.</h3>
         
         <div class="container">
         
