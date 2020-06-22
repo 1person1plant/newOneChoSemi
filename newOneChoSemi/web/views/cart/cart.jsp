@@ -377,7 +377,7 @@
     	function goHome() {
     		location.href="<%=request.getContextPath()%>/index.jsp";
 		}
-    
+    	window.history.forward();
     	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
             var orderCheckeds = $("input:checkbox[class=cart_checkbox]:checked");
@@ -393,6 +393,7 @@
 		        		$("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count").prop("disabled",false);
 		        	}
 	        	}
+	        	window.history.forward();
 				$("#orderForm").submit();
             }
 		}

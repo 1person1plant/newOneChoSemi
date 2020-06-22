@@ -1004,6 +1004,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	</div>
 	</form>
 	<script>
+		window.history.forward();
 		function orderEnd_cancel() {
 		    var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
 		    if(result){
@@ -1123,6 +1124,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 							msg += '카드 승인번호 : ' + rsp.apply_num;
 						*/
 				    	// 결제 완료 후 결과 화면으로...
+				    	window.history.forward();
 						$("#orderCompForm").submit();
 					} else {
 						var msg = rsp.error_msg;
