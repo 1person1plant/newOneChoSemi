@@ -6,6 +6,7 @@
 	ArrayList<Review> myReviewList = (ArrayList)request.getAttribute("myReviewList");
 	Order order = (Order)request.getAttribute("orderCheck");
 	Review loadReview = (Review)request.getAttribute("loadReview");
+	int otherReviewCount = ((Integer)request.getAttribute("otherReviewCount"));
 	int wishCheck = ((Integer)request.getAttribute("wishCheck"));
 	Pagination pagination = (Pagination)request.getAttribute("pagination");
 
@@ -209,7 +210,7 @@ td:nth-of-type(2) {width:45rem;}
 									<%}%>
 								<%}%>
 							<%}%>
-							<span class="iteminfo-starRating-text my-auto" style="color: gray"><%=otherReviewList.size()%>개 구매평</span>
+							<span class="iteminfo-starRating-text my-auto" style="color: gray"><%=otherReviewCount%>개 구매평</span>
 						</div>
 					</div>
 					<div class="row iteminfo-price" id="iteminfo-price" style="display: block;">
@@ -468,7 +469,7 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="reset" class="btn btn-light" data-dismiss="modal">취소하기</button>
-							<button type="submit" class="btn btn-secondary">등록하기</button>
+							<button type="submit" class="btn btn-secondary" id="goCreateReview-btn">등록하기</button>
 						</div>
 					</div>
 				</div>
@@ -550,7 +551,7 @@ td:nth-of-type(2) {width:45rem;}
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="reset" class="btn btn-light" data-dismiss="modal">취소하기</button>
-							<button type="submit" id="updateReview-btn" class="btn btn-secondary">수정하기</button>
+							<button type="submit" id="goUpdateReview-btn" class="btn btn-secondary">수정하기</button>
 						</div>
 					</div>
 				</div>
@@ -741,6 +742,18 @@ td:nth-of-type(2) {width:45rem;}
 							alert("code: "+request.status+"message: "+request.responseText+"error: "+ error);
 						}
 					})
+				})
+			})
+		</script>
+		
+		<script>
+			$(function() {
+				$("#goCreateReview-btn").click(function() {
+					alert("리뷰가 등록되었습니다.");
+				})
+				
+				$("#goUpdateReview-btn").click(function() {
+					alert("리뷰가 수정되었습니다.");
 				})
 			})
 		</script>

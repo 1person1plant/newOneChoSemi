@@ -94,6 +94,7 @@ public class ItemDetailServlet extends HttpServlet {
 		request.setAttribute("itemDetail", itemDetail);
 		request.setAttribute("myReviewList", myReviewList);
 		request.setAttribute("otherReviewList", otherReviewList);
+		request.setAttribute("otherReviewCount", otherReviewCount);
 		request.setAttribute("orderCheck", order);
 		request.setAttribute("wishCheck", wishCheck);
 		request.setAttribute("pagination", pagination);
