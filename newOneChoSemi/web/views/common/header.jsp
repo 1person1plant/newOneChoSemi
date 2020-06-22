@@ -354,7 +354,7 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input class="searchWhat" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2 searchWhat" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch()">Search</button>
             </form>
         </div>
