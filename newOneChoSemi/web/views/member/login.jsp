@@ -64,7 +64,7 @@
                     	</div>
                     	<div class="col-md-12">
                         	<input type="text" class="form-control" placeholder="아이디를 입력해주세요" maxlength="16" required name="memberId" id="memberId">
-                        	<input type="checkbox" id="cb_saveId" name='btn' value='setCookie' onclick='javascript:setValue();' style="margin-top: 10px; margin-bottom: 10px;"> 아이디 저장 <br>
+                        	<input type="checkbox" id="cb_saveId" name='btn' value='setCookie' onclick='javascript:setValue();' style="margin-top: 10px; margin-bottom: 10px;"><label for="cb_saveId">&nbsp; 아이디 저장 </label><br>
                     	</div>
                     	<br>
                     	<div class="col-md-12">

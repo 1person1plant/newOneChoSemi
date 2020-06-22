@@ -102,6 +102,8 @@
         .visual_container > div div.visual_img1 img{
             display: block;
             margin-bottom: 100px;
+            width: 200px;
+            height: 150px;
         }
         .visual_container > div div.visual_img1 a{
             display: inline-block;
@@ -153,8 +155,8 @@
 		}
 		.vbox_card .vbox{
 		    position: relative;
-		    width: 600px;
-		    height: 430px;
+		    width: 37.5rem;
+		    height: 26.875rem;
 		    background: #000;
 		}
 		.vbox_card .vbox .videoBx{
@@ -364,7 +366,7 @@
     <section class="visual_container">
         <div>
             <div class="visual_img1">
-                <img src="images/TS/logo-1.png" alt="onecho">
+                <img src="images/logo.png" alt="onecho">
                 <a onclick="goAll();" class="btn">자세히 보기</a> <!-- goAll()은 헤더에 있음 -->
             </div>
             <div class="visual_img2"><img src="images/TS/water_monstera.png" alt="monstera"></div>
