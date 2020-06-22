@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.admin.AdminMemberService;
 import member.model.vo.admin.AdminMember;
+import order.model.service.admin.AdminOrderService;
+import order.model.vo.admin.AdminOrder;
 
 /**
  * Servlet implementation class memberAdminSearchServlet
@@ -55,9 +57,16 @@ public class memberAdminSearchServlet extends HttpServlet {
 		AdminMemberService ms=new AdminMemberService();
 		ArrayList<AdminMember> members=ms.searchMember(list);
 		
+		System.out.println("검색 결과 멤버:"+members);
+		
+		//주문내역도 가져가야 함~
+		AdminOrderService os=new AdminOrderService();
+		ArrayList<AdminOrder> orders=os.selectAllOrders();
+		
 		if(members!=null) {
 			
 			request.setAttribute("members", members);
+			request.setAttribute("orders", orders);
 			request.getRequestDispatcher("views/admin/memberManager.jsp").forward(request, response);
 			
 		}else {
