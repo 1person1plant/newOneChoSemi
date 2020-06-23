@@ -14,6 +14,14 @@
 	int endPage = pagination.getEndPage();
 	int beginPage = 1;
 	
+	int colCount = 4;
+	int rowCount = (int)((double)allList.size()/colCount + 0.9);
+	int remain = allList.size() % colCount;
+
+	if(allList.size() > 5 && remain == 0) {
+		remain = 4;
+	}	
+	
 	String keyword = "";
 	String key1 = "";
 	String key2 = "";
@@ -36,6 +44,7 @@
 
 /* item page */
 .item-container {margin-top:10rem;}
+.item-card {margin:auto;}
 #item-card {width:15rem; height:28rem; border-radius:0px; border:none; text-align:center;}
 #item-card:focus,
 #item-card:hover {cursor:pointer;}
@@ -165,58 +174,26 @@
 					<div class="col-sm title-col">
 						<h1 class="display-6">ALL</h1>
 					</div>
-				</div>
-				<%if (allList.size() <= 4) {%>
-				<%for (int i = 0; i < 1; i++) {%>
+				</div>				
+				<%for(int i = 0; i < rowCount; i++) {%>
 				<div class="row item-row">
-					<%for (int j = 0; j < allList.size(); j++) {%>
+					<%if (i != rowCount-1) {%>
+					<%for (int j = 0; j < colCount; j++) {%>
+					<input type="hidden" value="<%=((Item)allList.get(4*i+j)).getItemNo()%>">
 					<div class="col-3 col-sm item-col" id="item-col">
 						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
+							<input type="hidden" value="<%=((Item)allList.get(4*i+j)).getItemNo()%>">
 							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
+								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
 							</div>
 							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(j)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) allList.get(i)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"
-									style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
+								<p class="card-title item-card-title"><%=((Item) allList.get(4*i+j)).getItemName()%></p>
+								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(4*i+j)).getItemPrice()) - (((Item) allList.get(4*i+j)).getItemDiscount())%></p>
+								<%if (!((Item) allList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) allList.get(4*i+j)).getKeywordName()%></a><br>
 								<%}else {%>
 								<%
-									keyword = ((Item) allList.get(j)).getKeywordName();
-									key1 = keyword.split(",")[0];
-									key2 = keyword.split(",")[1];
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
-								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
-							</div>
-						</div>
-					</div>
-					<%}%>
-				</div>
-				<%}%>
-				<%}else {%>
-				<%for(int i = 0; i < 2; i++) {%>
-				<div class="row item-row">
-					<%if (i == 0) {%>
-					<%for (int j = 0; j < 4; j++) {%>
-					<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
-							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
-							</div>
-							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(j)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) allList.get(j)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
-								<%}else {%>
-								<%
-									keyword = ((Item) allList.get(j)).getKeywordName();
+									keyword = ((Item) allList.get(4*i+j)).getKeywordName();
 									key1 = keyword.split(",")[0];
 									key2 = keyword.split(",")[1];
 								%>
@@ -228,55 +205,73 @@
 					</div>
 					<%}%>
 					<%}else {%>
-					<%for(int j = 4; j < allList.size(); j++) {%>
-					<input type="hidden" value="<%=((Item) allList.get(j)).getItemNo()%>">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="<%=((Item)allList.get(j)).getItemNo()%>">
-							<div class="card-image-zoom">
-								<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item) allList.get(j)).getItemImageName()%>" class="card-img-top" alt="...">
-							</div>
-							<div class="card-body item-card-body">
-								<p class="card-title item-card-title"><%=((Item) allList.get(j)).getItemName()%></p>
-								<p class="card-text item-card-text">&#8361;<%=(((Item) allList.get(i)).getItemPrice()) - (((Item) allList.get(j)).getItemDiscount())%></p>
-								<%if (!((Item) allList.get(j)).getItemKeywordNo().equals("K3")) {%>
-								<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=((Item) allList.get(j)).getKeywordName()%></a><br>
-								<%}else {%>
-								<%
-									keyword = ((Item) allList.get(j)).getKeywordName();
-									key1 = keyword.split(",")[0];
-									key2 = keyword.split(",")[1];
-								%>
-								<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
-								<%}%>
-								<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
+					<%for(int j = 0; j < colCount; j++) {%>
+						<%if(j < remain) {%>
+						<input type="hidden" value="<%=((Item)allList.get(4*i+j)).getItemNo()%>">
+						<div class="col-3 col-sm item-col" id="item-col">
+							<div class="card item-card" id="item-card">
+								<input type="hidden" value="<%=((Item)allList.get(4*i+j)).getItemNo()%>">
+								<div class="card-image-zoom">
+									<img src="<%=request.getContextPath()%>/items_uploadFiles/<%=((Item)allList.get(4*i+j)).getItemImageName()%>" class="card-img-top" alt="...">
+								</div>
+								<div class="card-body item-card-body">
+									<p class="card-title item-card-title"><%=(allList.get(4*i+j)).getItemName()%></p>
+									<p class="card-text item-card-text">&#8361;<%=(((Item)allList.get(4*i+j)).getItemPrice()) - (((Item)allList.get(4*i+j)).getItemDiscount())%></p>
+									<%if (!((Item)allList.get(4*i+j)).getItemKeywordNo().equals("K3")) {%>
+									<a href="#" class="badge badge-info" id="keyword-badge"
+										style="font-weight: lighter">#<%=((Item)allList.get(4*i+j)).getKeywordName()%></a><br>
+									<%}else {%>
+									<%
+										keyword = ((Item)allList.get(4*i+j)).getKeywordName();
+										key1 = keyword.split(",")[0];
+										key2 = keyword.split(",")[1];
+									%>
+									<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter">#<%=key1%></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter">#<%=key2%></a><br>
+									<%}%>
+									<a href="#" class="btn btn-outline-secondary btn-sm item-btn">VIEW DETAIL</a>
+								</div>
 							</div>
 						</div>
-					</div>
+						<%}else {%>
+						<div class="col-3 col-sm item-col" id="item-col" style="visibility:hidden">
+							<div class="card item-card" id="item-card">
+								<input type="hidden" value="">
+								<div class="card-image-zoom">
+									<img src="#" class="card-img-top" alt="...">
+								</div>
+								<div class="card-body item-card-body">
+									<p class="card-title item-card-title"></p>
+									<p class="card-text item-card-text"></p>
+									<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter"></a><br>
+									<a href="#" class="badge badge-info" id="keyword-badge"	style="font-weight: lighter"></a>&nbsp;<a href="#" class="badge badge-info" id="keyword-badge" style="font-weight: lighter"></a><br>
+									<a href="#" class="btn btn-outline-secondary btn-sm item-btn"></a>
+								</div>
+							</div>
+						</div>
+						<%}%>
 					<%}%>
-					<%}%>
+					<%}%>	
 				</div>
 				<%}%>
-				<%}%>
 				<nav class="item-pagination mx-auto" id="item-pagination">
-					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">맨 처음</a></li>
-						<%if(currentPage-1 <= 0) {%>
-							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">이전</a></li>
-						<%}else {%>
-							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage-1%>">이전</a></li>
-						<%}%>
-						<%for(int p = startPage; p <= endPage; p++) {%>
-							<%if (p == currentPage) {%>
-							<li class="page-item disabled"><a class="page-link"><%=p%></a></li>
+						<ul class="pagination justify-content-center">
+							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">맨 처음</a></li>
+							<%if(currentPage-1 <= 0) {%>
+								<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=beginPage%>">이전</a></li>
 							<%}else {%>
-							<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=p%>"><%=p%></a></li>
-							<%}%>
-						<%}%>
-						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage+1%>">다음</a></li>
-						<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=ultimatePage%>">맨 끝</a></li>
-					</ul>
-				</nav>
+								<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage-1%>">이전</a></li>
+                  			<%}%>
+                  			<%for(int p = startPage; p <= endPage; p++) {%>
+                  				<%if (p == currentPage) {%>
+                  					<li class="page-item disabled"><a class="page-link"><%=p%></a></li>
+                  				<%}else {%>
+                  					<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=p%>"><%=p%></a></li>
+                  				<%}%>
+                  			<%}%>
+                  			<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=currentPage+1%>">다음</a></li>
+                  			<li class="page-item"><a class="page-link" href="<%=request.getContextPath()%>/itemMain.it?currentPage=<%=ultimatePage%>">맨 끝</a></li>
+                  		</ul>
+            		</nav>
 			</div>
 		</form>
 	</section>

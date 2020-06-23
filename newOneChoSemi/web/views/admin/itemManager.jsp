@@ -763,10 +763,10 @@
                     $("#itemInfo").prop("readonly",false);
                     
                 }else if(selected=="전시중"){
-                    $(".modal-body input").prop("readonly",true);
-                    $("#mainImg").prop("disabled",true);
-                    $("#subImg").prop("disabled",true);
-                    $("#itemInfo").prop("readonly",true);
+                    //$(".modal-body input").prop("readonly",true);
+                    /* $("#mainImg").prop("disabled",true);
+                    $("#subImg").prop("disabled",true); */
+                    //$("#itemInfo").prop("readonly",true);
                 }
             });
 

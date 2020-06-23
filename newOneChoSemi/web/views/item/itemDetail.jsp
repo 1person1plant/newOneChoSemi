@@ -613,7 +613,7 @@ td:nth-of-type(2) {width:45rem;}
 								</div>
 								<%}else {%>
 								<div class="row review-bigImage" style="margin-top: 1rem;">
-									<img src="<%=request.getContextPath()%>/<%=otherReviewList.get(i).getReviewImgPath()%>/<%=otherReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
+									<img src="<%=request.getContextPath()%>/review_uploadFiles/<%=otherReviewList.get(i).getReviewImgName()%>" id="big-review-image" style="width: 30rem; height: 30rem;">
 								</div>
 								<%}%>
 							</td>

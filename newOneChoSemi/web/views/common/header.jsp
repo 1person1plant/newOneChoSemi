@@ -353,8 +353,10 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 searchWhat" type="search" placeholder="Search" aria-label="Search">
+			<form class="form-inline my-2 my-lg-0" method="get" action="<%=request.getContextPath()%>/itemSearch.it">
+                <input class="form-control mr-sm-2 searchWhat" type="search" placeholder="Search" aria-label="Search" name="searchWhat">
+                <input type="hidden" name="searchPriceMin" value=0>
+                <input type="hidden" name="searchPriceMax" value=9999999>
                 <button class="btn btn-outline-info my-2 my-sm-0" type="button" onclick="headerSearch()">Search</button>
             </form>
         </div>

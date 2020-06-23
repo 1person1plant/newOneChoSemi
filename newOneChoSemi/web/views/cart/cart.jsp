@@ -81,6 +81,9 @@
         width: 20px;
         height: 20px;
     }
+    .carttable label{
+		margin: 0;
+    }
 
     .carttable img {
         width: 100px;
@@ -100,7 +103,7 @@
     }
     .carttable thead td:nth-child(2) {
         width: 120px; 
-        height: 50px;  
+        height: 50px;
     }
     .carttable tbody td:nth-child(2) {
         width: 120px; 
@@ -284,8 +287,8 @@
 	    <table class="carttable">
 	        <thead>
 		        <tr>
-					<td><input type="checkbox" name="clearCart"></td>
-					<td>전체</td>
+					<td><input id="clearCart" type="checkbox" name="clearCart"></td>
+					<td><label for="clearCart">전체</label></td>
 					<td></td>
 					<td></td>
 					<td class="cart_total_count">0</td>
@@ -377,7 +380,6 @@
     	function goHome() {
     		location.href="<%=request.getContextPath()%>/index.jsp";
 		}
-    	window.history.forward();
     	// 구매 상품 확인 후 결제 페이지로 이동
 		function order() {
             var orderCheckeds = $("input:checkbox[class=cart_checkbox]:checked");
@@ -393,7 +395,6 @@
 		        		$("input:checkbox[class=cart_checkbox]").eq(i).parents("tr").children().children().children(".cart_count").prop("disabled",false);
 		        	}
 	        	}
-	        	window.history.forward();
 				$("#orderForm").submit();
             }
 		}

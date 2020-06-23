@@ -707,8 +707,10 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 
                     // 산간지역 배송비 계산
                     calculate_comp = true;
+                    checkdelivery();
                     Calculate();
                     recipient_address_check();
+                    $(".order_confirm_switch").prop("checked",false);
 
                     // iframe을 넣은 element를 안보이게 한다.
                     // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -827,6 +829,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	        	// 주소 입력 값 전부 있음
 	            $(".recipient_address_facheck").css("display","none");
 	            $(".recipient_address_faseedling").css("display","inline");
+                checkdelivery();
 	        } else {
 	        	// 주소 입력 빈값 있음
 	            $(".recipient_address_facheck").css("display","inline");
@@ -862,7 +865,7 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
         // 제주산간 지역 배송비 계산
         function checkdelivery(){
 			var recipient_postcode = $("#recipient_postcode").val();
-			//console.log("고객이 입력한 주소 : " + $("#recipient_postcode").val());
+			console.log("고객이 입력한 주소 : " + $("#recipient_postcode").val());
 			
 			$.ajax({
 				url:"<%=request.getContextPath()%>//orderChkPostcode.or",
@@ -871,13 +874,20 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 				success:function(data){
 					if(data == 8000){
 						additional = true;
+						var dtemp = delivery;
 						delivery = Number("8000");
 		                $("#orderpayment_delivery").text(delivery);
-		                alert("추가 배송비 지역 입니다.");
+		                if(dtemp != 8000) {
+		                	alert("추가 배송비 지역 입니다.");
+		                }
 					} else if(data == 2500) {
 						additional = false;
+						var dtemp = delivery;
 						delivery = Number("2500");
 		                $("#orderpayment_delivery").text(delivery);
+		                if(dtemp != 2500) {
+		                	alert("일반 배송비 지역 입니다.");
+		                }
 					}
 					
 				},
@@ -1003,7 +1013,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 	</div>
 	</form>
 	<script>
-		window.history.forward();
 		function orderEnd_cancel() {
 		    var result = confirm("입력하신 정보가 지워집니다. 주문을 취소 하시겠습니까?");
 		    if(result){
@@ -1123,7 +1132,6 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 							msg += '카드 승인번호 : ' + rsp.apply_num;
 						*/
 				    	// 결제 완료 후 결과 화면으로...
-				    	window.history.forward();
 						$("#orderCompForm").submit();
 					} else {
 						var msg = rsp.error_msg;
@@ -1132,6 +1140,11 @@ System.out.println("loginUser.getMemberStatus() : " + loginUser.getMemberStatus(
 					//alert(msg);
 				});
 		    }
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			history.replaceState(null,null, '<%=request.getContextPath()%>/views/common/expired.jsp');
 		});
 	</script>
 <%@ include file="../common/footer.jsp" %>
