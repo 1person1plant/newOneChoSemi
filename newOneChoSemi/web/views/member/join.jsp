@@ -303,7 +303,7 @@
 								<div class="card">
 									<div class="card-header" style="background: #1f598c; cursor: pointer; font-weight: bold; font-size: 20px; color: white;">
 										<div class="row">
-											<div align="left" class="test col-10" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">이용약관 동의</div>
+											<div align="left" class="test col-10" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">[필수] 이용약관 동의</div>
 											<div align="right" class="test col-2">
 												<label for="checkbox1"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox1" name="chkBox">
 											</div>
@@ -333,7 +333,7 @@
 								<div class="card">
 									<div class="card-header" style="background: #1f598c; cursor: pointer; font-weight: bold; font-size: 20px; color: white;" id="headingTwo">
 										<div class="row">
-											<div align="left" class="test col-10" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">개인정보 수집 및 이용 동의</div>
+											<div align="left" class="test col-10" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">[필수] 개인정보 수집 및 이용 동의</div>
 											<div align="right" class="test col-2">
 												<label for="checkbox2"><span class="chkText">동의 안함</span></label> <input class="input_chk chkbox" type="checkbox" onclick="chkAction();" id="checkbox2" name="chkBox">
 											</div>
