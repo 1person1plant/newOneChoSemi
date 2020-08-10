@@ -226,8 +226,8 @@
 					data:{wishNo:wishNo, memberNo:memberNo, wishMemo:wishMemo},
 					success:function(data){
 						if(data == "permit"){
-						alert("위시리스트에서 삭제되었습니다.");							
-						location.reload();
+							alert("위시리스트에서 삭제되었습니다.");							
+							location.reload();
 						}else if(data == "fail"){
 							alert("실패");
 						}
@@ -281,8 +281,12 @@
 					data:{wishNo:wishNo,memberNo:memberNo,wishMemo:wishMemo,itemNo:itemNo},
 					success:function(data){
 						if(data == "permit"){
+							if("<%=mwl.get(i).getWishlistMemo()%>"==wishMemo){
+								alert("수정된 정보가 없습니다.");
+							}else{
 							alert("메모 수정이 완료되었습니다.");
-							/* location.reload(); */
+							location.reload();
+							}
 						}else if(data == "fail"){
 							alert("실패");
 						}
